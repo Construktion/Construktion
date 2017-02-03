@@ -4,11 +4,11 @@ namespace Construktion.Tests
     using Shouldly;
     using Xunit;
 
-    public class PrimitiveTests
+    public class PrimitiveTypeTests
     {
         private readonly Construktion _construktion;
 
-        public PrimitiveTests()
+        public PrimitiveTypeTests()
         {
             _construktion = new Construktion();
         }
@@ -116,6 +116,18 @@ namespace Construktion.Tests
             var result = _construktion.Build<ulong>();
 
             result.ShouldNotBe(default(ulong));
+        }
+
+        [Fact]
+        public void Bool_Should_Alternate()
+        {
+            var result1 = _construktion.Build<bool>();
+            var result2 = _construktion.Build<bool>();
+            var result3 = _construktion.Build<bool>();
+
+            result1.ShouldBeTrue();
+            result2.ShouldBeFalse();
+            result3.ShouldBeTrue();
         }
     }
 }

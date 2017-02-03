@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     //https://github.com/AutoFixture/AutoFixture/blob/master/Src/AutoFixture/RandomNumericSequenceGenerator.cs
     public class NumericBuilder : Builder
@@ -56,7 +57,7 @@
 
         public bool CanBuild(Type request)
         {
-            return _typesHandled.Contains(Type.GetTypeCode(request));
+            return _typesHandled.Contains(Type.GetTypeCode(request)) && !request.GetTypeInfo().IsEnum;
         }
 
         public object Build(RequestContext context)
