@@ -3,46 +3,55 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Builders;
 
     public class Construktion
     {
-        private readonly IEnumerable<Builder> _builders;
-
-        public Construktion()
+        private readonly IEnumerable<Builder> _builders = new List<Builder>
         {
-            _builders = new List<Builder>
-            {
-                new StringBuilder(),
-                new NumericBuilder(),
-                new CharBuilder(),
-                new GuidBuilder(),
-                new BoolBuilder(),
-                new EnumBuilder()
-            };
-        }
+            new StringBuilder(),
+            new NumericBuilder(),
+            new CharBuilder(),
+            new GuidBuilder(),
+            new BoolBuilder(),
+            new EnumBuilder(),
+            new ClassBuilder()
+        };
 
         public T Build<T>()
         {
-            var request = typeof(T);
+            return DoBuild<T>(typeof(T), null);
+        }
 
-            var builder = _builders.FirstOrDefault(x => x.CanBuild(request));
+        public T Build<T>(Action<T> afterBuild)
+        {
+            return DoBuild(typeof(T), afterBuild);
+        }
 
-            var result = (T)builder.Build(new RequestContext(request));
+        public object Build(Type type)
+        {
+            return DoBuild<object>(type, null);
+        }
+
+        private T DoBuild<T>(Type request, Action<T> afterBuild)
+        {
+            var builder = GetBuilder(request);
+
+            var result = (T)builder.Build(new RequestContext(this, request));
+
+            afterBuild?.Invoke(result);
 
             return result;
         }
 
-        public T Build<T>(Action<T> afterBuild) where T : class
+        private Builder GetBuilder(Type request)
         {
-            if (afterBuild == null)
-                throw new ArgumentNullException(nameof(afterBuild));
+            var builder = _builders.FirstOrDefault(x => x.CanBuild(request));
 
-            var result = Build<T>();
-            afterBuild(result);
+            if (builder == null)
+                throw new Exception($"No builder can be found for {request.Name}");
 
-            return result;
+            return builder;
         }
     }
 }

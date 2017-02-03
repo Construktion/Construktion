@@ -18,7 +18,6 @@ namespace Construktion.Tests
         {
             var result = _construktion.Build<string>();
 
-            result.ShouldNotBeNullOrEmpty();
             result.Substring(0, 7).ShouldBe("String-");
         }
 
