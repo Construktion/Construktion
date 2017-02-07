@@ -1,15 +1,12 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Construktion.Builders
 {
-    using System.Linq;
-    using System.Reflection;
+    using System.ComponentModel.DataAnnotations;
 
     public class AttributeBuilder : Builder
     {
         public bool CanBuild(RequestContext context)
         {
-            return context.PropertyInfo?.GetCustomAttributes(typeof(MaxLengthAttribute)).ToList().Any() ?? false;
+            return context.HasAttribute<MaxLengthAttribute>();
         }
 
         public object Build(RequestContext context, ConstruktionPipeline pipeline)

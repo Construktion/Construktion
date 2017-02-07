@@ -6,17 +6,18 @@
     public class RequestContext
     {
         public Type RequestType { get; }
-        public PropertyInfo PropertyInfo { get; }
+        public Maybe<PropertyInfo> PropertyInfo { get; }
 
         public RequestContext(Type request)
         {
             RequestType = request;
+            PropertyInfo = new Maybe<PropertyInfo>();
         }
 
         public RequestContext(PropertyInfo propertyInfo)
         {
             RequestType = propertyInfo.PropertyType;
-            PropertyInfo = propertyInfo;
+            PropertyInfo = propertyInfo.ToMaybe();
         }
     }
 }
