@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Builders;
-
+ 
     public class Construktion
     {
         private readonly IEnumerable<Builder> _builders = new List<Builder>
         {
+            new AttributeBuilder(),
             new StringBuilder(),
             new NumericBuilder(),
             new CharBuilder(),
@@ -35,23 +35,13 @@
 
         private T DoBuild<T>(Type request, Action<T> afterBuild)
         {
-            var builder = GetBuilder(request);
+            var pipeline = new DefaultConstruktionPipeline(_builders);
 
-            var result = (T)builder.Build(new RequestContext(this, request));
+            var result = (T)pipeline.Build(new RequestContext(request));
 
             afterBuild?.Invoke(result);
 
             return result;
-        }
-
-        private Builder GetBuilder(Type request)
-        {
-            var builder = _builders.FirstOrDefault(x => x.CanBuild(request));
-
-            if (builder == null)
-                throw new Exception($"No builder can be found for {request.Name}");
-
-            return builder;
         }
     }
 }

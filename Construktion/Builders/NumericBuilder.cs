@@ -55,14 +55,14 @@
             CreateRange();
         }
 
-        public bool CanBuild(Type request)
+        public bool CanBuild(RequestContext context)
         {
-            return _typesHandled.Contains(Type.GetTypeCode(request)) && !request.GetTypeInfo().IsEnum;
+            return _typesHandled.Contains(Type.GetTypeCode(context.RequestType)) && !context.RequestType.GetTypeInfo().IsEnum;
         }
 
-        public object Build(RequestContext context)
+        public object Build(RequestContext context, ConstruktionPipeline pipeline)
         {
-            return CreateRandom(context.Request);
+            return CreateRandom(context.RequestType);
         }
 
         private static void AssertLimitsAreAscending(long[] limits)

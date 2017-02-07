@@ -5,23 +5,23 @@
 
     public class ClassBuilder : Builder
     {
-        public bool CanBuild(Type request)
+        public bool CanBuild(RequestContext context)
         {
-            return request.GetTypeInfo().IsClass;
+            return context.RequestType.GetTypeInfo().IsClass;
         }
 
-        public object Build(RequestContext context)
+        public object Build(RequestContext context, ConstruktionPipeline pipeline)
         {
-            var instance = Activator.CreateInstance(context.Request);
+            var instance = Activator.CreateInstance(context.RequestType);
 
-            var properties = context.Request.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var properties = context.RequestType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var property in properties)
             {
-                var pi = context.Request.GetProperty(property.Name);
+                var pi = context.RequestType.GetProperty(property.Name);
 
-                var result = context.Construktion.Build(pi.PropertyType);
-
+                var result = pipeline.Build(new RequestContext(pi));
+                    
                 pi.SetValue(instance, result);
             }
 

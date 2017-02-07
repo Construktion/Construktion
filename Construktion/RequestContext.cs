@@ -1,16 +1,22 @@
 ﻿namespace Construktion
 {
     using System;
+    using System.Reflection;
 
     public class RequestContext
     {
-        public Construktion Construktion { get; }
-        public Type Request { get; }
+        public Type RequestType { get; }
+        public PropertyInfo PropertyInfo { get; }
 
-        public RequestContext(Construktion construktion, Type request)
+        public RequestContext(Type request)
         {
-            Construktion = construktion;
-            Request = request;
+            RequestType = request;
+        }
+
+        public RequestContext(PropertyInfo propertyInfo)
+        {
+            RequestType = propertyInfo.PropertyType;
+            PropertyInfo = propertyInfo;
         }
     }
 }

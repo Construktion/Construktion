@@ -6,12 +6,12 @@
     {
         private bool value;
 
-        public bool CanBuild(Type request)
+        public bool CanBuild(RequestContext context)
         {
-            return request == typeof(bool);
+            return context.RequestType == typeof(bool);
         }
 
-        public object Build(RequestContext context)
+        public object Build(RequestContext context, ConstruktionPipeline pipeline)
         {
             value = !value;
 

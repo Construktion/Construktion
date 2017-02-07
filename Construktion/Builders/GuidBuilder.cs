@@ -4,12 +4,12 @@
 
     public class GuidBuilder : Builder
     {
-        public bool CanBuild(Type request)
+        public bool CanBuild(RequestContext context)
         {
-            return request == typeof(Guid);
+            return context.RequestType == typeof(Guid);
         }
 
-        public object Build(RequestContext context)
+        public object Build(RequestContext context, ConstruktionPipeline pipeline)
         {
             return Guid.NewGuid();
         }

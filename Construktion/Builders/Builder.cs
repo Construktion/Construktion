@@ -1,10 +1,8 @@
 ﻿namespace Construktion.Builders
 {
-    using System;
-
     public interface Builder 
     {
-        bool CanBuild(Type request);
-        object Build(RequestContext context);
+        bool CanBuild(RequestContext context);
+        object Build(RequestContext context, ConstruktionPipeline pipeline);
     }
 }
