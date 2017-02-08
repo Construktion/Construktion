@@ -30,8 +30,6 @@
 
         public Construktion(IList<Builder> additionalBuilders)
         {
-            additionalBuilders.ThrowIfNull(nameof(additionalBuilders));
-
             if (additionalBuilders.Any(x => x == null))
                 throw new ArgumentNullException(nameof(additionalBuilders), "There are items in the list that are null");
 
