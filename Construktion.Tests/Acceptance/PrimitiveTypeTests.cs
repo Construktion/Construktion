@@ -1,4 +1,4 @@
-namespace Construktion.Tests
+namespace Construktion.Tests.Acceptance
 {
     using System;
     using Shouldly;
@@ -118,15 +118,11 @@ namespace Construktion.Tests
         }
 
         [Fact]
-        public void Bool_Should_Alternate()
+        public void Bool()
         {
-            var result1 = _construktion.Build<bool>();
-            var result2 = _construktion.Build<bool>();
-            var result3 = _construktion.Build<bool>();
+            var result = _construktion.Build<bool>();
 
-            result1.ShouldBeTrue();
-            result2.ShouldBeFalse();
-            result3.ShouldBeTrue();
+            result.ShouldBeOneOf(true, false);
         }
     }
 }

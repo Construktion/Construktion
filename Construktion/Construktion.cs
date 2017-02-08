@@ -18,6 +18,8 @@
             new ClassBuilder()
         };
 
+        public IList<Builder> Builders => _builders;
+
         public Construktion()
         {
         }

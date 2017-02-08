@@ -1,6 +1,6 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Local
 // ReSharper disable ArrangeTypeMemberModifiers
-namespace Construktion.Tests
+namespace Construktion.Tests.Acceptance
 {
     using Shouldly;
     using Xunit;

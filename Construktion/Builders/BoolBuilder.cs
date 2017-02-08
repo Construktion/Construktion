@@ -1,7 +1,5 @@
 ﻿namespace Construktion.Builders
 {
-    using System;
-
     public class BoolBuilder : Builder
     {
         private bool value;
