@@ -16,8 +16,7 @@
 
         public DefaultConstruktionPipeline(IEnumerable<Builder> builders)
         {
-            if (builders == null)
-                throw new ArgumentNullException(nameof(builders));  
+            builders.ThrowIfNull(nameof(builders));
 
             _builders = builders;
         }

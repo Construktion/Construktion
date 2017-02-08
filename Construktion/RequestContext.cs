@@ -10,12 +10,16 @@
 
         public RequestContext(Type request)
         {
+            request.ThrowIfNull(nameof(request));
+
             RequestType = request;
-            PropertyInfo = new Maybe<PropertyInfo>();
+            PropertyInfo = Maybe.Empty<PropertyInfo>();
         }
 
         public RequestContext(PropertyInfo propertyInfo)
         {
+            propertyInfo.ThrowIfNull(nameof(propertyInfo));
+
             RequestType = propertyInfo.PropertyType;
             PropertyInfo = propertyInfo.ToMaybe();
         }
