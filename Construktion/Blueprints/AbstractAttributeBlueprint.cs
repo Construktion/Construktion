@@ -6,7 +6,7 @@ namespace Construktion.Blueprints
 
     public abstract class AbstractAttributeBlueprint<T> : Blueprint where T : Attribute
     {
-        public T GetAttribute(ConstruktionContext context)
+        protected T GetAttribute(ConstruktionContext context)
         {
            return (T)context.PropertyInfo
                 .Single()

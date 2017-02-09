@@ -2,7 +2,7 @@
 {
     public class BoolBlueprint : Blueprint
     {
-        private bool value;
+        private bool value = false;
 
         public bool Matches(ConstruktionContext context)
         {

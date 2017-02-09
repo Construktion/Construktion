@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Tests.Acceptance
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Blueprints;
     using Shouldly;
@@ -12,29 +11,37 @@
         [Fact]
         public void builds_attribute_based_properties()
         {
-           var construktion = new Construktion(new List<Blueprint>{ new RangeAttributeBlueprint() });
+           var construktion = new Construktion(new SetAttributeBlueprint());
 
-            var result = construktion.Build<AgeHasRange>();
+            var result = construktion.Build<Foo>();
 
-            result.Age.ShouldBe(5);
+            result.Bar.ShouldBe(5);
         }
-       
-        public class RangeAttributeBlueprint : AbstractAttributeBlueprint<RangeAttribute>
-        {
-            private readonly Random _rnd = new Random();
 
+        public class SetAttributeBlueprint : AbstractAttributeBlueprint<SetAttribute>
+        {
             public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 var attribute = GetAttribute(context);
 
-                return _rnd.Next((int)attribute.Minimum, (int) attribute.Maximum + 1);
+                return attribute.Value;
             }
         }
 
-        public class AgeHasRange
+        public class SetAttribute : Attribute
         {
-            [Range(5, 5)]
-            public int Age { get; set; }
+            public int Value { get; }
+
+            public SetAttribute(int value)
+            {
+                Value = value;
+            }
+        }
+
+        public class Foo
+        {
+            [Set(5)]
+            public int Bar { get; set; }
         }
     }
 }

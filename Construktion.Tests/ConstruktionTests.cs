@@ -9,20 +9,20 @@
     public class ConstruktionTests
     {
         [Fact]
-        public void Can_Inject_Single_Blueprint_To_Beginning_Of_blueprints()
+        public void custom_blueprints_should_be_listed_first()
         {
-            var construktion = new Construktion(new TestBlueprint());
+            var construktion = new Construktion(new FooBlueprint());
 
-            construktion.Blueprints[0].ShouldBeOfType<TestBlueprint>();
+            construktion.Blueprints[0].ShouldBeOfType<FooBlueprint>();
         }
 
         [Fact]
         public void Can_Inject_Multiple_blueprints_To_Beginning_Of_blueprints()
         {
-            var construktion = new Construktion(new List<Blueprint>{ new TestBlueprint(), new AnotherTestBlueprint()});
+            var construktion = new Construktion(new List<Blueprint>{ new FooBlueprint(), new BarBlueprint()});
 
-            construktion.Blueprints[0].ShouldBeOfType<TestBlueprint>();
-            construktion.Blueprints[1].ShouldBeOfType<AnotherTestBlueprint>();
+            construktion.Blueprints[0].ShouldBeOfType<FooBlueprint>();
+            construktion.Blueprints[1].ShouldBeOfType<BarBlueprint>();
         }
 
         [Fact]
@@ -39,34 +39,34 @@
         {
             Should.Throw<ArgumentNullException>(() =>
             {
-                var c = new Construktion(new List<Blueprint> { new TestBlueprint(), null });
+                var c = new Construktion(new List<Blueprint> { new FooBlueprint(), null });
             });
         }
 
 
-        public class TestBlueprint : Blueprint
+        public class FooBlueprint : Blueprint
         {
             public bool Matches(ConstruktionContext context)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
         }
 
-        public class AnotherTestBlueprint : Blueprint
+        public class BarBlueprint : Blueprint
         {
             public bool Matches(ConstruktionContext context)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
         }
     }

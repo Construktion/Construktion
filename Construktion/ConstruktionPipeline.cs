@@ -16,7 +16,8 @@
 
         public DefaultConstruktionPipeline(IEnumerable<Blueprint> blueprints)
         {
-            blueprints.ThrowIfNull(nameof(blueprints));
+            if (blueprints == null) 
+                throw new ArgumentNullException(nameof(blueprints));
 
             _blueprints = blueprints;
         }

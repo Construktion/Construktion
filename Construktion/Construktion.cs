@@ -18,22 +18,27 @@
             new ClassBlueprint()
         };
 
-        public IList<Blueprint> Blueprints => _blueprints;
+        public IReadOnlyList<Blueprint> Blueprints => _blueprints;
 
         public Construktion()
         {
         }
 
-        public Construktion(Blueprint additionalBlueprint) : this (new List<Blueprint> { additionalBlueprint })
+        public Construktion(Blueprint additionalBlueprint) : this (Enumerable.Repeat(additionalBlueprint, 1))
         {
         }
 
-        public Construktion(IList<Blueprint> additionalBlueprints)
+        public Construktion(IEnumerable<Blueprint> blueprints)
         {
-            if (additionalBlueprints.Any(x => x == null))
-                throw new ArgumentNullException(nameof(additionalBlueprints), "There are items in the list that are null");
+            var customBlueprints = blueprints?.ToList();
 
-            _blueprints.InsertRange(0, additionalBlueprints);
+            if (customBlueprints == null)
+                throw new ArgumentNullException(nameof(blueprints));
+
+            if (customBlueprints.Any(x => x == null))
+                throw new ArgumentNullException(nameof(blueprints), "There are items in the list that are null");
+
+            _blueprints.InsertRange(0, customBlueprints);
         }
 
         public T Build<T>()

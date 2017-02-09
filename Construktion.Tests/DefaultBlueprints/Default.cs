@@ -1,4 +1,4 @@
-﻿namespace Construktion.Tests
+﻿namespace Construktion.Tests.DefaultBlueprints
 {
     public static class Default
     {

@@ -18,17 +18,6 @@
         }
 
         [Fact]
-        public void get_attribute_should_resolve_attribute_correctly()
-        {
-            var pi = typeof(Foo).GetProperty(nameof(Foo.MaxLengthProperty));
-            var context = new ConstruktionContext(pi);
-
-            var attr = _maxLengthBlueprint.GetAttribute(context);
-
-            attr.Length.ShouldBe(12);
-        }
-
-        [Fact]
         public void matches_when_property_info_has_attribute_of_t()
         {
             var pi = typeof(Foo).GetProperty(nameof(Foo.MaxLengthProperty));
@@ -70,7 +59,7 @@
         public void base_additional_criteria_always_returns_true()
         {
             var attr = new MaxLengthAttributeBlueprint();
-            attr.AlsoMustMatchBase().ShouldBeTrue();
+            attr.BaseAlsoMustMatch().ShouldBeTrue();
         }
 
 
@@ -91,7 +80,7 @@
 
         public class MaxLengthAttributeBlueprint : AbstractAttributeBlueprint<MaxLengthAttribute>
         {
-            public bool AlsoMustMatchBase()
+            public bool BaseAlsoMustMatch()
             {
                 return base.AlsoMustMatch(new ConstruktionContext(typeof(Dummy)));
             }
