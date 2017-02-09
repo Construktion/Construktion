@@ -1,28 +1,31 @@
-﻿namespace Construktion
+﻿using System;
+
+namespace Construktion
 {
-    using System.Collections.Generic;
     using System.Collections;
+    using System.Collections.Generic;
 
     //https://github.com/ploeh/Booking/blob/master/BookingDomainModel/Maybe.cs
     public class Maybe<T> : IEnumerable<T>
     {
-        private readonly IEnumerable<T> values;
+        private readonly IEnumerable<T> value;
 
         public Maybe()
         {
-            values = new T[0];
+            value = new T[0];
         }
 
         public Maybe(T value)
         {
-            values = value == null
-                ? new T[0]
-                : new[] { value };
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            this.value = new[] { value };
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return values.GetEnumerator();
+            return value.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -35,7 +38,9 @@
     {
         public static Maybe<T> ToMaybe<T>(this T value)
         {
-            return new Maybe<T>(value);
+            return value == null 
+                ? new Maybe<T>()
+                : new Maybe<T>(value);
         }
 
         public static Maybe<T> Empty<T>()
