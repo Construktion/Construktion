@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Tests.Acceptance
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
     using Blueprints;
     using Shouldly;
     using Xunit;

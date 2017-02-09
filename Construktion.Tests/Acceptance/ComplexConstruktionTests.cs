@@ -5,17 +5,17 @@ namespace Construktion.Tests.Acceptance
     using Shouldly;
     using Xunit;
 
-    public class ComplexTypeTests
+    public class ComplexConstruktionTests
     {
         private readonly Construktion _construktion;
 
-        public ComplexTypeTests()
+        public ComplexConstruktionTests()
         {
             _construktion = new Construktion();
         }
 
         [Fact]
-        public void Enum()
+        public void enums()
         {
             var result = _construktion.Build<TestResult>();
 

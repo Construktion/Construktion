@@ -4,17 +4,17 @@ namespace Construktion.Tests.Acceptance
     using Shouldly;
     using Xunit;
 
-    public class PrimitiveTypeTests
+    public class PrimitiveConstruktionTests
     {
         private readonly Construktion _construktion;
 
-        public PrimitiveTypeTests()
+        public PrimitiveConstruktionTests()
         {
             _construktion = new Construktion();
         }
 
         [Fact]
-        public void String()
+        public void strings()
         {
             var result = _construktion.Build<string>();
 
@@ -22,7 +22,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Char()
+        public void chars()
         {
             var result = _construktion.Build<char>();
 
@@ -30,7 +30,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Guid()
+        public void guids()
         {
             var result = _construktion.Build<Guid>();
 
@@ -38,7 +38,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Byte()
+        public void bytes()
         {
             var result = _construktion.Build<byte>();
 
@@ -46,7 +46,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Decimal()
+        public void decimals()
         {
             var result = _construktion.Build<decimal>();
 
@@ -54,7 +54,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Double()
+        public void doubles()
         {
             var result = _construktion.Build<double>();
 
@@ -62,7 +62,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Short()
+        public void shorts()
         {
             var result = _construktion.Build<short>();
 
@@ -70,7 +70,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Int()
+        public void ints()
         {
             var result = _construktion.Build<int>();
 
@@ -78,7 +78,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Sbyte()
+        public void sbytes()
         {
             var result = _construktion.Build<sbyte>();
 
@@ -86,7 +86,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Float()
+        public void floats()
         {
             var result = _construktion.Build<float>();
 
@@ -94,7 +94,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Ushort()
+        public void ushorts()
         {
             var result = _construktion.Build<ushort>();
 
@@ -102,7 +102,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Uint()
+        public void unit()
         {
             var result = _construktion.Build<uint>();
 
@@ -110,7 +110,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Ulong()
+        public void ulongs()
         {
             var result = _construktion.Build<ulong>();
 
@@ -118,7 +118,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Bool()
+        public void bools()
         {
             var result = _construktion.Build<bool>();
 

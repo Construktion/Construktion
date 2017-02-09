@@ -6,7 +6,7 @@
     public class StringPropertyBlueprintTests
     {
         [Fact]
-        public void name_is_prefixed_on_string()
+        public void property_name_is_prefixed()
         {
             var construktion = new Construktion();
 

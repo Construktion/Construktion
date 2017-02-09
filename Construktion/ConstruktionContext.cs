@@ -17,7 +17,7 @@
 
             RequestType = request;
             PropertyInfo = Maybe.Empty<PropertyInfo>();
-            ParentClass =Maybe.Empty<Type>();
+            ParentClass = Maybe.Empty<Type>();
         }
 
         public ConstruktionContext(PropertyInfo propertyInfo)

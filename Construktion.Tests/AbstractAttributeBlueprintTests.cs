@@ -11,10 +11,12 @@
     public class AbstractAttributeBlueprintTests
     {
         private readonly MaxLengthAttributeBlueprint _maxLengthBlueprint;
+        private readonly BarMaxLengthAttributeBlueprint _barsMaxLengthBlueprint;
 
         public AbstractAttributeBlueprintTests()
         {
             _maxLengthBlueprint = new MaxLengthAttributeBlueprint();
+            _barsMaxLengthBlueprint = new BarMaxLengthAttributeBlueprint();
         }
 
         [Fact]
@@ -41,8 +43,7 @@
             var pi = typeof(Bar).GetProperty(nameof(Bar.MaxLengthProperty));
             var context = new ConstruktionContext(pi);
 
-            var barBlueprint = new BarMaxLengthAttributeBlueprint();
-            barBlueprint.Matches(context).ShouldBeTrue();
+            _barsMaxLengthBlueprint.Matches(context).ShouldBeTrue();
         }
 
         [Fact]
@@ -51,8 +52,7 @@
             var pi = typeof(Foo).GetProperty(nameof(Foo.MaxLengthProperty));
             var context = new ConstruktionContext(pi);
 
-            var barBlueprint = new BarMaxLengthAttributeBlueprint();
-            barBlueprint.Matches(context).ShouldBeFalse();
+            _barsMaxLengthBlueprint.Matches(context).ShouldBeFalse();
         }
 
         [Fact]

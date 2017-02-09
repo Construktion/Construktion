@@ -18,7 +18,7 @@
             new EnumBlueprint(),
             new ClassBlueprint()
         };
-
+        //gettert?
         public IReadOnlyList<Blueprint> Blueprints => _blueprints;
 
         public Construktion()
@@ -52,9 +52,9 @@
             return DoBuild(typeof(T), hardCodes);
         }
 
-        public object Build(Type type)
+        public object Build(Type request)
         {
-            return DoBuild<object>(type, null);
+            return DoBuild<object>(request, null);
         }
 
         private T DoBuild<T>(Type request, Action<T> hardCodes)
