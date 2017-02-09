@@ -11,7 +11,7 @@
         {
             var builder = new StringBuilder();
 
-            var result = (string)builder.Build(new RequestContext(typeof(string)), Default.Pipeline);
+            var result = (string)builder.Build(new ConstruktionContext(typeof(string)), Default.Pipeline);
 
             result.Substring(0, 7).ShouldBe("String-");
         }

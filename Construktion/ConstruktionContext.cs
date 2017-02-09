@@ -3,12 +3,12 @@
     using System;
     using System.Reflection;
 
-    public class RequestContext
+    public class ConstruktionContext
     {
         public Type RequestType { get; }
         public Maybe<PropertyInfo> PropertyInfo { get; }
 
-        public RequestContext(Type request)
+        public ConstruktionContext(Type request)
         {
             request.ThrowIfNull(nameof(request));
 
@@ -16,7 +16,7 @@
             PropertyInfo = Maybe.Empty<PropertyInfo>();
         }
 
-        public RequestContext(PropertyInfo propertyInfo)
+        public ConstruktionContext(PropertyInfo propertyInfo)
         {
             propertyInfo.ThrowIfNull(nameof(propertyInfo));
 

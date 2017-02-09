@@ -6,7 +6,7 @@ namespace Construktion.Builders
 
     public abstract class AbstractAttributeBuilder<T> : Builder where T : Attribute
     {
-        public T GetAttribute(RequestContext context)
+        public T GetAttribute(ConstruktionContext context)
         {
            return (T)context.PropertyInfo
                 .Single()
@@ -14,11 +14,11 @@ namespace Construktion.Builders
                 .First();
         }
 
-        public virtual bool CanBuild(RequestContext context)
+        public virtual bool CanBuild(ConstruktionContext context)
         {
             return context.HasAttribute<T>();
         }
 
-        public abstract object Build(RequestContext context, ConstruktionPipeline pipeline);
+        public abstract object Build(ConstruktionContext context, ConstruktionPipeline pipeline);
     }
 }

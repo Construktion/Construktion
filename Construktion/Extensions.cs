@@ -6,7 +6,7 @@
 
     public static class Extensions
     {
-        public static bool HasAttribute<T>(this RequestContext context) where T : Attribute
+        public static bool HasAttribute<T>(this ConstruktionContext context) where T : Attribute
         {
             return context.PropertyInfo.HasValue() &&
                    context.PropertyInfo

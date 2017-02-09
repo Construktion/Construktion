@@ -11,7 +11,7 @@
         {
             var builder = new ClassBuilder();
 
-            var result = (Person)builder.Build(new RequestContext(typeof(Person)), Default.Pipeline);
+            var result = (Person)builder.Build(new ConstruktionContext(typeof(Person)), Default.Pipeline);
 
             result.ShouldNotBeNull();
             result.Name.ShouldNotBeNull();

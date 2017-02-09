@@ -5,12 +5,12 @@
 
     public class ClassBuilder : Builder
     {
-        public bool CanBuild(RequestContext context)
+        public bool CanBuild(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsClass;
         }
 
-        public object Build(RequestContext context, ConstruktionPipeline pipeline)
+        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var instance = Activator.CreateInstance(context.RequestType);
 
@@ -20,7 +20,7 @@
             {
                 var pi = context.RequestType.GetProperty(property.Name);
 
-                var result = pipeline.Build(new RequestContext(pi));
+                var result = pipeline.Build(new ConstruktionContext(pi));
                     
                 pi.SetValue(instance, result);
             }

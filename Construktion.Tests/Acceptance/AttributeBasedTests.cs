@@ -23,7 +23,7 @@
         {
             private readonly Random _rnd = new Random();
 
-            public override object Build(RequestContext context, ConstruktionPipeline pipeline)
+            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 var attribute = GetAttribute(context);
 

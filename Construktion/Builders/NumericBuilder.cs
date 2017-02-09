@@ -55,12 +55,12 @@
             CreateRange();
         }
 
-        public bool CanBuild(RequestContext context)
+        public bool CanBuild(ConstruktionContext context)
         {
             return _typesHandled.Contains(Type.GetTypeCode(context.RequestType)) && !context.RequestType.GetTypeInfo().IsEnum;
         }
 
-        public object Build(RequestContext context, ConstruktionPipeline pipeline)
+        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             return CreateRandom(context.RequestType);
         }

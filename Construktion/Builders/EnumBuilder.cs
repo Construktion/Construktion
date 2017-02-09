@@ -7,12 +7,12 @@
     {
         private readonly Random _random = new Random();
 
-        public bool CanBuild(RequestContext context)
+        public bool CanBuild(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsEnum;
         }
 
-        public object Build(RequestContext context, ConstruktionPipeline pipeline)
+        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var values = Enum.GetValues(context.RequestType);
 

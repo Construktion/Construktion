@@ -11,7 +11,7 @@
         {
             var builder = new EnumBuilder();
 
-            var result = (Gender)builder.Build(new RequestContext(typeof(Gender)), Default.Pipeline);
+            var result = (Gender)builder.Build(new ConstruktionContext(typeof(Gender)), Default.Pipeline);
 
             result.ShouldBeOneOf(Gender.F, Gender.M);
         }

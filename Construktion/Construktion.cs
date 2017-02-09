@@ -55,7 +55,7 @@
         {
             var pipeline = new DefaultConstruktionPipeline(_builders);
 
-            var result = (T)pipeline.Build(new RequestContext(request));
+            var result = (T)pipeline.Build(new ConstruktionContext(request));
 
             hardCodes?.Invoke(result);
 

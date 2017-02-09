@@ -46,12 +46,12 @@
 
         public class TestBuilder : Builder
         {
-            public bool CanBuild(RequestContext context)
+            public bool CanBuild(ConstruktionContext context)
             {
                 throw new System.NotImplementedException();
             }
 
-            public object Build(RequestContext context, ConstruktionPipeline pipeline)
+            public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 throw new System.NotImplementedException();
             }
@@ -59,12 +59,12 @@
 
         public class AnotherTestBuilder : Builder
         {
-            public bool CanBuild(RequestContext context)
+            public bool CanBuild(ConstruktionContext context)
             {
                 throw new System.NotImplementedException();
             }
 
-            public object Build(RequestContext context, ConstruktionPipeline pipeline)
+            public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 throw new System.NotImplementedException();
             }

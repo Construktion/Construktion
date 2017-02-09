@@ -7,7 +7,7 @@
 
     public interface ConstruktionPipeline
     {
-        object Build(RequestContext requestContext);
+        object Build(ConstruktionContext requestContext);
     }
 
     public class DefaultConstruktionPipeline : ConstruktionPipeline
@@ -21,7 +21,7 @@
             _builders = builders;
         }
 
-        public object Build(RequestContext requestContext)
+        public object Build(ConstruktionContext requestContext)
         {
             var builder = GetBuilder(requestContext);
 
@@ -30,7 +30,7 @@
             return result;
         }
 
-        private Builder GetBuilder(RequestContext requestContext)
+        private Builder GetBuilder(ConstruktionContext requestContext)
         {
             var builder = _builders.FirstOrDefault(x => x.CanBuild(requestContext));
 

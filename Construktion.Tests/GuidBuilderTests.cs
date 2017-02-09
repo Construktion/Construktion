@@ -12,7 +12,7 @@
         {
             var builder = new GuidBuilder();
 
-            var result = (Guid)builder.Build(new RequestContext(typeof(Guid)), Default.Pipeline);
+            var result = (Guid)builder.Build(new ConstruktionContext(typeof(Guid)), Default.Pipeline);
 
             result.ShouldNotBe(new Guid());
         }
