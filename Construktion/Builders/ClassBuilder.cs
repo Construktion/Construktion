@@ -5,7 +5,7 @@
 
     public class ClassBuilder : Builder
     {
-        public bool CanBuild(ConstruktionContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsClass;
         }

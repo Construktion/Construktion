@@ -4,7 +4,7 @@
 
     public class GuidBuilder : Builder
     {
-        public bool CanBuild(ConstruktionContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return context.RequestType == typeof(Guid);
         }

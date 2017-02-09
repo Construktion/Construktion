@@ -14,7 +14,7 @@ namespace Construktion.Builders
                 .First();
         }
 
-        public virtual bool CanBuild(ConstruktionContext context)
+        public virtual bool Matches(ConstruktionContext context)
         {
             return context.HasAttribute<T>();
         }

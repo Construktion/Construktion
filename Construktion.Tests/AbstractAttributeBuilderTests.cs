@@ -29,7 +29,7 @@
         {
             var context = new ConstruktionContext(typeof(WithMaxLength).GetProperty(nameof(WithMaxLength.Property)));
 
-            _maxLengthBuilder.CanBuild(context).ShouldBeTrue();
+            _maxLengthBuilder.Matches(context).ShouldBeTrue();
         }
 
         [Fact]
@@ -53,7 +53,7 @@
         {
             var context =  new ConstruktionContext(typeof(WithRequired).GetProperty(nameof(WithRequired.Property)));
 
-            _maxLengthBuilder.CanBuild(context).ShouldBeFalse();
+            _maxLengthBuilder.Matches(context).ShouldBeFalse();
         }
 
         public class WithRequired

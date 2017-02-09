@@ -2,7 +2,7 @@
 {
     public interface Builder 
     {
-        bool CanBuild(ConstruktionContext context);
+        bool Matches(ConstruktionContext context);
         object Build(ConstruktionContext context, ConstruktionPipeline pipeline);
     }
 }

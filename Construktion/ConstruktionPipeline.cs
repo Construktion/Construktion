@@ -32,7 +32,7 @@
 
         private Builder GetBuilder(ConstruktionContext requestContext)
         {
-            var builder = _builders.FirstOrDefault(x => x.CanBuild(requestContext));
+            var builder = _builders.FirstOrDefault(x => x.Matches(requestContext));
 
             if (builder == null)
                 throw new Exception($"No builder can be found for {requestContext.RequestType.Name}");

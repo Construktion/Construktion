@@ -4,7 +4,7 @@
     {
         private bool value;
 
-        public bool CanBuild(ConstruktionContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return context.RequestType == typeof(bool);
         }

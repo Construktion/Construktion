@@ -46,7 +46,7 @@
 
         public class TestBuilder : Builder
         {
-            public bool CanBuild(ConstruktionContext context)
+            public bool Matches(ConstruktionContext context)
             {
                 throw new System.NotImplementedException();
             }
@@ -59,7 +59,7 @@
 
         public class AnotherTestBuilder : Builder
         {
-            public bool CanBuild(ConstruktionContext context)
+            public bool Matches(ConstruktionContext context)
             {
                 throw new System.NotImplementedException();
             }

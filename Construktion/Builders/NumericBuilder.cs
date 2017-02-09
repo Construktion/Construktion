@@ -55,7 +55,7 @@
             CreateRange();
         }
 
-        public bool CanBuild(ConstruktionContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return _typesHandled.Contains(Type.GetTypeCode(context.RequestType)) && !context.RequestType.GetTypeInfo().IsEnum;
         }

@@ -7,7 +7,7 @@
     {
         private readonly Random _random = new Random();
 
-        public bool CanBuild(ConstruktionContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsEnum;
         }
