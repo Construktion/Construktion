@@ -14,10 +14,21 @@ namespace Construktion.Blueprints
                 .First();
         }
 
-        public virtual bool Matches(ConstruktionContext context)
+        public bool Matches(ConstruktionContext context)
         {
-            return context.HasAttribute<T>();
+            return context.HasAttribute<T>() && AlsoMustMatch(context);
         }
+
+        /// <summary>
+        /// Allows additional criteria to be added to the blueprint.
+        /// The base implementation always returns true;
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        protected virtual bool AlsoMustMatch(ConstruktionContext context)
+        {
+            return true;
+        } 
 
         public abstract object Build(ConstruktionContext context, ConstruktionPipeline pipeline);
     }

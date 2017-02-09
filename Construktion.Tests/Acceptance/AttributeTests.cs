@@ -7,10 +7,10 @@
     using Shouldly;
     using Xunit;
 
-    public class AttributeBasedTests
+    public class AttributeTests
     {
         [Fact]
-        public void Should_Build_Attribute_Based_Properties()
+        public void builds_attribute_based_properties()
         {
            var construktion = new Construktion(new List<Blueprint>{ new RangeAttributeBlueprint() });
 
