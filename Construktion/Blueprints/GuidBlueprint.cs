@@ -1,8 +1,8 @@
-﻿namespace Construktion.Builders
+﻿namespace Construktion.Blueprints
 {
     using System;
 
-    public class GuidBuilder : Builder
+    public class GuidBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)
         {

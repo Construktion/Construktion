@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Builders;
+    using Blueprints;
     using Shouldly;
     using Xunit;
 
@@ -12,14 +12,14 @@
         [Fact]
         public void Should_Build_Attribute_Based_Properties()
         {
-           var construktion = new Construktion(new List<Builder>{ new RangeAttributeBuilder() });
+           var construktion = new Construktion(new List<Blueprint>{ new RangeAttributeBlueprint() });
 
             var result = construktion.Build<AgeHasRange>();
 
             result.Age.ShouldBe(5);
         }
        
-        public class RangeAttributeBuilder : AbstractAttributeBuilder<RangeAttribute>
+        public class RangeAttributeBlueprint : AbstractAttributeBlueprint<RangeAttribute>
         {
             private readonly Random _rnd = new Random();
 

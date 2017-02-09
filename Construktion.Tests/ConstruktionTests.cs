@@ -2,35 +2,35 @@
 {
     using System;
     using System.Collections.Generic;
-    using Builders;
+    using Blueprints;
     using Shouldly;
     using Xunit;
 
     public class ConstruktionTests
     {
         [Fact]
-        public void Can_Inject_Single_Builder_To_Beginning_Of_Builders()
+        public void Can_Inject_Single_Blueprint_To_Beginning_Of_blueprints()
         {
-            var construktion = new Construktion(new TestBuilder());
+            var construktion = new Construktion(new TestBlueprint());
 
-            construktion.Builders[0].ShouldBeOfType<TestBuilder>();
+            construktion.Blueprints[0].ShouldBeOfType<TestBlueprint>();
         }
 
         [Fact]
-        public void Can_Inject_Multiple_Builders_To_Beginning_Of_Builders()
+        public void Can_Inject_Multiple_blueprints_To_Beginning_Of_blueprints()
         {
-            var construktion = new Construktion(new List<Builder>{ new TestBuilder(), new AnotherTestBuilder()});
+            var construktion = new Construktion(new List<Blueprint>{ new TestBlueprint(), new AnotherTestBlueprint()});
 
-            construktion.Builders[0].ShouldBeOfType<TestBuilder>();
-            construktion.Builders[1].ShouldBeOfType<AnotherTestBuilder>();
+            construktion.Blueprints[0].ShouldBeOfType<TestBlueprint>();
+            construktion.Blueprints[1].ShouldBeOfType<AnotherTestBlueprint>();
         }
 
         [Fact]
-        public void Throws_If_Builder_Is_Null()
+        public void Throws_If_Blueprint_Is_Null()
         {
             Should.Throw<ArgumentNullException>(() =>
             {
-                var c = new Construktion((Builder)null);
+                var c = new Construktion((Blueprint)null);
             });
         }
 
@@ -39,12 +39,12 @@
         {
             Should.Throw<ArgumentNullException>(() =>
             {
-                var c = new Construktion(new List<Builder> { new TestBuilder(), null });
+                var c = new Construktion(new List<Blueprint> { new TestBlueprint(), null });
             });
         }
 
 
-        public class TestBuilder : Builder
+        public class TestBlueprint : Blueprint
         {
             public bool Matches(ConstruktionContext context)
             {
@@ -57,7 +57,7 @@
             }
         }
 
-        public class AnotherTestBuilder : Builder
+        public class AnotherTestBlueprint : Blueprint
         {
             public bool Matches(ConstruktionContext context)
             {

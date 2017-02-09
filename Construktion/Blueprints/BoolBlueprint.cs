@@ -1,6 +1,6 @@
-﻿namespace Construktion.Builders
+﻿namespace Construktion.Blueprints
 {
-    public class BoolBuilder : Builder
+    public class BoolBlueprint : Blueprint
     {
         private bool value;
 

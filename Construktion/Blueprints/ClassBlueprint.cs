@@ -1,9 +1,9 @@
-﻿namespace Construktion.Builders
+﻿namespace Construktion.Blueprints
 {
     using System;
     using System.Reflection;
 
-    public class ClassBuilder : Builder
+    public class ClassBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)
         {

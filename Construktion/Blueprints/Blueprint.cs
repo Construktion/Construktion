@@ -1,6 +1,6 @@
-﻿namespace Construktion.Builders
+﻿namespace Construktion.Blueprints
 {
-    public interface Builder 
+    public interface Blueprint 
     {
         bool Matches(ConstruktionContext context);
         object Build(ConstruktionContext context, ConstruktionPipeline pipeline);

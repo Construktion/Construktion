@@ -1,9 +1,9 @@
-﻿namespace Construktion.Builders
+﻿namespace Construktion.Blueprints
 {
     using System;
     using System.Reflection;
 
-    public class EnumBuilder : Builder 
+    public class EnumBlueprint : Blueprint 
     {
         private readonly Random _random = new Random();
 

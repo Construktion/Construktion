@@ -1,4 +1,4 @@
-﻿namespace Construktion.Builders
+﻿namespace Construktion.Blueprints
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
     using System.Reflection;
 
     //https://github.com/AutoFixture/AutoFixture/blob/master/Src/AutoFixture/RandomNumericSequenceGenerator.cs
-    public class NumericBuilder : Builder
+    public class NumericBlueprint : Blueprint
     {
         private readonly long[] limits;
         private readonly object syncRoot = new object();
@@ -31,17 +31,17 @@
         private long upper;
         private long count;
 
-        public NumericBuilder() 
+        public NumericBlueprint() 
             : this(1, byte.MaxValue, short.MaxValue, int.MaxValue)
         {
         }
 
-        public NumericBuilder(IEnumerable<long> limits)
+        public NumericBlueprint(IEnumerable<long> limits)
              : this(limits.ToArray()) 
          { 
          }
 
-        public NumericBuilder(params long[] limits)
+        public NumericBlueprint(params long[] limits)
         {
             if (limits == null)
                 throw new ArgumentNullException(nameof(limits));
@@ -120,7 +120,7 @@
                         GetNextRandom();
 
                 default:
-                    throw new InvalidOperationException($"Numeric Builder cannot handle the request of type {request}");
+                    throw new InvalidOperationException($"Numeric Blueprint cannot handle the request of type {request}");
             }
         }
 

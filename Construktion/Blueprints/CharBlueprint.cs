@@ -1,8 +1,8 @@
-﻿namespace Construktion.Builders
+﻿namespace Construktion.Blueprints
 {
     using System;
 
-    public class CharBuilder : Builder
+    public class CharBlueprint : Blueprint
     {
         private readonly Random _random = new Random();
 

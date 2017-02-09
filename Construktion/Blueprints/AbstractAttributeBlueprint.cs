@@ -1,10 +1,10 @@
-namespace Construktion.Builders
+namespace Construktion.Blueprints
 {
     using System;
     using System.Linq;
     using System.Reflection;
 
-    public abstract class AbstractAttributeBuilder<T> : Builder where T : Attribute
+    public abstract class AbstractAttributeBlueprint<T> : Blueprint where T : Attribute
     {
         public T GetAttribute(ConstruktionContext context)
         {

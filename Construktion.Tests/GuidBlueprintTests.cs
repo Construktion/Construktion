@@ -1,18 +1,18 @@
 ﻿namespace Construktion.Tests
 {
     using System;
-    using Builders;
+    using Blueprints;
     using Shouldly;
     using Xunit;
 
-    public class GuidBuilderTests
+    public class GuidBlueprintTests
     {
         [Fact]
         public void Can_Build_Guid()
         {
-            var builder = new GuidBuilder();
+            var blueprint = new GuidBlueprint();
 
-            var result = (Guid)builder.Build(new ConstruktionContext(typeof(Guid)), Default.Pipeline);
+            var result = (Guid)blueprint.Build(new ConstruktionContext(typeof(Guid)), Default.Pipeline);
 
             result.ShouldNotBe(new Guid());
         }

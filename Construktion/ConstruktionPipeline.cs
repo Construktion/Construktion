@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Builders;
+    using Blueprints;
 
     public interface ConstruktionPipeline
     {
@@ -12,32 +12,32 @@
 
     public class DefaultConstruktionPipeline : ConstruktionPipeline
     {
-        private readonly IEnumerable<Builder> _builders;
+        private readonly IEnumerable<Blueprint> _blueprints;
 
-        public DefaultConstruktionPipeline(IEnumerable<Builder> builders)
+        public DefaultConstruktionPipeline(IEnumerable<Blueprint> blueprints)
         {
-            builders.ThrowIfNull(nameof(builders));
+            blueprints.ThrowIfNull(nameof(blueprints));
 
-            _builders = builders;
+            _blueprints = blueprints;
         }
 
         public object Build(ConstruktionContext requestContext)
         {
-            var builder = GetBuilder(requestContext);
+            var blueprint = GetBlueprint(requestContext);
 
-            var result = builder.Build(requestContext, this);
+            var result = blueprint.Build(requestContext, this);
 
             return result;
         }
 
-        private Builder GetBuilder(ConstruktionContext requestContext)
+        private Blueprint GetBlueprint(ConstruktionContext requestContext)
         {
-            var builder = _builders.FirstOrDefault(x => x.Matches(requestContext));
+            var blueprint = _blueprints.FirstOrDefault(x => x.Matches(requestContext));
 
-            if (builder == null)
-                throw new Exception($"No builder can be found for {requestContext.RequestType.Name}");
+            if (blueprint == null)
+                throw new Exception($"No Blueprint can be found for {requestContext.RequestType.Name}");
 
-            return builder;
+            return blueprint;
         }
     }
 }

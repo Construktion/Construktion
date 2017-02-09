@@ -3,20 +3,20 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Reflection;
-    using Builders;
+    using Blueprints;
     using Shouldly;
     using Xunit;
 
-    public class AbstractAttributeBuilderTests
+    public class AbstractAttributeBlueprintTests
     {
-        private readonly MaxLengthAttributeBuilder _maxLengthBuilder;
+        private readonly MaxLengthAttributeBlueprint _maxLengthBlueprint;
 
-        public AbstractAttributeBuilderTests()
+        public AbstractAttributeBlueprintTests()
         {
-            _maxLengthBuilder = new MaxLengthAttributeBuilder();
+            _maxLengthBlueprint = new MaxLengthAttributeBlueprint();
         }
 
-        public class MaxLengthAttributeBuilder : AbstractAttributeBuilder<MaxLengthAttribute>
+        public class MaxLengthAttributeBlueprint : AbstractAttributeBlueprint<MaxLengthAttribute>
         {
             public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
@@ -29,7 +29,7 @@
         {
             var context = new ConstruktionContext(typeof(WithMaxLength).GetProperty(nameof(WithMaxLength.Property)));
 
-            _maxLengthBuilder.Matches(context).ShouldBeTrue();
+            _maxLengthBlueprint.Matches(context).ShouldBeTrue();
         }
 
         [Fact]
@@ -37,7 +37,7 @@
         {
             var context = new ConstruktionContext(typeof(WithMaxLength).GetProperty(nameof(WithMaxLength.Property)));
 
-            var attr = _maxLengthBuilder.GetAttribute(context);
+            var attr = _maxLengthBlueprint.GetAttribute(context);
 
             attr.Length.ShouldBe(12);
         }
@@ -53,7 +53,7 @@
         {
             var context =  new ConstruktionContext(typeof(WithRequired).GetProperty(nameof(WithRequired.Property)));
 
-            _maxLengthBuilder.Matches(context).ShouldBeFalse();
+            _maxLengthBlueprint.Matches(context).ShouldBeFalse();
         }
 
         public class WithRequired

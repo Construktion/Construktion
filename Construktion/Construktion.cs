@@ -3,37 +3,37 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Builders;
+    using Blueprints;
  
     public class Construktion
     {
-        private readonly List<Builder> _builders = new List<Builder>
+        private readonly List<Blueprint> _blueprints = new List<Blueprint>
         {
-            new StringBuilder(),
-            new NumericBuilder(),
-            new CharBuilder(),
-            new GuidBuilder(),
-            new BoolBuilder(),
-            new EnumBuilder(),
-            new ClassBuilder()
+            new StringBlueprint(),
+            new NumericBlueprint(),
+            new CharBlueprint(),
+            new GuidBlueprint(),
+            new BoolBlueprint(),
+            new EnumBlueprint(),
+            new ClassBlueprint()
         };
 
-        public IList<Builder> Builders => _builders;
+        public IList<Blueprint> Blueprints => _blueprints;
 
         public Construktion()
         {
         }
 
-        public Construktion(Builder additionalBuilder) : this (new List<Builder> { additionalBuilder })
+        public Construktion(Blueprint additionalBlueprint) : this (new List<Blueprint> { additionalBlueprint })
         {
         }
 
-        public Construktion(IList<Builder> additionalBuilders)
+        public Construktion(IList<Blueprint> additionalBlueprints)
         {
-            if (additionalBuilders.Any(x => x == null))
-                throw new ArgumentNullException(nameof(additionalBuilders), "There are items in the list that are null");
+            if (additionalBlueprints.Any(x => x == null))
+                throw new ArgumentNullException(nameof(additionalBlueprints), "There are items in the list that are null");
 
-            _builders.InsertRange(0, additionalBuilders);
+            _blueprints.InsertRange(0, additionalBlueprints);
         }
 
         public T Build<T>()
@@ -53,7 +53,7 @@
 
         private T DoBuild<T>(Type request, Action<T> hardCodes)
         {
-            var pipeline = new DefaultConstruktionPipeline(_builders);
+            var pipeline = new DefaultConstruktionPipeline(_blueprints);
 
             var result = (T)pipeline.Build(new ConstruktionContext(request));
 
