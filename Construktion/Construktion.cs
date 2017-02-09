@@ -9,6 +9,7 @@
     {
         private readonly List<Blueprint> _blueprints = new List<Blueprint>
         {
+            new StringPropertyBlueprint(),
             new StringBlueprint(),
             new NumericBlueprint(),
             new CharBlueprint(),

@@ -6,6 +6,8 @@
     public class ConstruktionContext
     {
         public Type RequestType { get; }
+
+        //separate interfaces?
         public Maybe<Type> ParentClass { get; set; }
         public Maybe<PropertyInfo> PropertyInfo { get; }
 

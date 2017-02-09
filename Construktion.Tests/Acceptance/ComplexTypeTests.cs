@@ -27,7 +27,7 @@ namespace Construktion.Tests.Acceptance
         {
             var result = _construktion.Build<Child>();
 
-            result.Name.Substring(0, 7).ShouldBe("String-");
+            result.Name.ShouldNotBeNullOrEmpty();
             result.Age.ShouldNotBe(default(int));
         }
 
@@ -36,9 +36,9 @@ namespace Construktion.Tests.Acceptance
         {
             var result = _construktion.Build<Parent>();
 
-            result.Name.Substring(0,7).ShouldBe("String-");
+            result.Name.ShouldNotBeNullOrEmpty();
             result.Age.ShouldNotBe(default(int));
-            result.Child.Name.Substring(0, 7).ShouldBe("String-");
+            result.Child.Name.ShouldNotBeNullOrEmpty(); 
             result.Child.Age.ShouldNotBe(default(int));
         }
 
@@ -62,7 +62,7 @@ namespace Construktion.Tests.Acceptance
         {
             var result = _construktion.Build<Private>();
 
-            result.PrivateName.Substring(0,7).ShouldBe("String-");
+            result.PrivateName.ShouldNotBeNullOrEmpty();
             result.PrivateAge.ShouldNotBe(default(int));
         }
 
