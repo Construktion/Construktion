@@ -102,7 +102,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void unit()
+        public void uints()
         {
             var result = _construktion.Build<uint>();
 

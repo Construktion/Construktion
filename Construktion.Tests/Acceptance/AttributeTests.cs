@@ -1,7 +1,7 @@
 ﻿namespace Construktion.Tests.Acceptance
 {
     using System;
-    using Blueprints;
+    using global::Construktion.Blueprints;
     using Shouldly;
     using Xunit;
 

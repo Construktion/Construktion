@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Blueprints;
+    using global::Construktion.Blueprints;
     using Shouldly;
     using Xunit;
 
