@@ -118,6 +118,14 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
+        public void single()
+        {
+            var result = _construktion.Build<Single>();
+
+            result.ShouldNotBe(default(Single));
+        }
+
+        [Fact]
         public void bools()
         {
             var result = _construktion.Build<bool>();

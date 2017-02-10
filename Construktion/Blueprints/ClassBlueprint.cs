@@ -14,11 +14,13 @@
         {
             var instance = Activator.CreateInstance(context.RequestType);
 
-            var properties = context.RequestType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var properties = context.RequestType.GetRuntimeProperties();
+                
+                //.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var property in properties)
             {
-                var pi = context.RequestType.GetProperty(property.Name);
+                var pi = context.RequestType.GetRuntimeProperty(property.Name);
 
                 var result = pipeline.Build(new ConstruktionContext(pi));
                     
