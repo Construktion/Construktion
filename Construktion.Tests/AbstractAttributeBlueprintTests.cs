@@ -14,7 +14,7 @@
         {
             var blueprint = new Setlueprint();
             var property = typeof(Foo).GetProperty("WithSet");
-            var context = new ConstruktionContext(property);
+            var context = new BuildContext(property);
 
             var matches = blueprint.Matches(context);
 
@@ -26,7 +26,7 @@
         {
             var blueprint = new Setlueprint();
             var property = typeof(Foo).GetProperty("WithoutSet");
-            var context = new ConstruktionContext(property);
+            var context = new BuildContext(property);
 
             var matches = blueprint.Matches(context);
 
@@ -35,7 +35,7 @@
 
         public class Setlueprint : AbstractAttributeBlueprint<Set>
         {
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public override object Build(BuildContext context, ConstruktionPipeline pipeline)
             {
                 throw new NotImplementedException();
             }

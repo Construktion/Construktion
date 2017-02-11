@@ -20,7 +20,7 @@
 
         public class SetBlueprint : AbstractAttributeBlueprint<Set>
         {
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public override object Build(BuildContext context, ConstruktionPipeline pipeline)
             {
                 var attribute = Attribute(context);
 
@@ -40,14 +40,14 @@
 
         public class BarStrictSetBlueprint : AbstractAttributeBlueprint<Set>
         {
-            protected override bool AlsoMustMatch(ConstruktionContext context)
+            protected override bool AlsoMustMatch(BuildContext context)
             {
                 var propertyName = context.PropertyInfo.Single().Name;
 
                 return propertyName == "Bar";
             }
 
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public override object Build(BuildContext context, ConstruktionPipeline pipeline)
             {
                 var attribute = Attribute(context);
 

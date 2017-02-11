@@ -5,12 +5,12 @@
 
     public class ClassBlueprint : Blueprint
     {
-        public bool Matches(ConstruktionContext context)
+        public bool Matches(BuildContext context)
         {
             return context.RequestType.GetTypeInfo().IsClass;
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Build(BuildContext context, ConstruktionPipeline pipeline)
         {
             var instance = Activator.CreateInstance(context.RequestType);
 
@@ -22,7 +22,7 @@
             {
                 var pi = context.RequestType.GetRuntimeProperty(property.Name);
 
-                var result = pipeline.Build(new ConstruktionContext(pi));
+                var result = pipeline.Build(new BuildContext(pi));
                     
                 pi.SetValue(instance, result);
             }

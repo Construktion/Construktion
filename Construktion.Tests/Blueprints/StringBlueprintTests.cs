@@ -11,7 +11,7 @@
         {
             var blueprint = new StringBlueprint();
 
-            var result = (string)blueprint.Build(new ConstruktionContext(typeof(string)), Default.Pipeline);
+            var result = (string)blueprint.Build(new BuildContext(typeof(string)), Default.Pipeline);
 
             result.Substring(0, 7).ShouldBe("String-");
         }

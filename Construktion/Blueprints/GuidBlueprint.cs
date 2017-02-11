@@ -4,12 +4,12 @@
 
     public class GuidBlueprint : Blueprint
     {
-        public bool Matches(ConstruktionContext context)
+        public bool Matches(BuildContext context)
         {
             return context.RequestType == typeof(Guid);
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Build(BuildContext context, ConstruktionPipeline pipeline)
         {
             return Guid.NewGuid();
         }

@@ -12,7 +12,7 @@
         {
             var blueprint = new GuidBlueprint();
 
-            var result = (Guid)blueprint.Build(new ConstruktionContext(typeof(Guid)), Default.Pipeline);
+            var result = (Guid)blueprint.Build(new BuildContext(typeof(Guid)), Default.Pipeline);
 
             result.ShouldNotBe(new Guid());
         }

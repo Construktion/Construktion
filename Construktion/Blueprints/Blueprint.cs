@@ -2,7 +2,7 @@
 {
     public interface Blueprint 
     {
-        bool Matches(ConstruktionContext context);
-        object Build(ConstruktionContext context, ConstruktionPipeline pipeline);
+        bool Matches(BuildContext context);
+        object Build(BuildContext context, ConstruktionPipeline pipeline);
     }
 }

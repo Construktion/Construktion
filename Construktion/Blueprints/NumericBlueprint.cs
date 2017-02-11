@@ -57,12 +57,12 @@
             CreateRange();
         }
 
-        public bool Matches(ConstruktionContext context)
+        public bool Matches(BuildContext context)
         {
            return _typesHandled.Contains(context.RequestType) && !context.RequestType.GetTypeInfo().IsEnum;
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Build(BuildContext context, ConstruktionPipeline pipeline)
         { 
             return CreateRandom(context.RequestType);
         }

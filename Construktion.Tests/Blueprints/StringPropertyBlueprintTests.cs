@@ -12,7 +12,7 @@
         {
             var blueprint = new StringPropertyBlueprint();
             var pi = typeof(Foo).GetProperty(nameof(Foo.Name));
-            var result = (string)blueprint.Build(new ConstruktionContext(pi), Default.Pipeline);
+            var result = (string)blueprint.Build(new BuildContext(pi), Default.Pipeline);
             
             result.Substring(0, 5).ShouldBe("Name-");
         }
