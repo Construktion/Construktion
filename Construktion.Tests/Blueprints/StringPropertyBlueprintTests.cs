@@ -1,5 +1,7 @@
 ﻿namespace Construktion.Tests.Blueprints
 {
+    using System.Reflection;
+    using global::Construktion.Blueprints;
     using Shouldly;
     using Xunit;
 
@@ -8,11 +10,11 @@
         [Fact]
         public void property_name_is_prefixed()
         {
-            var construktion = new Construktion();
-
-            var result = construktion.Build<Foo>();
-
-            result.Name.Substring(0, 5).ShouldBe("Name-");
+            var blueprint = new StringPropertyBlueprint();
+            var pi = typeof(Foo).GetProperty(nameof(Foo.Name));
+            var result = (string)blueprint.Build(new ConstruktionContext(pi), Default.Pipeline);
+            
+            result.Substring(0, 5).ShouldBe("Name-");
         }
 
         public class Foo

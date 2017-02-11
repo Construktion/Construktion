@@ -1,112 +1,51 @@
 ﻿namespace Construktion.Tests
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
     using System.Reflection;
+    using Acceptance;
     using global::Construktion.Blueprints;
     using Shouldly;
     using Xunit;
 
     public class AbstractAttributeBlueprintTests
     {
-        private readonly MaxLengthAttributeBlueprint _maxLengthBlueprint;
-        private readonly BarMaxLengthAttributeBlueprint _barsMaxLengthBlueprint;
-
-        public AbstractAttributeBlueprintTests()
+        [Fact]
+        public void default_criteria_should_match_property_with_attribute()
         {
-            _maxLengthBlueprint = new MaxLengthAttributeBlueprint();
-            _barsMaxLengthBlueprint = new BarMaxLengthAttributeBlueprint();
+            var blueprint = new Setlueprint();
+            var property = typeof(Foo).GetProperty("WithSet");
+            var context = new ConstruktionContext(property);
+
+            var matches = blueprint.Matches(context);
+
+            matches.ShouldBeTrue();
         }
 
         [Fact]
-        public void matches_when_property_info_has_attribute_of_t()
+        public void property_without_attribute_should_not_match()
         {
-            var pi = typeof(Foo).GetProperty(nameof(Foo.MaxLengthProperty));
-            var context = new ConstruktionContext(pi);
+            var blueprint = new Setlueprint();
+            var property = typeof(Foo).GetProperty("WithoutSet");
+            var context = new ConstruktionContext(property);
 
-            _maxLengthBlueprint.Matches(context).ShouldBeTrue();
+            var matches = blueprint.Matches(context);
+
+            matches.ShouldBeFalse();
         }
 
-        [Fact]
-        public void does_not_match_when_property_info_does_not_have_attribute_of_t()
+        public class Setlueprint : AbstractAttributeBlueprint<Set>
         {
-            var pi = typeof(Foo).GetProperty(nameof(Foo.RequiredProperty));
-            var context = new ConstruktionContext(pi);
-
-            _maxLengthBlueprint.Matches(context).ShouldBeFalse();
+            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            {
+                throw new NotImplementedException();
+            }
         }
-
-        [Fact]
-        public void should_match_if_additional_criteria_is_met()
-        {
-            var pi = typeof(Bar).GetProperty(nameof(Bar.MaxLengthProperty));
-            var context = new ConstruktionContext(pi);
-
-            _barsMaxLengthBlueprint.Matches(context).ShouldBeTrue();
-        }
-
-        [Fact]
-        public void should_not_match_if_additional_criteria_is_not_met()
-        {
-            var pi = typeof(Foo).GetProperty(nameof(Foo.MaxLengthProperty));
-            var context = new ConstruktionContext(pi);
-
-            _barsMaxLengthBlueprint.Matches(context).ShouldBeFalse();
-        }
-
-        [Fact]
-        public void base_additional_criteria_always_returns_true()
-        {
-            var attr = new MaxLengthAttributeBlueprint();
-            attr.BaseAlsoMustMatch().ShouldBeTrue();
-        }
-
 
         public class Foo
         {
-            [MaxLength(12)]
-            public string MaxLengthProperty { get; set; }
-
-            [Required]
-            public string RequiredProperty { get; set; }
-        }
-
-        public class Bar
-        {
-            [MaxLength(12)]
-            public string MaxLengthProperty { get; set; }
-        }
-
-        public class MaxLengthAttributeBlueprint : AbstractAttributeBlueprint<MaxLengthAttribute>
-        {
-            public bool BaseAlsoMustMatch()
-            {
-                return base.AlsoMustMatch(new ConstruktionContext(typeof(Dummy)));
-            }
-
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public class BarMaxLengthAttributeBlueprint : AbstractAttributeBlueprint<MaxLengthAttribute>
-        {
-            protected override bool AlsoMustMatch(ConstruktionContext context)
-            {
-                return context.ParentClass.HasValue() && context.ParentClass.Single() == typeof(Bar);
-            }
-
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public class Dummy
-        {
-
+            [Set("Fubar")]
+            public string WithSet { get; set; }
+            public string WithoutSet { get; set; }
         }
     }
 }
