@@ -2,7 +2,8 @@
 {
     public interface Blueprint 
     {
-        bool Matches(BuildContext context);
-        object Build(BuildContext context, ConstruktionPipeline pipeline);
+        bool Matches(ConstruktionContext context);
+        //need to refactor out the pipeline
+        object Build(ConstruktionContext context, ConstruktionPipeline pipeline);
     }
 }

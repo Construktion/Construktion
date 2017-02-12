@@ -6,12 +6,12 @@
     {
         private readonly Random _random = new Random();
 
-        public bool Matches(BuildContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return context.RequestType == typeof(string);
         }
 
-        public object Build(BuildContext context, ConstruktionPipeline pipeline)
+        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var result = context.RequestType.Name + "-" + _random.Next(1, 10000);
 

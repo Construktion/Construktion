@@ -6,7 +6,7 @@ namespace Construktion.Blueprints
 
     public abstract class AbstractAttributeBlueprint<T> : Blueprint where T : Attribute
     {
-        protected T Attribute(BuildContext context)
+        protected T GetAttribute(ConstruktionContext context)
         {
            return (T)context.PropertyInfo
                 .Single()
@@ -14,7 +14,7 @@ namespace Construktion.Blueprints
                 .First();
         }
 
-        public bool Matches(BuildContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return context.HasAttribute<T>() && AlsoMustMatch(context);
         }
@@ -25,11 +25,11 @@ namespace Construktion.Blueprints
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected virtual bool AlsoMustMatch(BuildContext context)
+        protected virtual bool AlsoMustMatch(ConstruktionContext context)
         {
             return true;
         } 
 
-        public abstract object Build(BuildContext context, ConstruktionPipeline pipeline);
+        public abstract object Build(ConstruktionContext context, ConstruktionPipeline pipeline);
     }
 }

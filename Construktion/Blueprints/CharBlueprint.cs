@@ -6,12 +6,12 @@
     {
         private readonly Random _random = new Random();
 
-        public bool Matches(BuildContext context)
+        public bool Matches(ConstruktionContext context)
         {
             return context.RequestType == typeof(char);
         }
 
-        public object Build(BuildContext context, ConstruktionPipeline pipeline)
+        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var chars = "$%#@!*abcdefghijklmnopqrstuvwxyz1234567890?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ^&";
             var num = _random.Next(0, chars.Length - 1);

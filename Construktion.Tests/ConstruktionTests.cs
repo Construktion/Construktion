@@ -46,12 +46,12 @@
 
         public class FooBlueprint : Blueprint
         {
-            public bool Matches(BuildContext context)
+            public bool Matches(ConstruktionContext context)
             {
                 throw new NotImplementedException();
             }
 
-            public object Build(BuildContext context, ConstruktionPipeline pipeline)
+            public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 throw new NotImplementedException();
             }
@@ -59,12 +59,12 @@
 
         public class BarBlueprint : Blueprint
         {
-            public bool Matches(BuildContext context)
+            public bool Matches(ConstruktionContext context)
             {
                 throw new NotImplementedException();
             }
 
-            public object Build(BuildContext context, ConstruktionPipeline pipeline)
+            public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 throw new NotImplementedException();
             }

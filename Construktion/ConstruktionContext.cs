@@ -3,7 +3,7 @@
     using System;
     using System.Reflection;
 
-    public class BuildContext
+    public class ConstruktionContext
     {
         public Type RequestType { get; }
 
@@ -11,7 +11,7 @@
         public Maybe<Type> ParentClass { get; set; }
         public Maybe<PropertyInfo> PropertyInfo { get; }
 
-        public BuildContext(Type request)
+        public ConstruktionContext(Type request)
         {
             request.ThrowIfNull(nameof(request));
 
@@ -20,7 +20,7 @@
             ParentClass = Maybe.Empty<Type>();
         }
 
-        public BuildContext(PropertyInfo propertyInfo)
+        public ConstruktionContext(PropertyInfo propertyInfo)
         {
             propertyInfo.ThrowIfNull(nameof(propertyInfo));
 

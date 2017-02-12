@@ -7,7 +7,7 @@
 
     public interface ConstruktionPipeline
     {
-        object Build(BuildContext requestContext);
+        object Build(ConstruktionContext requestContext);
     }
 
     public class DefaultConstruktionPipeline : ConstruktionPipeline
@@ -22,7 +22,7 @@
             _blueprints = blueprints;
         }
 
-        public object Build(BuildContext requestContext)
+        public object Build(ConstruktionContext requestContext)
         {
             var blueprint = _blueprints.FirstOrDefault(x => x.Matches(requestContext));
 

@@ -61,7 +61,7 @@
         {
             var pipeline = new DefaultConstruktionPipeline(_blueprints);
 
-            var result = (T)pipeline.Build(new BuildContext(request));
+            var result = (T)pipeline.Build(new ConstruktionContext(request));
 
             hardCodes?.Invoke(result);
 
