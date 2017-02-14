@@ -11,103 +11,73 @@ namespace Construktion
         private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
         private readonly Dictionary<Type, Func<object>> _ctors = new Dictionary<Type, Func<object>>();
 
-        public Config<T> For<T>()
-        {
-            return new Config<T>(typeof(T), this);
-        }
+        private Type GetConcrete(Type t) => _typeMap.ContainsKey(t) ? _typeMap[t] : t;
 
-        internal void Use(Type contract, Type imp)
+        public void Register<TContract, TImplementation>() where TImplementation : class, TContract
         {
-            _typeMap.Add(contract, imp);
+            _typeMap[typeof(TContract)] = typeof(TImplementation);
         }
 
         public T GetInstance<T>()
         {
-            var t = typeof(T);
-            if (!_typeMap.ContainsKey(typeof(T)) && t.GetTypeInfo().IsInterface)
+            var type = typeof(T);
+            if (!_typeMap.ContainsKey(type) && type.GetTypeInfo().IsInterface)
             {
-                throw new Exception($"No registered instance can be found for {t.Name}");
+                throw new Exception($"No registered instance can be found for {type.Name}");
             }
 
-            return (T) ResolveInstance(typeof(T), new Dictionary<Type, object>());
+            return (T) ResolveInstance(type);
         }
 
-        private object ResolveInstance(Type t, Dictionary<Type, object> uow)
+        private object ResolveInstance(Type type)
         {
-            if (uow.ContainsKey(t))
-                return uow[t];
-
-            object instance = null;
-            if (_ctors.ContainsKey(t))
+            if (_ctors.ContainsKey(type))
             {
-                instance = _ctors[t]();
-                uow.Add(t, instance);
-
-                return instance;
+                return _ctors[type]();
             }
 
-            ResolveCtor(t, uow);
+            AddCtor(type);
 
-            instance = _ctors[t]();
-            uow.Add(t, instance);
-
-            return instance;
+            return _ctors[type]();
         }
 
-        private void ResolveCtor(Type t, Dictionary<Type, object> uow)
+        private void AddCtor(Type type)
         {
-            if (!_typeMap.ContainsKey(t) && t.HasDefaultCtor())
+            if (!_typeMap.ContainsKey(type) && type.HasDefaultCtor())
             {
-                var defCtor = Expression.Lambda<Func<object>>(Expression.New(t)).Compile();
+                var defCtor = Expression.Lambda<Func<object>>(Expression.New(type)).Compile();
 
-                _ctors.Add(t, defCtor);
+                _ctors.Add(type, defCtor);
                 return;
             }
 
-            var imp = _typeMap.ContainsKey(t) ? _typeMap[t] : t;
+            var imp = GetConcrete(type);
 
             var ctors = imp.GetTypeInfo()
                 .DeclaredConstructors
                 .ToList();
 
-            var max = ctors.Max(x => x.GetParameters().Length);
-            var greedyCtor = ctors.First(x => x.GetParameters().Length == max);
+            var greedyCtor = ctors.GetGreedyCtor();
 
-            var args = new List<ConstantExpression>();
+            var @params = new List<ConstantExpression>();
             foreach (var parameter in greedyCtor.GetParameters())
             {
-                var type = parameter.ParameterType;
+                var ctorArg = parameter.ParameterType;
 
-                if (!_typeMap.ContainsKey(type) && type.GetTypeInfo().IsInterface)
+                if (!_typeMap.ContainsKey(ctorArg) && ctorArg.GetTypeInfo().IsInterface)
                 {
-                    throw new Exception($"Cannot instantiate {t.Name}. Ctor arg {type.Name} cannot be resolved. " +
+                    throw new Exception($"Cannot instantiate {type.Name}. No registered instance can be found for {ctorArg.Name}, " +
                                         "Please register it with the container");
                 }
 
-                var value = ResolveInstance(type, uow);
-                args.Add(Expression.Constant(value));
+                var value = ResolveInstance(ctorArg);
+
+                @params.Add(Expression.Constant(value));
             }
 
-            var ctor = Expression.Lambda<Func<object>>(Expression.New(greedyCtor, args)).Compile();
+            var ctor = Expression.Lambda<Func<object>>(Expression.New(greedyCtor, @params)).Compile();
 
-            _ctors.Add(t, ctor);
-        }
-
-        public class Config<TContract>
-        {
-            private readonly Type _contract;
-            private readonly ConstruktionContainer _container;
-
-            public Config(Type contract, ConstruktionContainer container)
-            {
-                _contract = contract;
-                _container = container;
-            }
-
-            public void Use<TImp>() where TImp : TContract
-            {
-                _container.Use(_contract, typeof(TImp));
-            }
+            _ctors.Add(type, ctor);
         }
     }
 }

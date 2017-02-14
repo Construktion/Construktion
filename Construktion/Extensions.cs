@@ -1,6 +1,7 @@
 ﻿namespace Construktion
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
@@ -14,6 +15,14 @@
                    .GetCustomAttributes(typeof(T))
                    .ToList()
                    .Any();
+        }
+
+        public static ConstructorInfo GetGreedyCtor(this List<ConstructorInfo> ctors)
+        {
+            var max = ctors.Max(x => x.GetParameters().Length);
+            var greedyCtor = ctors.First(x => x.GetParameters().Length == max);
+
+            return greedyCtor;
         }
 
         internal static bool HasDefaultCtor(this Type type)

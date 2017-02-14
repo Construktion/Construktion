@@ -21,8 +21,8 @@ namespace Construktion.Tests
         {
             var container = new ConstruktionContainer();
 
-            container.For<IFoo>().Use<Foo>();
-
+            container.Register<IFoo, Foo>();
+            
             container.GetInstance<IFoo>().ShouldBeOfType<Foo>();
         }
    
@@ -30,7 +30,7 @@ namespace Construktion.Tests
         public void should_resolve_instance_with_a_dependency()
         {
             var container = new ConstruktionContainer();
-            container.For<IFoo>().Use<Foo>();
+            container.Register<IFoo, Foo>();
 
             var instance = container.GetInstance<Bar>();
 
@@ -42,8 +42,8 @@ namespace Construktion.Tests
         public void should_resolve_a_deep_graph()
         {
             var container = new ConstruktionContainer();
-            container.For<IFoo>().Use<Foo>();
-            container.For<IBar>().Use<Bar>();
+            container.Register<IFoo, Foo>();
+            container.Register<IBar, Bar>();
 
             var instance = container.GetInstance<Baz>();
 
@@ -56,8 +56,8 @@ namespace Construktion.Tests
         public void should_resolve_all_dependencies()
         {
             var container = new ConstruktionContainer();
-            container.For<IFoo>().Use<Foo>();
-            container.For<IBar>().Use<Bar>();
+            container.Register<IFoo, Foo>();
+            container.Register<IBar, Bar>();
 
             var instance = container.GetInstance<MultipleDependencies>();
 
@@ -66,15 +66,15 @@ namespace Construktion.Tests
         }
 
         [Fact]
-        public void should_have_a_built_in_unit_of_work()
+        public void should_use_transient_instances()
         {
             var container = new ConstruktionContainer();
-            container.For<IFoo>().Use<Foo>();
-            container.For<IBar>().Use<Bar>();
+            container.Register<IFoo, Foo>();
+            container.Register<IBar, Bar>();
 
             var instance = container.GetInstance<MultipleDependencies>();
 
-            instance.Foo.GetHashCode().ShouldBe(instance.Bar.FooD.GetHashCode());
+            instance.Foo.GetHashCode().ShouldNotBe(instance.Bar.FooD.GetHashCode());
         }
 
         public void should_throw_when_no_interface_implementation_is_registered()
@@ -99,7 +99,7 @@ namespace Construktion.Tests
                 var instance = container.GetInstance<Bar>();
 
             })
-            .Message.ShouldContain("Ctor arg IFoo cannot be resolved.");
+            .Message.ShouldContain("No registered instance can be found for IFoo");
         }
 
         public interface IFoo
