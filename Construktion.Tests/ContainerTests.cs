@@ -11,9 +11,9 @@ namespace Construktion.Tests
         {
             var container = new ConstruktionContainer();
         
-            var instance = container.GetInstance<Foo>();
+            var foo = container.GetInstance<Foo>();
 
-            instance.ShouldNotBeNull();
+            foo.ShouldNotBeNull();
         }
 
         [Fact]
@@ -32,10 +32,10 @@ namespace Construktion.Tests
             var container = new ConstruktionContainer();
             container.Register<IFoo, Foo>();
 
-            var instance = container.GetInstance<Bar>();
+            var bar = container.GetInstance<Bar>();
 
-            instance.ShouldNotBeNull();
-            instance.FooD.ShouldBeOfType<Foo>();
+            bar.ShouldNotBeNull();
+            bar.Foo.ShouldBeOfType<Foo>();
         }
 
         [Fact]
@@ -45,11 +45,13 @@ namespace Construktion.Tests
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
-            var instance = container.GetInstance<Baz>();
+            var baz = container.GetInstance<Baz>();
 
-            instance.ShouldNotBeNull();
-            instance.BarD.ShouldBeOfType<Bar>()
-                .FooD.ShouldBeOfType<Foo>();
+            baz.ShouldNotBeNull();
+            baz.Bar
+                .ShouldBeOfType<Bar>()
+                .Foo
+                .ShouldBeOfType<Foo>();
         }
 
         [Fact]
@@ -59,10 +61,10 @@ namespace Construktion.Tests
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
-            var instance = container.GetInstance<MultipleDependencies>();
+            var multipleDependencies = container.GetInstance<MultipleDependencies>();
 
-            instance.Bar.ShouldBeOfType<Bar>();
-            instance.Foo.ShouldBeOfType<Foo>();
+            multipleDependencies.Bar.ShouldBeOfType<Bar>();
+            multipleDependencies.Foo.ShouldBeOfType<Foo>();
         }
 
         [Fact]
@@ -72,9 +74,9 @@ namespace Construktion.Tests
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
-            var instance = container.GetInstance<MultipleDependencies>();
+            var multipleDependencies = container.GetInstance<MultipleDependencies>();
 
-            instance.Foo.GetHashCode().ShouldNotBe(instance.Bar.FooD.GetHashCode());
+            multipleDependencies.Foo.GetHashCode().ShouldNotBe(multipleDependencies.Bar.Foo.GetHashCode());
         }
 
         public void should_throw_when_no_interface_implementation_is_registered()
@@ -83,7 +85,7 @@ namespace Construktion.Tests
 
             Should.Throw<Exception>(() =>
             {
-                var instance = container.GetInstance<IFoo>();
+                var foo = container.GetInstance<IFoo>();
             })
             .Message.ShouldBe("No registered instance can be found for IFoo");
         }
@@ -96,7 +98,7 @@ namespace Construktion.Tests
 
             Should.Throw<Exception>(() =>
             {
-                var instance = container.GetInstance<Bar>();
+                var bar = container.GetInstance<Bar>();
 
             })
             .Message.ShouldContain("No registered instance can be found for IFoo");
@@ -125,26 +127,26 @@ namespace Construktion.Tests
 
         public interface IBar
         {
-             IFoo FooD { get; }
+             IFoo Foo { get; }
         }
 
         public class Bar : IBar
         {
-            public IFoo FooD { get; }
+            public IFoo Foo { get; }
 
             public Bar(IFoo foo)
             {
-                FooD = foo;
+                Foo = foo;
             }
         }
 
         public class Baz
         {
-            public IBar BarD { get; }
+            public IBar Bar { get; }
 
             public Baz(IBar bar)
             {
-                BarD = bar;
+                Bar = bar;
             }
         }
 
