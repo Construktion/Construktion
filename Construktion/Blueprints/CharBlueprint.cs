@@ -14,7 +14,7 @@
         public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var chars = "$%#@!*abcdefghijklmnopqrstuvwxyz1234567890?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ^&";
-            var num = _random.Next(0, chars.Length - 1);
+            var num = _random.Next(0, chars.Length);
 
             return chars[num];
         }
