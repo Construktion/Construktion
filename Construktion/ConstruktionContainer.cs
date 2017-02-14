@@ -11,11 +11,10 @@ namespace Construktion
         private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
         private readonly Dictionary<Type, Func<object>> _ctors = new Dictionary<Type, Func<object>>();
 
-        private Type GetConcrete(Type t) => _typeMap.ContainsKey(t) ? _typeMap[t] : t;
-
         public void Register<TContract, TImplementation>() where TImplementation : class, TContract
         {
-            _typeMap[typeof(TContract)] = typeof(TImplementation);
+            if (!_typeMap.ContainsKey(typeof(TContract)))
+                _typeMap[typeof(TContract)] = typeof(TImplementation);
         }
 
         public T GetInstance<T>()
@@ -51,7 +50,7 @@ namespace Construktion
                 return;
             }
 
-            var imp = GetConcrete(type);
+            var imp = _typeMap.ContainsKey(type) ? _typeMap[type] : type; ;
 
             var ctors = imp.GetTypeInfo()
                 .DeclaredConstructors

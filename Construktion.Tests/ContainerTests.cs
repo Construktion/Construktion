@@ -102,12 +102,26 @@ namespace Construktion.Tests
             .Message.ShouldContain("No registered instance can be found for IFoo");
         }
 
+        [Fact]
+        public void should_resolve_first_implementation_registered()
+        {
+            var container = new ConstruktionContainer();
+
+            container.Register<IFoo, Foo>();
+            container.Register<IFoo, Foo2>();
+
+            container.GetInstance<IFoo>().ShouldBeOfType<Foo>();
+        }
+
         public interface IFoo
         {
             
         }
 
         public class Foo : IFoo { }
+
+        public class Foo2 : IFoo { }
+         
 
         public interface IBar
         {
