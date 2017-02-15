@@ -8,7 +8,7 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.RequestType.GetTypeInfo().IsClass;
+            return context.RequestType.GetTypeInfo().IsClass && context.RequestType.HasDefaultCtor();
         }
 
         public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
@@ -16,16 +16,13 @@
             var instance = Activator.CreateInstance(context.RequestType);
 
             var properties = context.RequestType.GetRuntimeProperties().ToList();
-                //look into 
                 //.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var property in properties)
             {
-                var pi = context.RequestType.GetRuntimeProperty(property.Name);
-
-                var result = pipeline.Build(new ConstruktionContext(pi));
+                var result = pipeline.Build(new ConstruktionContext(property));
                     
-                pi.SetValue(instance, result);
+                property.SetValue(instance, result);
             }
 
             return instance;
