@@ -18,7 +18,6 @@
             new EnumBlueprint(),
             new ClassBlueprint()
         };
-        //gettert?
         public IReadOnlyList<Blueprint> Blueprints => _blueprints;
 
         public Construktion()
@@ -37,31 +36,31 @@
                 throw new ArgumentNullException(nameof(blueprints));
 
             if (customBlueprints.Any(x => x == null))
-                throw new ArgumentNullException(nameof(blueprints), "There are items in the list that are null");
+                throw new ArgumentNullException(nameof(blueprints), "There are blueprints in the collection that are null");
 
             _blueprints.InsertRange(0, customBlueprints);
         }
 
-        public T Build<T>()
+        public T Construct<T>()
         {
-            return DoBuild<T>(typeof(T), null);
+            return DoConstruct<T>(typeof(T), null);
         }
 
-        public T Build<T>(Action<T> hardCodes)
+        public T Construct<T>(Action<T> hardCodes)
         {
-            return DoBuild(typeof(T), hardCodes);
+            return DoConstruct(typeof(T), hardCodes);
         }
 
-        public object Build(Type request)
+        public object Construct(Type request)
         {
-            return DoBuild<object>(request, null);
+            return DoConstruct<object>(request, null);
         }
 
-        private T DoBuild<T>(Type request, Action<T> hardCodes)
+        private T DoConstruct<T>(Type request, Action<T> hardCodes)
         {
             var pipeline = new DefaultConstruktionPipeline(_blueprints);
 
-            var result = (T)pipeline.Build(new ConstruktionContext(request));
+            var result = (T)pipeline.Construct(new ConstruktionContext(request));
 
             hardCodes?.Invoke(result);
 

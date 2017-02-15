@@ -51,7 +51,7 @@
                 throw new NotImplementedException();
             }
 
-            public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 throw new NotImplementedException();
             }
@@ -64,7 +64,7 @@
                 throw new NotImplementedException();
             }
 
-            public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 throw new NotImplementedException();
             }

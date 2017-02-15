@@ -13,7 +13,7 @@
         {
             var construktion = new Construktion(new SetBlueprint());
 
-            var result = construktion.Build<Foo>();
+            var result = construktion.Construct<Foo>();
 
             result.Bar.ShouldBe("Set");
             result.Baz.ShouldBe("Set");
@@ -21,7 +21,7 @@
 
         public class SetBlueprint : AbstractAttributeBlueprint<Set>
         {
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 var attribute = GetAttribute(context);
 
@@ -34,7 +34,7 @@
         {
             var construktion = new Construktion(new BarStrictSetBlueprint());
 
-            var result = construktion.Build<Foo>();
+            var result = construktion.Construct<Foo>();
 
             result.Bar.ShouldBe("Set");
             result.Baz.ShouldNotBe("Set");
@@ -49,7 +49,7 @@
                 return propertyName == "Bar";
             }
 
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 var attribute = GetAttribute(context);
 

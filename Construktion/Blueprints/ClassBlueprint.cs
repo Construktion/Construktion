@@ -11,7 +11,7 @@
             return context.RequestType.GetTypeInfo().IsClass && context.RequestType.HasDefaultCtor();
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var instance = Activator.CreateInstance(context.RequestType);
 
@@ -20,7 +20,7 @@
 
             foreach (var property in properties)
             {
-                var result = pipeline.Build(new ConstruktionContext(property));
+                var result = pipeline.Construct(new ConstruktionContext(property));
                     
                 property.SetValue(instance, result);
             }

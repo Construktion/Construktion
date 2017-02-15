@@ -12,7 +12,7 @@
             return context.RequestType.GetTypeInfo().IsEnum;
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var values = Enum.GetValues(context.RequestType);
 

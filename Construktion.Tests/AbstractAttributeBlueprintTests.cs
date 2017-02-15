@@ -16,7 +16,7 @@
             var property = typeof(Foo).GetProperty("WithSet");
             var context = new ConstruktionContext(property);
 
-            var result = (string)blueprint.Build(context, Default.Pipeline);
+            var result = (string)blueprint.Construct(context, Default.Pipeline);
 
             result.ShouldBe("Fubar");
         }
@@ -46,7 +46,7 @@
 
         public class SetBlueprint : AbstractAttributeBlueprint<Set>
         {
-            public override object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 return GetAttribute(context).Value;
             }

@@ -9,7 +9,7 @@
             return context.RequestType == typeof(bool);
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             value = !value;
 

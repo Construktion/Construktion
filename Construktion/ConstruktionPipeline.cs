@@ -7,7 +7,7 @@
 
     public interface ConstruktionPipeline
     {
-        object Build(ConstruktionContext requestContext);
+        object Construct(ConstruktionContext requestContext);
     }
 
     public class DefaultConstruktionPipeline : ConstruktionPipeline
@@ -22,14 +22,14 @@
             _blueprints = blueprints;
         }
 
-        public object Build(ConstruktionContext requestContext)
+        public object Construct(ConstruktionContext requestContext)
         {
             var blueprint = _blueprints.FirstOrDefault(x => x.Matches(requestContext));
 
             if (blueprint == null)
                 throw new Exception($"No Blueprint can be found for {requestContext.RequestType.Name}");
 
-            var result = blueprint.Build(requestContext, this);
+            var result = blueprint.Construct(requestContext, this);
 
             return result;
         }

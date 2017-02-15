@@ -29,6 +29,6 @@ namespace Construktion.Blueprints
             return true;
         } 
 
-        public abstract object Build(ConstruktionContext context, ConstruktionPipeline pipeline);
+        public abstract object Construct(ConstruktionContext context, ConstruktionPipeline pipeline);
     }
 }

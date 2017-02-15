@@ -17,7 +17,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void enums()
         {
-            var result = _construktion.Build<TestResult>();
+            var result = _construktion.Construct<TestResult>();
 
             result.ShouldBeOneOf(TestResult.Pass, TestResult.Fail);
         }
@@ -25,7 +25,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void Can_Build_Classes()
         {
-            var result = _construktion.Build<Child>();
+            var result = _construktion.Construct<Child>();
 
             result.Name.ShouldNotBeNullOrEmpty();
             result.Age.ShouldNotBe(default(int));
@@ -34,7 +34,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void Can_Build_Nested_Classes()
         {
-            var result = _construktion.Build<Parent>();
+            var result = _construktion.Construct<Parent>();
 
             result.Name.ShouldNotBeNullOrEmpty();
             result.Age.ShouldNotBe(default(int));
@@ -45,7 +45,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void Can_Explicitly_Set_Properties()
         {
-            var result = _construktion.Build<Parent>(x =>
+            var result = _construktion.Construct<Parent>(x =>
             {
                 x.Name = "Joe";
                 x.Child.Name = "Lil Joe";
@@ -60,7 +60,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void Can_Build_Private_Properties()
         {
-            var result = _construktion.Build<Private>();
+            var result = _construktion.Construct<Private>();
 
             result.PrivateName.ShouldNotBeNullOrEmpty();
             result.PrivateAge.ShouldNotBe(default(int));

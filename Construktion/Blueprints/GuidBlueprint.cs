@@ -9,7 +9,7 @@
             return context.RequestType == typeof(Guid);
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             return Guid.NewGuid();
         }

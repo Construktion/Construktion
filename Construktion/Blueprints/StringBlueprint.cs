@@ -11,7 +11,7 @@
             return context.RequestType == typeof(string);
         }
 
-        public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var result = context.RequestType.Name + "-" + _random.Next(1, 10000);
 
