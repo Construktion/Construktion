@@ -27,7 +27,7 @@ namespace Construktion.Tests
         }
    
         [Fact]
-        public void should_resolve_instance_with_a_dependency()
+        public void should_resolve_concrete_with_its_dependency()
         {
             var container = new ConstruktionContainer();
             container.Register<IFoo, Foo>();
@@ -94,14 +94,13 @@ namespace Construktion.Tests
         public void should_tell_you_what_dependency_is_missing()
         {
             var container = new ConstruktionContainer();
-            // container.For<IFoo>().Use<Foo>();
+            // container.Register<IFoo, Foo>();
 
             Should.Throw<Exception>(() =>
             {
                 var bar = container.GetInstance<Bar>();
 
-            })
-            .Message.ShouldContain("No registered instance can be found for IFoo");
+            }).Message.ShouldContain("Bar", "IFoo");
         }
 
         [Fact]

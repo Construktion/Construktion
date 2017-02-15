@@ -9,10 +9,10 @@
     {
         public static bool HasAttribute<T>(this ConstruktionContext context) where T : Attribute
         {
-            return context.PropertyInfo?
-                .GetCustomAttributes(typeof(T))
-                .ToList()
-                .Any() ?? false;
+            return context.PropertyInfo
+                       ?.GetCustomAttributes(typeof(T))
+                       .ToList()
+                       .Any() ?? false;
         }
 
         public static ConstructorInfo Greediest(this List<ConstructorInfo> ctors)
@@ -23,7 +23,7 @@
             return greedyCtor;
         }
 
-        internal static bool HasDefaultCtor(this Type type)
+        public static bool HasDefaultCtor(this Type type)
         {
             var ctors = type.GetTypeInfo()
              .DeclaredConstructors

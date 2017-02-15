@@ -22,7 +22,7 @@ namespace Construktion
             var type = typeof(T);
             if (!_typeMap.ContainsKey(type) && type.GetTypeInfo().IsInterface)
             {
-                throw new Exception($"No registered instance can be found for {type.Name}");
+                throw new Exception($"Cannot resolve {type.Name}. No registered instance could be found");
             }
 
             return (T) ResolveInstance(type);
@@ -64,8 +64,8 @@ namespace Construktion
 
                 if (!_typeMap.ContainsKey(ctorArg) && ctorArg.GetTypeInfo().IsInterface)
                 {
-                    throw new Exception($"Cannot instantiate {type.Name}. No registered instance can be found for {ctorArg.Name}, " +
-                                        "Please register it with the container");
+                    throw new Exception($"Couldn't instantiate {type.FullName} " +
+                                        $"No registered instance could be found for ctor arg {ctorArg.FullName}.");
                 }
 
                 var value = ResolveInstance(ctorArg);
