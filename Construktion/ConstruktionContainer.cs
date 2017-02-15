@@ -11,7 +11,7 @@ namespace Construktion
         private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
         private readonly Dictionary<Type, Func<object>> _ctors = new Dictionary<Type, Func<object>>();
 
-        public void Register<TContract, TImplementation>() where TImplementation : class, TContract
+        public void Register<TContract, TImplementation>() where TImplementation : TContract
         {
             if (!_typeMap.ContainsKey(typeof(TContract)))
                 _typeMap[typeof(TContract)] = typeof(TImplementation);
@@ -50,13 +50,12 @@ namespace Construktion
                 return;
             }
 
-            var imp = _typeMap.ContainsKey(type) ? _typeMap[type] : type; ;
+            var imp = _typeMap.ContainsKey(type) ? _typeMap[type] : type;
 
-            var ctors = imp.GetTypeInfo()
+            var greedyCtor = imp.GetTypeInfo()
                 .DeclaredConstructors
-                .ToList();
-
-            var greedyCtor = ctors.GetGreedyCtor();
+                .ToList()
+                .Greediest();
 
             var @params = new List<ConstantExpression>();
             foreach (var parameter in greedyCtor.GetParameters())

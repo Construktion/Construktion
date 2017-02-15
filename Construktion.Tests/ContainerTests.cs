@@ -125,7 +125,7 @@ namespace Construktion.Tests
         public class Foo2 : IFoo { }
          
 
-        public interface IBar
+        public interface IBar : IFoo
         {
              IFoo Foo { get; }
         }

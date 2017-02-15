@@ -15,7 +15,7 @@
                 .Any() ?? false;
         }
 
-        public static ConstructorInfo GetGreedyCtor(this List<ConstructorInfo> ctors)
+        public static ConstructorInfo Greediest(this List<ConstructorInfo> ctors)
         {
             var max = ctors.Max(x => x.GetParameters().Length);
             var greedyCtor = ctors.First(x => x.GetParameters().Length == max);
