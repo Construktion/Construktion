@@ -9,12 +9,10 @@
     {
         public static bool HasAttribute<T>(this ConstruktionContext context) where T : Attribute
         {
-            return context.PropertyInfo.HasValue() &&
-                   context.PropertyInfo
-                   .Single()
-                   .GetCustomAttributes(typeof(T))
-                   .ToList()
-                   .Any();
+            return context.PropertyInfo?
+                .GetCustomAttributes(typeof(T))
+                .ToList()
+                .Any() ?? false;
         }
 
         public static ConstructorInfo GetGreedyCtor(this List<ConstructorInfo> ctors)

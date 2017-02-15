@@ -44,7 +44,7 @@
         {
             protected override bool AlsoMustMatch(ConstruktionContext context)
             {
-                var propertyName = context.PropertyInfo.Single().Name;
+                var propertyName = context.PropertyInfo.Name;
 
                 return propertyName == "Bar";
             }

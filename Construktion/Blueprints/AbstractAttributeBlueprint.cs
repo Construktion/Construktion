@@ -9,7 +9,6 @@ namespace Construktion.Blueprints
         protected T GetAttribute(ConstruktionContext context)
         {
            return (T)context.PropertyInfo
-                .Single()
                 .GetCustomAttributes(typeof(T))
                 .First();
         }

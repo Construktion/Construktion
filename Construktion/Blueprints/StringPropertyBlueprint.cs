@@ -9,12 +9,12 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.PropertyInfo.HasValue() && context.RequestType == typeof(string);
+            return context.PropertyInfo != null && context.RequestType == typeof(string);
         }
 
         public object Build(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var result = context.PropertyInfo.Single().Name + "-" + _random.Next(1, 10000);
+            var result = context.PropertyInfo.Name + "-" + _random.Next(1, 10000);
 
             return result;
         }
