@@ -13,7 +13,7 @@
         {
             try
             {
-                return _container.GetInstance(context.RequestType) != null;
+                return _container.GetInstance(context.Request) != null;
             }
             catch
             {
@@ -23,7 +23,7 @@
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            return _container.GetInstance(context.RequestType);
+            return _container.GetInstance(context.Request);
         }
     }
 }

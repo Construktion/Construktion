@@ -6,7 +6,7 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.RequestType == typeof(bool);
+            return context.Request == typeof(bool);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

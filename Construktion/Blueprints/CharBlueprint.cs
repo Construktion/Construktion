@@ -8,7 +8,7 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.RequestType == typeof(char);
+            return context.Request == typeof(char);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

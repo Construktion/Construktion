@@ -5,22 +5,23 @@
 
     public class ConstruktionContext
     {
-        public Type RequestType { get; }
-        public PropertyInfo PropertyInfo { get; }
+        public Type Request { get; }
+        public PropertyContext PropertyContext { get; }
 
         public ConstruktionContext(Type request)
         {
             request.ThrowIfNull(nameof(request));
 
-            RequestType = request;
+            Request = request;
+            PropertyContext = new PropertyContext();
         }
 
         public ConstruktionContext(PropertyInfo propertyInfo)
         {
             propertyInfo.ThrowIfNull(nameof(propertyInfo));
 
-            RequestType = propertyInfo.PropertyType;
-            PropertyInfo = propertyInfo;
+            Request = propertyInfo.PropertyType;
+            PropertyContext = new PropertyContext(propertyInfo);
         }
     }
 }

@@ -8,14 +8,14 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.RequestType.GetTypeInfo().IsClass && context.RequestType.HasDefaultCtor();
+            return context.Request.GetTypeInfo().IsClass && context.Request.HasDefaultCtor();
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var instance = Activator.CreateInstance(context.RequestType);
+            var instance = Activator.CreateInstance(context.Request);
 
-            var properties = context.RequestType.GetRuntimeProperties().ToList();
+            var properties = context.Request.GetRuntimeProperties().ToList();
                 //.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var property in properties)

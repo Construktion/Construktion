@@ -78,7 +78,7 @@
         {
             public bool Matches(ConstruktionContext context)
             {
-                return context.PropertyInfo != null && context.PropertyInfo.PropertyType == typeof(string);
+                return context.PropertyContext.IsType(typeof(string));
             }
 
             public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

@@ -41,12 +41,12 @@
 
         public bool Matches(ConstruktionContext context)
         {
-           return _typesHandled.Contains(context.RequestType) && !context.RequestType.GetTypeInfo().IsEnum;
+           return _typesHandled.Contains(context.Request) && !context.Request.GetTypeInfo().IsEnum;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         { 
-            return CreateRandom(context.RequestType);
+            return CreateRandom(context.Request);
         }
 
         private static void AssertLimitsAreAscending(long[] limits)

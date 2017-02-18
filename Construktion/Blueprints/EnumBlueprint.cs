@@ -9,12 +9,12 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.RequestType.GetTypeInfo().IsEnum;
+            return context.Request.GetTypeInfo().IsEnum;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var values = Enum.GetValues(context.RequestType);
+            var values = Enum.GetValues(context.Request);
 
             return values.GetValue(_random.Next(values.Length));
         }

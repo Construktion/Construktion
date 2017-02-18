@@ -7,14 +7,6 @@
 
     public static class Extensions
     {
-        public static bool HasAttribute<T>(this ConstruktionContext context) where T : Attribute
-        {
-            return context.PropertyInfo
-                       ?.GetCustomAttributes(typeof(T))
-                       .ToList()
-                       .Any() ?? false;
-        }
-
         public static ConstructorInfo Greediest(this List<ConstructorInfo> ctors)
         {
             var max = ctors.Max(x => x.GetParameters().Length);
