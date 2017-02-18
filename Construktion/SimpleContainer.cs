@@ -8,13 +8,13 @@ namespace Construktion
 
     public class SimpleContainer
     {
-        private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
-        private readonly Dictionary<Type, Func<object>> _ctors = new Dictionary<Type, Func<object>>();
+        private readonly Dictionary<Type, Type> _typeMapper = new Dictionary<Type, Type>();
+        private readonly Dictionary<Type, Func<object>> _ctorCache = new Dictionary<Type, Func<object>>();
 
         public void Register<TContract, TImplementation>() where TImplementation : TContract
         {
-            if (!_typeMap.ContainsKey(typeof(TContract)))
-                _typeMap[typeof(TContract)] = typeof(TImplementation);
+            if (!_typeMapper.ContainsKey(typeof(TContract)))
+                _typeMapper[typeof(TContract)] = typeof(TImplementation);
         }
 
         public T GetInstance<T>()
@@ -22,41 +22,41 @@ namespace Construktion
             return (T)GetInstance(typeof(T));
         }
 
-        public object GetInstance(Type type)
+        public object GetInstance(Type request)
         {
-            if (!_typeMap.ContainsKey(type) && type.GetTypeInfo().IsInterface)
+            if (!_typeMapper.ContainsKey(request) && request.GetTypeInfo().IsInterface)
             {
-                throw new Exception($"Cannot resolve {type.Name}. No registered instance could be found");
+                throw new Exception($"Cannot resolve {request.FullName}. No registered instance could be found");
             }
 
-            return ResolveInstance(type);
+            return ResolveInstance(request);
         }
 
-        private object ResolveInstance(Type type)
+        private object ResolveInstance(Type request)
         {
-            if (_ctors.ContainsKey(type))
+            if (_ctorCache.ContainsKey(request))
             {
-                return _ctors[type]();
+                return _ctorCache[request]();
             }
 
-            AddCtor(type);
+            CreateCtor(request);
 
-            return _ctors[type]();
+            return _ctorCache[request]();
         }
 
-        private void AddCtor(Type type)
+        private void CreateCtor(Type request)
         {
-            if (!_typeMap.ContainsKey(type) && type.HasDefaultCtor())
+            if (!_typeMapper.ContainsKey(request) && request.HasDefaultCtor())
             {
-                var defCtor = Expression.Lambda<Func<object>>(Expression.New(type)).Compile();
+                var defCtor = Expression.Lambda<Func<object>>(Expression.New(request)).Compile();
 
-                _ctors.Add(type, defCtor);
+                _ctorCache.Add(request, defCtor);
                 return;
             }
 
-            var imp = _typeMap.ContainsKey(type) ? _typeMap[type] : type;
+            var implementation = _typeMapper.ContainsKey(request) ? _typeMapper[request] : request;
 
-            var greedyCtor = imp.GetTypeInfo()
+            var greedyCtor = implementation.GetTypeInfo()
                 .DeclaredConstructors
                 .ToList()
                 .Greediest();
@@ -66,9 +66,9 @@ namespace Construktion
             {
                 var ctorArg = parameter.ParameterType;
 
-                if (!_typeMap.ContainsKey(ctorArg) && ctorArg.GetTypeInfo().IsInterface)
+                if (!_typeMapper.ContainsKey(ctorArg) && ctorArg.GetTypeInfo().IsInterface)
                 {
-                    throw new Exception($"Couldn't instantiate {type.FullName} " +
+                    throw new Exception($"Couldn't instantiate {implementation.FullName} " +
                                         $"No registered instance could be found for ctor arg {ctorArg.FullName}.");
                 }
 
@@ -79,7 +79,7 @@ namespace Construktion
 
             var ctor = Expression.Lambda<Func<object>>(Expression.New(greedyCtor, @params)).Compile();
 
-            _ctors.Add(type, ctor);
+            _ctorCache.Add(request, ctor);
         }
     }
 }
