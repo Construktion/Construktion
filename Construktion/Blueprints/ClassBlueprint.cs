@@ -8,7 +8,9 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request.GetTypeInfo().IsClass && context.Request.HasDefaultCtor();
+            return //!context.Request.GetTypeInfo().IsGenericType &&
+                   context.Request.GetTypeInfo().IsClass &&
+                   context.Request.HasDefaultCtor();
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

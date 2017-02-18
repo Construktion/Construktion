@@ -13,8 +13,9 @@
             new CharBlueprint(),
             new GuidBlueprint(),
             new BoolBlueprint(),
+            new EnumerableBlueprint(),
             new EnumBlueprint(),
-            new ClassBlueprint()
+            new ClassBlueprint(),
             //defensive blueprint for container
         };
 

@@ -49,12 +49,6 @@
             return CreateRandom(context.Request);
         }
 
-        private static void AssertLimitsAreAscending(long[] limits)
-        {
-            if (limits.Zip(limits.Skip(1), (a, b) => a >= b).Any(b => b))
-                throw new ArgumentOutOfRangeException(nameof(limits), "Limits must be ascending numbers.");
-        }
-
         private object CreateRandom(Type request)
         {
             if (request == typeof(byte))
