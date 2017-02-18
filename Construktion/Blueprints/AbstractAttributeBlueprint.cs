@@ -15,19 +15,8 @@ namespace Construktion.Blueprints
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.HasAttribute<T>() && AlsoMustMatch(context);
+            return context.HasAttribute<T>();
         }
-
-        /// <summary>
-        /// Allows additional criteria to be added to the blueprint.
-        /// The base implementation always returns true;
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        protected virtual bool AlsoMustMatch(ConstruktionContext context)
-        {
-            return true;
-        } 
 
         public abstract object Construct(ConstruktionContext context, ConstruktionPipeline pipeline);
     }

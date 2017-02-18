@@ -2,9 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Blueprints;
- 
+
     public class Construktion
     {
         private readonly List<Blueprint> _blueprints = new List<Blueprint>
@@ -17,28 +16,37 @@
             new BoolBlueprint(),
             new EnumBlueprint(),
             new ClassBlueprint()
+            //guardedblueprint
         };
-        public IReadOnlyList<Blueprint> Blueprints => _blueprints;
+
+        public IReadOnlyCollection<Blueprint> Blueprints => _blueprints;
 
         public Construktion()
         {
+
         }
 
-        public Construktion(Blueprint additionalBlueprint) : this (Enumerable.Repeat(additionalBlueprint, 1))
+        public Construktion(Blueprint blueprint)
         {
+            blueprint.ThrowIfNull(nameof(blueprint));
+
+            _blueprints.Insert(0, blueprint);
         }
 
-        public Construktion(IEnumerable<Blueprint> blueprints)
+        public Construktion(BlueprintRegistry registry) 
         {
-            var customBlueprints = blueprints?.ToList();
+            registry.ThrowIfNull(nameof(registry));
 
-            if (customBlueprints == null)
-                throw new ArgumentNullException(nameof(blueprints));
+            _blueprints.InsertRange(0, registry.Blueprints);
+        }
 
-            if (customBlueprints.Any(x => x == null))
-                throw new ArgumentNullException(nameof(blueprints), "There are blueprints in the collection that are null");
+        public Construktion(Action<BlueprintRegistry> config)
+        {
+            var registry = new BlueprintRegistry();
 
-            _blueprints.InsertRange(0, customBlueprints);
+            config(registry);
+
+            _blueprints.InsertRange(0, registry.Blueprints);
         }
 
         public T Construct<T>()

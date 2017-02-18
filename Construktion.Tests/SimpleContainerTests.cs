@@ -4,12 +4,12 @@ namespace Construktion.Tests
     using Shouldly;
     using Xunit;
 
-    public class ContainerTests
+    public class SimpleContainerTests
     {
         [Fact]
         public void should_resolve_parameterless_ctor_instances()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
         
             var foo = container.GetInstance<Foo>();
 
@@ -19,7 +19,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_interface_with_implementation()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
 
             container.Register<IFoo, Foo>();
             
@@ -29,7 +29,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_concrete_with_its_dependency()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
             container.Register<IFoo, Foo>();
 
             var bar = container.GetInstance<Bar>();
@@ -41,7 +41,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_a_deep_graph()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
@@ -57,7 +57,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_all_dependencies()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
@@ -70,7 +70,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_use_transient_instances()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
@@ -79,21 +79,10 @@ namespace Construktion.Tests
             multipleDependencies.Foo.GetHashCode().ShouldNotBe(multipleDependencies.Bar.Foo.GetHashCode());
         }
 
-        public void should_throw_when_no_interface_implementation_is_registered()
-        {
-            var container = new ConstruktionContainer();
-
-            Should.Throw<Exception>(() =>
-            {
-                var foo = container.GetInstance<IFoo>();
-            })
-            .Message.ShouldBe("No registered instance can be found for IFoo");
-        }
-
         [Fact]
-        public void should_tell_you_what_dependency_is_missing()
+        public void should_throw_and_tell_you_what_dependency_is_missing()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
             // container.Register<IFoo, Foo>();
 
             Should.Throw<Exception>(() =>
@@ -104,9 +93,22 @@ namespace Construktion.Tests
         }
 
         [Fact]
+        public void should_resolve_greediest_ctor()
+        {
+            var container = new SimpleContainer();
+            container.Register<IFoo, Foo>();
+            container.Register<IBar, Bar>();
+
+            var greedyCtor = container.GetInstance<GreedyCtor>();
+
+            greedyCtor.Foo.ShouldBeOfType<Foo>();
+            greedyCtor.Bar.ShouldBeOfType<Bar>();
+        }
+
+        [Fact]
         public void should_resolve_first_implementation_registered()
         {
-            var container = new ConstruktionContainer();
+            var container = new SimpleContainer();
 
             container.Register<IFoo, Foo>();
             container.Register<IFoo, Foo2>();
@@ -156,6 +158,23 @@ namespace Construktion.Tests
             public IFoo Foo { get; }
 
             public MultipleDependencies(IBar bar, IFoo foo)
+            {
+                Bar = bar;
+                Foo = foo;
+            }
+        }
+
+        public class GreedyCtor
+        {
+            public IBar Bar { get; }
+            public IFoo Foo { get; }
+
+            public GreedyCtor(IBar bar)
+            {
+                Bar = bar;
+            }
+
+            public GreedyCtor(IBar bar, IFoo foo)
             {
                 Bar = bar;
                 Foo = foo;

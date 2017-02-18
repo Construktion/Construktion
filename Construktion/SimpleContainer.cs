@@ -6,7 +6,7 @@ namespace Construktion
     using System.Linq.Expressions;
     using System.Reflection;
 
-    public class ConstruktionContainer
+    public class SimpleContainer
     {
         private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
         private readonly Dictionary<Type, Func<object>> _ctors = new Dictionary<Type, Func<object>>();
@@ -19,13 +19,17 @@ namespace Construktion
 
         public T GetInstance<T>()
         {
-            var type = typeof(T);
+            return (T)GetInstance(typeof(T));
+        }
+
+        public object GetInstance(Type type)
+        {
             if (!_typeMap.ContainsKey(type) && type.GetTypeInfo().IsInterface)
             {
                 throw new Exception($"Cannot resolve {type.Name}. No registered instance could be found");
             }
 
-            return (T) ResolveInstance(type);
+            return ResolveInstance(type);
         }
 
         private object ResolveInstance(Type type)

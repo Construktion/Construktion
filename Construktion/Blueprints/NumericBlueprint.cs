@@ -33,27 +33,9 @@
         private long upper;
         private long count;
 
-        public NumericBlueprint() 
-            : this(1, byte.MaxValue, short.MaxValue, int.MaxValue)
+        public NumericBlueprint()
         {
-        }
-
-        public NumericBlueprint(IEnumerable<long> limits)
-             : this(limits.ToArray()) 
-         { 
-         }
-
-        public NumericBlueprint(params long[] limits)
-        {
-            if (limits == null)
-                throw new ArgumentNullException(nameof(limits));
-
-            if (limits.Length < 2)
-                throw new ArgumentException("Limits must be at least two ascending numbers.", nameof(limits));
-
-            AssertLimitsAreAscending(limits);
-
-            this.limits = limits;
+            limits = new long[] {1, byte.MaxValue, short.MaxValue, int.MaxValue};
             CreateRange();
         }
 

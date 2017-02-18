@@ -1,8 +1,6 @@
 ﻿namespace Construktion.Tests.Acceptance
 {
     using System;
-    using System.Linq;
-    using global::Construktion.Blueprints;
     using Shouldly;
     using Xunit;
 
@@ -11,50 +9,12 @@
         [Fact]
         public void should_set_value_from_attribute()
         {
-            var construktion = new Construktion(new SetBlueprint());
+            var construktion = new Construktion(x => x.AddAttributeBlueprint<Set>(a => a.Value));
 
             var result = construktion.Construct<Foo>();
 
             result.Bar.ShouldBe("Set");
             result.Baz.ShouldBe("Set");
-        }
-
-        public class SetBlueprint : AbstractAttributeBlueprint<Set>
-        {
-            public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-            {
-                var attribute = GetAttribute(context);
-
-                return attribute.Value;
-            }
-        }
-
-        [Fact]
-        public void should_only_build_bar_property()
-        {
-            var construktion = new Construktion(new BarStrictSetBlueprint());
-
-            var result = construktion.Construct<Foo>();
-
-            result.Bar.ShouldBe("Set");
-            result.Baz.ShouldNotBe("Set");
-        }
-
-        public class BarStrictSetBlueprint : AbstractAttributeBlueprint<Set>
-        {
-            protected override bool AlsoMustMatch(ConstruktionContext context)
-            {
-                var propertyName = context.PropertyInfo.Name;
-
-                return propertyName == "Bar";
-            }
-
-            public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-            {
-                var attribute = GetAttribute(context);
-
-                return attribute.Value;
-            }
         }
 
         public class Foo
@@ -65,15 +25,15 @@
             [Set("Set")]
             public string Baz { get; set; }
         }
-    }
 
-    public class Set : Attribute
-    {
-        public object Value { get; }
-
-        public Set(object value)
+        public class Set : Attribute
         {
-            Value = value;
+            public object Value { get; }
+
+            public Set(object value)
+            {
+                Value = value;
+            }
         }
     }
 }

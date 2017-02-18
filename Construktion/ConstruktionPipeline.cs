@@ -27,7 +27,7 @@
             var blueprint = _blueprints.FirstOrDefault(x => x.Matches(requestContext));
 
             if (blueprint == null)
-                throw new Exception($"No Blueprint can be found for {requestContext.RequestType.Name}");
+                throw new Exception($"No Blueprint can be found for {requestContext.RequestType.FullName}");
 
             var result = blueprint.Construct(requestContext, this);
 
