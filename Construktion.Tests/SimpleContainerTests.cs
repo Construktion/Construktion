@@ -55,31 +55,6 @@ namespace Construktion.Tests
         }
 
         [Fact]
-        public void should_resolve_all_dependencies()
-        {
-            var container = new SimpleContainer();
-            container.Register<IFoo, Foo>();
-            container.Register<IBar, Bar>();
-
-            var multipleDependencies = container.GetInstance<MultipleDependencies>();
-
-            multipleDependencies.Bar.ShouldBeOfType<Bar>();
-            multipleDependencies.Foo.ShouldBeOfType<Foo>();
-        }
-
-        [Fact]
-        public void should_use_transient_instances()
-        {
-            var container = new SimpleContainer();
-            container.Register<IFoo, Foo>();
-            container.Register<IBar, Bar>();
-
-            var multipleDependencies = container.GetInstance<MultipleDependencies>();
-
-            multipleDependencies.Foo.GetHashCode().ShouldNotBe(multipleDependencies.Bar.Foo.GetHashCode());
-        }
-
-        [Fact]
         public void should_throw_and_tell_you_what_dependency_is_missing()
         {
             var container = new SimpleContainer();
@@ -148,19 +123,6 @@ namespace Construktion.Tests
             public Baz(IBar bar)
             {
                 Bar = bar;
-            }
-        }
-
-      
-        public class MultipleDependencies
-        {
-            public IBar Bar { get; }
-            public IFoo Foo { get; }
-
-            public MultipleDependencies(IBar bar, IFoo foo)
-            {
-                Bar = bar;
-                Foo = foo;
             }
         }
 
