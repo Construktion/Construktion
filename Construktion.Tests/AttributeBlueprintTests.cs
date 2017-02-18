@@ -13,7 +13,7 @@
         {
             var blueprint = new AttributeBlueprint<Set>(x => x.Value);
 
-            var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("Bar")), Pipeline.Default);
+            var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("Bar")), Default.Pipeline);
 
             result.ShouldBe("Set");
         }

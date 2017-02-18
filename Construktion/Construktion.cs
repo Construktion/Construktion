@@ -6,20 +6,7 @@
 
     public class Construktion
     {
-        private readonly List<Blueprint> _blueprints = new List<Blueprint>
-        {
-            new StringPropertyBlueprint(),
-            new StringBlueprint(),
-            new NumericBlueprint(),
-            new CharBlueprint(),
-            new GuidBlueprint(),
-            new BoolBlueprint(),
-            new EnumBlueprint(),
-            new ClassBlueprint()
-            //guardedblueprint
-        };
-
-        public IReadOnlyCollection<Blueprint> Blueprints => _blueprints;
+        private readonly List<Blueprint> _blueprints = Default.Blueprints;
 
         public Construktion()
         {

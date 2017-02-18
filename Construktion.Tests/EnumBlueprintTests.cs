@@ -11,7 +11,7 @@
         {
             var blueprint = new EnumBlueprint();
 
-            var result = (Gender)blueprint.Construct(new ConstruktionContext(typeof(Gender)), Pipeline.Default);
+            var result = (Gender)blueprint.Construct(new ConstruktionContext(typeof(Gender)), Default.Pipeline);
 
             result.ShouldBeOneOf(Gender.F, Gender.M);
         }

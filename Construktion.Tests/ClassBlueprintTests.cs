@@ -11,7 +11,7 @@
         {
             var blueprint = new ClassBlueprint();
 
-            var result = (Person)blueprint.Construct(new ConstruktionContext(typeof(Person)), Pipeline.Default);
+            var result = (Person)blueprint.Construct(new ConstruktionContext(typeof(Person)), Default.Pipeline);
 
             result.ShouldNotBeNull();
             result.Name.ShouldNotBeNullOrEmpty();

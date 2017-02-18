@@ -23,7 +23,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Can_Build_Classes()
+        public void should_build_classes()
         {
             var result = _construktion.Construct<Child>();
 
@@ -32,7 +32,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Can_Build_Nested_Classes()
+        public void should_build_nested_classes_too()
         {
             var result = _construktion.Construct<Parent>();
 
@@ -43,7 +43,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Can_Explicitly_Set_Properties()
+        public void should_hardcode_properties()
         {
             var result = _construktion.Construct<Parent>(x =>
             {
@@ -58,7 +58,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void Can_Build_Private_Properties()
+        public void should_build_private_properties()
         {
             var result = _construktion.Construct<Private>();
 

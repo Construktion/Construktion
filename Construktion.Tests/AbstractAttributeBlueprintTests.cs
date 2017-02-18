@@ -27,7 +27,7 @@
             var property = typeof(Foo).GetProperty("WithSet");
             var context = new ConstruktionContext(property);
 
-            var result = (string)blueprint.Construct(context, Pipeline.Default);
+            var result = (string)blueprint.Construct(context, Default.Pipeline);
 
             result.ShouldBe("Set");
         }
