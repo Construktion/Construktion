@@ -8,7 +8,7 @@
     public class StringPropertyBlueprintTests
     {
         [Fact]
-        public void property_name_is_prefixed()
+        public void should_prefix_property_name()
         {
             var blueprint = new StringPropertyBlueprint();
             var pi = typeof(Foo).GetProperty(nameof(Foo.Name));

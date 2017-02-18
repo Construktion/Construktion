@@ -9,7 +9,7 @@
     public class AbstractAttributeBlueprintTests
     {
         [Fact]
-        public void default_criteria_should_match_property_with_attribute()
+        public void should_match_property_with_attribute()
         {
             var blueprint = new SetBlueprint();
             var property = typeof(Foo).GetProperty("WithSet");
@@ -17,11 +17,11 @@
 
             var matches = blueprint.Matches(context);
 
-            matches.ShouldBeTrue();
+            matches.ShouldBe(true);
         }
 
         [Fact]
-        public void should_return_attribute_value()
+        public void should_construct_from_attribute_value()
         {
             var blueprint = new SetBlueprint();
             var property = typeof(Foo).GetProperty("WithSet");
@@ -41,7 +41,7 @@
 
             var matches = blueprint.Matches(context);
 
-            matches.ShouldBeFalse();
+            matches.ShouldBe(false);
         }
 
         public class SetBlueprint : AbstractAttributeBlueprint<Set>

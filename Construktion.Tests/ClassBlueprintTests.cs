@@ -7,7 +7,7 @@
     public class ClassBlueprintTests
     {
         [Fact]
-        public void can_build_a_class()
+        public void should_build_a_class_with_its_properties()
         {
             var blueprint = new ClassBlueprint();
 

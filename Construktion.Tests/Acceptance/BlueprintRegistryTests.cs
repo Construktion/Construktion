@@ -19,23 +19,13 @@
         {
             _registry.AddBlueprint(new HardCodeStringBlueprint());
 
-            var result = new Construktion(_registry).Construct<Foo>();
+            var foo = new Construktion(_registry).Construct<Foo>();
 
-            result.Bar.ShouldBe("HardCode");
+            foo.Bar.ShouldBe("HardCode");
         }
 
         [Fact]
-        public void lambda_expression_should_register_container()
-        {
-            _registry.AddContainerBlueprint(x => x.Register<IFoo, Foo>());
-
-            var result = new Construktion(_registry).Construct<IFoo>();
-
-            result.ShouldBeOfType<Foo>();
-        }
-
-        [Fact]
-        public void supplied_instance_should_register_container()
+        public void should_register_container()
         {
             var container = new SimpleContainer();
             container.Register<IFoo, Foo>();
@@ -47,13 +37,23 @@
         }
 
         [Fact]
+        public void should_register_container_with_lambda()
+        {
+            _registry.AddContainerBlueprint(x => x.Register<IFoo, Foo>());
+
+            var result = new Construktion(_registry).Construct<IFoo>();
+
+            result.ShouldBeOfType<Foo>();
+        }
+
+        [Fact]
         public void should_register_attribute_blueprint()
         {
             _registry.AddAttributeBlueprint<Set>(x => x.Value);
 
-            var result = new Construktion(_registry).Construct<Foo>();
+            var foo = new Construktion(_registry).Construct<Foo>();
 
-            result.Bar.ShouldBe("Set");
+            foo.Bar.ShouldBe("Set");
         }
 
         [Fact]
@@ -61,9 +61,17 @@
         {
             var construktion = new Construktion(new HardCodeRegistry());
 
-            var result = construktion.Construct<Foo>();
+            var foo = construktion.Construct<Foo>();
 
-            result.Bar.ShouldBe("HardCode");
+            foo.Bar.ShouldBe("HardCode");
+        }
+
+        public class HardCodeRegistry : BlueprintRegistry
+        {
+            public HardCodeRegistry()
+            {
+                AddBlueprint(new HardCodeStringBlueprint());
+            }
         }
 
         public class HardCodeStringBlueprint : Blueprint
@@ -76,14 +84,6 @@
             public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 return "HardCode";
-            }
-        }
-
-        public class HardCodeRegistry : BlueprintRegistry
-        {
-            public HardCodeRegistry()
-            {
-                AddBlueprint(new HardCodeStringBlueprint());
             }
         }
 

@@ -8,7 +8,7 @@
     public class GuidBlueprintTests
     {
         [Fact]
-        public void Can_Build_Guid()
+        public void should_build_non_empty_guid()
         {
             var blueprint = new GuidBlueprint();
 
