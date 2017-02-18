@@ -1,7 +1,7 @@
-﻿namespace Construktion.Tests.Blueprints
+﻿namespace Construktion.Tests
 {
     using System;
-    using global::Construktion.Blueprints;
+    using Blueprints;
     using Shouldly;
     using Xunit;
 

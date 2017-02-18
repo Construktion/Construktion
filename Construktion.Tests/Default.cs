@@ -1,4 +1,4 @@
-﻿namespace Construktion.Tests.Blueprints
+﻿namespace Construktion.Tests
 {
     public static class Pipeline
     {
