@@ -7,19 +7,14 @@
 
     public class BlueprintRegistryTests
     {
-        private readonly BlueprintRegistry _registry;
-
-        public BlueprintRegistryTests()
-        {
-            _registry = new BlueprintRegistry();
-        }
-
+     
         [Fact]
         public void should_register_a_custom_blueprint()
         {
-            _registry.AddBlueprint(new HardCodeStringBlueprint());
-
-            var foo = new Construktion(_registry).Construct<Foo>();
+            var registry = new BlueprintRegistry();
+            registry.AddBlueprint(new HardCodeStringBlueprint());
+            
+            var foo = new Construktion(registry).Construct<Foo>();
 
             foo.Bar.ShouldBe("HardCode");
         }
@@ -29,9 +24,10 @@
         {
             var container = new SimpleContainer();
             container.Register<IFoo, Foo>();
-            _registry.AddContainerBlueprint(container);
+            var registry = new BlueprintRegistry();
+            registry.AddContainerBlueprint(container);
 
-            var result = new Construktion(_registry).Construct<IFoo>();
+            var result = new Construktion(registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -39,9 +35,10 @@
         [Fact]
         public void should_register_container_with_lambda()
         {
-            _registry.AddContainerBlueprint(x => x.Register<IFoo, Foo>());
+            var registry = new BlueprintRegistry();
+            registry.AddContainerBlueprint(x => x.Register<IFoo, Foo>());
 
-            var result = new Construktion(_registry).Construct<IFoo>();
+            var result = new Construktion(registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -49,9 +46,10 @@
         [Fact]
         public void should_register_attribute_blueprint()
         {
-            _registry.AddAttributeBlueprint<Set>(x => x.Value);
+            var registry = new BlueprintRegistry();
+            registry.AddAttributeBlueprint<Set>(x => x.Value);
 
-            var foo = new Construktion(_registry).Construct<Foo>();
+            var foo = new Construktion(registry).Construct<Foo>();
 
             foo.Bar.ShouldBe("Set");
         }

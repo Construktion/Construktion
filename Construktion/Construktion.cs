@@ -1,9 +1,7 @@
 ﻿namespace Construktion
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Blueprints;
 
     public class Construktion
@@ -58,7 +56,7 @@
             var pipeline = new DefaultConstruktionPipeline(_blueprints);
 
             var result = (T)pipeline.Construct(new ConstruktionContext(request));
-
+          
             hardCodes?.Invoke(result);
 
             return result;
