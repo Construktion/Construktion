@@ -14,6 +14,7 @@
             new GuidBlueprint(),
             new BoolBlueprint(),
             new EnumerableBlueprint(),
+            new ArrayBlueprint(),
             new EnumBlueprint(),
             new NullableTypeBlueprint(),
             new ClassBlueprint(),

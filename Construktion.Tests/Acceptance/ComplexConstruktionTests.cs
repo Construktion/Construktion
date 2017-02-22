@@ -77,6 +77,14 @@ namespace Construktion.Tests.Acceptance
             result.ShouldAllBe(x => x.Age != 0);
         }
 
+        [Fact]
+        public void should_build_arrays()
+        {
+            var result = _construktion.Construct<string[]>();
+
+            result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x));
+        }
+
         class Private
         {
             public string PrivateName { get; private set; }
