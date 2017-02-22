@@ -13,6 +13,7 @@
             new CharBlueprint(),
             new GuidBlueprint(),
             new BoolBlueprint(),
+            new DictionaryBlueprint(),
             new EnumerableBlueprint(),
             new ArrayBlueprint(),
             new EnumBlueprint(),

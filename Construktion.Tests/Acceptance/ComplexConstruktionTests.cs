@@ -85,6 +85,15 @@ namespace Construktion.Tests.Acceptance
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x));
         }
 
+        [Fact]
+        public void should_build_dictionaries()
+        {
+            var result = _construktion.Construct<Dictionary<string,int>>();
+
+            result.ShouldNotBe(null);
+            result.Count.ShouldBe(4);
+        }
+
         class Private
         {
             public string PrivateName { get; private set; }
