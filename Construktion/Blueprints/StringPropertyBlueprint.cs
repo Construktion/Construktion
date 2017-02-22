@@ -1,7 +1,7 @@
 ﻿namespace Construktion.Blueprints
 {
     using System;
-    
+
     public class StringPropertyBlueprint : Blueprint
     { 
         private readonly Random _random = new Random();

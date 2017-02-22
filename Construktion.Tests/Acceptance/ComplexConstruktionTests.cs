@@ -2,6 +2,7 @@
 // ReSharper disable ArrangeTypeMemberModifiers
 namespace Construktion.Tests.Acceptance
 {
+    using System.Collections.Generic;
     using Shouldly;
     using Xunit;
 
@@ -64,6 +65,16 @@ namespace Construktion.Tests.Acceptance
 
             result.PrivateName.ShouldNotBeNullOrEmpty();
             result.PrivateAge.ShouldNotBe(default(int));
+        }
+
+        [Fact]
+        public void should_build_any_enumerable_type()
+        {
+            var result = _construktion.Construct<IReadOnlyCollection<Child>>();
+
+            result.Count.ShouldBe(3);
+            result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Name));
+            result.ShouldAllBe(x => x.Age != 0);
         }
 
         class Private

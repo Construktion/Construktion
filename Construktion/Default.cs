@@ -15,6 +15,7 @@
             new BoolBlueprint(),
             new EnumerableBlueprint(),
             new EnumBlueprint(),
+            new NullableTypeBlueprint(),
             new ClassBlueprint(),
             //defensive blueprint for container
         };

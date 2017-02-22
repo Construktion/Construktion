@@ -21,7 +21,9 @@
         [Fact]
         public void should_build_simple_enumerable_type()
         {
-            var result = new Construktion().Construct<IEnumerable<int>>();
+            var blueprint = new EnumerableBlueprint();
+
+            var result = (IEnumerable<int>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<int>)), Default.Pipeline);
             
             result.Count().ShouldBe(3);
             result.ShouldAllBe(x => x != 0);
@@ -30,9 +32,10 @@
         [Fact]
         public void should_build_a_complex_enumerable_type()
         {
-            var result = new Construktion().Construct<IEnumerable<Foo>>();
+            var blueprint = new EnumerableBlueprint();
 
-            
+            var result = (IEnumerable<Foo>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Foo>)), Default.Pipeline);
+
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Bar));
             result.ShouldAllBe(x => x.Baz != 0);
         }
@@ -40,7 +43,9 @@
         [Fact]
         public void should_build_nested_enumerables()
         {
-            var result = new Construktion().Construct<IEnumerable<Bar>>();
+            var blueprint = new EnumerableBlueprint();
+
+            var result = (IEnumerable<Bar>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Bar>)), Default.Pipeline);
 
             result.ShouldAllBe(x => x != null);
 
@@ -52,7 +57,9 @@
         [Fact]
         public void should_build_a_list()
         {
-            var result = new Construktion().Construct<List<int>>();
+            var blueprint = new EnumerableBlueprint();
+
+            var result = (List<int>)blueprint.Construct(new ConstruktionContext(typeof(List<int>)), Default.Pipeline);
 
             result.ShouldNotBe(null);
             result.ShouldAllBe(x => x != default(int));
@@ -61,7 +68,9 @@
         [Fact]
         public void should_build_icollections()
         {
-            var result = new Construktion().Construct<ICollection<Foo>>();
+            var blueprint = new EnumerableBlueprint();
+
+            var result = (ICollection<Foo>)blueprint.Construct(new ConstruktionContext(typeof(ICollection<Foo>)), Default.Pipeline);
 
             result.ShouldNotBe(null);
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Bar));

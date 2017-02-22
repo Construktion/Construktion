@@ -7,7 +7,6 @@
 
     public class BlueprintRegistryTests
     {
-     
         [Fact]
         public void should_register_a_custom_blueprint()
         {
