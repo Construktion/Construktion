@@ -14,7 +14,8 @@
             var result = construktion.Construct<Foo>();
 
             result.Bar.ShouldBe("Set");
-            result.Baz.ShouldBe("Set");
+            result.Baz.ShouldNotBe("Set");
+            result.Baz.ShouldNotBeNullOrWhiteSpace();
         }
 
         public class Foo
@@ -22,7 +23,6 @@
             [Set("Set")]
             public string Bar { get; set; }
 
-            [Set("Set")]
             public string Baz { get; set; }
         }
 
