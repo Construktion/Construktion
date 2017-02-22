@@ -15,14 +15,16 @@
 
         public Construktion(Blueprint blueprint)
         {
-            blueprint.ThrowIfNull(nameof(blueprint));
+            if (blueprint == null)
+                throw new ArgumentNullException(nameof(blueprint));
 
             _blueprints.Insert(0, blueprint);
         }
 
-        public Construktion(BlueprintRegistry registry) 
+        public Construktion(BlueprintRegistry registry)
         {
-            registry.ThrowIfNull(nameof(registry));
+            if (registry == null)
+                throw new ArgumentNullException(nameof(registry));
 
             _blueprints.InsertRange(0, registry.Blueprints);
         }

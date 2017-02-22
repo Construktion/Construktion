@@ -23,11 +23,5 @@
 
             return ctors.Any(x => x.GetParameters().Length == 0);
         }
-
-        internal static void ThrowIfNull<T>(this T item, string param) where T : class
-        {
-            if (item == null)
-                throw new ArgumentNullException(param);
-        }
     }
 }

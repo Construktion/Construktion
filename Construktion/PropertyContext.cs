@@ -18,7 +18,8 @@
 
         public PropertyContext(PropertyInfo propertyInfo)
         {
-            propertyInfo.ThrowIfNull(nameof(propertyInfo));
+            if (propertyInfo == null)
+                throw new ArgumentNullException(nameof(propertyInfo));
 
             _propertyInfo = propertyInfo;
         }

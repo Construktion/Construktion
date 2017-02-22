@@ -12,14 +12,16 @@
 
         public void AddBlueprint(Blueprint blueprint)
         {
-            blueprint.ThrowIfNull(nameof(blueprint));
+            if (blueprint == null)
+                throw new ArgumentNullException(nameof(blueprint));
 
             _blueprints.Add(blueprint);
         }
 
         public void AddContainerBlueprint(SimpleContainer container)
         {
-            container.ThrowIfNull(nameof(container));
+            if (container == null)
+                throw new ArgumentNullException(nameof(container));
 
             _blueprints.Add(new SimpleContainerBlueprint(container));
         }
