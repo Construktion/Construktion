@@ -19,7 +19,7 @@
             new EnumBlueprint(),
             new NullableTypeBlueprint(),
             new ClassBlueprint(),
-            //defensive blueprint for container
+            new DefensiveBlueprint()
         };
 
         public static ConstruktionPipeline Pipeline => new DefaultConstruktionPipeline(Blueprints);
