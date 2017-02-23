@@ -21,8 +21,9 @@
             var key = context.Request.GetGenericArguments()[0];
             var value = context.Request.GetGenericArguments()[1];
 
-            var keys = GenerateUqKeys(howMany, pipeline, new ConstruktionContext(key), new HashSet<object>()).ToList();
-            var values = GenerateValues(howMany, value, pipeline).ToList();
+            var keys = UniqueKeys(howMany, key, pipeline, new HashSet<object>()).ToList();
+
+            var values = Values(howMany, value, pipeline).ToList();
 
             var dictionary = (IDictionary)Activator.CreateInstance(typeof(Dictionary<,>).MakeGenericType(key, value));
 
@@ -34,9 +35,9 @@
             return dictionary;
         }
 
-        private HashSet<object> GenerateUqKeys(int howMany, ConstruktionPipeline pipeline, ConstruktionContext context, HashSet<object> items)
+        private HashSet<object> UniqueKeys(int howMany, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
         {
-            var newItem = pipeline.Construct(context);
+            var newItem = pipeline.Construct(new ConstruktionContext(key));
 
             if (newItem != null)
                 items.Add(newItem);
@@ -46,10 +47,10 @@
                 return items;
             }
 
-            return GenerateUqKeys(howMany, pipeline, context, items);
+            return UniqueKeys(howMany, key, pipeline, items);
         }
 
-        private IEnumerable<object> GenerateValues(int howMany, Type closedType, ConstruktionPipeline pipeline)
+        private IEnumerable<object> Values(int howMany, Type closedType, ConstruktionPipeline pipeline)
         {
             for (var i = 0; i < howMany; i++)
             {
