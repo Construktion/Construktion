@@ -1,24 +1,23 @@
 ﻿namespace Construktion.Blueprints.Recursive
 {
     using System;
-    using System.Linq;
     using System.Reflection;
 
     public class ClassBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)
         {
-            return //!context.Request.GetTypeInfo().IsGenericType &&
-                   context.Request.GetTypeInfo().IsClass &&
-                   context.Request.HasDefaultCtor();
+            return 
+                   context.RequestType.GetTypeInfo().IsClass &&
+                   context.RequestType.HasDefaultCtor() &&
+                   !context.RequestType.GetTypeInfo().IsGenericType;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var instance = Activator.CreateInstance(context.Request);
+            var instance = Activator.CreateInstance(context.RequestType);
 
-            var properties = context.Request.GetRuntimeProperties().ToList();
-                //.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var properties = context.RequestType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var property in properties)
             {

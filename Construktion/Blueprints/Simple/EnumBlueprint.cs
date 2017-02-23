@@ -1,4 +1,4 @@
-﻿namespace Construktion.Blueprints
+﻿namespace Construktion.Blueprints.Simple
 {
     using System;
     using System.Reflection;
@@ -9,12 +9,12 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request.GetTypeInfo().IsEnum;
+            return context.RequestType.GetTypeInfo().IsEnum;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var values = Enum.GetValues(context.Request);
+            var values = Enum.GetValues(context.RequestType);
 
             return values.GetValue(_random.Next(values.Length));
         }

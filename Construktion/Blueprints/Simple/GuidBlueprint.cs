@@ -1,4 +1,4 @@
-﻿namespace Construktion.Blueprints
+﻿namespace Construktion.Blueprints.Simple
 {
     using System;
 
@@ -6,7 +6,7 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request == typeof(Guid);
+            return context.RequestType == typeof(Guid);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

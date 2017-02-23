@@ -1,15 +1,15 @@
-namespace Construktion.Tests
+namespace Construktion.Tests.Recursive
 {
     using System;
     using Shouldly;
     using Xunit;
 
-    public class SimpleContainerTests
+    public class ConstruktionContainerTests
     {
         [Fact]
         public void should_resolve_parameterless_ctor_instances()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
         
             var foo = container.GetInstance<Foo>();
 
@@ -19,7 +19,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_interface_with_implementation()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
 
             container.Register<IFoo, Foo>();
             
@@ -29,7 +29,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_concrete_with_its_dependency()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
             container.Register<IFoo, Foo>();
 
             var bar = container.GetInstance<Bar>();
@@ -41,7 +41,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_a_deep_graph()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
@@ -57,7 +57,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_throw_and_tell_you_what_dependency_is_missing()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
             // container.Register<IFoo, Foo>();
 
             Should.Throw<Exception>(() =>
@@ -70,7 +70,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_greediest_ctor()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
             container.Register<IFoo, Foo>();
             container.Register<IBar, Bar>();
 
@@ -83,7 +83,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_resolve_first_implementation_registered()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
 
             container.Register<IFoo, Foo>();
             container.Register<IFoo, Foo2>();
@@ -109,6 +109,7 @@ namespace Construktion.Tests
         public class Bar : IBar
         {
             public IFoo Foo { get; }
+            public string StringProperty { get; set; }
 
             public Bar(IFoo foo)
             {

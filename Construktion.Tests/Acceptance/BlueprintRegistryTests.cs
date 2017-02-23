@@ -21,7 +21,7 @@
         [Fact]
         public void should_register_container()
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
             container.Register<IFoo, Foo>();
             var registry = new BlueprintRegistry();
             registry.AddContainerBlueprint(container);

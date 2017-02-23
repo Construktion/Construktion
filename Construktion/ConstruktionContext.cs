@@ -5,7 +5,7 @@
 
     public class ConstruktionContext
     {
-        public Type Request { get; }
+        public Type RequestType { get; }
         public PropertyContext PropertyContext { get; }
 
         public ConstruktionContext(Type request)
@@ -13,7 +13,7 @@
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            Request = request;
+            RequestType = request;
             PropertyContext = new PropertyContext();
         }
 
@@ -22,7 +22,7 @@
             if (propertyInfo == null)
                 throw new ArgumentNullException(nameof(propertyInfo));
 
-            Request = propertyInfo.PropertyType;
+            RequestType = propertyInfo.PropertyType;
             PropertyContext = new PropertyContext(propertyInfo);
         }
     }

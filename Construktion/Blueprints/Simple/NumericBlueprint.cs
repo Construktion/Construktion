@@ -1,4 +1,4 @@
-﻿namespace Construktion.Blueprints
+﻿namespace Construktion.Blueprints.Simple
 {
     using System;
     using System.Collections.Generic;
@@ -41,12 +41,12 @@
 
         public bool Matches(ConstruktionContext context)
         {
-           return _typesHandled.Contains(context.Request) && !context.Request.GetTypeInfo().IsEnum;
+           return _typesHandled.Contains(context.RequestType) && !context.RequestType.GetTypeInfo().IsEnum;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         { 
-            return CreateRandom(context.Request);
+            return CreateRandom(context.RequestType);
         }
 
         private object CreateRandom(Type request)

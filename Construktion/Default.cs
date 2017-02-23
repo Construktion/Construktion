@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Blueprints;
     using Blueprints.Recursive;
+    using Blueprints.Simple;
 
     public static class Default
     {

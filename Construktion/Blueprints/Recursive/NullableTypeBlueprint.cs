@@ -9,13 +9,13 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request.GetTypeInfo().IsGenericType &&
-                   context.Request.GetTypeInfo().GetGenericTypeDefinition() == typeof(Nullable<>);
+            return context.RequestType.GetTypeInfo().IsGenericType &&
+                   context.RequestType.GetTypeInfo().GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var closedType = context.Request.GetGenericArguments()[0];
+            var closedType = context.RequestType.GetGenericArguments()[0];
 
             var useNull = _rand.Next(1, 5);
 

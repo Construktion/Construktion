@@ -1,6 +1,6 @@
 ﻿namespace Construktion.Tests.Simple
 {
-    using global::Construktion.Blueprints;
+    using Blueprints.Simple;
     using Shouldly;
     using Xunit;
 

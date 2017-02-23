@@ -20,7 +20,7 @@
 
         public object Construct(ConstruktionContext requestContext)
         {
-            var blueprint = _blueprints.FirstOrDefault(x => x.Matches(requestContext));
+            var blueprint = _blueprints.First(x => x.Matches(requestContext));
 
             var result = blueprint.Construct(requestContext, this);
 

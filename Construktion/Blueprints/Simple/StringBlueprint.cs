@@ -1,4 +1,4 @@
-﻿namespace Construktion.Blueprints
+﻿namespace Construktion.Blueprints.Simple
 {
     using System;
 
@@ -8,12 +8,12 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request == typeof(string);
+            return context.RequestType == typeof(string);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var result = context.Request.Name + "-" + _random.Next(1, 10000);
+            var result = context.RequestType.Name + "-" + _random.Next(1, 10000);
 
             return result;
         }

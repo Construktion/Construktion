@@ -8,12 +8,12 @@ namespace Construktion.Blueprints.Recursive
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request.IsArray;
+            return context.RequestType.IsArray;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var arrayType = context.Request.GetElementType();
+            var arrayType = context.RequestType.GetElementType();
 
             var results = construct(arrayType, pipeline).ToList();
 

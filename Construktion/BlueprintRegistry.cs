@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Blueprints;
+    using Blueprints.Recursive;
+    using Blueprints.Simple;
 
     public class BlueprintRegistry
     {
@@ -18,21 +20,21 @@
             _blueprints.Add(blueprint);
         }
 
-        public void AddContainerBlueprint(SimpleContainer container)
+        public void AddContainerBlueprint(ConstruktionContainer container)
         {
             if (container == null)
                 throw new ArgumentNullException(nameof(container));
 
-            _blueprints.Add(new SimpleContainerBlueprint(container));
+            _blueprints.Add(new ConstruktionContainerBlueprint(container));
         }
 
-        public void AddContainerBlueprint(Action<SimpleContainer> config)
+        public void AddContainerBlueprint(Action<ConstruktionContainer> config)
         {
-            var container = new SimpleContainer();
+            var container = new ConstruktionContainer();
 
             config(container);
 
-            _blueprints.Add(new SimpleContainerBlueprint(container));
+            _blueprints.Add(new ConstruktionContainerBlueprint(container));
         }
 
         public void AddAttributeBlueprint<T>(Func<T, object> value) where T : Attribute

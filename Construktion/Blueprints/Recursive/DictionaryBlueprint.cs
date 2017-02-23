@@ -10,16 +10,16 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request.GetTypeInfo().IsGenericType &&
-                   context.Request.GetTypeInfo().GetGenericTypeDefinition() == typeof(Dictionary<,>);
+            return context.RequestType.GetTypeInfo().IsGenericType &&
+                   context.RequestType.GetTypeInfo().GetGenericTypeDefinition() == typeof(Dictionary<,>);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var howMany = 4;
 
-            var key = context.Request.GetGenericArguments()[0];
-            var value = context.Request.GetGenericArguments()[1];
+            var key = context.RequestType.GetGenericArguments()[0];
+            var value = context.RequestType.GetGenericArguments()[1];
 
             var keys = UniqueKeys(howMany, key, pipeline, new HashSet<object>()).ToList();
 

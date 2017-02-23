@@ -11,7 +11,7 @@
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            throw new Exception($"No Blueprint could be found for {context.Request.FullName}");
+            throw new Exception($"No Blueprint could be found for {context.RequestType.FullName}");
         }
     }
 }

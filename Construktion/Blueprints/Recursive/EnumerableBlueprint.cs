@@ -10,13 +10,13 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.Request.GetTypeInfo().IsGenericType &&
-                   context.Request.GetInterfaces().Contains(typeof(IEnumerable));
+            return context.RequestType.GetTypeInfo().IsGenericType &&
+                   context.RequestType.GetInterfaces().Contains(typeof(IEnumerable));
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var closedType = context.Request.GenericTypeArguments[0];
+            var closedType = context.RequestType.GenericTypeArguments[0];
 
             var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
 
