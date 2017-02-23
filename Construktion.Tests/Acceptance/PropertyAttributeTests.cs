@@ -4,7 +4,7 @@
     using Shouldly;
     using Xunit;
 
-    public class AttributeTests
+    public class PropertyAttributeTests
     {
         [Fact]
         public void should_set_value_from_attribute()

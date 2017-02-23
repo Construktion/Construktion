@@ -8,7 +8,7 @@
     {
         private readonly List<Blueprint> _blueprints = new List<Blueprint>();
 
-        public IReadOnlyCollection<Blueprint> Blueprints => _blueprints;
+        internal IReadOnlyCollection<Blueprint> Blueprints => _blueprints;
 
         public void AddBlueprint(Blueprint blueprint)
         {
