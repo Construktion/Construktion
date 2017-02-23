@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests
+﻿namespace Construktion.Tests.Recursive
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Blueprints;
+    using Blueprints.Recursive;
     using Shouldly;
     using Xunit;
 

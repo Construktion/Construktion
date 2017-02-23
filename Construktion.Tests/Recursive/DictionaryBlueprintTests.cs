@@ -1,7 +1,7 @@
-﻿namespace Construktion.Tests
+﻿namespace Construktion.Tests.Recursive
 {
     using System.Collections.Generic;
-    using Blueprints;
+    using Blueprints.Recursive;
     using Shouldly;
     using Xunit;
 

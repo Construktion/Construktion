@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Blueprints;
+    using Blueprints.Recursive;
 
     public static class Default
     {
