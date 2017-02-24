@@ -20,7 +20,7 @@
         {
             _blueprintRegistry.Register<IFoo, Foo>();
 
-            var result = new Construktion(_blueprintRegistry).Construct<IFoo>();
+            var result = new Construktion().WithRegistry(_blueprintRegistry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -30,7 +30,7 @@
         {
             _blueprintRegistry.AddBlueprint(new StringA());
 
-            var result = new Construktion(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().WithRegistry(_blueprintRegistry).Construct<string>();
 
             result.ShouldBe("StringA");
         }
@@ -40,7 +40,7 @@
         {
             _blueprintRegistry.AddBlueprint<StringA>();
 
-            var result = new Construktion(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().WithRegistry(_blueprintRegistry).Construct<string>();
 
             result.ShouldBe("StringA");
         }
@@ -51,7 +51,7 @@
             _blueprintRegistry.AddBlueprint(new StringB());
             _blueprintRegistry.AddBlueprint(new StringA());
 
-            var result = new Construktion(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().WithRegistry(_blueprintRegistry).Construct<string>();
 
             result.ShouldBe("StringB");
         }
@@ -61,7 +61,7 @@
         {
             _blueprintRegistry.AddAttributeBlueprint<Set>(x => x.Value);
 
-            var foo = new Construktion(_blueprintRegistry).Construct<Foo>();
+            var foo = new Construktion().WithRegistry(_blueprintRegistry).Construct<Foo>();
 
             foo.Bar.ShouldBe("Set");
         }
@@ -69,7 +69,7 @@
         [Fact]
         public void should_work_with_a_custom_registry()
         {
-            var construktion = new Construktion(new StringARegistry());
+            var construktion = new Construktion().WithRegistry(new StringARegistry());
 
             var foo = construktion.Construct<Foo>();
 
@@ -82,7 +82,7 @@
             //_blueprintRegistry.Register<IFoo, Foo>();
 
             Should.Throw<Exception>
-                (() => new Construktion(_blueprintRegistry).Construct<IFoo>())
+                (() => new Construktion().WithRegistry(_blueprintRegistry).Construct<IFoo>())
                 .Message
                 .ShouldContain("Cannot construct the interface IFoo.");
         }

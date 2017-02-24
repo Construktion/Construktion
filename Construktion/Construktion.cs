@@ -5,36 +5,7 @@
 
     public class Construktion
     {
-        private readonly BlueprintRegistry _registry;
-
-        public Construktion() : this(new BlueprintRegistry())
-        {
-        }
-
-        public Construktion(BlueprintRegistry registry)
-        {
-            if (registry == null)
-                throw new ArgumentNullException(nameof(registry));
-
-            _registry = registry;
-        }
-
-        public Construktion(Blueprint blueprint)
-        {
-            if (blueprint == null)
-                throw new ArgumentNullException(nameof(blueprint));
-
-            _registry.AddBlueprint(blueprint);
-        }
-
-        public Construktion(Action<BlueprintRegistry> config)
-        {
-            var registry = new BlueprintRegistry();
-
-            config(registry);
-
-            _registry = registry;
-        }
+        private BlueprintRegistry _registry = new BlueprintRegistry();
 
         public T Construct<T>()
         {
@@ -60,6 +31,27 @@
             hardCodes?.Invoke(result);
 
             return result;
+        }
+
+        public Construktion WithRegistry(BlueprintRegistry registry)
+        {
+            if (registry == null)
+                throw new ArgumentNullException(nameof(registry));
+
+            _registry = registry;
+            return this;
+        }
+
+        public Construktion WithRegistry(Action<BlueprintRegistry> registry)
+        {
+            registry(_registry);
+            return this;
+        }
+
+        public Construktion WithBlueprint(Blueprint blueprint)
+        {
+            _registry.AddBlueprint(blueprint);
+            return this;
         }
     }
 }

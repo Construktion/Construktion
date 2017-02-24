@@ -9,7 +9,7 @@
         [Fact]
         public void should_set_value_from_attribute()
         {
-            var construktion = new Construktion(x => x.AddAttributeBlueprint<Set>(a => a.Value));
+            var construktion = new Construktion().WithRegistry(x => x.AddAttributeBlueprint<Set>(a => a.Value));
 
             var foo = construktion.Construct<Foo>();
 
