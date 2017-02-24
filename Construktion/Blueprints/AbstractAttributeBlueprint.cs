@@ -10,11 +10,11 @@ namespace Construktion.Blueprints
             return (T) context.PropertyContext.GetAttributes(typeof(T)).First();
         }
 
-        public bool Matches(ConstruktionContext context)
+        public virtual bool Matches(ConstruktionContext context)
         {
             return context.PropertyContext.GetAttributes(typeof(T))
-                        .ToList()
-                        .Any();
+                .ToList()
+                .Any();
         }
 
         public abstract object Construct(ConstruktionContext context, ConstruktionPipeline pipeline);
