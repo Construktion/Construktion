@@ -2,7 +2,7 @@
 {
     using System;
     using System.Reflection;
-    using global::Construktion.Blueprints;
+    using Blueprints;
     using Shouldly;
     using Xunit;
 
@@ -21,18 +21,6 @@
         }
 
         [Fact]
-        public void should_construct_from_attribute_value()
-        {
-            var blueprint = new SetBlueprint();
-            var property = typeof(Foo).GetProperty("WithSet");
-            var context = new ConstruktionContext(property);
-
-            var result = (string)blueprint.Construct(context, Default.Pipeline);
-
-            result.ShouldBe("Set");
-        }
-
-        [Fact]
         public void property_without_attribute_should_not_match()
         {
             var blueprint = new SetBlueprint();
@@ -42,6 +30,18 @@
             var matches = blueprint.Matches(context);
 
             matches.ShouldBe(false);
+        }
+
+        [Fact]
+        public void should_construct_from_attribute_value()
+        {
+            var blueprint = new SetBlueprint();
+            var property = typeof(Foo).GetProperty("WithSet");
+            var context = new ConstruktionContext(property);
+
+            var result = (string)blueprint.Construct(context, Default.Pipeline);
+
+            result.ShouldBe("Set");
         }
 
         public class SetBlueprint : AbstractAttributeBlueprint<Set>

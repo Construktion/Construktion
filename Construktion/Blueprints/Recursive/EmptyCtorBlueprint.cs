@@ -1,32 +1,21 @@
 ﻿namespace Construktion.Blueprints.Recursive
 {
+    using System;
     using System.Linq;
     using System.Reflection;
 
-    public class ConstruktionContainerBlueprint : Blueprint
+    public class EmptyCtorBlueprint : Blueprint
     {
-        private readonly ConstruktionContainer _container;
-
-        public ConstruktionContainerBlueprint(ConstruktionContainer container)
-        {
-            _container = container;
-        }
-
         public bool Matches(ConstruktionContext context)
         {
-            try
-            {
-                return _container.GetInstance(context.RequestType) != null;
-            }
-            catch
-            {
-                return false;
-            }
+            //need to see what happens for Class<TClass>
+            return context.RequestType.GetTypeInfo().IsClass &&
+                   context.RequestType.HasDefaultCtor();
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var instance = _container.GetInstance(context.RequestType);
+            var instance = Activator.CreateInstance(context.RequestType);
 
             var properties = context.RequestType
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)

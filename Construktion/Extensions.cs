@@ -23,5 +23,14 @@
 
             return ctors.Any(x => x.GetParameters().Length == 0);
         }
+
+        public static bool HasNonDefaultCtor(this Type type)
+        {
+            var ctors = type.GetTypeInfo()
+             .DeclaredConstructors
+             .ToList();
+
+            return ctors.Any(x => x.GetParameters().Length != 0);
+        }
     }
 }

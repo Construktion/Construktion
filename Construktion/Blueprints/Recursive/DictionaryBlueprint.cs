@@ -22,7 +22,6 @@
             var value = context.RequestType.GetGenericArguments()[1];
 
             var keys = UniqueKeys(howMany, key, pipeline, new HashSet<object>()).ToList();
-
             var values = Values(howMany, value, pipeline).ToList();
 
             var dictionary = (IDictionary)Activator.CreateInstance(typeof(Dictionary<,>).MakeGenericType(key, value));
@@ -42,12 +41,9 @@
             if (newItem != null)
                 items.Add(newItem);
 
-            if (items.Count == howMany)
-            {
-                return items;
-            }
-
-            return UniqueKeys(howMany, key, pipeline, items);
+            return items.Count == howMany
+                ? items 
+                : UniqueKeys(howMany, key, pipeline, items);
         }
 
         private IEnumerable<object> Values(int howMany, Type closedType, ConstruktionPipeline pipeline)

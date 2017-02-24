@@ -18,23 +18,22 @@
         {
             var closedType = context.RequestType.GenericTypeArguments[0];
 
-            var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
+            var results = construct(closedType, pipeline);
 
-            var results = construct(closedType, pipeline).ToList();
-
-            results.ForEach(x => items.Add(x));
-
-            return items;
+            return results;
         }
 
-        public IEnumerable<object> construct(Type closedType, ConstruktionPipeline pipeline)
+        private IList construct(Type closedType, ConstruktionPipeline pipeline)
         {
             var count = 3;
+            var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
 
             for (var i = 0; i < count; i++ )
             {
-                yield return pipeline.Construct(new ConstruktionContext(closedType));
+                items.Add(pipeline.Construct(new ConstruktionContext(closedType)));
             }
+
+            return items;
         }
     }
 }

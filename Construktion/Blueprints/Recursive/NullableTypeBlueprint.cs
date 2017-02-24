@@ -5,7 +5,7 @@
 
     public class NullableTypeBlueprint : Blueprint
     {
-        private readonly Random _rand = new Random();
+        private readonly Random _random = new Random();
 
         public bool Matches(ConstruktionContext context)
         {
@@ -17,7 +17,7 @@
         {
             var closedType = context.RequestType.GetGenericArguments()[0];
 
-            var useNull = _rand.Next(1, 5);
+            var useNull = _random.Next(1, 5);
 
             return useNull == 1 
                 ? null 

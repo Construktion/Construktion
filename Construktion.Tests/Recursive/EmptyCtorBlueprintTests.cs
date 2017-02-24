@@ -4,12 +4,12 @@
     using Shouldly;
     using Xunit;
 
-    public class ClassBlueprintTests
+    public class EmptyCtorBlueprintTests
     {
         [Fact]
         public void should_build_a_class_with_its_properties()
         {
-            var blueprint = new ClassBlueprint();
+            var blueprint = new EmptyCtorBlueprint();
 
             var result = (Person)blueprint.Construct(new ConstruktionContext(typeof(Person)), Default.Pipeline);
 

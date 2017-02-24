@@ -8,6 +8,9 @@
 
         public AttributeBlueprint(Func<T, object> value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             _value = value;
         }
 

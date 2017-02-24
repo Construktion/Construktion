@@ -48,13 +48,13 @@ namespace Construktion.Tests.Acceptance
         {
             var result = _construktion.Construct<Parent>(x =>
             {
-                x.Name = "Joe";
-                x.Child.Name = "Lil Joe";
+                x.Name = "Foo";
+                x.Child.Name = "Lil Foo";
             });
 
-            result.Name.ShouldBe("Joe");
+            result.Name.ShouldBe("Foo");
             result.Age.ShouldNotBe(default(int));
-            result.Child.Name.ShouldBe("Lil Joe");
+            result.Child.Name.ShouldBe("Lil Foo");
             result.Child.Age.ShouldNotBe(default(int));
         }
 

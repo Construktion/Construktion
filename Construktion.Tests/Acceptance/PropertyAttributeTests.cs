@@ -11,11 +11,11 @@
         {
             var construktion = new Construktion(x => x.AddAttributeBlueprint<Set>(a => a.Value));
 
-            var result = construktion.Construct<Foo>();
+            var foo = construktion.Construct<Foo>();
 
-            result.Bar.ShouldBe("Set");
-            result.Baz.ShouldNotBe("Set");
-            result.Baz.ShouldNotBeNullOrWhiteSpace();
+            foo.Bar.ShouldBe("Set");
+            foo.Baz.ShouldNotBe("Set");
+            foo.Baz.ShouldNotBeNullOrWhiteSpace();
         }
 
         public class Foo

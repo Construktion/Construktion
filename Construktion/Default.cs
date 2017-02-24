@@ -1,5 +1,6 @@
 ﻿namespace Construktion
 {
+    using System;
     using System.Collections.Generic;
     using Blueprints;
     using Blueprints.Recursive;
@@ -9,8 +10,8 @@
     {
         public static List<Blueprint> Blueprints => new List<Blueprint>
         {
-            new StringPropertyBlueprint(),
             new StringBlueprint(),
+            new StringPropertyBlueprint(),
             new NumericBlueprint(),
             new CharBlueprint(),
             new GuidBlueprint(),
@@ -20,7 +21,8 @@
             new ArrayBlueprint(),
             new EnumBlueprint(),
             new NullableTypeBlueprint(),
-            new ClassBlueprint(),
+            new EmptyCtorBlueprint(),
+            new NonEmptyCtorBlueprint(new Dictionary<Type, Type>()),
             new DefensiveBlueprint()
         };
 
