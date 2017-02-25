@@ -64,7 +64,12 @@ order.Customer.Name.ShouldNotBeNullOrWhiteSpace();
 order.Products.Count().ShouldBe(3);
 order.Products.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Sku));
 ```
-
+Nuget Package
+---
+This [package](https://www.nuget.org/packages/Construktion) is currently in pre release and looking for early adopters/contributors.
+```
+Install-Package Construktion
+```
 Customizing
 ---
 Check out the [wiki](https://github.com/Construktion/Construktion/wiki/Construktion-Wiki) for more details about the library and how it can be customized. 
