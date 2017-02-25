@@ -1,7 +1,6 @@
 namespace Construktion.Blueprints.Recursive
 {
     using System;
-    using System.Collections.Generic;
 
     public class ArrayBlueprint : Blueprint
     {
@@ -23,17 +22,13 @@ namespace Construktion.Blueprints.Recursive
         {
             var count = 3;
 
-            var items = new List<object>();
-            for (var i = 0; i < count; i++)
-            {
-                items.Add(pipeline.Construct(new ConstruktionContext(arrayType)));
-            }
+            var array = Array.CreateInstance(arrayType, count);
 
-            var array = Array.CreateInstance(arrayType, items.Count);
-
-            for (var i = 0; i <= items.Count - 1; i++)
+            for (var i = 0; i <= count - 1; i++)
             {
-                array.SetValue(items[i], i);
+                var value = pipeline.Construct(new ConstruktionContext(arrayType));
+
+                array.SetValue(value, i);
             }
 
             return array;
