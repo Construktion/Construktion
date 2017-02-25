@@ -44,6 +44,15 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
+        public void should_prefix_properties_with_property_name()
+        {
+            var child = _construktion.Construct<Child>();
+
+            child.Name.ShouldStartWith("Name-");
+            child.Age.ShouldNotBe(0);
+        }
+
+        [Fact]
         public void should_hardcode_properties()
         {
             var result = _construktion.Construct<Parent>(x =>

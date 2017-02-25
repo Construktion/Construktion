@@ -10,8 +10,8 @@
     {
         public static List<Blueprint> Blueprints => new List<Blueprint>
         {
-            new StringBlueprint(),
             new StringPropertyBlueprint(),
+            new StringBlueprint(),
             new NumericBlueprint(),
             new CharBlueprint(),
             new GuidBlueprint(),
