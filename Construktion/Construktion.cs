@@ -33,7 +33,7 @@
             return result;
         }
 
-        public Construktion WithRegistry(BlueprintRegistry registry)
+        public Construktion UseRegistry(BlueprintRegistry registry)
         {
             if (registry == null)
                 throw new ArgumentNullException(nameof(registry));
@@ -42,13 +42,13 @@
             return this;
         }
 
-        public Construktion WithRegistry(Action<BlueprintRegistry> registry)
+        public Construktion UseRegistry(Action<BlueprintRegistry> registry)
         {
             registry(_registry);
             return this;
         }
 
-        public Construktion WithBlueprint(Blueprint blueprint)
+        public Construktion UseBlueprint(Blueprint blueprint)
         {
             _registry.AddBlueprint(blueprint);
             return this;

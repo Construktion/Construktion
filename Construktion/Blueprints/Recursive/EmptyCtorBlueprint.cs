@@ -18,6 +18,7 @@
             var instance = Activator.CreateInstance(context.RequestType);
 
             var properties = context.RequestType
+                //get writeable public properties ext method
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(x => x.CanWrite);
 

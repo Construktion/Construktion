@@ -18,7 +18,7 @@
 
 
             throw new Exception($"No Blueprint could be found for {context.RequestType.FullName}. Please add " +
-                                $"a custom blueprint if you'd like to create it.");
+                                $"a custom blueprint that can create it.");
         }
     }
 }

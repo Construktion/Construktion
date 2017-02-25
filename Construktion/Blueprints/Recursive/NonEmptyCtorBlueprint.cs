@@ -12,9 +12,6 @@
 
         public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap)
         {
-            if (typeMap == null)
-                throw new ArgumentNullException(nameof(typeMap));
-
             _typeMap = typeMap;
         }
 

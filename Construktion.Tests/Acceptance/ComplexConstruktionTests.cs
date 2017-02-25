@@ -68,6 +68,14 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
+        public void should_not_set_properties_without_a_setter()
+        {
+            var parent = _construktion.Construct<Parent>();
+
+            parent.NoSetter.ShouldBe(0);
+        }
+
+        [Fact]
         public void should_build_any_enumerable_type()
         {
             var result = _construktion.Construct<IReadOnlyCollection<Child>>();
@@ -92,6 +100,8 @@ namespace Construktion.Tests.Acceptance
 
             result.ShouldNotBe(null);
             result.Count.ShouldBe(4);
+            result.Keys.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x));
+            result.Values.ShouldAllBe(x => x != 0);
         }
 
         class Private
@@ -111,6 +121,7 @@ namespace Construktion.Tests.Acceptance
             public string Name { get; set; }
             public int Age { get; set; }
             public Child Child { get; set; }
+            public int NoSetter { get; }
         }
 
         enum TestResult
