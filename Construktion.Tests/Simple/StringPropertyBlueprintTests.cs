@@ -14,7 +14,7 @@
             var pi = typeof(Foo).GetProperty(nameof(Foo.Name));
             var result = (string)blueprint.Construct(new ConstruktionContext(pi), Default.Pipeline);
             
-            result.Substring(0, 5).ShouldBe("Name-");
+            result.ShouldStartWith("Name-");
         }
 
         public class Foo

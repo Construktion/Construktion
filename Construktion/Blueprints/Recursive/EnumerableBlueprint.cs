@@ -28,9 +28,11 @@
             var count = 3;
             var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
 
-            for (var i = 0; i < count; i++ )
+            for (var i = 0; i < count; i++)
             {
-                items.Add(pipeline.Construct(new ConstruktionContext(closedType)));
+                var result = pipeline.Construct(new ConstruktionContext(closedType));
+
+                items.Add(result);
             }
 
             return items;

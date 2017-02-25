@@ -13,7 +13,7 @@
 
             var result = (string)blueprint.Construct(new ConstruktionContext(typeof(string)), Default.Pipeline);
 
-            result.Substring(0, 7).ShouldBe("String-");
+            result.ShouldStartWith("String-");
         }
     }
 }
