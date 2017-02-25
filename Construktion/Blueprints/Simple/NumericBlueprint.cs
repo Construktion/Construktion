@@ -12,21 +12,19 @@
         private readonly object syncRoot = new object();
         private readonly Random _random = new Random();
         private readonly HashSet<long> numbers = new HashSet<long>();
-        //this was Type codes but net standard doesn't have GetTypeCode on Type 
-        //anymore...find out where it is
-        private readonly IEnumerable<Type> _typesHandled = new List<Type>
+        private readonly List<TypeCode> _typesHandled = new List<TypeCode>
         {
-            typeof(byte),
-            typeof(decimal),
-            typeof(double),
-            typeof(Int16),
-            typeof(Int32),
-            typeof(Int64),
-            typeof(sbyte),
-            typeof(Single),
-            typeof(UInt16),
-            typeof(UInt32),
-            typeof(UInt64)
+            TypeCode.Byte,
+            TypeCode.Decimal,
+            TypeCode.Double,
+            TypeCode.Int16,
+            TypeCode.Int32,
+            TypeCode.Int64,
+            TypeCode.SByte,
+            TypeCode.Single,
+            TypeCode.UInt16,
+            TypeCode.UInt32,
+            TypeCode.UInt64
         };
 
         private long lower;
@@ -41,7 +39,7 @@
 
         public bool Matches(ConstruktionContext context)
         {
-           return _typesHandled.Contains(context.RequestType) && !context.RequestType.GetTypeInfo().IsEnum;
+           return _typesHandled.Contains(Type.GetTypeCode(context.RequestType)) && !context.RequestType.GetTypeInfo().IsEnum;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
@@ -51,43 +49,56 @@
 
         private object CreateRandom(Type request)
         {
-            if (request == typeof(byte))
-                return (byte)GetNextRandom();
+            switch (Type.GetTypeCode(request))
+            {
+                case TypeCode.Byte:
+                    return (byte)
+                        GetNextRandom();
 
-            else if (request == typeof(decimal))
-                return (decimal)GetNextRandom();
+                case TypeCode.Decimal:
+                    return (decimal)
+                        GetNextRandom();
 
-            else if (request == typeof(double))
-                return (double)GetNextRandom();
+                case TypeCode.Double:
+                    return (double)
+                        GetNextRandom();
 
-            else if (request == typeof(Int16))
-                return (Int16)GetNextRandom();
+                case TypeCode.Int16:
+                    return (short)
+                        GetNextRandom();
 
-            else if (request == typeof(Int32))
-                return (Int32)GetNextRandom();
+                case TypeCode.Int32:
+                    return (int)
+                        GetNextRandom();
 
-            else if (request == typeof(Int64))
-                return (Int64)GetNextRandom();
+                case TypeCode.Int64:
+                    return
+                        GetNextRandom();
 
-            else if (request == typeof(sbyte))
-                return (sbyte)GetNextRandom();
+                case TypeCode.SByte:
+                    return (sbyte)
+                        GetNextRandom();
 
-            else if (request == typeof(Single))
-                return (Single)GetNextRandom();
+                case TypeCode.Single:
+                    return (float)
+                        GetNextRandom();
 
-            else if (request == typeof(UInt16))
-                return (UInt16)GetNextRandom();
+                case TypeCode.UInt16:
+                    return (ushort)
+                        GetNextRandom();
 
-            else if (request == typeof(UInt32))
-                return (UInt32)GetNextRandom();
+                case TypeCode.UInt32:
+                    return (uint)
+                        GetNextRandom();
 
-            else if (request == typeof(UInt64))
-                return (UInt64)GetNextRandom();
+                case TypeCode.UInt64:
+                    return (ulong)
+                        GetNextRandom();
 
-            else
-                throw new InvalidOperationException($"Numeric Blueprint cannot handle the request of type {request}");
+                default:
+                    throw new InvalidOperationException($"Numeric Blueprint cannot handle the request of type {request}");
+            }
         }
-        
 
         private long GetNextRandom()
         {
