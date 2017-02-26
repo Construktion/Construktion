@@ -72,4 +72,4 @@ Install-Package Construktion
 ```
 Customizing
 ---
-Check out the [wiki](https://github.com/Construktion/Construktion/wiki/Construktion-Wiki) for more details about the library and how it can be customized. 
+Check out the [wiki](https://github.com/Construktion/Construktion/wiki) for more details about the library and how it can be customized. 
