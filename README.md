@@ -1,8 +1,7 @@
 What is Construktion
 ---
 Construktion is a library created to assist with unit testing by simplifying the [arrange](http://wiki.c2.com/?ArrangeActAssert) portion of your tests.
-Its role is to create objects and populate their properties with random data. Many times we don't care what that data is, only that it
-is _something_.
+Its role is to create objects and populate their properties with random data. Many times while testing we don't care what the data is, only that it's _something_.
   
 Getting started
 ---
@@ -73,3 +72,7 @@ Install-Package Construktion
 Customizing
 ---
 Check out the [wiki](https://github.com/Construktion/Construktion/wiki) for more details about the library and how it can be customized. 
+
+Owner
+---
+Joe Gannon, joegannon15@gmail.com
