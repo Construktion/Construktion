@@ -7,10 +7,18 @@
 
     public static class Extensions
     {
-        public static ConstructorInfo Greediest(this List<ConstructorInfo> ctors)
+        public static ConstructorInfo GreedyCtor(this List<ConstructorInfo> ctors)
         {
             var max = ctors.Max(x => x.GetParameters().Length);
             var greedyCtor = ctors.First(x => x.GetParameters().Length == max);
+
+            return greedyCtor;
+        }
+
+        public static ConstructorInfo ModestCtor(this List<ConstructorInfo> ctors)
+        {
+            var min = ctors.Min(x => x.GetParameters().Length);
+            var greedyCtor = ctors.First(x => x.GetParameters().Length == min);
 
             return greedyCtor;
         }

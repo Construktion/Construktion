@@ -9,10 +9,18 @@
     public class NonEmptyCtorBlueprint : Blueprint
     {
         private readonly Dictionary<Type, Type> _typeMap;
+        private readonly Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
 
         public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap)
+            : this(typeMap, Extensions.GreedyCtor)
+        {
+
+        }
+
+        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap, Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy)
         {
             _typeMap = typeMap;
+            _ctorStrategy = ctorStrategy;
         }
 
         public bool Matches(ConstruktionContext context)
@@ -42,13 +50,14 @@
 
         private Func<object> BuildCtor(Type type, ConstruktionPipeline pipeline)
         {
-            var greedyCtor = type.GetTypeInfo()
+            var ctors = type.GetTypeInfo()
                 .DeclaredConstructors
-                .ToList()
-                .Greediest();
+                .ToList();
+
+            var ctor = _ctorStrategy(ctors);
 
             var @params = new List<ConstantExpression>();
-            foreach (var parameter in greedyCtor.GetParameters())
+            foreach (var parameter in ctor.GetParameters())
             {
                 var ctorArg = parameter.ParameterType;
 
@@ -57,9 +66,7 @@
                 @params.Add(Expression.Constant(value));
             }
 
-            var ctor = Expression.Lambda<Func<object>>(Expression.New(greedyCtor, @params)).Compile();
-
-            return ctor;
+            return Expression.Lambda<Func<object>>(Expression.New(ctor, @params)).Compile();
         }
 
         private object construct(Func<object> ctor, ConstruktionPipeline pipeline)

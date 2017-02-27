@@ -96,6 +96,17 @@
             result.Bar.ShouldNotBe(0);
         }
 
+        [Fact]
+        public void should_use_modest_ctor_when_opted_in()
+        {
+            _blueprintRegistry.UseModestCtor();
+
+            var result = new Construktion().UseRegistry(_blueprintRegistry).Construct<MultiCtor>();
+
+            result.Foo.ShouldNotBe(0);
+            result.Bar.ShouldBe(0);
+        }
+
         public class StringA : Blueprint
         {
             public bool Matches(ConstruktionContext context)
@@ -150,8 +161,8 @@
 
         public class MultiCtor
         {
-            public int Foo { get; private set; }
-            public int Bar { get; private set; }
+            public int Foo { get; }
+            public int Bar { get; }
 
             public MultiCtor(int foo)
             {
