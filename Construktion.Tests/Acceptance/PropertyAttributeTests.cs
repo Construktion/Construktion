@@ -1,6 +1,7 @@
 ﻿namespace Construktion.Tests.Acceptance
 {
     using System;
+    using Blueprints.Simple;
     using Shouldly;
     using Xunit;
 
@@ -9,7 +10,7 @@
         [Fact]
         public void should_set_value_from_attribute()
         {
-            var construktion = new Construktion().UseRegistry(x => x.AddAttributeBlueprint<Set>(a => a.Value));
+            var construktion = new Construktion().AddBlueprint(new AttributeBlueprint<Set>(x => x.Value));
 
             var foo = construktion.Construct<Foo>();
 

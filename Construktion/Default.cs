@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Blueprints;
     using Blueprints.Recursive;
     using Blueprints.Simple;
@@ -22,10 +23,18 @@
             new EnumBlueprint(),
             new NullableTypeBlueprint(),
             new EmptyCtorBlueprint(),
-            new NonEmptyCtorBlueprint(new Dictionary<Type, Type>()),
-            new DefensiveBlueprint()
+            //added at runtime
+            //new NonEmptyCtorBlueprint(new Dictionary<Type, Type>()),
+            //new DefensiveBlueprint()
         };
 
-        public static ConstruktionPipeline Pipeline => new DefaultConstruktionPipeline(Blueprints);
+        public static ConstruktionPipeline Pipeline
+            =>
+                new DefaultConstruktionPipeline(
+                    Blueprints.Concat(new List<Blueprint>
+                    {
+                        new NonEmptyCtorBlueprint(new Dictionary<Type, Type>()),
+                        new DefensiveBlueprint()
+                    }));
     }
 }

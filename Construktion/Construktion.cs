@@ -1,11 +1,19 @@
 ﻿namespace Construktion
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using Blueprints;
+    using Blueprints.Recursive;
 
     public class Construktion
     {
-        private BlueprintRegistry _registry = new BlueprintRegistry();
+        private readonly List<Blueprint> _customBlueprints = new List<Blueprint>();
+        private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
+
+        private readonly Func<List<ConstructorInfo>, ConstructorInfo> _defaultCtorStrategy = Extensions.GreedyCtor;
+        private Func<List<ConstructorInfo>, ConstructorInfo> _customCtorStrategy;
 
         public T Construct<T>()
         {
@@ -24,7 +32,11 @@
 
         private T DoConstruct<T>(Type request, Action<T> hardCodes)
         {
-            var pipeline = new DefaultConstruktionPipeline(_registry.Blueprints);
+            var defaultBlueprints = Default.Blueprints;
+            defaultBlueprints.Add(new NonEmptyCtorBlueprint(_typeMap, _customCtorStrategy ?? _defaultCtorStrategy));
+            defaultBlueprints.Add(new DefensiveBlueprint());
+
+            var pipeline = new DefaultConstruktionPipeline(_customBlueprints.Concat(defaultBlueprints));
 
             var result = (T)pipeline.Construct(new ConstruktionContext(request));
           
@@ -33,24 +45,31 @@
             return result;
         }
 
-        public Construktion UseRegistry(BlueprintRegistry registry)
+        //just use a  configure method
+
+        public Construktion AddRegistry(BlueprintRegistry registry)
         {
             if (registry == null)
                 throw new ArgumentNullException(nameof(registry));
 
-            _registry = registry;
+            _customBlueprints.AddRange(registry.Blueprints);
+
+            foreach (var map in registry.TypeMap)
+                if (!_typeMap.ContainsKey(map.Key))
+                    _typeMap[map.Key] = map.Value;
+
+            _customCtorStrategy = _customCtorStrategy ?? registry.CtorStrategy;
+
             return this;
         }
 
-        public Construktion UseRegistry(Action<BlueprintRegistry> registry)
+        public Construktion AddBlueprint(Blueprint blueprint)
         {
-            registry(_registry);
-            return this;
-        }
+            if (blueprint == null)
+                throw new ArgumentNullException(nameof(blueprint));
 
-        public Construktion UseBlueprint(Blueprint blueprint)
-        {
-            _registry.AddBlueprint(blueprint);
+            _customBlueprints.Add(blueprint);
+            
             return this;
         }
     }

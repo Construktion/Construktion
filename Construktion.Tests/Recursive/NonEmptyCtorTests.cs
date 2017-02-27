@@ -26,7 +26,7 @@
             var registry = new BlueprintRegistry();
             registry.Register<IFoo,Foo>();
             registry.Register<IBar, Bar>();
-            var construktion = new Construktion().UseRegistry(registry);
+            var construktion = new Construktion().AddRegistry(registry);
 
             var bar = construktion.Construct<IBar>();
 
