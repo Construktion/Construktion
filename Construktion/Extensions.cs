@@ -18,9 +18,9 @@
         public static ConstructorInfo ModestCtor(this List<ConstructorInfo> ctors)
         {
             var min = ctors.Min(x => x.GetParameters().Length);
-            var greedyCtor = ctors.First(x => x.GetParameters().Length == min);
+            var modestCtor = ctors.First(x => x.GetParameters().Length == min);
 
-            return greedyCtor;
+            return modestCtor;
         }
 
         public static bool HasDefaultCtor(this Type type)
