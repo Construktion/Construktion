@@ -4,7 +4,10 @@ namespace Construktion.Tests.Acceptance
 {
     using Shouldly;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using Xunit;
+    using Xunit.Sdk;
 
     public class ComplexConstruktionTests
     {
@@ -111,6 +114,23 @@ namespace Construktion.Tests.Acceptance
             result.Count.ShouldBe(4);
             result.Keys.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x));
             result.Values.ShouldAllBe(x => x != 0);
+        }
+
+        [Fact]
+        public void should_resolve_parameters_from_method()
+        {
+            var methodInfo = typeof(ComplexConstruktionTests).GetMethod(nameof(TestMethod));
+            var construktion = new Construktion();
+
+            var values = methodInfo.GetParameters().Select(pi => construktion.Construct(pi)).ToList();
+
+            values.Count.ShouldBe(2);
+            ((string)values[0]).ShouldNotBeNullOrWhiteSpace();
+            ((int)values[1]).ShouldNotBe(0);
+        }
+        
+        public void TestMethod(string name, int age)
+        {
         }
 
         class Private

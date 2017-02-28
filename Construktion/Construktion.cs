@@ -30,15 +30,24 @@
             return DoConstruct<object>(request, null);
         }
 
-        private T DoConstruct<T>(Type request, Action<T> hardCodes)
+        public object Construct(ParameterInfo request)
+        {
+            return DoConstruct<object>(null, null, request);
+        }
+
+        private T DoConstruct<T>(Type type, Action<T> hardCodes, ParameterInfo parameterInfo = null)
         {
             var defaultBlueprints = Default.Blueprints;
             defaultBlueprints.Add(new NonEmptyCtorBlueprint(_typeMap, _customCtorStrategy ?? _defaultCtorStrategy));
             defaultBlueprints.Add(new DefensiveBlueprint());
 
+            var context = type != null
+                ? new ConstruktionContext(type)
+                : new ConstruktionContext(parameterInfo);
+            
             var pipeline = new DefaultConstruktionPipeline(_customBlueprints.Concat(defaultBlueprints));
 
-            var result = (T)pipeline.Construct(new ConstruktionContext(request));
+            var result = (T)pipeline.Construct(context);
           
             hardCodes?.Invoke(result);
 
