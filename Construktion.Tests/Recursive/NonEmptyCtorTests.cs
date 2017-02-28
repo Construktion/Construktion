@@ -11,7 +11,7 @@
         [Fact]
         public void should_match_class_with_non_default_ctor_and_not_match_class_with_default_ctor()
         {
-            var blueprint = new NonEmptyCtorBlueprint(new Dictionary<Type, Type>());
+            var blueprint = new NonEmptyCtorBlueprint(new Dictionary<Type, Type>(), Extensions.GreedyCtor);
 
             var matchesNonEmptyCtor = blueprint.Matches(new ConstruktionContext(typeof(Bar)));
             var matchesEmptyCtor = blueprint.Matches(new ConstruktionContext(typeof(EmptyCtor)));
@@ -26,7 +26,7 @@
             var registry = new BlueprintRegistry();
             registry.Register<IFoo,Foo>();
             registry.Register<IBar, Bar>();
-            var construktion = new Construktion().UseRegistry(registry);
+            var construktion = new Construktion().AddRegistry(registry);
 
             var bar = construktion.Construct<IBar>();
 

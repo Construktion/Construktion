@@ -1,11 +1,17 @@
 ﻿namespace Construktion
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using Blueprints;
+    using Blueprints.Recursive;
 
     public class Construktion
     {
-        private BlueprintRegistry _registry = new BlueprintRegistry();
+        private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
+        private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
+        private readonly List<Blueprint> _customBlueprints = new List<Blueprint>();
 
         public T Construct<T>()
         {
@@ -24,7 +30,9 @@
 
         private T DoConstruct<T>(Type request, Action<T> hardCodes)
         {
-            var pipeline = new DefaultConstruktionPipeline(_registry.Blueprints);
+            var blueprints = PrepareBlueprints();
+
+            var pipeline = new DefaultConstruktionPipeline(blueprints);
 
             var result = (T)pipeline.Construct(new ConstruktionContext(request));
           
@@ -33,25 +41,58 @@
             return result;
         }
 
-        public Construktion UseRegistry(BlueprintRegistry registry)
+        public Construktion AddRegistry(BlueprintRegistry registry)
+        {
+            addRegistry(registry);
+            return this;
+        }
+
+        public Construktion AddRegistry(Action<BlueprintRegistry> registry)
+        {
+            var _registry = new BlueprintRegistry();
+
+            registry(_registry);
+
+            addRegistry(_registry);
+            return this;
+        }
+
+        public Construktion AddBlueprint(Blueprint blueprint)
+        {
+            if (blueprint == null)
+                throw new ArgumentNullException(nameof(blueprint));
+
+            _customBlueprints.Add(blueprint);
+            return this;
+        }
+
+        private void addRegistry(BlueprintRegistry registry)
         {
             if (registry == null)
                 throw new ArgumentNullException(nameof(registry));
 
-            _registry = registry;
-            return this;
+            _ctorStrategy = _ctorStrategy ?? registry.CtorStrategy;
+
+            foreach (var map in registry.TypeMap)
+            {
+                if (!_typeMap.ContainsKey(map.Key))
+                    _typeMap[map.Key] = map.Value;
+            }
+
+            _customBlueprints.AddRange(registry.Blueprints);
         }
 
-        public Construktion UseRegistry(Action<BlueprintRegistry> registry)
+        private IEnumerable<Blueprint> PrepareBlueprints()
         {
-            registry(_registry);
-            return this;
-        }
+            var defaults = Default.Blueprints;
 
-        public Construktion UseBlueprint(Blueprint blueprint)
-        {
-            _registry.AddBlueprint(blueprint);
-            return this;
+            var idx = defaults.FindIndex(x => x.GetType() == typeof(NonEmptyCtorBlueprint));
+
+            _ctorStrategy = _ctorStrategy ?? Extensions.GreedyCtor;
+
+            defaults[idx] = new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy);
+
+            return _customBlueprints.Concat(defaults);
         }
     }
 }

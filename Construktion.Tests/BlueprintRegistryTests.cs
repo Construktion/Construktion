@@ -2,7 +2,6 @@
 {
     using System;
     using Blueprints;
-    using Recursive;
     using Shouldly;
     using Xunit;
 
@@ -20,7 +19,7 @@
         {
             _blueprintRegistry.Register<IFoo, Foo>();
 
-            var result = new Construktion().UseRegistry(_blueprintRegistry).Construct<IFoo>();
+            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -30,7 +29,7 @@
         {
             _blueprintRegistry.AddBlueprint(new StringA());
 
-            var result = new Construktion().UseRegistry(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<string>();
 
             result.ShouldBe("StringA");
         }
@@ -40,7 +39,7 @@
         {
             _blueprintRegistry.AddBlueprint<StringA>();
 
-            var result = new Construktion().UseRegistry(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<string>();
 
             result.ShouldBe("StringA");
         }
@@ -51,7 +50,19 @@
             _blueprintRegistry.AddBlueprint(new StringB());
             _blueprintRegistry.AddBlueprint(new StringA());
 
-            var result = new Construktion().UseRegistry(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<string>();
+
+            result.ShouldBe("StringB");
+        }
+
+        [Fact]
+        public void registries_registered_first_should_have_their_blueprints_registered_first()
+        {
+            var construktion = new Construktion()
+                .AddRegistry(new StringBRegistry())
+                .AddRegistry(new StringARegistry());
+
+            var result = construktion.Construct<string>();
 
             result.ShouldBe("StringB");
         }
@@ -61,7 +72,7 @@
         {
             _blueprintRegistry.AddAttributeBlueprint<Set>(x => x.Value);
 
-            var foo = new Construktion().UseRegistry(_blueprintRegistry).Construct<Foo>();
+            var foo = new Construktion().AddRegistry(_blueprintRegistry).Construct<Foo>();
 
             foo.Bar.ShouldBe("Set");
         }
@@ -69,7 +80,7 @@
         [Fact]
         public void should_work_with_a_custom_registry()
         {
-            var construktion = new Construktion().UseRegistry(new StringARegistry());
+            var construktion = new Construktion().AddRegistry(new StringARegistry());
 
             var foo = construktion.Construct<Foo>();
 
@@ -82,7 +93,7 @@
             //_blueprintRegistry.Register<IFoo, Foo>();
 
             Should.Throw<Exception>
-                (() => new Construktion().UseRegistry(_blueprintRegistry).Construct<IFoo>())
+                (() => new Construktion().AddRegistry(_blueprintRegistry).Construct<IFoo>())
                 .Message
                 .ShouldContain("Cannot construct the interface IFoo.");
         }
@@ -101,7 +112,7 @@
         {
             _blueprintRegistry.UseModestCtor();
 
-            var result = new Construktion().UseRegistry(_blueprintRegistry).Construct<MultiCtor>();
+            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<MultiCtor>();
 
             result.Foo.ShouldNotBe(0);
             result.Bar.ShouldBe(0);
@@ -138,6 +149,14 @@
             public StringARegistry()
             {
                 AddBlueprint(new StringA());
+            }
+        }
+
+        public class StringBRegistry : BlueprintRegistry
+        {
+            public StringBRegistry()
+            {
+                AddBlueprint(new StringB());
             }
         }
 

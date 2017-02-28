@@ -22,7 +22,7 @@
             new EnumBlueprint(),
             new NullableTypeBlueprint(),
             new EmptyCtorBlueprint(),
-            new NonEmptyCtorBlueprint(new Dictionary<Type, Type>()),
+            new NonEmptyCtorBlueprint(new Dictionary<Type, Type>(), Extensions.GreedyCtor),
             new DefensiveBlueprint()
         };
 

@@ -33,7 +33,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void should_build_nested_classes_too()
+        public void should_build_nested_classes()
         {
             var result = _construktion.Construct<Parent>();
 
