@@ -1,19 +1,12 @@
 ﻿namespace Construktion
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using Blueprints;
-    using Blueprints.Recursive;
 
     public class Construktion
     {
-        private readonly List<Blueprint> _customBlueprints = new List<Blueprint>();
-        private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
-
-        private readonly Func<List<ConstructorInfo>, ConstructorInfo> _defaultCtorStrategy = Extensions.GreedyCtor;
-        private Func<List<ConstructorInfo>, ConstructorInfo> _customCtorStrategy;
+        private readonly BlueprintRegistry _registry = new BlueprintRegistry();
 
         public T Construct<T>()
         {
@@ -37,15 +30,11 @@
 
         private T DoConstruct<T>(Type type, Action<T> hardCodes, ParameterInfo parameterInfo = null)
         {
-            var defaultBlueprints = Default.Blueprints;
-            defaultBlueprints.Add(new NonEmptyCtorBlueprint(_typeMap, _customCtorStrategy ?? _defaultCtorStrategy));
-            defaultBlueprints.Add(new DefensiveBlueprint());
-
             var context = type != null
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
             
-            var pipeline = new DefaultConstruktionPipeline(_customBlueprints.Concat(defaultBlueprints));
+            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints());
 
             var result = (T)pipeline.Construct(context);
           
@@ -54,31 +43,15 @@
             return result;
         }
 
-        //just use a  configure method
-
         public Construktion AddRegistry(BlueprintRegistry registry)
         {
-            if (registry == null)
-                throw new ArgumentNullException(nameof(registry));
-
-            _customBlueprints.AddRange(registry.Blueprints);
-
-            foreach (var map in registry.TypeMap)
-                if (!_typeMap.ContainsKey(map.Key))
-                    _typeMap[map.Key] = map.Value;
-
-            _customCtorStrategy = _customCtorStrategy ?? registry.CtorStrategy;
-
+            _registry.AddRegistry(registry);
             return this;
         }
 
         public Construktion AddBlueprint(Blueprint blueprint)
         {
-            if (blueprint == null)
-                throw new ArgumentNullException(nameof(blueprint));
-
-            _customBlueprints.Add(blueprint);
-            
+            _registry.AddBlueprint(blueprint);
             return this;
         }
     }

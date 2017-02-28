@@ -10,7 +10,7 @@
         private readonly PropertyInfo _propertyInfo;
 
         /// <summary>
-        /// The name of the property. An empty string indicates an anonymous string is being constructed.
+        /// The name of the property. An empty string indicates a PropertyContext is NOT being constructed.
         /// </summary>
         public string Name => _propertyInfo?.Name ?? "";
 

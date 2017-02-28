@@ -2,53 +2,71 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using Blueprints;
+    using Blueprints.Recursive;
     using Blueprints.Simple;
 
     public class BlueprintRegistry
     {
-        internal Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; } = Extensions.GreedyCtor;
-        internal Dictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
-        internal List<Blueprint> Blueprints { get; } = new List<Blueprint>();
+        private readonly List<Blueprint> _defaultBlueprints = Default.Blueprints;
+
+        private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy = Extensions.GreedyCtor;
+        private Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
+        private List<Blueprint> _customBlueprints { get; } = new List<Blueprint>();
 
         public void AddBlueprint(Blueprint blueprint)
         {
             if (blueprint == null)
                 throw new ArgumentNullException(nameof(blueprint));
 
-            Blueprints.Add(blueprint);
+            _customBlueprints.Add(blueprint);
         }
 
         public void AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
-            Blueprints.Add((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
+            _customBlueprints.Add((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
         }
 
         public void Register<TContract, TImplementation>() where TImplementation : TContract
         {
-            if (!TypeMap.ContainsKey(typeof(TContract)))
-                TypeMap[typeof(TContract)] = typeof(TImplementation);
+            if (!_typeMap.ContainsKey(typeof(TContract)))
+                _typeMap[typeof(TContract)] = typeof(TImplementation);
         }
 
         public void AddAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
         {
             var attributeBlueprint = new AttributeBlueprint<T>(value);
 
-            Blueprints.Add(attributeBlueprint);
+            _customBlueprints.Add(attributeBlueprint);
         }
 
         public void UseModestCtor()
         {
-            CtorStrategy = Extensions.ModestCtor;
+            _ctorStrategy = Extensions.ModestCtor;
         }
 
-        internal void AddCustomBlueprints(IEnumerable<Blueprint> blueprints)
+        internal void AddRegistry(BlueprintRegistry registry)
         {
-            if (blueprints == null)
-                throw new ArgumentNullException(nameof(blueprints));
+            _ctorStrategy = registry._ctorStrategy;
 
-            Blueprints.AddRange(blueprints);
+            _customBlueprints.AddRange(registry._customBlueprints);
+
+            foreach (var map in registry._typeMap)
+                if (!_typeMap.ContainsKey(map.Key))
+                {
+                    _typeMap[map.Key] = map.Value;
+                }
+
+            var idx = _defaultBlueprints.FindIndex(x => x.GetType() == typeof(NonEmptyCtorBlueprint));
+
+            _defaultBlueprints[idx] = new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy);
+        }
+
+        internal List<Blueprint> GetBlueprints()
+        {
+            return _customBlueprints.Concat(_defaultBlueprints).ToList();
         }
     }
 }

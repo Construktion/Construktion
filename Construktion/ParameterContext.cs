@@ -10,7 +10,7 @@
         private readonly ParameterInfo _parameterInfo;
 
         /// <summary>
-        /// The name of the parameter. An empty string indicates an anonymous string is being constructed.
+        /// The name of the parameter. An empty string indicates a parameter context is NOT being constructed.
         /// </summary>
         public string Name => _parameterInfo?.Name ?? "";
 

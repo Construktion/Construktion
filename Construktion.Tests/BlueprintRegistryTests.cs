@@ -2,7 +2,6 @@
 {
     using System;
     using Blueprints;
-    using Recursive;
     using Shouldly;
     using Xunit;
 
@@ -52,6 +51,18 @@
             _blueprintRegistry.AddBlueprint(new StringA());
 
             var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<string>();
+
+            result.ShouldBe("StringB");
+        }
+
+        [Fact]
+        public void registries_registered_first_have_their_blueprints_used_first()
+        {
+            var construktion = new Construktion();
+            construktion.AddRegistry(new StringBRegistry());
+            construktion.AddRegistry(new StringARegistry());
+
+            var result = construktion.Construct<string>();
 
             result.ShouldBe("StringB");
         }
@@ -138,6 +149,14 @@
             public StringARegistry()
             {
                 AddBlueprint(new StringA());
+            }
+        }
+
+        public class StringBRegistry : BlueprintRegistry
+        {
+            public StringBRegistry()
+            {
+                AddBlueprint(new StringB());
             }
         }
 

@@ -11,12 +11,6 @@
         private readonly Dictionary<Type, Type> _typeMap;
         private readonly Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
 
-        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap)
-            : this(typeMap, Extensions.GreedyCtor)
-        {
-
-        }
-
         public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap, Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy)
         {
             _typeMap = typeMap;

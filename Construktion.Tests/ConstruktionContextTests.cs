@@ -37,6 +37,7 @@
 
             var context = new ConstruktionContext(parameterInfo);
 
+            context.RequestType.ShouldBe(typeof(string));
             context.ParameterContext.Name.ShouldBe("name");
             context.ParameterContext.IsType(typeof(string)).ShouldBe(true);
             context.ParameterContext.GetAttributes(typeof(MaxLengthAttribute)).Count().ShouldBe(1);
