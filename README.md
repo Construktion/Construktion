@@ -67,7 +67,7 @@ Nuget Package
 ---
 This [package](https://www.nuget.org/packages/Construktion) is currently in pre release and looking for early adopters/contributors.
 ```
-Install-Package Construktion
+Install-Package Construktion -Pre
 ```
 Customizing
 ---

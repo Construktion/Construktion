@@ -33,11 +33,11 @@
             var context = type != null
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
-            
+
             var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints());
 
             var result = (T)pipeline.Construct(context);
-          
+
             hardCodes?.Invoke(result);
 
             return result;
