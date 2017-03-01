@@ -20,6 +20,7 @@
             new EnumerableBlueprint(),
             new ArrayBlueprint(),
             new EnumBlueprint(),
+            new DateTimeBlueprint(),
             new NullableTypeBlueprint(),
             new EmptyCtorBlueprint(),
             new NonEmptyCtorBlueprint(new Dictionary<Type, Type>(), Extensions.GreedyCtor),

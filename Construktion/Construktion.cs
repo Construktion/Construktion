@@ -45,7 +45,7 @@
 
         public Construktion AddRegistry(BlueprintRegistry registry)
         {
-            _registry.AddRegistry(registry);
+            _registry.ApplyRegistry(registry);
             return this;
         }
 

@@ -38,6 +38,14 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
+        public void datetime()
+        {
+            var result = _construktion.Construct<DateTime>();
+
+            result.ShouldNotBe(default(DateTime));
+        }
+
+        [Fact]
         public void bytes()
         {
             var result = _construktion.Construct<byte>();

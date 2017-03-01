@@ -47,7 +47,7 @@
             _ctorStrategy = Extensions.ModestCtor;
         }
 
-        internal void AddRegistry(BlueprintRegistry registry)
+        internal void ApplyRegistry(BlueprintRegistry registry)
         {
             _ctorStrategy = registry._ctorStrategy;
 
