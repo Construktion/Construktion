@@ -47,7 +47,7 @@
             _ctorStrategy = Extensions.ModestCtor;
         }
 
-        internal void ApplyRegistry(BlueprintRegistry registry)
+        internal void AddRegistry(BlueprintRegistry registry)
         {
             _ctorStrategy = registry._ctorStrategy;
 
@@ -67,6 +67,30 @@
         internal List<Blueprint> GetBlueprints()
         {
             return _customBlueprints.Concat(_defaultBlueprints).ToList();
+        }
+
+        /// <summary>
+        /// Return 0 for int properties ending in "Id"
+        /// </summary>
+        public void OmitIdProperties()
+        {
+            _customBlueprints.Add(new OmitIdBlueprint());
+        }
+
+        /// <summary>
+        /// Define a convention to match "Id" properties. Matches ints.
+        /// </summary>
+        public void OmitIdProperties(Func<string, bool> convention)
+        {
+            _customBlueprints.Add(new OmitIdBlueprint(convention, typeof(int)));
+        }
+
+        /// <summary>
+        /// Define a convention to omit properties of the specified type
+        /// </summary>
+        public void OmitIdProperties(Func<string, bool> convention, Type propertyType)
+        {
+            _customBlueprints.Add(new OmitIdBlueprint(convention, propertyType));
         }
     }
 }

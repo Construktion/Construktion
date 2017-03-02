@@ -16,17 +16,17 @@
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var howMany = 4;
+            var count = 4;
 
             var key = context.RequestType.GetGenericArguments()[0];
             var value = context.RequestType.GetGenericArguments()[1];
 
-            var keys = UniqueKeys(howMany, key, pipeline, new HashSet<object>()).ToList();
-            var values = Values(howMany, value, pipeline).ToList();
+            var keys = UniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
+            var values = Values(count, value, pipeline).ToList();
 
             var dictionary = (IDictionary)Activator.CreateInstance(typeof(Dictionary<,>).MakeGenericType(key, value));
 
-            for (var i = 0; i <= howMany - 1; i++)
+            for (var i = 0; i <= count - 1; i++)
             {
                dictionary.Add(keys[i], values[i]);
             }
@@ -34,21 +34,21 @@
             return dictionary;
         }
 
-        private HashSet<object> UniqueKeys(int howMany, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
+        private HashSet<object> UniqueKeys(int count, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
         {
             var newItem = pipeline.Construct(new ConstruktionContext(key));
 
             if (newItem != null)
                 items.Add(newItem);
 
-            return items.Count == howMany
+            return items.Count == count
                 ? items 
-                : UniqueKeys(howMany, key, pipeline, items);
+                : UniqueKeys(count, key, pipeline, items);
         }
 
-        private IEnumerable<object> Values(int howMany, Type closedType, ConstruktionPipeline pipeline)
+        private IEnumerable<object> Values(int count, Type closedType, ConstruktionPipeline pipeline)
         {
-            for (var i = 0; i < howMany; i++)
+            for (var i = 0; i < count; i++)
             {
                 yield return pipeline.Construct(new ConstruktionContext(closedType));
             }
