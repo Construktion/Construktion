@@ -140,5 +140,13 @@ namespace Construktion.Tests.Acceptance
 
             result.ShouldBeOneOf(true, false);
         }
+
+        [Fact]
+        public void timespans()
+        {
+            var result = _construktion.Construct<TimeSpan>();
+
+            result.ShouldNotBe(default(TimeSpan));
+        }
     }
 }

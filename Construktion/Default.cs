@@ -16,6 +16,7 @@
             new CharBlueprint(),
             new GuidBlueprint(),
             new BoolBlueprint(),
+            new TimespanBlueprint(),
             new DictionaryBlueprint(),
             new EnumerableBlueprint(),
             new ArrayBlueprint(),
