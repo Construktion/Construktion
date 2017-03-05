@@ -31,8 +31,12 @@
 
         public void Register<TContract, TImplementation>() where TImplementation : TContract
         {
-            if (!_typeMap.ContainsKey(typeof(TContract)))
-                _typeMap[typeof(TContract)] = typeof(TImplementation);
+            _typeMap[typeof(TContract)] = typeof(TImplementation);
+        }
+
+        public void Register<T>(T instance)
+        {
+            throw new NotImplementedException();
         }
 
         public void AddAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
