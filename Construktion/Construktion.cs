@@ -49,6 +49,16 @@
             return this;
         }
 
+        public Construktion AddRegistry(Action<BlueprintRegistry> configure)
+        {
+            var registry = new BlueprintRegistry();
+
+            configure(registry);
+
+            _registry.AddRegistry(registry);
+            return this;
+        }
+
         public Construktion AddBlueprint(Blueprint blueprint)
         {
             _registry.AddBlueprint(blueprint);

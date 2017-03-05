@@ -28,10 +28,10 @@
         }
 
         [Fact]
-        public void should_opt_in_during_registration()
+        public void should_omit_ids()
         {
             var registry = new BlueprintRegistry();
-            registry.OmitIdProperties();
+            registry.OmitIds();
             var construktion = new Construktion().AddRegistry(registry);
 
             var foo = construktion.Construct<Foo>();
@@ -43,7 +43,7 @@
         public void should_be_able_to_define_a_custom_convention()
         {
             var registry = new BlueprintRegistry();
-            registry.OmitIdProperties(x => x.EndsWith("_id"));
+            registry.OmitIds(x => x.EndsWith("_id"));
             var construktion = new Construktion().AddRegistry(registry);
 
             var foo = construktion.Construct<Foo>();
@@ -55,7 +55,7 @@
         public void should_be_able_to_override_type_and_convention()
         {
             var registry = new BlueprintRegistry();
-            registry.OmitIdProperties(x => x.EndsWith("String_Id"), typeof(string));
+            registry.OmitIds(x => x.EndsWith("String_Id"), typeof(string));
             var construktion = new Construktion().AddRegistry(registry);
 
             var foo = construktion.Construct<Foo>();
@@ -68,6 +68,14 @@
             public int FooId { get; set; }
             public int Foo_id { get; set; }
             public string String_Id { get; set; }
+        }
+    }
+
+    public class Re : BlueprintRegistry
+    {
+        public Re()
+        {
+            OmitIds();
         }
     }
 }

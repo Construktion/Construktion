@@ -103,8 +103,7 @@
         {
             var result = new Construktion().Construct<MultiCtor>();
 
-            result.Foo.ShouldNotBe(0);
-            result.Bar.ShouldNotBe(0);
+            result.UsedGreedyCtor.ShouldBe(true);
         }
 
         [Fact]
@@ -114,8 +113,49 @@
 
             var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<MultiCtor>();
 
-            result.Foo.ShouldNotBe(0);
-            result.Bar.ShouldBe(0);
+            result.UsedModestCtor.ShouldBe(true);
+        }
+
+
+        [Fact]
+        public void should_respect_registries_ctor_strategy()
+        {
+            var registryA = new StringARegistry();
+            registryA.UseModestCtor();
+            var registryB = new StringARegistry();
+            var construktion = new Construktion();
+            construktion.AddRegistry(registryA);
+            construktion.AddRegistry(registryB);
+
+            var result = construktion.Construct<MultiCtor>();
+
+            result.UsedModestCtor.ShouldBe(true);
+        }
+
+        [Fact]
+        public void registries_ctor_strategy_should_overwrite_previous()
+        {
+            var registryA = new StringARegistry();
+            registryA.UseModestCtor();
+            var registryB = new StringARegistry();
+            registryB.UseGreedyCtor();
+            var construktion = new Construktion();
+            construktion.AddRegistry(registryA);
+            construktion.AddRegistry(registryB);
+
+            var result = construktion.Construct<MultiCtor>();
+
+            result.UsedGreedyCtor.ShouldBe(true);
+        }
+
+        [Fact]
+        public void should_use_linq_created_registry()
+        {
+            var construktion = new Construktion().AddRegistry(x => x.UseModestCtor());
+
+            var result = construktion.Construct<MultiCtor>();
+
+            result.UsedModestCtor.ShouldBe(true);
         }
 
         public class StringA : Blueprint
@@ -180,18 +220,17 @@
 
         public class MultiCtor
         {
-            public int Foo { get; }
-            public int Bar { get; }
+            public bool UsedModestCtor { get; }
+            public bool UsedGreedyCtor { get; }
 
-            public MultiCtor(int foo)
+            public MultiCtor(string one)
             {
-                Foo = foo;
+                UsedModestCtor = true;
             }
 
-            public MultiCtor(int foo, int bar)
+            public MultiCtor(string one, string two)
             {
-                Foo = foo;
-                Bar = bar;
+                UsedGreedyCtor = true;
             }
         }
     }

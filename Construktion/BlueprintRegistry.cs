@@ -12,7 +12,7 @@
     {
         private readonly List<Blueprint> _defaultBlueprints = Default.Blueprints;
 
-        private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy = Extensions.GreedyCtor;
+        private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
         private Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
         private List<Blueprint> _customBlueprints { get; } = new List<Blueprint>();
 
@@ -47,9 +47,14 @@
             _ctorStrategy = Extensions.ModestCtor;
         }
 
+        public void UseGreedyCtor()
+        {
+            _ctorStrategy = Extensions.GreedyCtor;
+        }
+
         internal void AddRegistry(BlueprintRegistry registry)
         {
-            _ctorStrategy = registry._ctorStrategy;
+            _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy;
 
             _customBlueprints.AddRange(registry._customBlueprints);
 
@@ -61,7 +66,7 @@
 
             var idx = _defaultBlueprints.FindIndex(x => x.GetType() == typeof(NonEmptyCtorBlueprint));
 
-            _defaultBlueprints[idx] = new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy);
+            _defaultBlueprints[idx] = new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy ?? Extensions.GreedyCtor);
         }
 
         internal List<Blueprint> GetBlueprints()
@@ -72,15 +77,15 @@
         /// <summary>
         /// Return 0 for int properties ending in "Id"
         /// </summary>
-        public void OmitIdProperties()
+        public void OmitIds()
         {
             _customBlueprints.Add(new OmitIdBlueprint());
         }
 
         /// <summary>
-        /// Define a convention to match "Id" properties. Matches ints.
+        /// Define a convention to match "Id" properties. Matches non nullable ints.
         /// </summary>
-        public void OmitIdProperties(Func<string, bool> convention)
+        public void OmitIds(Func<string, bool> convention)
         {
             _customBlueprints.Add(new OmitIdBlueprint(convention, typeof(int)));
         }
@@ -88,7 +93,7 @@
         /// <summary>
         /// Define a convention to omit properties of the specified type
         /// </summary>
-        public void OmitIdProperties(Func<string, bool> convention, Type propertyType)
+        public void OmitIds(Func<string, bool> convention, Type propertyType)
         {
             _customBlueprints.Add(new OmitIdBlueprint(convention, propertyType));
         }
