@@ -28,6 +28,16 @@
             return DoConstruct<object>(null, null, request);
         }
 
+        public object ConstructMany(Type request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object ConstructMany<T>()
+        {
+            throw new NotImplementedException();
+        }
+
         private T DoConstruct<T>(Type type, Action<T> hardCodes, ParameterInfo parameterInfo = null)
         {
             var context = type != null

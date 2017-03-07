@@ -5,7 +5,7 @@
     using Shouldly;
     using Xunit;
 
-    public class OmitIdBlueprintTests
+    public class OmitPropertyBlueprintTests
     {
         [Fact]
         public void should_match_defined_convention()
@@ -25,18 +25,6 @@
             var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("FooId")), Default.Pipeline);
 
             result.ShouldBe(0);
-        }
-
-        [Fact]
-        public void should_omit_ids()
-        {
-            var registry = new BlueprintRegistry();
-            registry.OmitIds();
-            var construktion = new Construktion().AddRegistry(registry);
-
-            var foo = construktion.Construct<Foo>();
-
-            foo.FooId.ShouldBe(0);
         }
 
         [Fact]

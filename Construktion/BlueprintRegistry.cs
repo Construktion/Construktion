@@ -30,7 +30,8 @@
         }
 
         /// <summary>
-        /// Registers an implementation to use for the contract class. 
+        /// Registers an implementation to be supplied for the contract class. 
+        /// Instances are transient and the last registered will be chosen.
         /// </summary>
         /// <typeparam name="TContract"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
@@ -39,7 +40,7 @@
             _typeMap[typeof(TContract)] = typeof(TImplementation);
         }
 
-        public void Register<T>(T instance)
+        public void RegisterScoped<T>(T instance)
         {
             throw new NotImplementedException();
         }
@@ -68,11 +69,10 @@
             foreach (var map in registry._typeMap)
                 _typeMap[map.Key] = map.Value;
 
-            var idx = _defaultBlueprints.FindIndex(x => x.GetType() == typeof(NonEmptyCtorBlueprint));
+            _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy ?? Extensions.GreedyCtor;
 
-            _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy;
-
-            _defaultBlueprints[idx] = new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy ?? Extensions.GreedyCtor);
+            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint),
+                new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy));
         }
 
         internal List<Blueprint> GetBlueprints()

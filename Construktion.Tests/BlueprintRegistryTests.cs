@@ -7,19 +7,30 @@
 
     public class BlueprintRegistryTests
     {
-        private readonly BlueprintRegistry _blueprintRegistry;
+        private readonly BlueprintRegistry _registry;
 
         public BlueprintRegistryTests()
         {
-            _blueprintRegistry = new BlueprintRegistry();
+            _registry = new BlueprintRegistry();
+        }
+
+        [Fact]
+        public void should_omit_ids()
+        {
+            _registry.OmitIds();
+            var construktion = new Construktion().AddRegistry(_registry);
+
+            var foo = construktion.Construct<Foo>();
+
+            foo.FooId.ShouldBe(0);
         }
 
         [Fact]
         public void should_register_instance_with_contract()
         {
-            _blueprintRegistry.Register<IFoo, Foo>();
+            _registry.Register<IFoo, Foo>();
 
-            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<IFoo>();
+            var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -27,10 +38,10 @@
         [Fact]
         public void last_registered_instance_should_be_chosen()
         {
-            _blueprintRegistry.Register<IFoo, Foo>();
-            _blueprintRegistry.Register<IFoo, Foo2>();
+            _registry.Register<IFoo, Foo>();
+            _registry.Register<IFoo, Foo2>();
 
-            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<IFoo>();
+            var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo2>();
         }
@@ -38,9 +49,9 @@
         [Fact]
         public void should_register_a_custom_blueprint()
         {
-            _blueprintRegistry.AddBlueprint(new StringA());
+            _registry.AddBlueprint(new StringA());
 
-            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().AddRegistry(_registry).Construct<string>();
 
             result.ShouldBe("StringA");
         }
@@ -48,9 +59,9 @@
         [Fact]
         public void should_register_via_generic_parameter()
         {
-            _blueprintRegistry.AddBlueprint<StringA>();
+            _registry.AddBlueprint<StringA>();
 
-            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().AddRegistry(_registry).Construct<string>();
 
             result.ShouldBe("StringA");
         }
@@ -58,16 +69,16 @@
         [Fact]
         public void blue_prints_registered_first_are_chosen_first()
         {
-            _blueprintRegistry.AddBlueprint(new StringB());
-            _blueprintRegistry.AddBlueprint(new StringA());
+            _registry.AddBlueprint(new StringB());
+            _registry.AddBlueprint(new StringA());
 
-            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<string>();
+            var result = new Construktion().AddRegistry(_registry).Construct<string>();
 
             result.ShouldBe("StringB");
         }
 
         [Fact]
-        public void registries_registered_first_have_their_blueprints_used_first()
+        public void registries_registered_first_should_have_their_blueprints_used_first()
         {
             var construktion = new Construktion();
             construktion.AddRegistry(new StringBRegistry());
@@ -81,9 +92,9 @@
         [Fact]
         public void should_register_attribute_blueprint()
         {
-            _blueprintRegistry.AddAttributeBlueprint<Set>(x => x.Value);
+            _registry.AddAttributeBlueprint<Set>(x => x.Value);
 
-            var foo = new Construktion().AddRegistry(_blueprintRegistry).Construct<Foo>();
+            var foo = new Construktion().AddRegistry(_registry).Construct<Foo>();
 
             foo.Bar.ShouldBe("Set");
         }
@@ -104,7 +115,7 @@
             //_blueprintRegistry.Register<IFoo, Foo>();
 
             Should.Throw<Exception>
-                (() => new Construktion().AddRegistry(_blueprintRegistry).Construct<IFoo>())
+                (() => new Construktion().AddRegistry(_registry).Construct<IFoo>())
                 .Message
                 .ShouldContain("Cannot construct the interface IFoo.");
         }
@@ -120,39 +131,45 @@
         [Fact]
         public void should_use_modest_ctor_when_opted_in()
         {
-            _blueprintRegistry.UseModestCtor();
+            _registry.UseModestCtor();
 
-            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<MultiCtor>();
+            var result = new Construktion().AddRegistry(_registry).Construct<MultiCtor>();
 
             result.UsedModestCtor.ShouldBe(true);
         }
 
         [Fact]
-        public void should_respect_the_registries_ctor_strategy()
+        public void a_new_registry_without_a_ctor_strategy_should_not_overwrite_previous()
         {
             var registryA = new StringARegistry();
             registryA.UseModestCtor();
+
             var registryB = new StringARegistry();
+
             var construktion = new Construktion();
             construktion.AddRegistry(registryA);
             construktion.AddRegistry(registryB);
 
+            //act
             var result = construktion.Construct<MultiCtor>();
 
             result.UsedModestCtor.ShouldBe(true);
         }
 
         [Fact]
-        public void registries_ctor_strategy_should_overwrite_previous()
+        public void should_use_the_last_registered_ctor_strategy()
         {
             var registryA = new StringARegistry();
             registryA.UseModestCtor();
+
             var registryB = new StringARegistry();
             registryB.UseGreedyCtor();
+
             var construktion = new Construktion();
             construktion.AddRegistry(registryA);
             construktion.AddRegistry(registryB);
 
+            //act
             var result = construktion.Construct<MultiCtor>();
 
             result.UsedGreedyCtor.ShouldBe(true);
@@ -224,6 +241,8 @@
 
         public class Foo : IFoo
         {
+            public int FooId { get; set; }
+
             [Set("Set")]
             public string Bar { get; set; }
         }
