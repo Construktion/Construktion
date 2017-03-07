@@ -25,6 +25,17 @@
         }
 
         [Fact]
+        public void last_registered_instance_should_be_chosen()
+        {
+            _blueprintRegistry.Register<IFoo, Foo>();
+            _blueprintRegistry.Register<IFoo, Foo2>();
+
+            var result = new Construktion().AddRegistry(_blueprintRegistry).Construct<IFoo>();
+
+            result.ShouldBeOfType<Foo2>();
+        }
+
+        [Fact]
         public void should_register_a_custom_blueprint()
         {
             _blueprintRegistry.AddBlueprint(new StringA());
@@ -116,9 +127,8 @@
             result.UsedModestCtor.ShouldBe(true);
         }
 
-
         [Fact]
-        public void should_respect_registries_ctor_strategy()
+        public void should_respect_the_registries_ctor_strategy()
         {
             var registryA = new StringARegistry();
             registryA.UseModestCtor();
@@ -217,6 +227,8 @@
             [Set("Set")]
             public string Bar { get; set; }
         }
+
+        public class Foo2 : IFoo { }
 
         public class MultiCtor
         {

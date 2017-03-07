@@ -117,18 +117,28 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
+        public void should_resolve_runtime_type()
+        {
+            var result = _construktion.Construct(typeof(Child)) as Child;
+
+            result.Name.ShouldNotBeNullOrWhiteSpace();
+            result.Age.ShouldNotBe(0);
+        }
+
+        [Fact]
         public void should_resolve_parameters_from_method()
         {
             var methodInfo = typeof(ComplexConstruktionTests).GetMethod(nameof(TestMethod));
-            var construktion = new Construktion();
 
-            var values = methodInfo.GetParameters().Select(pi => construktion.Construct(pi)).ToList();
+            var values = methodInfo.GetParameters()
+                .Select(pi => _construktion.Construct(pi))
+                .ToList();
 
             values.Count.ShouldBe(2);
             ((string)values[0]).ShouldNotBeNullOrWhiteSpace();
             ((int)values[1]).ShouldNotBe(0);
         }
-        
+
         public void TestMethod(string name, int age)
         {
         }

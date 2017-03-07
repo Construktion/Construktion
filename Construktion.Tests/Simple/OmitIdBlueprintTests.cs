@@ -8,9 +8,9 @@
     public class OmitIdBlueprintTests
     {
         [Fact]
-        public void should_match_property_ending_in_Id()
+        public void should_match_defined_convention()
         {
-            var blueprint = new OmitIdBlueprint();
+            var blueprint = new OmitPropertyBlueprint(x => x.EndsWith("Id"), typeof(int));
 
             var matches = blueprint.Matches(new ConstruktionContext(typeof(Foo).GetProperty(nameof(Foo.FooId))));
 
@@ -20,7 +20,7 @@
         [Fact]
         public void should_return_default_int()
         {
-            var blueprint = new OmitIdBlueprint();
+            var blueprint = new OmitPropertyBlueprint(x => x.EndsWith("Id"), typeof(int));
 
             var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("FooId")), Default.Pipeline);
 
@@ -40,22 +40,22 @@
         }
 
         [Fact]
-        public void should_be_able_to_define_a_custom_convention()
+        public void should_be_case_sensitive()
         {
             var registry = new BlueprintRegistry();
-            registry.OmitIds(x => x.EndsWith("_id"));
+            registry.OmitIds();
             var construktion = new Construktion().AddRegistry(registry);
 
             var foo = construktion.Construct<Foo>();
 
-            foo.Foo_id.ShouldBe(0);
+            foo.Fooid.ShouldNotBe(0);
         }
 
         [Fact]
-        public void should_be_able_to_override_type_and_convention()
+        public void should_be_able_to_define_a_custom_convention()
         {
             var registry = new BlueprintRegistry();
-            registry.OmitIds(x => x.EndsWith("String_Id"), typeof(string));
+            registry.OmitProperties(x => x.EndsWith("_Id"), typeof(string));
             var construktion = new Construktion().AddRegistry(registry);
 
             var foo = construktion.Construct<Foo>();
@@ -66,16 +66,9 @@
         public class Foo
         {
             public int FooId { get; set; }
+            public int Fooid { get; set; }
             public int Foo_id { get; set; }
             public string String_Id { get; set; }
-        }
-    }
-
-    public class Re : BlueprintRegistry
-    {
-        public Re()
-        {
-            OmitIds();
         }
     }
 }
