@@ -55,7 +55,6 @@
         {
             public int FooId { get; set; }
             public int Fooid { get; set; }
-            public int Foo_id { get; set; }
             public string String_Id { get; set; }
         }
     }
