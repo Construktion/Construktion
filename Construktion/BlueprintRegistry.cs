@@ -85,7 +85,7 @@
         /// </summary>
         public void OmitIds()
         {
-            _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal), typeof(int)));
+            _customBlueprints.Add(new PropertyOmitterBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal), typeof(int)));
         }
      
         /// <summary>
@@ -93,7 +93,7 @@
         /// </summary>
         public void OmitProperties(Func<string, bool> convention, Type propertyType)
         {
-            _customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyType));
+            _customBlueprints.Add(new PropertyOmitterBlueprint(convention, propertyType));
         }
     }
 }

@@ -4,12 +4,12 @@
     using System.Reflection;
     using Blueprints;
 
-    public class OmitPropertyBlueprint : Blueprint
+    public class PropertyOmitterBlueprint : Blueprint
     {
         private readonly Func<string, bool> _convention;
         private readonly Type _propertyType;
 
-        public OmitPropertyBlueprint(Func<string, bool> convention, Type propertyType)
+        public PropertyOmitterBlueprint(Func<string, bool> convention, Type propertyType)
         {
             if (convention == null)
                 throw new ArgumentNullException(nameof(convention));
