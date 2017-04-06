@@ -16,10 +16,17 @@
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var count = 4;
+            int count = 4;
 
-            var key = context.RequestType.GetGenericArguments()[0];
-            var value = context.RequestType.GetGenericArguments()[1];
+            Type key = context.RequestType.GetGenericArguments()[0];
+            Type value = context.RequestType.GetGenericArguments()[1];
+
+            // If dictionary key is an enum with unique number of items less than the available count, use that number for the dictionary generation instead.
+            if (key.GetTypeInfo().IsEnum)
+            {
+                int max = Enum.GetNames(context.RequestType.GetGenericArguments()[0]).Length;
+                count = max < count ? max : count;
+            }
 
             var keys = UniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
             var values = Values(count, value, pipeline).ToList();
