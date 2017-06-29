@@ -16,6 +16,18 @@
         private Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
         private List<Blueprint> _customBlueprints { get; } = new List<Blueprint>();
 
+        public IList<Blueprint> ReadBlueprints() => _customBlueprints.Concat(_defaultBlueprints).ToList();
+
+        public BlueprintRegistry()
+        {
+
+        }
+
+        public BlueprintRegistry(Action<BlueprintRegistry> configure)
+        {
+            configure(this);
+        }
+
         public void AddBlueprint(Blueprint blueprint)
         {
             if (blueprint == null)
@@ -27,6 +39,14 @@
         public void AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
             _customBlueprints.Add((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
+        }
+
+        public void AddBlueprints(IEnumerable<Blueprint> blueprints)
+        {
+            if (blueprints == null)
+                throw new ArgumentNullException(nameof(blueprints));
+
+            _customBlueprints.AddRange(blueprints);
         }
 
         /// <summary>
@@ -73,12 +93,7 @@
 
             _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint),
                 new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy));
-        }
-
-        internal List<Blueprint> GetBlueprints()
-        {
-            return _customBlueprints.Concat(_defaultBlueprints).ToList();
-        }
+        }        
 
         /// <summary>
         /// Return 0 for int properties ending in "Id". Uses Ordinal comparison. 

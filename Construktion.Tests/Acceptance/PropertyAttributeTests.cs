@@ -14,14 +14,13 @@
 
             var foo = construktion.Construct<Foo>();
 
-            foo.Bar.ShouldBe("Set");
-            foo.Baz.ShouldNotBe("Set");
-            foo.Baz.ShouldNotBeNullOrWhiteSpace();
+            foo.Bar.ShouldBe("SetFromAttribute");
+            foo.Baz.ShouldNotBe("SetFromAttribute");
         }
 
         public class Foo
         {
-            [Set("Set")]
+            [Set("SetFromAttribute")]
             public string Bar { get; set; }
 
             public string Baz { get; set; }

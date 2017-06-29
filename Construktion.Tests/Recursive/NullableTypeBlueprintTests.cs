@@ -10,7 +10,7 @@
     public class NullableTypeBlueprintTests
     {
         [Fact]
-        public void should_match_nullable_types()
+        public void should_match_nullable_type()
         {
             var blueprint = new NullableTypeBlueprint();
             var context = new ConstruktionContext(typeof(Foo).GetProperty("NullableAge"));
@@ -21,10 +21,10 @@
         }
 
         [Fact]
-        public void should_not_match_non_nullable_types()
+        public void should_not_match_non_nullable_type()
         {
             var blueprint = new NullableTypeBlueprint();
-            var context = new ConstruktionContext(typeof(Foo).GetProperty("Age"));
+            var context = new ConstruktionContext(typeof(Foo).GetProperty("NonNullableAge"));
 
             var matches = blueprint.Matches(context);
 
@@ -62,7 +62,7 @@
 
         public class Foo
         {
-            public int Age { get; set; }
+            public int NonNullableAge { get; set; }
             public int? NullableAge { get; set; }
         }
     }

@@ -2,6 +2,7 @@
 // ReSharper disable ArrangeTypeMemberModifiers
 namespace Construktion.Tests.Acceptance
 {
+    using System;
     using Shouldly;
     using System.Collections.Generic;
     using System.Linq;
@@ -52,7 +53,6 @@ namespace Construktion.Tests.Acceptance
             var child = _construktion.Construct<Child>();
 
             child.Name.ShouldStartWith("Name-");
-            child.Age.ShouldNotBe(0);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void should_not_set_properties_without_a_setter()
+        public void should_ignore_properties_without_a_setter()
         {
             var parent = _construktion.Construct<Parent>();
 
@@ -88,7 +88,7 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void should_build_any_enumerable_type()
+        public void should_build_any_type_implementing_ienumerable()
         {
             var result = _construktion.Construct<IReadOnlyCollection<Child>>();
 
@@ -143,19 +143,19 @@ namespace Construktion.Tests.Acceptance
         {
         }
 
-        class Private
+        private class Private
         {
             public string PrivateName { get; private set; }
             public int PrivateAge { get; private set; }
         }
 
-        class Child
+        private class Child
         {
             public string Name { get; set; }
             public int Age { get; set; }
         }
 
-        class Parent
+        private class Parent
         {
             public string Name { get; set; }
             public int Age { get; set; }

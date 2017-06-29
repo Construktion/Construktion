@@ -6,7 +6,7 @@
     using Shouldly;
     using Xunit;
 
-    public class NonEmptyCtorTests
+    public class NonEmptyCtorBlueprintTests
     {
         [Fact]
         public void should_match_class_with_non_default_ctor_and_not_match_class_with_default_ctor()
@@ -23,15 +23,20 @@
         [Fact]
         public void should_construct_graph_and_auto_properties()
         {
-            var registry = new BlueprintRegistry();
-            registry.Register<IFoo,Foo>();
-            registry.Register<IBar, Bar>();
-            var construktion = new Construktion().AddRegistry(registry);
+            var blueprint = new NonEmptyCtorBlueprint(new Dictionary<Type, Type>()
+            {
+                { typeof(IBar), typeof(Bar)},
+                { typeof(IFoo), typeof(Foo)}
+            });
+            var pipeline = new DefaultConstruktionPipeline(Default.Blueprints.Replace(typeof(NonEmptyCtorBlueprint), blueprint));
 
-            var bar = construktion.Construct<IBar>();
+            var bar = (IBar)blueprint.Construct(new ConstruktionContext(typeof(IBar)), pipeline);
 
+            bar.ShouldBeOfType<Bar>();
             bar.Name.ShouldNotBeNullOrWhiteSpace();
             bar.Age.ShouldNotBe(0);
+
+            bar.Foo.ShouldBeOfType<Foo>();
             bar.Foo.Name.ShouldNotBeNullOrWhiteSpace();
             bar.Foo.Age.ShouldNotBe(0);
         }

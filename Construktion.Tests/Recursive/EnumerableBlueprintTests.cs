@@ -1,4 +1,5 @@
-﻿namespace Construktion.Tests.Recursive
+﻿// ReSharper disable PossibleMultipleEnumeration
+namespace Construktion.Tests.Recursive
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,7 +10,7 @@
     public class EnumerableBlueprintTests 
     {
         [Fact]
-        public void should_match_all_enumerables_of_t()
+        public void should_match_enumerables_of_t()
         {
             var blueprint = new EnumerableBlueprint();
 
@@ -19,7 +20,7 @@
         }
 
         [Fact]
-        public void should_build_simple_enumerable_type()
+        public void should_build_simple_enumerable()
         {
             var blueprint = new EnumerableBlueprint();
 
@@ -30,7 +31,7 @@
         }
 
         [Fact]
-        public void should_build_a_complex_enumerable_type()
+        public void should_build_complex_enumerable()
         {
             var blueprint = new EnumerableBlueprint();
 
@@ -72,7 +73,6 @@
 
             var result = (ICollection<Foo>)blueprint.Construct(new ConstruktionContext(typeof(ICollection<Foo>)), Default.Pipeline);
 
-            result.ShouldNotBe(null);
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Bar));
             result.ShouldAllBe(x => x.Baz != 0);
         }

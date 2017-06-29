@@ -8,6 +8,16 @@
     {
         private readonly BlueprintRegistry _registry = new BlueprintRegistry();
 
+        public Construktion()
+        {
+
+        }
+
+        public Construktion(Action<Construktion> configure)
+        {
+            configure(this);
+        }
+
         public T Construct<T>()
         {
             return DoConstruct<T>(typeof(T), null);
@@ -44,7 +54,7 @@
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints());
+            var pipeline = new DefaultConstruktionPipeline(_registry.ReadBlueprints());
 
             var result = (T)pipeline.Construct(context);
 

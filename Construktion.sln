@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Construktion", "Construktion\Construktion.csproj", "{29804F2B-1EBD-42E0-89AA-EE8F63250323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Construktion", "Construktion\Construktion.csproj", "{29804F2B-1EBD-42E0-89AA-EE8F63250323}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Construktion.Tests", "Construktion.Tests\Construktion.Tests.csproj", "{671CA75E-365A-4B72-9FE4-22402A580F37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Construktion.Tests", "Construktion.Tests\Construktion.Tests.csproj", "{671CA75E-365A-4B72-9FE4-22402A580F37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

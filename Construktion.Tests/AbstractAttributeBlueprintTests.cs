@@ -12,7 +12,7 @@
         public void should_match_property_with_attribute()
         {
             var blueprint = new SetBlueprint();
-            var property = typeof(Foo).GetProperty("WithSet");
+            var property = typeof(Foo).GetProperty("WithAttribute");
             var context = new ConstruktionContext(property);
 
             var matches = blueprint.Matches(context);
@@ -24,7 +24,7 @@
         public void property_without_attribute_should_not_match()
         {
             var blueprint = new SetBlueprint();
-            var property = typeof(Foo).GetProperty("WithoutSet");
+            var property = typeof(Foo).GetProperty("WithOutAttribute");
             var context = new ConstruktionContext(property);
 
             var matches = blueprint.Matches(context);
@@ -36,12 +36,12 @@
         public void should_construct_from_attribute_value()
         {
             var blueprint = new SetBlueprint();
-            var property = typeof(Foo).GetProperty("WithSet");
+            var property = typeof(Foo).GetProperty("WithAttribute");
             var context = new ConstruktionContext(property);
 
             var result = (string)blueprint.Construct(context, Default.Pipeline);
 
-            result.ShouldBe("Set");
+            result.ShouldBe("SetFromAttribute");
         }
 
         public class SetBlueprint : AbstractAttributeBlueprint<Set>
@@ -54,9 +54,9 @@
 
         public class Foo
         {
-            [Set("Set")]
-            public string WithSet { get; set; }
-            public string WithoutSet { get; set; }
+            [Set("SetFromAttribute")]
+            public string WithAttribute { get; set; }
+            public string WithOutAttribute { get; set; }
         }
 
 

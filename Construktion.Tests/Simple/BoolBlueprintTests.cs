@@ -15,9 +15,9 @@
             var result2 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), Default.Pipeline);
             var result3 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), Default.Pipeline);
 
-            result1.ShouldBeTrue();
-            result2.ShouldBeFalse();
-            result3.ShouldBeTrue();
+            result1.ShouldBe(true);
+            result2.ShouldBe(false);
+            result3.ShouldBe(true);
         }
     }
 }

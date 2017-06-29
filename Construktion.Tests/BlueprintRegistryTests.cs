@@ -26,6 +26,28 @@
         }
 
         [Fact]
+        public void should_be_case_sensitive()
+        {
+            var registry = new BlueprintRegistry(x => x.OmitIds());
+            var construktion = new Construktion().AddRegistry(registry);
+
+            var foo = construktion.Construct<Foo>();
+
+            foo.Fooid.ShouldNotBe(0);
+        }
+
+        [Fact]
+        public void should_be_able_to_define_a_custom_convention()
+        {
+            var registry = new BlueprintRegistry(x => x.OmitProperties(prop => prop.EndsWith("_Id"), typeof(string)));
+            var construktion = new Construktion().AddRegistry(registry);
+
+            var foo = construktion.Construct<Foo>();
+
+            foo.String_Id.ShouldBe(null);
+        }
+
+        [Fact]
         public void should_register_instance_with_contract()
         {
             _registry.Register<IFoo, Foo>();
@@ -49,44 +71,44 @@
         [Fact]
         public void should_register_a_custom_blueprint()
         {
-            _registry.AddBlueprint(new StringA());
+            _registry.AddBlueprint(new StringOneBlueprint());
 
             var result = new Construktion().AddRegistry(_registry).Construct<string>();
 
-            result.ShouldBe("StringA");
+            result.ShouldBe("StringOne");
         }
 
         [Fact]
         public void should_register_via_generic_parameter()
         {
-            _registry.AddBlueprint<StringA>();
+            _registry.AddBlueprint<StringOneBlueprint>();
 
             var result = new Construktion().AddRegistry(_registry).Construct<string>();
 
-            result.ShouldBe("StringA");
+            result.ShouldBe("StringOne");
         }
 
         [Fact]
         public void blue_prints_registered_first_are_chosen_first()
         {
-            _registry.AddBlueprint(new StringB());
-            _registry.AddBlueprint(new StringA());
+            _registry.AddBlueprint(new StringTwoBlueprint());
+            _registry.AddBlueprint(new StringOneBlueprint());
 
             var result = new Construktion().AddRegistry(_registry).Construct<string>();
 
-            result.ShouldBe("StringB");
+            result.ShouldBe("StringTwo");
         }
 
         [Fact]
         public void registries_registered_first_should_have_their_blueprints_used_first()
         {
             var construktion = new Construktion();
-            construktion.AddRegistry(new StringBRegistry());
-            construktion.AddRegistry(new StringARegistry());
+            construktion.AddRegistry(new StringTwoRegistry());
+            construktion.AddRegistry(new StringOneRegistry());
 
             var result = construktion.Construct<string>();
 
-            result.ShouldBe("StringB");
+            result.ShouldBe("StringTwo");
         }
 
         [Fact]
@@ -96,17 +118,17 @@
 
             var foo = new Construktion().AddRegistry(_registry).Construct<Foo>();
 
-            foo.Bar.ShouldBe("Set");
+            foo.Bar.ShouldBe("SetFromAttribute");
         }
 
         [Fact]
         public void should_work_with_a_custom_registry()
         {
-            var construktion = new Construktion().AddRegistry(new StringARegistry());
+            var construktion = new Construktion().AddRegistry(new StringOneRegistry());
 
             var foo = construktion.Construct<Foo>();
 
-            foo.Bar.ShouldBe("StringA");
+            foo.Bar.ShouldBe("StringOne");
         }
 
         [Fact]
@@ -141,10 +163,10 @@
         [Fact]
         public void a_new_registry_without_a_ctor_strategy_should_not_overwrite_previous()
         {
-            var registryA = new StringARegistry();
+            var registryA = new StringOneRegistry();
             registryA.UseModestCtor();
 
-            var registryB = new StringARegistry();
+            var registryB = new StringOneRegistry();
 
             var construktion = new Construktion();
             construktion.AddRegistry(registryA);
@@ -159,10 +181,10 @@
         [Fact]
         public void should_use_the_last_registered_ctor_strategy()
         {
-            var registryA = new StringARegistry();
+            var registryA = new StringOneRegistry();
             registryA.UseModestCtor();
 
-            var registryB = new StringARegistry();
+            var registryB = new StringOneRegistry();
             registryB.UseGreedyCtor();
 
             var construktion = new Construktion();
@@ -185,7 +207,7 @@
             result.UsedModestCtor.ShouldBe(true);
         }
 
-        public class StringA : Blueprint
+        public class StringOneBlueprint : Blueprint
         {
             public bool Matches(ConstruktionContext context)
             {
@@ -194,11 +216,11 @@
 
             public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
-                return "StringA";
+                return "StringOne";
             }
         }
 
-        public class StringB : Blueprint
+        public class StringTwoBlueprint : Blueprint
         {
             public bool Matches(ConstruktionContext context)
             {
@@ -207,23 +229,23 @@
 
             public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
-                return "StringB";
+                return "StringTwo";
             }
         }
 
-        public class StringARegistry : BlueprintRegistry
+        public class StringOneRegistry : BlueprintRegistry
         {
-            public StringARegistry()
+            public StringOneRegistry()
             {
-                AddBlueprint(new StringA());
+                AddBlueprint(new StringOneBlueprint());
             }
         }
 
-        public class StringBRegistry : BlueprintRegistry
+        public class StringTwoRegistry : BlueprintRegistry
         {
-            public StringBRegistry()
+            public StringTwoRegistry()
             {
-                AddBlueprint(new StringB());
+                AddBlueprint(new StringTwoBlueprint());
             }
         }
 
@@ -242,8 +264,10 @@
         public class Foo : IFoo
         {
             public int FooId { get; set; }
+            public int Fooid { get; set; }
+            public string String_Id { get; set; }
 
-            [Set("Set")]
+            [Set("SetFromAttribute")]
             public string Bar { get; set; }
         }
 
