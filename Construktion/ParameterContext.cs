@@ -31,7 +31,7 @@
         /// </summary>
         public IEnumerable<Attribute> GetAttributes(Type attr)
         {
-            return _parameterInfo?.GetCustomAttributes(attr, false).ToList() ?? new List<Attribute>();
+            return (IEnumerable<Attribute>)_parameterInfo?.GetCustomAttributes(attr, false).ToList() ?? new List<Attribute>();
         }
     }
 }
