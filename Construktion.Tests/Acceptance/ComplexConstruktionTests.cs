@@ -71,20 +71,13 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
-        public void should_build_private_properties()
+        public void should_ignore_private_and_no_setters_by_default()
         {
             var result = _construktion.Construct<Private>();
 
-            result.PrivateName.ShouldNotBeNullOrEmpty();
-            result.PrivateAge.ShouldNotBe(default(int));
-        }
-
-        [Fact]
-        public void should_ignore_properties_without_a_setter()
-        {
-            var parent = _construktion.Construct<Parent>();
-
-            parent.NoSetter.ShouldBe(0);
+            result.PrivateName.ShouldBe(null);
+            result.PrivateAge.ShouldBe(0);
+            result.NoSetter.ShouldBe(null);
         }
 
         [Fact]
@@ -147,6 +140,7 @@ namespace Construktion.Tests.Acceptance
         {
             public string PrivateName { get; private set; }
             public int PrivateAge { get; private set; }
+            public string NoSetter { get; }
         }
 
         private class Child
@@ -160,7 +154,6 @@ namespace Construktion.Tests.Acceptance
             public string Name { get; set; }
             public int Age { get; set; }
             public Child Child { get; set; }
-            public int NoSetter { get; }
         }
 
         enum TestResult

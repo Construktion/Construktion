@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Blueprints.Recursive;
 
     public static class Extensions
     {
@@ -49,6 +48,18 @@
             items[idx] = newItem;
 
             return items;
+        }
+
+        public static IEnumerable<PropertyInfo> PropertiesWithPublicSetter(Type type)
+        {
+            return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(x => x.CanWrite && x.GetSetMethod(/*nonPublic*/ true).IsPublic);
+        }
+
+        public static IEnumerable<PropertyInfo> PropertiesWithAccessibleSetter(Type type)
+        {
+            return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(x => x.CanWrite);
         }
     }
 }

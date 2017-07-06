@@ -198,6 +198,16 @@
         }
 
         [Fact]
+        public void should_opt_in_to_constructing_properties_with_private_setter()
+        {
+            var construktion = new Construktion().AddRegistry(x => x.ConstructPrivateSetters());
+
+            var result = construktion.Construct<Foo>();
+
+            result.StringWithPrivateSetter.ShouldNotBeNullOrWhiteSpace();
+        }
+
+        [Fact]
         public void should_use_linq_created_registry()
         {
             var construktion = new Construktion().AddRegistry(x => x.UseModestCtor());
@@ -269,6 +279,8 @@
 
             [Set("SetFromAttribute")]
             public string Bar { get; set; }
+
+            public string StringWithPrivateSetter { get; private set; }
         }
 
         public class Foo2 : IFoo { }

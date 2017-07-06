@@ -11,7 +11,7 @@
         [Fact]
         public void should_match_class_with_non_default_ctor_and_not_match_class_with_default_ctor()
         {
-            var blueprint = new NonEmptyCtorBlueprint(new Dictionary<Type, Type>(), Extensions.GreedyCtor);
+            var blueprint = new NonEmptyCtorBlueprint(new Dictionary<Type, Type>());
 
             var matchesNonEmptyCtor = blueprint.Matches(new ConstruktionContext(typeof(Bar)));
             var matchesEmptyCtor = blueprint.Matches(new ConstruktionContext(typeof(EmptyCtor)));

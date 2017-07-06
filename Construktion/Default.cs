@@ -24,7 +24,7 @@
             new DateTimeBlueprint(),
             new NullableTypeBlueprint(),
             new EmptyCtorBlueprint(),
-            new NonEmptyCtorBlueprint(new Dictionary<Type, Type>(), Extensions.GreedyCtor),
+            new NonEmptyCtorBlueprint(new Dictionary<Type, Type>(), Extensions.GreedyCtor, Extensions.PropertiesWithPublicSetter),
             new DefensiveBlueprint()
         };
 

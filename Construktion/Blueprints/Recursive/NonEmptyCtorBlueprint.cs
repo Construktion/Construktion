@@ -10,16 +10,18 @@
     {
         private readonly Dictionary<Type, Type> _typeMap;
         private readonly Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
+        private readonly Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
 
-        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap) : this(typeMap, Extensions.GreedyCtor)
+        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap) : this(typeMap, Extensions.GreedyCtor, Extensions.PropertiesWithPublicSetter)
         {
             
         }
 
-        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap, Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy)
+        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap, Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy, Func<Type, IEnumerable<PropertyInfo>> propertiesSelector)
         {
             _typeMap = typeMap;
             _ctorStrategy = ctorStrategy;
+            _propertiesSelector = propertiesSelector;
         }
 
         public bool Matches(ConstruktionContext context)
@@ -42,7 +44,7 @@
 
             var ctor = BuildCtor(implementation, pipeline);
 
-            var instance = construct(ctor, pipeline);
+            var instance = construct(ctor(), pipeline);
 
             return instance;
         }
@@ -68,13 +70,9 @@
             return Expression.Lambda<Func<object>>(Expression.New(ctor, @params)).Compile();
         }
 
-        private object construct(Func<object> ctor, ConstruktionPipeline pipeline)
+        private object construct(object instance, ConstruktionPipeline pipeline)
         {
-            var instance = ctor();
-
-            var properties = instance.GetType()
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => x.CanWrite);
+            var properties = _propertiesSelector(instance.GetType());
 
             foreach (var property in properties)
             {

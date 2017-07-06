@@ -1,11 +1,23 @@
 ﻿namespace Construktion.Blueprints.Recursive
 {
     using System;
-    using System.Linq;
+    using System.Collections.Generic;    
     using System.Reflection;
 
     public class EmptyCtorBlueprint : Blueprint
     {
+        private readonly Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
+
+        public EmptyCtorBlueprint() : this (Extensions.PropertiesWithPublicSetter)
+        {
+
+        }
+
+        public EmptyCtorBlueprint(Func<Type, IEnumerable<PropertyInfo>> propertiesSelector)
+        {
+            _propertiesSelector = propertiesSelector;
+        }
+
         public bool Matches(ConstruktionContext context)
         {
             //need to see what happens for Class<TClass>
@@ -17,10 +29,7 @@
         {
             var instance = Activator.CreateInstance(context.RequestType);
 
-            var properties = context.RequestType
-                .GetTypeInfo()
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => x.CanWrite);
+            var properties = _propertiesSelector(context.RequestType);
 
             foreach (var property in properties)
             {

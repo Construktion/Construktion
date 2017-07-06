@@ -13,6 +13,7 @@
         private readonly List<Blueprint> _defaultBlueprints = Default.Blueprints;
 
         private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
+        private Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
         private Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
         private List<Blueprint> _customBlueprints { get; } = new List<Blueprint>();
 
@@ -82,6 +83,16 @@
             _ctorStrategy = Extensions.GreedyCtor;
         }
 
+        public void OmitPrivateSetters()
+        {
+            _propertiesSelector = Extensions.PropertiesWithPublicSetter;
+        }
+
+        public void ConstructPrivateSetters()
+        {
+            _propertiesSelector = Extensions.PropertiesWithAccessibleSetter;
+        }
+
         internal void AddRegistry(BlueprintRegistry registry)
         {
             _customBlueprints.AddRange(registry._customBlueprints);
@@ -89,11 +100,14 @@
             foreach (var map in registry._typeMap)
                 _typeMap[map.Key] = map.Value;
 
+            //todo yuck
             _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy ?? Extensions.GreedyCtor;
+            _propertiesSelector = registry._propertiesSelector ?? _propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
 
-            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint),
-                new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy));
-        }        
+            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint), new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy, _propertiesSelector));
+
+            _defaultBlueprints.Replace(typeof(EmptyCtorBlueprint), new EmptyCtorBlueprint(_propertiesSelector));
+        }
 
         /// <summary>
         /// Return 0 for int properties ending in "Id". Uses Ordinal comparison. 
