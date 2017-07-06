@@ -5,17 +5,11 @@
     using Shouldly;
     using Xunit;
 
-    public enum genres
+    public enum Genres
     {
         Fantasy,
-        Sci_FI,
+        SciFi,
         Biography,
-        Fiction,
-        Cooking
-    }
-
-    public enum small_genres
-    {
         Fiction,
         Cooking
     }
@@ -23,7 +17,7 @@
     public class DictionaryBlueprintTests
     {
         [Fact]
-        public void should_build_dictionary()
+        public void should_have_4_dictionary_items_when_not_an_enum()
         {
             var blueprint = new DictionaryBlueprint();
 
@@ -32,29 +26,16 @@
             dictionary.ShouldNotBe(null);
             dictionary.Count.ShouldBe(4);
         }
-        
+
         [Fact]
-        public void should_build_enum_key_dictionary()
+        public void when_dictionary_is_an_enum_should_cover_all_enum_options()
         {
             var blueprint = new DictionaryBlueprint();
 
-            var dictionary = (Dictionary<genres, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<genres, string>)), Default.Pipeline);
+            var dictionary = (Dictionary<Genres, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<Genres, string>)), Default.Pipeline);
 
             dictionary.ShouldNotBe(null);
-            dictionary.Count.ShouldBe(4);
-        }
-
-        [Fact]
-        public void should_build_small_enum_key_dictionary()
-        {
-            var blueprint = new DictionaryBlueprint();
-
-            var dictionary = (Dictionary<small_genres, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<small_genres, string>)), Default.Pipeline);
-
-            dictionary.ShouldNotBe(null);
-            dictionary.Count.ShouldBe(2);
-        }
-
-
+            dictionary.Count.ShouldBe(5);
+        }      
     }
 }
