@@ -1,6 +1,7 @@
 namespace Construktion.Tests.Acceptance
 {
     using System;
+    using System.Linq;
     using Shouldly;
     using Xunit;
 
@@ -147,6 +148,17 @@ namespace Construktion.Tests.Acceptance
             var result = _construktion.Construct<TimeSpan>();
 
             result.ShouldNotBe(default(TimeSpan));
+        }
+
+        [Fact]
+        public void should_construct_many()
+        {
+            var construktion = new Construktion();
+
+            var results = construktion.ConstructMany<int>();
+
+            results.Count().ShouldBe(3);
+            results.ShouldAllBe(x => x != 0);
         }
     }
 }

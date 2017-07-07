@@ -1,22 +1,13 @@
 ﻿namespace Construktion
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
     using Blueprints;
 
     public class Construktion
     {
         private readonly BlueprintRegistry _registry = new BlueprintRegistry();
-
-        public Construktion()
-        {
-
-        }
-
-        public Construktion(Action<Construktion> configure)
-        {
-            configure(this);
-        }
 
         public T Construct<T>()
         {
@@ -38,14 +29,18 @@
             return DoConstruct<object>(null, null, request);
         }
 
-        public object ConstructMany(Type request)
+        public IEnumerable<T> ConstructMany<T>()
         {
-            throw new NotImplementedException();
-        }
+            var items = new List<T>();
 
-        public object ConstructMany<T>()
-        {
-            throw new NotImplementedException();
+            for (var i = 1; i <= 3; i++)
+            {
+                var item = DoConstruct<T>(typeof(T), null);
+
+                items.Add(item);
+            }
+
+            return items;
         }
 
         private T DoConstruct<T>(Type type, Action<T> hardCodes, ParameterInfo parameterInfo = null)

@@ -19,7 +19,7 @@
 
   <!-- Nuget information -->
   <PropertyGroup>
-    <VersionPrefix>0.8.2</VersionPrefix>
+    <VersionPrefix>0.8.3</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Configuration>Release</Configuration>
     <title>Construktion</title>
