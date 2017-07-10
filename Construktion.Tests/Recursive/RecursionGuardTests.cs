@@ -1,6 +1,5 @@
 ﻿namespace Construktion.Tests.Recursive
 {
-    using System;
     using System.Collections.Generic;
     using Shouldly;
     using Xunit;

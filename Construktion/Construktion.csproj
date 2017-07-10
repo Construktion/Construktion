@@ -22,6 +22,7 @@
     <VersionPrefix>0.9</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Configuration>Release</Configuration>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <title>Construktion</title>
     <authors>Joe Gannon</authors>
     <owners>Joe Gannon</owners>
@@ -31,5 +32,9 @@
       Construktion is a library created to assist with unit testing by simplifying the arrange portion of your tests. It does this by creating objects and populating its properties with random data.
     </description>
     <copyright>Copyright 2017</copyright>
+  </PropertyGroup>
+  
+    <PropertyGroup>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 </Project>

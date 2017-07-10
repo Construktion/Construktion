@@ -2,13 +2,11 @@
 // ReSharper disable ArrangeTypeMemberModifiers
 namespace Construktion.Tests.Acceptance
 {
-    using System;
     using Shouldly;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using Xunit;
-    using Xunit.Sdk;
 
     public class ComplexConstruktionTests
     {
