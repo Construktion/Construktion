@@ -15,6 +15,16 @@
         }
 
         [Fact]
+        public void should_register_a_custom_blueprint()
+        {
+            _registry.AddBlueprint(new StringOneBlueprint());
+
+            var result = new Construktion().AddRegistry(_registry).Construct<string>();
+
+            result.ShouldBe("StringOne");
+        }
+
+        [Fact]
         public void omit_ids_should_omit_an_int_that_ends_in_Id()
         {
             _registry.OmitIds();
@@ -77,16 +87,6 @@
             var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo2>();
-        }
-
-        [Fact]
-        public void should_register_a_custom_blueprint()
-        {
-            _registry.AddBlueprint(new StringOneBlueprint());
-
-            var result = new Construktion().AddRegistry(_registry).Construct<string>();
-
-            result.ShouldBe("StringOne");
         }
 
         [Fact]
