@@ -1,11 +1,15 @@
-﻿namespace Construktion
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Construktion.Tests")]
+
+namespace Construktion
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
-    public static class Extensions
+    internal static class Extensions
     {
         public static ConstructorInfo GreedyCtor(this List<ConstructorInfo> ctors)
         {
@@ -38,7 +42,7 @@
              .DeclaredConstructors
              .ToList();
 
-            return ctors.Any(x => x.GetParameters().Length != 0);
+            return ctors.Any(x => x.GetParameters().Length > 0);
         }
 
         public static List<T> Replace<T>(this List<T> items, Type item, T newItem)

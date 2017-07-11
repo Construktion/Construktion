@@ -15,7 +15,7 @@
         }
 
         [Fact]
-        public void should_omit_ids()
+        public void omit_ids_should_omit_an_int_that_ends_in_Id()
         {
             _registry.OmitIds();
             var construktion = new Construktion().AddRegistry(_registry);
@@ -23,6 +23,17 @@
             var foo = construktion.Construct<Foo>();
 
             foo.FooId.ShouldBe(0);
+        }
+
+        [Fact]
+        public void omit_ids_should_omit_a_nullable_int_that_ends_in_Id()
+        {
+            _registry.OmitIds();
+            var construktion = new Construktion().AddRegistry(_registry);
+
+            var foo = construktion.Construct<Foo>();
+
+            foo.NullableFooId.ShouldBe(null);
         }
 
         [Fact]
@@ -274,6 +285,7 @@
         public class Foo : IFoo
         {
             public int FooId { get; set; }
+            public int? NullableFooId { get; set; }
             public int Fooid { get; set; }
             public string String_Id { get; set; }
 

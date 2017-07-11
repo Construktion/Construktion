@@ -110,15 +110,15 @@
         }
 
         /// <summary>
-        /// Return 0 for int properties ending in "Id". Uses Ordinal comparison. 
+        /// Return 0 for ints and null for nullable ints ending in "Id". Uses Ordinal comparison. 
         /// </summary>
         public void OmitIds()
         {
-            _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal), typeof(int)));
+            _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal), new List<Type>{ typeof(int), typeof(int?)}));
         }
      
         /// <summary>
-        /// Define a convention to omit properties of the specified type.
+        /// Specify a convention to omit properties of the specified type.
         /// </summary>
         public void OmitProperties(Func<string, bool> convention, Type propertyType)
         {
