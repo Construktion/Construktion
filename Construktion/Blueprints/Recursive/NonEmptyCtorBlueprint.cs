@@ -8,18 +8,17 @@
 
     public class NonEmptyCtorBlueprint : Blueprint
     {
-        private readonly Dictionary<Type, Type> _typeMap;
         private readonly Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
         private readonly Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
 
-        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap) : this(typeMap, Extensions.GreedyCtor, Extensions.PropertiesWithPublicSetter)
+        public NonEmptyCtorBlueprint()
+            : this (Extensions.GreedyCtor, Extensions.PropertiesWithPublicSetter)
         {
-            
+
         }
 
-        public NonEmptyCtorBlueprint(Dictionary<Type, Type> typeMap, Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy, Func<Type, IEnumerable<PropertyInfo>> propertiesSelector)
+        public NonEmptyCtorBlueprint(Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy, Func<Type, IEnumerable<PropertyInfo>> propertiesSelector)
         {
-            _typeMap = typeMap;
             _ctorStrategy = ctorStrategy;
             _propertiesSelector = propertiesSelector;
         }
@@ -28,21 +27,14 @@
         {
             var typeInfo = context.RequestType.GetTypeInfo();
 
-            return (typeInfo.IsInterface &&
-                    _typeMap.ContainsKey(context.RequestType))
-                   ||
-                   (!typeInfo.IsGenericType &&
-                    typeInfo.IsClass &&
-                    context.RequestType.HasNonDefaultCtor());
+            return context.RequestType.HasNonDefaultCtor() &&
+                   !typeInfo.IsGenericType &&
+                   typeInfo.IsClass;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            var implementation = _typeMap.ContainsKey(context.RequestType)
-                ? _typeMap[context.RequestType]
-                : context.RequestType;
-
-            var ctor = BuildCtor(implementation, pipeline);
+        {         
+            var ctor = BuildCtor(context.RequestType, pipeline);
 
             var instance = construct(ctor(), pipeline);
 

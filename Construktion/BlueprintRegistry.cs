@@ -50,19 +50,24 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Registers an implementation to be supplied for the contract class. 
-        /// Instances are transient and the last registered will be chosen.
+        /// When TContact is requested, construct TImplementation instead.
+        /// Useful when you want to construct a specific implementation whenever an interface is requested. 
         /// </summary>
-        /// <typeparam name="TContract"></typeparam>
-        /// <typeparam name="TImplementation"></typeparam>
+        /// <typeparam name="TContract">The type to be substituted</typeparam>
+        /// <typeparam name="TImplementation">Will be used for substitution</typeparam>
         public void Register<TContract, TImplementation>() where TImplementation : TContract
         {
             _typeMap[typeof(TContract)] = typeof(TImplementation);
         }
 
+        /// <summary>
+        /// Register an instance that will be supplied whenever the type is requested.  
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void RegisterScoped<T>(T instance)
         {
-            throw new NotImplementedException();
+            _customBlueprints.Add(new ScopedBlueprint(typeof(T), instance));
         }
 
         public void AddAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
@@ -103,7 +108,9 @@ namespace Construktion
             _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy ?? Extensions.GreedyCtor;
             _propertiesSelector = registry._propertiesSelector ?? _propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
 
-            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint), new NonEmptyCtorBlueprint(_typeMap, _ctorStrategy, _propertiesSelector));
+            _defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
+
+            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint), new NonEmptyCtorBlueprint(_ctorStrategy, _propertiesSelector));
 
             _defaultBlueprints.Replace(typeof(EmptyCtorBlueprint), new EmptyCtorBlueprint(_propertiesSelector));
         }

@@ -1,6 +1,5 @@
 ﻿namespace Construktion
 {
-    using System;
     using System.Collections.Generic;
     using Blueprints;
     using Blueprints.Recursive;
@@ -24,7 +23,8 @@
             new DateTimeBlueprint(),
             new NullableTypeBlueprint(),
             new EmptyCtorBlueprint(),
-            new NonEmptyCtorBlueprint(new Dictionary<Type, Type>(), Extensions.GreedyCtor, Extensions.PropertiesWithPublicSetter),
+            new NonEmptyCtorBlueprint(),
+            new InterfaceBlueprint(),
             new DefensiveBlueprint()
         };
 

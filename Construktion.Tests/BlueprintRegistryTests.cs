@@ -66,28 +66,7 @@
             var foo = construktion.Construct<Foo>();
 
             foo.String_Id.ShouldBe(null);
-        }
-
-        [Fact]
-        public void should_register_instance_with_contract()
-        {
-            _registry.Register<IFoo, Foo>();
-
-            var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
-
-            result.ShouldBeOfType<Foo>();
-        }
-
-        [Fact]
-        public void last_registered_instance_should_be_chosen()
-        {
-            _registry.Register<IFoo, Foo>();
-            _registry.Register<IFoo, Foo2>();
-
-            var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
-
-            result.ShouldBeOfType<Foo2>();
-        }
+        }       
 
         [Fact]
         public void should_register_via_generic_parameter()
@@ -140,6 +119,57 @@
             var foo = construktion.Construct<Foo>();
 
             foo.Bar.ShouldBe("StringOne");
+        }
+
+        [Fact]
+        public void should_register_instance_with_contract()
+        {
+            _registry.Register<IFoo, Foo>();
+
+            var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
+
+            result.ShouldBeOfType<Foo>();
+        }        
+
+        [Fact]
+        public void last_registered_instance_should_be_chosen()
+        {
+            _registry.Register<IFoo, Foo>();
+            _registry.Register<IFoo, Foo2>();
+
+
+            var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
+
+            result.ShouldBeOfType<Foo2>();
+        }
+
+        [Fact]
+        public void should_register_scoped_instance()
+        {
+            var foo = new Foo { FooId = -1, String_Id = "-1" };
+            _registry.RegisterScoped<IFoo>(foo);
+
+            var result = new Construktion().AddRegistry(_registry).Construct<IFoo>();
+
+            var fooResult = result.ShouldBeOfType<Foo>();
+            fooResult.FooId.ShouldBe(-1);
+            fooResult.String_Id.ShouldBe("-1");
+            fooResult.GetHashCode().ShouldBe(foo.GetHashCode());
+        }
+
+        [Fact]
+        public void should_not_matter_where_scoped_instance_is_in_the_graph()
+        {
+            var foo = new Foo();
+            var registry = new BlueprintRegistry();
+            registry.RegisterScoped<IFoo>(foo);
+
+            var construktion = new Construktion().AddRegistry(registry);
+
+            var result = construktion.Construct<LovesFoo>();
+
+            result.CtorFoo.GetHashCode().ShouldBe(foo.GetHashCode());
+            result.PropertyFoo.GetHashCode().ShouldBe(foo.GetHashCode());
         }
 
         [Fact]
@@ -310,6 +340,17 @@
             public MultiCtor(string one, string two)
             {
                 UsedGreedyCtor = true;
+            }
+        }
+
+        public class LovesFoo
+        {
+            public IFoo CtorFoo { get; }
+            public IFoo PropertyFoo { get; set; }
+
+            public LovesFoo(IFoo foo)
+            {
+                CtorFoo = foo;
             }
         }
     }
