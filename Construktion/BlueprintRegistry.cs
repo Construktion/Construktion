@@ -1,4 +1,5 @@
-﻿namespace Construktion
+﻿// ReSharper disable PossibleMultipleEnumeration
+namespace Construktion
 {
     using System;
     using System.Collections.Generic;
@@ -31,8 +32,7 @@
 
         public void AddBlueprint(Blueprint blueprint)
         {
-            if (blueprint == null)
-                throw new ArgumentNullException(nameof(blueprint));
+           blueprint.GuardNull();
 
             _customBlueprints.Add(blueprint);
         }
@@ -44,8 +44,7 @@
 
         public void AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
-            if (blueprints == null)
-                throw new ArgumentNullException(nameof(blueprints));
+            blueprints.GuardNull();
 
             _customBlueprints.AddRange(blueprints);
         }

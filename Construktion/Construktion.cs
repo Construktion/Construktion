@@ -16,17 +16,23 @@
 
         public T Construct<T>(Action<T> hardCodes)
         {
+            hardCodes.GuardNull();
+
             return DoConstruct(typeof(T), hardCodes);
         }
 
-        public object Construct(Type request)
+        public object Construct(Type type)
         {
-            return DoConstruct<object>(request, null);
+            type.GuardNull();
+
+            return DoConstruct<object>(type, null);
         }
 
-        public object Construct(ParameterInfo request)
+        public object Construct(ParameterInfo parameterInfo)
         {
-            return DoConstruct<object>(null, null, request);
+            parameterInfo.GuardNull();
+
+            return DoConstruct<object>(null, null, parameterInfo);
         }
 
         public IEnumerable<T> ConstructMany<T>()
