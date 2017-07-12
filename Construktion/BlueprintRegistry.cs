@@ -30,23 +30,26 @@ namespace Construktion
             configure(this);
         }
 
-        public void AddBlueprint(Blueprint blueprint)
+        public BlueprintRegistry AddBlueprint(Blueprint blueprint)
         {
            blueprint.GuardNull();
 
             _customBlueprints.Add(blueprint);
+            return this;
         }
 
-        public void AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
+        public BlueprintRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
             _customBlueprints.Add((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
+            return this;
         }
 
-        public void AddBlueprints(IEnumerable<Blueprint> blueprints)
+        public BlueprintRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
             blueprints.GuardNull();
 
             _customBlueprints.AddRange(blueprints);
+            return this;
         }
 
         /// <summary>
@@ -55,9 +58,10 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="TContract">The type to be substituted</typeparam>
         /// <typeparam name="TImplementation">Will be used for substitution</typeparam>
-        public void Register<TContract, TImplementation>() where TImplementation : TContract
+        public BlueprintRegistry Register<TContract, TImplementation>() where TImplementation : TContract
         {
             _typeMap[typeof(TContract)] = typeof(TImplementation);
+            return this;
         }
 
         /// <summary>
@@ -65,36 +69,42 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
-        public void RegisterScoped<T>(T instance)
+        public BlueprintRegistry RegisterScoped<T>(T instance)
         {
             _customBlueprints.Add(new ScopedBlueprint(typeof(T), instance));
+            return this;
         }
 
-        public void AddAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
+        public BlueprintRegistry AddAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
         {
             var attributeBlueprint = new AttributeBlueprint<T>(value);
 
             _customBlueprints.Add(attributeBlueprint);
+            return this;
         }
 
-        public void UseModestCtor()
+        public BlueprintRegistry UseModestCtor()
         {
             _ctorStrategy = Extensions.ModestCtor;
+            return this;
         }
 
-        public void UseGreedyCtor()
+        public BlueprintRegistry UseGreedyCtor()
         {
             _ctorStrategy = Extensions.GreedyCtor;
+            return this;
         }
 
-        public void OmitPrivateSetters()
+        public BlueprintRegistry OmitPrivateSetters()
         {
             _propertiesSelector = Extensions.PropertiesWithPublicSetter;
+            return this;
         }
 
-        public void ConstructPrivateSetters()
+        public BlueprintRegistry ConstructPrivateSetters()
         {
             _propertiesSelector = Extensions.PropertiesWithAccessibleSetter;
+            return this;
         }
 
         internal void AddRegistry(BlueprintRegistry registry)
@@ -118,17 +128,19 @@ namespace Construktion
         /// <summary>
         /// Return 0 for ints and null for nullable ints ending in "Id". Uses Ordinal comparison. 
         /// </summary>
-        public void OmitIds()
+        public BlueprintRegistry OmitIds()
         {
             _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal), new List<Type>{ typeof(int), typeof(int?)}));
+            return this;
         }
      
         /// <summary>
         /// Specify a convention to omit properties of the specified type.
         /// </summary>
-        public void OmitProperties(Func<string, bool> convention, Type propertyType)
+        public BlueprintRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
         {
             _customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyType));
+            return this;
         }
     }
 }
