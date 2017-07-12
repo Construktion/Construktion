@@ -6,19 +6,9 @@
     using Xunit;
 
     public class TimespanBlueprintTests
-    {
+    {       
         [Fact]
-        public void should_match_timespan()
-        {
-            var blueprint = new TimespanBlueprint();
-
-            var matches = blueprint.Matches(new ConstruktionContext(typeof(TimeSpan)));
-
-            matches.ShouldBe(true);
-        }
-
-        [Fact]
-        public void should_create_timespan()
+        public void should_construct()
         {
             var blueprint = new TimespanBlueprint();
 

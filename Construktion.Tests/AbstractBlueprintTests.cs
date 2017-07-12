@@ -7,7 +7,15 @@
     public class AbstractBlueprintTests
     {
         [Fact]
-        public void should_construct_using_blueprint()
+        public void should_match_t()
+        {
+            var blueprint = new FooBlueprint();
+
+            blueprint.Matches(new ConstruktionContext(typeof(Foo))).ShouldBe(true);
+        }
+
+        [Fact]
+        public void should_construct()
         {
             var context = new Construktion().AddBlueprint(new FooBlueprint());
 
@@ -18,7 +26,7 @@
         }
 
         public class FooBlueprint : AbstractBlueprint<Foo>
-        {
+        {           
             public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 return new Foo

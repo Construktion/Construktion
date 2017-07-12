@@ -6,19 +6,9 @@
     using Xunit;
 
     public class DateTimeBlueprintTests
-    {
+    {       
         [Fact]
-        public void should_match_datetime()
-        {
-            var blueprint = new DateTimeBlueprint();
-
-            var matches = blueprint.Matches(new ConstruktionContext(typeof(DateTime)));
-
-            matches.ShouldBe(true);
-        }
-
-        [Fact]
-        public void should_construct_datetime()
+        public void should_construct()
         {
             var blueprint = new DateTimeBlueprint();
 

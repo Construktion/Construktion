@@ -7,7 +7,7 @@
     public class EnumBlueprintTests
     {
         [Fact]
-        public void should_not_be_null()
+        public void should_construct()
         {
             var blueprint = new EnumBlueprint();
 

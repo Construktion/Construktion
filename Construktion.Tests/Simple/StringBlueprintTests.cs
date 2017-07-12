@@ -7,7 +7,7 @@
     public class StringBlueprintTests
     {
         [Fact]
-        public void should_build_string()
+        public void should_construct()
         {
             var blueprint = new StringBlueprint();
 

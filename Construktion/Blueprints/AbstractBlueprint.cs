@@ -1,8 +1,11 @@
 namespace Construktion.Blueprints
 {
-    //todo a lot of the simple blueprints can be converted to use this base class 
+    using System;
+
     public abstract class AbstractBlueprint<T> : Blueprint
     {
+        protected readonly Random _random = new Random();
+
         public virtual bool Matches(ConstruktionContext context)
         {
             return context.RequestType == typeof(T);

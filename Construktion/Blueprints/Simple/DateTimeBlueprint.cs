@@ -2,16 +2,9 @@
 {
     using System;
 
-    public class DateTimeBlueprint : Blueprint
+    public class DateTimeBlueprint : AbstractBlueprint<DateTime>
     {
-        private readonly Random _random = new Random();
-
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.RequestType == typeof(DateTime);
-        }
-
-        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var start = DateTime.Today.AddYears(-2);
 
