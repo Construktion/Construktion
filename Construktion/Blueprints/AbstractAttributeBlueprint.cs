@@ -2,19 +2,20 @@ namespace Construktion.Blueprints
 {
     using System;
     using System.Linq;
+    using System.Reflection;
 
     public abstract class AbstractAttributeBlueprint<T> : Blueprint where T : Attribute
     {
         protected T GetAttribute(ConstruktionContext context)
         {
-            return (T) context.PropertyContext.GetAttributes(typeof(T)).First();
+            return (T) context.PropertyInfo.GetCustomAttribute(typeof(T));
         }
 
         public virtual bool Matches(ConstruktionContext context)
         {
-            return context.PropertyContext.GetAttributes(typeof(T))
+            return context.PropertyInfo?.GetCustomAttributes(typeof(T))
                 .ToList()
-                .Any();
+                .Any() ?? false;
         }
 
         public abstract object Construct(ConstruktionContext context, ConstruktionPipeline pipeline);

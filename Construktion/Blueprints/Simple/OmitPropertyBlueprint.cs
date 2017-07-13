@@ -16,10 +16,8 @@
 
         public OmitPropertyBlueprint(Func<string, bool> convention, List<Type> propertyTypes)
         {
-            if (convention == null)
-                throw new ArgumentNullException(nameof(convention));
-            if (propertyTypes == null)
-                throw new ArgumentNullException(nameof(propertyTypes));
+            convention.GuardNull();
+            propertyTypes.GuardNull();
 
             _convention = convention;
             _propertyTypes = propertyTypes;
@@ -27,8 +25,10 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return _convention(context.PropertyContext.Name) &&
-                   _propertyTypes.Contains(context.RequestType);
+            return
+                context.PropertyInfo != null &&
+                _convention(context.PropertyInfo.Name) &&
+                _propertyTypes.Contains(context.RequestType);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

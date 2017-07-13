@@ -17,18 +17,16 @@
         }
 
         [Fact]
-        public void should_build_property_context_correctly()
+        public void should_set_property_info()
         {
             var context = new ConstruktionContext(typeof(Foo).GetProperty(nameof(Foo.Bar)));
 
             context.RequestType.ShouldBe(typeof(string));
-            context.PropertyContext.Name.ShouldBe("Bar");
-            context.PropertyContext.IsType(typeof(string)).ShouldBe(true);
-            context.PropertyContext.GetAttributes(typeof(MaxLengthAttribute)).Count().ShouldBe(1);
+            context.PropertyInfo.ShouldNotBe(null);
         }
 
         [Fact]
-        public void should_build_parameter_info_context_correctly()
+        public void should_set_parameter_info()
         {
             var parameterInfo =
                 typeof(ConstruktionContextTests).GetMethod(nameof(TestMethod))
@@ -38,9 +36,7 @@
             var context = new ConstruktionContext(parameterInfo);
 
             context.RequestType.ShouldBe(typeof(string));
-            context.ParameterContext.Name.ShouldBe("name");
-            context.ParameterContext.IsType(typeof(string)).ShouldBe(true);
-            context.ParameterContext.GetAttributes(typeof(MaxLengthAttribute)).Count().ShouldBe(1);
+            context.ParameterInfo.ShouldNotBe(null);
         }
 
         public void TestMethod([MaxLength(1)] string name)

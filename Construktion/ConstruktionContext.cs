@@ -11,33 +11,36 @@
         public Type RequestType { get; }
 
         /// <summary>
-        /// Non null, will be populated when a Property is requested
+        /// When not null PropertyInfo is being constructed
         /// </summary>
-        public PropertyContext PropertyContext { get; } = new PropertyContext();
+        public PropertyInfo PropertyInfo { get; }
 
         ///<summary>
-        ///Non null, will be populated when a ParameterInfo is requested
+        ///When not null ParameterInfo is being constructed
         ///</summary>
-        public ParameterContext ParameterContext { get; } = new ParameterContext();
+        public ParameterInfo ParameterInfo { get; }
 
         public ConstruktionContext(Type request)
         {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
+            request.GuardNull();
 
             RequestType = request;
         }
 
         public ConstruktionContext(PropertyInfo propertyInfo)
-            : this(propertyInfo?.PropertyType)
         {
-            PropertyContext = new PropertyContext(propertyInfo);
+            propertyInfo.GuardNull();
+
+            PropertyInfo = propertyInfo;
+            RequestType = propertyInfo.PropertyType;
         }
 
         public ConstruktionContext(ParameterInfo parameterInfo)
-            : this(parameterInfo?.ParameterType)
         {
-            ParameterContext = new ParameterContext(parameterInfo);
+            parameterInfo.GuardNull();
+
+            ParameterInfo = parameterInfo;
+            RequestType = parameterInfo.ParameterType;
         }
     }
 }

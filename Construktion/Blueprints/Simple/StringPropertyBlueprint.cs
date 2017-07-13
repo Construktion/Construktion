@@ -8,12 +8,12 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return context.PropertyContext.IsType(typeof(string));
+            return context.PropertyInfo != null && context.PropertyInfo.PropertyType == typeof(string);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var result = context.PropertyContext.Name + "-" + _random.Next(1, 10000);
+            var result = context.PropertyInfo.Name + "-" + _random.Next(1, 10000);
 
             return result;
         }
