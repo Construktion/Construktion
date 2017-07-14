@@ -37,11 +37,28 @@
 
         public IEnumerable<T> ConstructMany<T>()
         {
+            return ConstructMany<T>(_registry.GetEnumerableCount());
+        }
+
+        public IEnumerable<T> ConstructMany<T>(int count)
+        {
+            return ConstructMany<T>(null, count);
+        }
+
+        public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
+        {
+            return ConstructMany(hardCodes, _registry.GetEnumerableCount());
+        }
+
+        public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes, int count)
+        {
             var items = new List<T>();
 
-            for (var i = 1; i <= 3; i++)
+            for (var i = 0; i < count; i++)
             {
                 var item = DoConstruct<T>(typeof(T), null);
+
+                hardCodes?.Invoke(item);
 
                 items.Add(item);
             }
@@ -55,7 +72,7 @@
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_registry.ReadBlueprints());
+            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints());
 
             var result = (T)pipeline.Construct(context);
 
@@ -84,6 +101,11 @@
         {
             _registry.AddBlueprint(blueprint);
             return this;
+        }
+
+        public void SetEnumerableCount(int count)
+        {
+            _registry.EnumerableCount(count);
         }
     }
 }

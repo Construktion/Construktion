@@ -13,12 +13,15 @@ namespace Construktion
     {
         private readonly List<Blueprint> _defaultBlueprints = Default.Blueprints;
 
+        //need to move all these defaults into a config class
+        private int? _enumerableCount;
         private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
         private Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
         private Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
         private List<Blueprint> _customBlueprints { get; } = new List<Blueprint>();
 
-        public IList<Blueprint> ReadBlueprints() => _customBlueprints.Concat(_defaultBlueprints).ToList();
+        public int GetEnumerableCount() => _enumerableCount ?? 3;
+        public IList<Blueprint> GetBlueprints() => _customBlueprints.Concat(_defaultBlueprints).ToList();
 
         public BlueprintRegistry()
         {
@@ -32,7 +35,7 @@ namespace Construktion
 
         public BlueprintRegistry AddBlueprint(Blueprint blueprint)
         {
-           blueprint.GuardNull();
+            blueprint.GuardNull();
 
             _customBlueprints.Add(blueprint);
             return this;
@@ -40,7 +43,7 @@ namespace Construktion
 
         public BlueprintRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
-            _customBlueprints.Add((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
+            _customBlueprints.Add((Blueprint) Activator.CreateInstance(typeof(TBlueprint)));
             return this;
         }
 
@@ -124,11 +127,13 @@ namespace Construktion
 
             //todo yuck
             _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy ?? Extensions.GreedyCtor;
-            _propertiesSelector = registry._propertiesSelector ?? _propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
+            _propertiesSelector = registry._propertiesSelector ??_propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
+            _enumerableCount = registry._enumerableCount ?? _enumerableCount;
 
             _defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
 
-            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint), new NonEmptyCtorBlueprint(_ctorStrategy, _propertiesSelector));
+            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint),
+                new NonEmptyCtorBlueprint(_ctorStrategy, _propertiesSelector));
 
             _defaultBlueprints.Replace(typeof(EmptyCtorBlueprint), new EmptyCtorBlueprint(_propertiesSelector));
         }
@@ -138,16 +143,26 @@ namespace Construktion
         /// </summary>
         public BlueprintRegistry OmitIds()
         {
-            _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal), new List<Type>{ typeof(int), typeof(int?)}));
+            _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal),
+                new List<Type> { typeof(int), typeof(int?) }));
             return this;
         }
-     
+
         /// <summary>
         /// Specify a convention to omit properties of the specified type.
         /// </summary>
         public BlueprintRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
         {
             _customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyType));
+            return this;
+        }
+
+        public BlueprintRegistry EnumerableCount(int count)
+        {
+            if (count < 0)
+                throw new ArgumentException("Cannot set count less than 0");
+
+            _enumerableCount = count;
             return this;
         }
     }
