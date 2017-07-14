@@ -243,6 +243,20 @@
         }
 
         [Fact]
+        public void should_overwrite_previous_property_selector()
+        {
+            _registry
+                .ConstructPrivateSetters()
+                .OmitPrivateSetters();
+
+            var construktion = _construktion.AddRegistry(_registry);
+
+            var result = construktion.Construct<Foo>();
+
+            result.StringWithPrivateSetter.ShouldBeNullOrWhiteSpace();
+        }
+
+        [Fact]
         public void should_use_linq_created_registry()
         {
             var construktion = _construktion.AddRegistry(x => x.UseModestCtor());
