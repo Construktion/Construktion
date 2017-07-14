@@ -23,7 +23,7 @@
         {
             _registry.AddBlueprint(new StringOneBlueprint());
 
-            var result = _construktion.AddRegistry(_registry).Construct<string>();
+            var result = _construktion.Apply(_registry).Construct<string>();
 
             result.ShouldBe("StringOne");
         }
@@ -32,9 +32,9 @@
         public void omit_ids_should_omit_an_int_that_ends_in_Id()
         {
             _registry.OmitIds();
-            var construktion = _construktion.AddRegistry(_registry);
+            _construktion.Apply(_registry);
 
-            var foo = construktion.Construct<Foo>();
+            var foo = _construktion.Construct<Foo>();
 
             foo.FooId.ShouldBe(0);
         }
@@ -43,9 +43,9 @@
         public void omit_ids_should_omit_a_nullable_int_that_ends_in_Id()
         {
             _registry.OmitIds();
-            var construktion = _construktion.AddRegistry(_registry);
+            _construktion.Apply(_registry);
 
-            var foo = construktion.Construct<Foo>();
+            var foo = _construktion.Construct<Foo>();
 
             foo.NullableFooId.ShouldBe(null);
         }
@@ -53,10 +53,10 @@
         [Fact]
         public void should_be_case_sensitive()
         {
-            var registry = new BlueprintRegistry(x => x.OmitIds());
-            var construktion = _construktion.AddRegistry(registry);
+            _registry.OmitIds();
+            _construktion.Apply(_registry);
 
-            var foo = construktion.Construct<Foo>();
+            var foo = _construktion.Construct<Foo>();
 
             foo.Fooid.ShouldNotBe(0);
         }
@@ -64,10 +64,10 @@
         [Fact]
         public void should_be_able_to_define_a_custom_convention()
         {
-            var registry = new BlueprintRegistry(x => x.OmitProperties(prop => prop.EndsWith("_Id"), typeof(string)));
-            var construktion = _construktion.AddRegistry(registry);
+            _registry.OmitProperties(prop => prop.EndsWith("_Id"), typeof(string));
+            _construktion.Apply(_registry);
 
-            var foo = construktion.Construct<Foo>();
+            var foo = _construktion.Construct<Foo>();
 
             foo.String_Id.ShouldBe(null);
         }
@@ -77,7 +77,7 @@
         {
             _registry.AddBlueprint<StringOneBlueprint>();
 
-            var result = _construktion.AddRegistry(_registry).Construct<string>();
+            var result = _construktion.Apply(_registry).Construct<string>();
 
             result.ShouldBe("StringOne");
         }
@@ -88,7 +88,7 @@
             _registry.AddBlueprint(new StringTwoBlueprint());
             _registry.AddBlueprint(new StringOneBlueprint());
 
-            var result = _construktion.AddRegistry(_registry).Construct<string>();
+            var result = _construktion.Apply(_registry).Construct<string>();
 
             result.ShouldBe("StringTwo");
         }
@@ -96,11 +96,11 @@
         [Fact]
         public void registries_registered_first_should_have_their_blueprints_used_first()
         {
-            var construktion = _construktion;
-            construktion.AddRegistry(new StringTwoRegistry());
-            construktion.AddRegistry(new StringOneRegistry());
+            _construktion
+                .Apply(new StringTwoRegistry())
+                .Apply(new StringOneRegistry());
 
-            var result = construktion.Construct<string>();
+            var result = _construktion.Construct<string>();
 
             result.ShouldBe("StringTwo");
         }
@@ -108,9 +108,9 @@
         [Fact]
         public void should_work_with_a_custom_registry()
         {
-            var construktion = _construktion.AddRegistry(new StringOneRegistry());
+            _construktion.Apply(new StringOneRegistry());
 
-            var foo = construktion.Construct<Foo>();
+            var foo = _construktion.Construct<Foo>();
 
             foo.Bar.ShouldBe("StringOne");
         }
@@ -120,7 +120,7 @@
         {
             _registry.Register<IFoo, Foo>();
 
-            var result = _construktion.AddRegistry(_registry).Construct<IFoo>();
+            var result = _construktion.Apply(_registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -131,8 +131,7 @@
             _registry.Register<IFoo, Foo>();
             _registry.Register<IFoo, Foo2>();
 
-
-            var result = _construktion.AddRegistry(_registry).Construct<IFoo>();
+            var result = _construktion.Apply(_registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo2>();
         }
@@ -141,9 +140,9 @@
         public void should_register_scoped_instance()
         {
             var foo = new Foo { FooId = -1, String_Id = "-1" };
-            _registry.RegisterScoped<IFoo>(foo);
+            _registry.UseInstance<IFoo>(foo);
 
-            var result = _construktion.AddRegistry(_registry).Construct<IFoo>();
+            var result = _construktion.Apply(_registry).Construct<IFoo>();
 
             var fooResult = result.ShouldBeOfType<Foo>();
             fooResult.FooId.ShouldBe(-1);
@@ -155,12 +154,11 @@
         public void should_not_matter_where_scoped_instance_is_in_the_graph()
         {
             var foo = new Foo();
-            var registry = new BlueprintRegistry();
-            registry.RegisterScoped<IFoo>(foo);
+            _registry.UseInstance<IFoo>(foo);
 
-            var construktion = _construktion.AddRegistry(registry);
+            _construktion.Apply(_registry);
 
-            var result = construktion.Construct<LovesFoo>();
+            var result = _construktion.Construct<LovesFoo>();
 
             result.CtorFoo.GetHashCode().ShouldBe(foo.GetHashCode());
             result.PropertyFoo.GetHashCode().ShouldBe(foo.GetHashCode());
@@ -172,7 +170,7 @@
             //_blueprintRegistry.Register<IFoo, Foo>();
 
             Should.Throw<Exception>
-                (() => _construktion.AddRegistry(_registry).Construct<IFoo>())
+                (() => _construktion.Apply(_registry).Construct<IFoo>())
                 .Message
                 .ShouldContain("Cannot construct the interface IFoo.");
         }
@@ -190,7 +188,7 @@
         {
             _registry.UseModestCtor();
 
-            var result = _construktion.AddRegistry(_registry).Construct<MultiCtor>();
+            var result = _construktion.Apply(_registry).Construct<MultiCtor>();
 
             result.UsedModestCtor.ShouldBe(true);
         }
@@ -203,12 +201,12 @@
 
             var registryB = new StringOneRegistry();
 
-            var construktion = _construktion;
-            construktion.AddRegistry(registryA);
-            construktion.AddRegistry(registryB);
+            _construktion
+                .Apply(registryA)
+                .Apply(registryB);
 
             //act
-            var result = construktion.Construct<MultiCtor>();
+            var result = _construktion.Construct<MultiCtor>();
 
             result.UsedModestCtor.ShouldBe(true);
         }
@@ -222,12 +220,12 @@
             var registryB = new StringOneRegistry();
             registryB.UseGreedyCtor();
 
-            var construktion = _construktion;
-            construktion.AddRegistry(registryA);
-            construktion.AddRegistry(registryB);
+            _construktion
+                .Apply(registryA)
+                .Apply(registryB);
 
             //act
-            var result = construktion.Construct<MultiCtor>();
+            var result = _construktion.Construct<MultiCtor>();
 
             result.UsedGreedyCtor.ShouldBe(true);
         }
@@ -235,9 +233,9 @@
         [Fact]
         public void should_opt_in_to_constructing_properties_with_private_setter()
         {
-            var construktion = _construktion.AddRegistry(x => x.ConstructPrivateSetters());
+            _construktion.Apply(x => x.ConstructPrivateSetters());
 
-            var result = construktion.Construct<Foo>();
+            var result = _construktion.Construct<Foo>();
 
             result.StringWithPrivateSetter.ShouldNotBeNullOrWhiteSpace();
         }
@@ -249,9 +247,9 @@
                 .ConstructPrivateSetters()
                 .OmitPrivateSetters();
 
-            var construktion = _construktion.AddRegistry(_registry);
+            _construktion.Apply(_registry);
 
-            var result = construktion.Construct<Foo>();
+            var result = _construktion.Construct<Foo>();
 
             result.StringWithPrivateSetter.ShouldBeNullOrWhiteSpace();
         }
@@ -259,9 +257,9 @@
         [Fact]
         public void should_use_linq_created_registry()
         {
-            var construktion = _construktion.AddRegistry(x => x.UseModestCtor());
+            _construktion.Apply(x => x.UseModestCtor());
 
-            var result = construktion.Construct<MultiCtor>();
+            var result = _construktion.Construct<MultiCtor>();
 
             result.UsedModestCtor.ShouldBe(true);
         }
@@ -269,9 +267,9 @@
         [Fact]
         public void should_register_property_attribute_blueprint()
         {
-            _registry.AddPropertyAttributeBlueprint<Set>(x => x.Value);
+            _registry.AddPropertyAttribute<Set>(x => x.Value);
 
-            var foo = _construktion.AddRegistry(_registry).Construct<Foo>();
+            var foo = _construktion.Apply(_registry).Construct<Foo>();
 
             foo.Bar.ShouldBe("Set");
         }
@@ -283,7 +281,7 @@
             _registry.EnumerableCount(1);
             _registry.AddRegistry(new BlueprintRegistry());
 
-            var ints = _construktion.AddRegistry(_registry).ConstructMany<int>();
+            var ints = _construktion.Apply(_registry).ConstructMany<int>();
 
             ints.Count().ShouldBe(1);
         }
@@ -295,7 +293,7 @@
             _registry.EnumerableCount(1);
             _registry.AddRegistry(new BlueprintRegistry(x => x.EnumerableCount(2)));
 
-            var ints = _construktion.AddRegistry(_registry).ConstructMany<int>();
+            var ints = _construktion.Apply(_registry).ConstructMany<int>();
 
             ints.Count().ShouldBe(2);
         }
@@ -303,14 +301,14 @@
         [Fact]
         public void should_register_parameter_attribute_blueprint()
         {
-            _registry.AddParameterAttributeBlueprint<Set>(x => x.Value);
+            _registry.AddParameterAttribute<Set>(x => x.Value);
 
             var parameterInfo =
                 typeof(BlueprintRegistryTests).GetMethod(nameof(TestMethod))
                     .GetParameters()
                     .Single();
 
-            var parameter = (string)_construktion.AddRegistry(_registry).Construct(parameterInfo);
+            var parameter = (string)_construktion.Apply(_registry).Construct(parameterInfo);
 
             parameter.ShouldBe("Set");
         }

@@ -2,6 +2,10 @@ namespace Construktion.Blueprints
 {
     using System;
 
+    /// <summary>
+    /// A blueprint that will construct the specified type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class AbstractBlueprint<T> : Blueprint
     {
         internal readonly Random _random = new Random();

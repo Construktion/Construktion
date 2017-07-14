@@ -1,6 +1,5 @@
 ﻿namespace Construktion.Tests
 {
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Reflection;
     using Shouldly;
@@ -39,14 +38,13 @@
             context.ParameterInfo.ShouldNotBe(null);
         }
 
-        public void TestMethod([MaxLength(1)] string name)
+        public void TestMethod(string name)
         {
             
         }
 
         public class Foo
         {
-            [MaxLength]
             public string Bar { get; set; }
         }
     }

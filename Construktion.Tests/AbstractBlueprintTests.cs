@@ -17,7 +17,7 @@
         [Fact]
         public void should_construct()
         {
-            var context = new Construktion().AddBlueprint(new FooBlueprint());
+            var context = new Construktion().Apply(new FooBlueprint());
 
             var result = context.Construct<Foo>();
 

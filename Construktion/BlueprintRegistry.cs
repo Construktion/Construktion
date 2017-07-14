@@ -33,6 +33,12 @@ namespace Construktion
             configure(this);
         }
 
+        /// <summary>
+        /// Register a blueprint to be added to the pipeline. Will replace
+        /// any built-in blueprint that may match
+        /// </summary>
+        /// <param name="blueprint"></param>
+        /// <returns></returns>
         public BlueprintRegistry AddBlueprint(Blueprint blueprint)
         {
             blueprint.GuardNull();
@@ -41,12 +47,22 @@ namespace Construktion
             return this;
         }
 
+        /// <summary>
+        /// Register a blueprint to be added to the pipeline. Will replace
+        /// any built-in blueprint that may match
+        /// </summary>
+        /// <returns></returns>
         public BlueprintRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
             _customBlueprints.Add((Blueprint) Activator.CreateInstance(typeof(TBlueprint)));
             return this;
         }
 
+        /// <summary>
+        /// Register blueprints to be added to the pipeline. Will replace
+        /// any built-in blueprints that may match
+        /// </summary>
+        /// <returns></returns>
         public BlueprintRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
             blueprints.GuardNull();
@@ -72,13 +88,19 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
-        public BlueprintRegistry RegisterScoped<T>(T instance)
+        public BlueprintRegistry UseInstance<T>(T instance)
         {
             _customBlueprints.Add(new ScopedBlueprint(typeof(T), instance));
             return this;
         }
 
-        public BlueprintRegistry AddPropertyAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
+        /// <summary>
+        /// Adds a blueprint that will use the property's attribute to construct it
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public BlueprintRegistry AddPropertyAttribute<T>(Func<T, object> value) where T : Attribute
         {
             var attributeBlueprint = new PropertyAttributeBlueprint<T>(value);
 
@@ -86,7 +108,13 @@ namespace Construktion
             return this;
         }
 
-        public BlueprintRegistry AddParameterAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
+        /// <summary>
+        /// Adds a blueprint that will use the parameter's attribute to construct it
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public BlueprintRegistry AddParameterAttribute<T>(Func<T, object> value) where T : Attribute
         {
             var attributeBlueprint = new ParameterAttributeBlueprint<T>(value);
 
@@ -94,24 +122,40 @@ namespace Construktion
             return this;
         }
 
+        /// <summary>
+        /// Construct objects using the constructor with the fewest arguments
+        /// </summary>
+        /// <returns></returns>
         public BlueprintRegistry UseModestCtor()
         {
             _ctorStrategy = Extensions.ModestCtor;
             return this;
         }
 
+        /// <summary>
+        /// Construct objects using the constructor with the most arguments
+        /// </summary>
+        /// <returns></returns>
         public BlueprintRegistry UseGreedyCtor()
         {
             _ctorStrategy = Extensions.GreedyCtor;
             return this;
         }
 
+        /// <summary>
+        /// Omit properties with private setters
+        /// </summary>
+        /// <returns></returns>
         public BlueprintRegistry OmitPrivateSetters()
         {
             _propertiesSelector = Extensions.PropertiesWithPublicSetter;
             return this;
         }
 
+        /// <summary>
+        /// Construct properties with private setters
+        /// </summary>
+        /// <returns></returns>
         public BlueprintRegistry ConstructPrivateSetters()
         {
             _propertiesSelector = Extensions.PropertiesWithAccessibleSetter;
@@ -139,7 +183,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Return 0 for ints and null for nullable ints ending in "Id". Uses Ordinal comparison. 
+        /// Return 0 for ints and null for nullable ints ending in "Id". 
         /// </summary>
         public BlueprintRegistry OmitIds()
         {
