@@ -6,7 +6,7 @@
     using Shouldly;
     using Xunit;
 
-    public class AbstractAttributeBlueprintTests
+    public class PropertyAttributeBlueprintTests
     {
         [Fact]
         public void should_match_property_with_attribute()
@@ -21,10 +21,10 @@
         }
 
         [Fact]
-        public void property_without_attribute_should_not_match()
+        public void should_not_match_property_without_attribute()
         {
             var blueprint = new SetBlueprint();
-            var property = typeof(Foo).GetProperty("WithOutAttribute");
+            var property = typeof(Foo).GetProperty("WithoutAttribute");
             var context = new ConstruktionContext(property);
 
             var matches = blueprint.Matches(context);
@@ -33,7 +33,7 @@
         }
 
         [Fact]
-        public void should_construct_from_attribute_value()
+        public void should_construct_from_attribute()
         {
             var blueprint = new SetBlueprint();
             var property = typeof(Foo).GetProperty("WithAttribute");
@@ -41,24 +41,23 @@
 
             var result = (string)blueprint.Construct(context, Default.Pipeline);
 
-            result.ShouldBe("SetFromAttribute");
+            result.ShouldBe("Set");
         }
 
-        public class SetBlueprint : AbstractAttributeBlueprint<Set>
+        public class SetBlueprint : PropertyAttributeBlueprint<Set>
         {
-            public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public SetBlueprint() : base (x => x.Value)
             {
-                return GetAttribute(context).Value;
+                
             }
         }
 
         public class Foo
         {
-            [Set("SetFromAttribute")]
+            [Set("Set")]
             public string WithAttribute { get; set; }
-            public string WithOutAttribute { get; set; }
+            public string WithoutAttribute { get; set; }
         }
-
 
         public class Set : Attribute
         {

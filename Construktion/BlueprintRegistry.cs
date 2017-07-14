@@ -75,9 +75,17 @@ namespace Construktion
             return this;
         }
 
-        public BlueprintRegistry AddAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
+        public BlueprintRegistry AddPropertyAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
         {
-            var attributeBlueprint = new AttributeBlueprint<T>(value);
+            var attributeBlueprint = new PropertyAttributeBlueprint<T>(value);
+
+            _customBlueprints.Add(attributeBlueprint);
+            return this;
+        }
+
+        public BlueprintRegistry AddParameterAttributeBlueprint<T>(Func<T, object> value) where T : Attribute
+        {
+            var attributeBlueprint = new ParameterAttributeBlueprint<T>(value);
 
             _customBlueprints.Add(attributeBlueprint);
             return this;

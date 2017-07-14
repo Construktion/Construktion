@@ -1,6 +1,8 @@
 ﻿namespace Construktion.Tests
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
     using Blueprints;
     using Shouldly;
     using Xunit;
@@ -99,16 +101,6 @@
             var result = construktion.Construct<string>();
 
             result.ShouldBe("StringTwo");
-        }
-
-        [Fact]
-        public void should_register_attribute_blueprint()
-        {
-            _registry.AddAttributeBlueprint<Set>(x => x.Value);
-
-            var foo = new Construktion().AddRegistry(_registry).Construct<Foo>();
-
-            foo.Bar.ShouldBe("SetFromAttribute");
         }
 
         [Fact]
@@ -258,6 +250,33 @@
             result.UsedModestCtor.ShouldBe(true);
         }
 
+        [Fact]
+        public void should_register_property_attribute_blueprint()
+        {
+            _registry.AddPropertyAttributeBlueprint<Set>(x => x.Value);
+
+            var foo = new Construktion().AddRegistry(_registry).Construct<Foo>();
+
+            foo.Bar.ShouldBe("Set");
+        }
+
+        [Fact]
+        public void should_register_parameter_attribute_blueprint()
+        {
+            _registry.AddParameterAttributeBlueprint<Set>(x => x.Value);
+
+            var parameterInfo =
+                typeof(BlueprintRegistryTests).GetMethod(nameof(TestMethod))
+                    .GetParameters()
+                    .Single();
+
+            var parameter = (string)new Construktion().AddRegistry(_registry).Construct(parameterInfo);
+
+            parameter.ShouldBe("Set");
+        }
+
+        public void TestMethod([Set("Set")] string parameter) { }
+
         public class StringOneBlueprint : Blueprint
         {
             public bool Matches(ConstruktionContext context)
@@ -319,7 +338,7 @@
             public int Fooid { get; set; }
             public string String_Id { get; set; }
 
-            [Set("SetFromAttribute")]
+            [Set("Set")]
             public string Bar { get; set; }
 
             public string StringWithPrivateSetter { get; private set; }

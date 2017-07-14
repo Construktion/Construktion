@@ -4,7 +4,7 @@ namespace Construktion.Blueprints
 
     public abstract class AbstractBlueprint<T> : Blueprint
     {
-        protected readonly Random _random = new Random();
+        internal readonly Random _random = new Random();
 
         public virtual bool Matches(ConstruktionContext context)
         {
