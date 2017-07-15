@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class StringPropertyBlueprint : Blueprint
+    internal class StringPropertyBlueprint : Blueprint
     { 
         private readonly Random _random = new Random();
 
