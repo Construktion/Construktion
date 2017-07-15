@@ -201,6 +201,15 @@ namespace Construktion
         }
 
         /// <summary>
+        /// Specify a convention to omit properties of the specified types
+        /// </summary>
+        public ConstruktionRegistry OmitProperties(Func<string, bool> convention, IEnumerable<Type> propertyTypes)
+        {
+            _customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyTypes));
+            return this;
+        }
+
+        /// <summary>
         /// Configure how many items to be returned in an IEnumerable 
         /// </summary>
         /// <param name="count"></param>

@@ -2,19 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using Blueprints;
 
     public class OmitPropertyBlueprint : Blueprint
     {
         private readonly Func<string, bool> _convention;
-        private readonly List<Type> _propertyTypes;
+        private readonly IEnumerable<Type> _propertyTypes;
 
         public OmitPropertyBlueprint(Func<string, bool> convention, Type propertyType) : this(convention, new List<Type> { propertyType})
         {
         }
 
-        public OmitPropertyBlueprint(Func<string, bool> convention, List<Type> propertyTypes)
+        public OmitPropertyBlueprint(Func<string, bool> convention, IEnumerable<Type> propertyTypes)
         {
             convention.GuardNull();
             propertyTypes.GuardNull();
