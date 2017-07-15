@@ -75,6 +75,16 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
+        public void should_set_enumerable_count_for_arrays()
+        {
+            _contruktion.With(x => x.EnumerableCount(2));
+
+            var ints = _contruktion.Construct<int[]>();
+
+            ints.Length.ShouldBe(2);
+        }
+
+        [Fact]
         public void should_throw_when_setting_a_negative_count()
         {
             Should.Throw<ArgumentException>(() => _contruktion.With(x => x.EnumerableCount(-1)));

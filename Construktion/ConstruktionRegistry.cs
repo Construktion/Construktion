@@ -262,6 +262,8 @@ namespace Construktion
             _enumerableCount = registry._enumerableCount ?? _enumerableCount;
             _recurssionLimit = registry._recurssionLimit ?? _recurssionLimit;
 
+            _defaultBlueprints.Replace(typeof(ArrayBlueprint), new ArrayBlueprint(_enumerableCount ?? 3));
+
             _defaultBlueprints.Replace(typeof(EnumerableBlueprint), new EnumerableBlueprint(_enumerableCount ?? 3));
 
             _defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
