@@ -5,7 +5,7 @@
     using System.Reflection;
 
     /// <summary>
-    /// Base class to construct properties from an attribute
+    /// Base class to construct properties from an attribute.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class PropertyAttributeBlueprint<T> : Blueprint where T : Attribute
@@ -19,6 +19,11 @@
             _value = value;
         }
 
+        /// <summary>
+        /// The base implementation returns true if the property has the attribute.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public virtual bool Matches(ConstruktionContext context)
         {
             return context.PropertyInfo?.GetCustomAttributes(typeof(T))
@@ -26,6 +31,12 @@
                        .Any() ?? false;
         }
 
+        /// <summary>
+        /// Constrcut a property using its attribute value.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
         public virtual object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var attribute = (T)context.PropertyInfo.GetCustomAttribute(typeof(T));

@@ -26,13 +26,13 @@ namespace Construktion
         private readonly List<Blueprint> _customBlueprints = new List<Blueprint>();
 
         /// <summary>
-        /// Get the configured recurssion limit
+        /// Get the configured recurssion limit.
         /// </summary>
         /// <returns></returns>
         public int GetRecurssionLimit() => _recurssionLimit ?? 0;
 
         /// <summary>
-        /// Get the configured enumerable count
+        /// Get the configured enumerable count.
         /// </summary>
         /// <returns></returns>
         public int GetEnumerableCount() => _enumerableCount ?? 3;
@@ -54,7 +54,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register a blueprint to be added to the pipeline
+        /// Register a blueprint to be added to the pipeline.
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
@@ -68,7 +68,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register a blueprint to be added to the pipeline
+        /// Register a blueprint to be added to the pipeline.
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
@@ -91,8 +91,8 @@ namespace Construktion
         }
 
         /// <summary>
-        /// When TContrac is requested, construct TImplementation instead.
-        /// Useful when you want to construct a specific implementation whenever an interface is requested 
+        /// When the type is requested, construct the subtitute type instead.
+        /// Useful when you want to construct a specific implementation whenever an interface is requested.
         /// </summary>
         /// <typeparam name="TContract">The type to be substituted</typeparam>
         /// <typeparam name="TImplementation">Will be used for substitution</typeparam>
@@ -103,7 +103,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register an instance that will be supplied whenever the type is requested
+        /// Register a single instance that will be supplied whenever the type is requested.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
@@ -114,7 +114,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Adds a blueprint that will use the property's attribute to construct it
+        /// Adds a blueprint that will use the property's attribute to construct it.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
@@ -128,7 +128,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Adds a blueprint that will use the parameter's attribute to construct it
+        /// Adds a blueprint that will use the parameter's attribute to construct it.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
@@ -142,7 +142,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Construct objects using the constructor with the fewest arguments
+        /// Construct objects using the constructor with the fewest arguments.
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry UseModestCtor()
@@ -152,7 +152,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Construct objects using the constructor with the most arguments
+        /// Construct objects using the constructor with the most arguments. This is the default behavior.
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry UseGreedyCtor()
@@ -162,7 +162,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Omit properties with private setters
+        /// Omit properties with private setters. This is the default behavior.
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry OmitPrivateSetters()
@@ -172,7 +172,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Construct properties with private setters
+        /// Construct properties with private setters.
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry ConstructPrivateSetters()
@@ -192,7 +192,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Specify a convention to omit properties of the specified type
+        /// Specify a convention to omit properties of the specified type.
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
         {
@@ -201,7 +201,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Specify a convention to omit properties of the specified types
+        /// Specify a convention to omit properties of the specified types.
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<string, bool> convention, IEnumerable<Type> propertyTypes)
         {
@@ -210,7 +210,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Omit all virtual properties
+        /// Omit all virtual properties.
         /// </summary>
         public void OmitVirtualProperties()
         {
@@ -218,7 +218,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Configure how many items to be returned in an IEnumerable 
+        /// Configure how many items to be returned in an IEnumerable. The default is 3.
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
@@ -233,7 +233,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Configure how many levels of recurssion to construct
+        /// Configure how many levels of recurssion to construct. By default recurssive properties are ignored.
         /// </summary>
         /// <param name="limit"></param>
         /// <returns></returns>

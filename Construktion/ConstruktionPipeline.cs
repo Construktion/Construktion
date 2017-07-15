@@ -7,6 +7,11 @@
 
     public interface ConstruktionPipeline
     {
+        /// <summary>
+        /// Send a request through the pipeline to be constructed.
+        /// </summary>
+        /// <param name="requestContext"></param>
+        /// <returns></returns>
         object Send(ConstruktionContext requestContext);
     }
 

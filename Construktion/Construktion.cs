@@ -10,7 +10,7 @@
         private readonly ConstruktionRegistry _registry = new ConstruktionRegistry();
 
         /// <summary>
-        /// Construct an object of the specified type
+        /// Construct an object of the specified type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -31,7 +31,7 @@
         }
 
         /// <summary>
-        /// Construct the type
+        /// Construct the type.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -44,7 +44,7 @@
         }
 
         /// <summary>
-        /// Construct the parameter info
+        /// Construct the parameter info.
         /// </summary>
         /// <param name="parameterInfo"></param>
         /// <returns></returns>
@@ -57,7 +57,7 @@
         }
 
         /// <summary>
-        /// Construct an IEnumerable of the specified type
+        /// Construct an IEnumerable of the specified type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// Construct an IEnumerable with a specific count
+        /// Construct an IEnumerable with a specific count. Cannot be negative.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="count"></param>
@@ -79,7 +79,7 @@
         }
 
         /// <summary>
-        /// Construct an IEnumerable with hard codes applied after construction
+        /// Construct an IEnumerable with hard codes applied after construction.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="hardCodes"></param>
@@ -90,7 +90,7 @@
         }
 
         /// <summary>
-        /// Construct an IEnumerable with hard codes applied after construction and with a certain count
+        /// Construct an IEnumerable with hard codes applied after construction and with a specific count. Cannot be negative.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="hardCodes"></param>
@@ -132,7 +132,7 @@
         }
 
         /// <summary>
-        /// Adds a registy to be used during construction
+        /// Adds a registy to be used during construction.
         /// </summary>
         /// <param name="registry"></param>
         /// <returns></returns>
@@ -143,7 +143,7 @@
         }
 
         /// <summary>
-        /// Supply a configuration expression to be used during construction
+        /// Supply a configuration expression to be used during construction.
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
@@ -159,7 +159,7 @@
         }
 
         /// <summary>
-        /// Add a blueprint to be used during construction
+        /// Add a blueprint to be used during construction.
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
@@ -170,7 +170,7 @@
         }
 
         /// <summary>
-        /// Add blueprints to be used during construction
+        /// Add blueprints to be used during construction.
         /// </summary>
         /// <param name="blueprints"></param>
         /// <returns></returns>
