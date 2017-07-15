@@ -10,8 +10,10 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.RequestType.GetTypeInfo().IsGenericType &&
-                   context.RequestType.GetTypeInfo().GetGenericTypeDefinition() == typeof(Dictionary<,>);
+            var typeInfo = context.RequestType.GetTypeInfo();
+
+            return typeInfo.IsGenericType &&
+                   typeInfo.GetGenericTypeDefinition() == typeof(Dictionary<,>);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
