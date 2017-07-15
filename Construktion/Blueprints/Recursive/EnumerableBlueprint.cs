@@ -8,6 +8,18 @@
 
     public class EnumerableBlueprint : Blueprint
     {
+        private readonly int _enumerableCount;
+
+        public EnumerableBlueprint() : this(3)
+        {
+            
+        }
+
+        public EnumerableBlueprint(int enumerableCount)
+        {
+            _enumerableCount = enumerableCount;
+        }
+
         public bool Matches(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsGenericType &&
@@ -25,10 +37,9 @@
 
         private IList construct(Type closedType, ConstruktionPipeline pipeline)
         {
-            var count = 3;
             var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
 
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < _enumerableCount; i++)
             {
                 var result = pipeline.Construct(new ConstruktionContext(closedType));
 
