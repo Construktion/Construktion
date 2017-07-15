@@ -21,7 +21,7 @@
 
             return useNull == 1 
                 ? null 
-                : pipeline.Construct(new ConstruktionContext(closedType));
+                : pipeline.Send(new ConstruktionContext(closedType));
         }
     }
 }

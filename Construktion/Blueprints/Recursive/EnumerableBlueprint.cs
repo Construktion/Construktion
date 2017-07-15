@@ -41,7 +41,7 @@
 
             for (var i = 0; i < _enumerableCount; i++)
             {
-                var result = pipeline.Construct(new ConstruktionContext(closedType));
+                var result = pipeline.Send(new ConstruktionContext(closedType));
 
                 items.Add(result);
             }

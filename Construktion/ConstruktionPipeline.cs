@@ -7,7 +7,7 @@
 
     public interface ConstruktionPipeline
     {
-        object Construct(ConstruktionContext requestContext);
+        object Send(ConstruktionContext requestContext);
     }
 
     internal class DefaultConstruktionPipeline : ConstruktionPipeline
@@ -27,16 +27,16 @@
             _limit = recurrsionDepth;
         }
 
-        public object Construct(ConstruktionContext requestContext)
+        public object Send(ConstruktionContext requestContext)
         {
             var blueprint = _blueprints.First(x => x.Matches(requestContext));
 
-            var result = construct(requestContext, blueprint);
+            var result = Construct(requestContext, blueprint);
 
             return result;
         }
 
-        private object construct(ConstruktionContext requestContext, Blueprint blueprint)
+        private object Construct(ConstruktionContext requestContext, Blueprint blueprint)
         {
             var depth = _underConstruction.Count(x => requestContext.RequestType == x);
 

@@ -54,7 +54,7 @@
             {
                 var ctorArg = parameter.ParameterType;
 
-                var value = pipeline.Construct(new ConstruktionContext(ctorArg));
+                var value = pipeline.Send(new ConstruktionContext(ctorArg));
 
                 @params.Add(Expression.Constant(value));
             }
@@ -68,7 +68,7 @@
 
             foreach (var property in properties)
             {
-                var result = pipeline.Construct(new ConstruktionContext(property));
+                var result = pipeline.Send(new ConstruktionContext(property));
 
                 property.SetValue(instance, result);
             }

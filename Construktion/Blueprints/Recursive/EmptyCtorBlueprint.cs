@@ -32,7 +32,7 @@
 
             foreach (var property in properties)
             {
-                var result = pipeline.Construct(new ConstruktionContext(property));
+                var result = pipeline.Send(new ConstruktionContext(property));
 
                 property.SetValue(instance, result);
             }

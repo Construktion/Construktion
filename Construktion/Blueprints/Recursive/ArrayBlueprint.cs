@@ -26,7 +26,7 @@ namespace Construktion.Blueprints.Recursive
 
             for (var i = 0; i <= count - 1; i++)
             {
-                var value = pipeline.Construct(new ConstruktionContext(arrayType));
+                var value = pipeline.Send(new ConstruktionContext(arrayType));
 
                 array.SetValue(value, i);
             }

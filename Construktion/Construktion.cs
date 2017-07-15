@@ -124,7 +124,7 @@
 
             var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints(), _registry.GetRecurssionLimit());
 
-            var result = (T)pipeline.Construct(context);
+            var result = (T)pipeline.Send(context);
 
             hardCodes?.Invoke(result);
 

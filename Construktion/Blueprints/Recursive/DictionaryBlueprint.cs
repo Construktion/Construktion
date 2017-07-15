@@ -39,7 +39,7 @@
 
         private HashSet<object> CreateUniqueKeys(int count, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
         {
-            var newItem = pipeline.Construct(new ConstruktionContext(key));
+            var newItem = pipeline.Send(new ConstruktionContext(key));
 
             if (newItem != null)
                 items.Add(newItem);
@@ -53,7 +53,7 @@
         {
             for (var i = 0; i < count; i++)
             {
-                yield return pipeline.Construct(new ConstruktionContext(closedType));
+                yield return pipeline.Send(new ConstruktionContext(closedType));
             }
         }
     }

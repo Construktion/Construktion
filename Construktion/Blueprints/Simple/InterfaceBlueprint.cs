@@ -26,8 +26,8 @@
         {
             var implementation = _typeMap[context.RequestType];
 
-            var result = pipeline.Construct(new ConstruktionContext(implementation));
-
+            var result = pipeline.Send(new ConstruktionContext(implementation));
+            
             return result;
         }        
     }
