@@ -2,7 +2,7 @@
 {
     public class StringBlueprint : AbstractBlueprint<string>
     {
-        public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var result = "String-" + _random.Next(1, 10000);
 

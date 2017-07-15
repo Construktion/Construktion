@@ -21,11 +21,22 @@ namespace Construktion.Blueprints
         }
 
         /// <summary>
+        /// Defers work to derived classes
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
+        object Blueprint.Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+        {
+            return Construct(context, pipeline);
+        }
+
+        /// <summary>
         /// Contruct an object of T
         /// </summary>
         /// <param name="context"></param>
         /// <param name="pipeline"></param>
         /// <returns></returns>
-        public abstract object Construct(ConstruktionContext context, ConstruktionPipeline pipeline);
+        public abstract T Construct(ConstruktionContext context, ConstruktionPipeline pipeline);
     }
 }

@@ -6,7 +6,7 @@
     {
         private const int twoDays = 172800;
 
-        public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public override TimeSpan Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var timespan = new TimeSpan(0, 0, 0, _random.Next(twoDays));
 

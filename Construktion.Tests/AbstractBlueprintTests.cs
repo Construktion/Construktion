@@ -26,8 +26,8 @@
         }
 
         public class FooBlueprint : AbstractBlueprint<Foo>
-        {           
-            public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+        {
+            public override Foo Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
                 return new Foo
                 {

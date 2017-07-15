@@ -4,7 +4,7 @@
 
     public class DateTimeBlueprint : AbstractBlueprint<DateTime>
     {
-        public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public override DateTime Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var start = DateTime.Today.AddYears(-2);
 

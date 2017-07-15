@@ -4,7 +4,7 @@
     {
         private bool value = false;
 
-        public override object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+        public override bool Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             value = !value;
 

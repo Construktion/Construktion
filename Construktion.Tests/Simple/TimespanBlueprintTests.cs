@@ -14,7 +14,7 @@
 
             var result = blueprint.Construct(new ConstruktionContext(typeof(TimeSpan)), Default.Pipeline);
 
-            result.ShouldNotBe(null);
+            result.ShouldNotBe(default(TimeSpan));
         }
     }
 }
