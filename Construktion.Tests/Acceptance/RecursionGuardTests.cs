@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests.Recursive
+﻿namespace Construktion.Tests.Acceptance
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Shouldly;
     using Xunit;
-    using System.Linq;
 
     public class RecursionGuardTests
     {
@@ -47,6 +47,20 @@
             sut.Parents.ShouldAllBe(x => x.Child != null);
 
             sut.Parents.Select(x => x.Child).ShouldAllBe(x => x.RecursiveParent == null);
+        }
+
+        [Fact]
+        public void should_have_configurable_recurssion_depth()
+        {
+            var construction = new Construktion().Apply(x => x.RecurssionLimit(1));
+
+            var parent = construction.Construct<Parent>();
+
+            var firstRecurssiveParent = parent.Child.RecursiveParent;
+            var secondRecurssiveParent = firstRecurssiveParent.Child.RecursiveParent;
+
+            firstRecurssiveParent.ShouldNotBe(null);
+            secondRecurssiveParent.ShouldBe(null);
         }
 
         public class Parent

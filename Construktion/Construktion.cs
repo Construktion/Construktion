@@ -120,7 +120,7 @@
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints());
+            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints(), _registry.GetRecurssionDepth());
 
             var result = (T)pipeline.Construct(context);
 

@@ -17,9 +17,11 @@ namespace Construktion
         private int? _enumerableCount;
         private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
         private Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
+        private int? _recurssionLimit;
         private Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
         private List<Blueprint> _customBlueprints { get; } = new List<Blueprint>();
 
+        public int GetRecurssionDepth() => _recurssionLimit ?? 0;
         public int GetEnumerableCount() => _enumerableCount ?? 3;
         public IList<Blueprint> GetBlueprints() => _customBlueprints.Concat(_defaultBlueprints).ToList();
 
@@ -173,6 +175,7 @@ namespace Construktion
             _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy ?? Extensions.GreedyCtor;
             _propertiesSelector = registry._propertiesSelector ??_propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
             _enumerableCount = registry._enumerableCount ?? _enumerableCount;
+            _recurssionLimit = registry._recurssionLimit ?? _recurssionLimit;
 
             _defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
 
@@ -207,6 +210,17 @@ namespace Construktion
                 throw new ArgumentException("Cannot set count less than 0");
 
             _enumerableCount = count;
+            return this;
+        }
+
+        /// <summary>
+        /// Configure how many levels of recurssion you want to construct 
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public BlueprintRegistry RecurssionLimit(int limit)
+        {
+            _recurssionLimit = limit;
             return this;
         }
     }
