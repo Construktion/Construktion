@@ -52,7 +52,7 @@
         [Fact]
         public void should_set_enumerable_count_globally()
         {
-            _contruktion.Apply(x => x.EnumerableCount(2));
+            _contruktion.With(x => x.EnumerableCount(2));
 
             var ints = _contruktion.ConstructMany<int>();
             var foos = _contruktion.ConstructMany<Foo>();
@@ -64,7 +64,7 @@
         [Fact]
         public void should_throw_when_setting_a_negative_count()
         {
-            Should.Throw<ArgumentException>(() => _contruktion.Apply(x => x.EnumerableCount(-1)));
+            Should.Throw<ArgumentException>(() => _contruktion.With(x => x.EnumerableCount(-1)));
         }
 
         public class Foo

@@ -52,7 +52,7 @@
         [Fact]
         public void should_have_configurable_recurssion_depth()
         {
-            var construction = new Construktion().Apply(x => x.RecurssionLimit(1));
+            var construction = new Construktion().With(x => x.RecurssionLimit(1));
 
             var parent = construction.Construct<Parent>();
 

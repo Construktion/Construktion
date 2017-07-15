@@ -9,7 +9,7 @@ namespace Construktion
     using Blueprints.Recursive;
     using Blueprints.Simple;
 
-    public class BlueprintRegistry
+    public class ConstruktionRegistry
     {
         private readonly List<Blueprint> _defaultBlueprints = Default.Blueprints;
 
@@ -23,14 +23,14 @@ namespace Construktion
 
         public int GetRecurssionDepth() => _recurssionLimit ?? 0;
         public int GetEnumerableCount() => _enumerableCount ?? 3;
-        public IList<Blueprint> GetBlueprints() => _customBlueprints.Concat(_defaultBlueprints).ToList();
+        public IEnumerable<Blueprint> GetBlueprints() => _customBlueprints.Concat(_defaultBlueprints).ToList();
 
-        public BlueprintRegistry()
+        public ConstruktionRegistry()
         {
 
         }
 
-        public BlueprintRegistry(Action<BlueprintRegistry> configure)
+        public ConstruktionRegistry(Action<ConstruktionRegistry> configure)
         {
             configure(this);
         }
@@ -41,7 +41,7 @@ namespace Construktion
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
-        public BlueprintRegistry AddBlueprint(Blueprint blueprint)
+        public ConstruktionRegistry AddBlueprint(Blueprint blueprint)
         {
             blueprint.GuardNull();
 
@@ -54,7 +54,7 @@ namespace Construktion
         /// any built-in blueprint that may match
         /// </summary>
         /// <returns></returns>
-        public BlueprintRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
+        public ConstruktionRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
             _customBlueprints.Add((Blueprint) Activator.CreateInstance(typeof(TBlueprint)));
             return this;
@@ -65,7 +65,7 @@ namespace Construktion
         /// any built-in blueprints that may match
         /// </summary>
         /// <returns></returns>
-        public BlueprintRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
+        public ConstruktionRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
             blueprints.GuardNull();
 
@@ -79,7 +79,7 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="TContract">The type to be substituted</typeparam>
         /// <typeparam name="TImplementation">Will be used for substitution</typeparam>
-        public BlueprintRegistry Register<TContract, TImplementation>() where TImplementation : TContract
+        public ConstruktionRegistry Register<TContract, TImplementation>() where TImplementation : TContract
         {
             _typeMap[typeof(TContract)] = typeof(TImplementation);
             return this;
@@ -90,7 +90,7 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
-        public BlueprintRegistry UseInstance<T>(T instance)
+        public ConstruktionRegistry UseInstance<T>(T instance)
         {
             _customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
             return this;
@@ -102,7 +102,7 @@ namespace Construktion
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public BlueprintRegistry AddPropertyAttribute<T>(Func<T, object> value) where T : Attribute
+        public ConstruktionRegistry AddPropertyAttribute<T>(Func<T, object> value) where T : Attribute
         {
             var attributeBlueprint = new PropertyAttributeBlueprint<T>(value);
 
@@ -116,7 +116,7 @@ namespace Construktion
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public BlueprintRegistry AddParameterAttribute<T>(Func<T, object> value) where T : Attribute
+        public ConstruktionRegistry AddParameterAttribute<T>(Func<T, object> value) where T : Attribute
         {
             var attributeBlueprint = new ParameterAttributeBlueprint<T>(value);
 
@@ -128,7 +128,7 @@ namespace Construktion
         /// Construct objects using the constructor with the fewest arguments
         /// </summary>
         /// <returns></returns>
-        public BlueprintRegistry UseModestCtor()
+        public ConstruktionRegistry UseModestCtor()
         {
             _ctorStrategy = Extensions.ModestCtor;
             return this;
@@ -138,7 +138,7 @@ namespace Construktion
         /// Construct objects using the constructor with the most arguments
         /// </summary>
         /// <returns></returns>
-        public BlueprintRegistry UseGreedyCtor()
+        public ConstruktionRegistry UseGreedyCtor()
         {
             _ctorStrategy = Extensions.GreedyCtor;
             return this;
@@ -148,7 +148,7 @@ namespace Construktion
         /// Omit properties with private setters
         /// </summary>
         /// <returns></returns>
-        public BlueprintRegistry OmitPrivateSetters()
+        public ConstruktionRegistry OmitPrivateSetters()
         {
             _propertiesSelector = Extensions.PropertiesWithPublicSetter;
             return this;
@@ -158,13 +158,13 @@ namespace Construktion
         /// Construct properties with private setters
         /// </summary>
         /// <returns></returns>
-        public BlueprintRegistry ConstructPrivateSetters()
+        public ConstruktionRegistry ConstructPrivateSetters()
         {
             _propertiesSelector = Extensions.PropertiesWithAccessibleSetter;
             return this;
         }
 
-        internal void AddRegistry(BlueprintRegistry registry)
+        internal void AddRegistry(ConstruktionRegistry registry)
         {
             _customBlueprints.AddRange(registry._customBlueprints);
 
@@ -188,7 +188,7 @@ namespace Construktion
         /// <summary>
         /// Return 0 for ints and null for nullable ints ending in "Id". 
         /// </summary>
-        public BlueprintRegistry OmitIds()
+        public ConstruktionRegistry OmitIds()
         {
             _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal),
                 new List<Type> { typeof(int), typeof(int?) }));
@@ -198,13 +198,13 @@ namespace Construktion
         /// <summary>
         /// Specify a convention to omit properties of the specified type.
         /// </summary>
-        public BlueprintRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
+        public ConstruktionRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
         {
             _customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyType));
             return this;
         }
 
-        public BlueprintRegistry EnumerableCount(int count)
+        public ConstruktionRegistry EnumerableCount(int count)
         {
             if (count < 0)
                 throw new ArgumentException("Cannot set count less than 0");
@@ -218,7 +218,7 @@ namespace Construktion
         /// </summary>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public BlueprintRegistry RecurssionLimit(int limit)
+        public ConstruktionRegistry RecurssionLimit(int limit)
         {
             _recurssionLimit = limit;
             return this;

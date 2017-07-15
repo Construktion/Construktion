@@ -4,6 +4,10 @@
     using System.Linq;
     using System.Reflection;
 
+    /// <summary>
+    /// Base class to construct parameters from an attribute
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ParameterAttributeBlueprint<T> : Blueprint where T : Attribute
     {
         protected readonly Func<T, object> _value;

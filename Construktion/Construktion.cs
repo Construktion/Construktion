@@ -7,7 +7,7 @@
 
     public class Construktion
     {
-        private readonly BlueprintRegistry _registry = new BlueprintRegistry();
+        private readonly ConstruktionRegistry _registry = new ConstruktionRegistry();
 
         /// <summary>
         /// Construct an object of the specified type
@@ -129,15 +129,25 @@
             return result;
         }
 
-        public Construktion Apply(BlueprintRegistry registry)
+        /// <summary>
+        /// Adds a registy to be used during construction
+        /// </summary>
+        /// <param name="registry"></param>
+        /// <returns></returns>
+        public Construktion With(ConstruktionRegistry registry)
         {
             _registry.AddRegistry(registry);
             return this;
         }
 
-        public Construktion Apply(Action<BlueprintRegistry> configure)
+        /// <summary>
+        /// Supply a configuration expression to be used during construction
+        /// </summary>
+        /// <param name="configure"></param>
+        /// <returns></returns>
+        public Construktion With(Action<ConstruktionRegistry> configure)
         {
-            var registry = new BlueprintRegistry();
+            var registry = new ConstruktionRegistry();
 
             configure(registry);
 
@@ -146,13 +156,23 @@
             return this;
         }
 
-        public Construktion Apply(Blueprint blueprint)
+        /// <summary>
+        /// Add a blueprint to be used during construction
+        /// </summary>
+        /// <param name="blueprint"></param>
+        /// <returns></returns>
+        public Construktion With(Blueprint blueprint)
         {
             _registry.AddBlueprint(blueprint);
             return this;
         }
 
-        public Construktion Apply(IEnumerable<Blueprint> blueprints)
+        /// <summary>
+        /// Add blueprints to be used during construction
+        /// </summary>
+        /// <param name="blueprints"></param>
+        /// <returns></returns>
+        public Construktion With(IEnumerable<Blueprint> blueprints)
         {
             _registry.AddBlueprints(blueprints);
             return this;
