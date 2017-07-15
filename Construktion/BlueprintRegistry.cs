@@ -90,7 +90,7 @@ namespace Construktion
         /// <param name="instance"></param>
         public BlueprintRegistry UseInstance<T>(T instance)
         {
-            _customBlueprints.Add(new ScopedBlueprint(typeof(T), instance));
+            _customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
             return this;
         }
 

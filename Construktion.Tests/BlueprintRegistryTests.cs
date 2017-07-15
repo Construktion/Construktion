@@ -151,6 +151,21 @@
         }
 
         [Fact]
+        public void should_use_last_scoped_instance_registered()
+        {
+            var foo = new Foo();
+            var foo2 = new Foo();
+            _registry.UseInstance<IFoo>(foo);
+            _registry.UseInstance<IFoo>(foo2);
+
+            _construktion.Apply(_registry);
+
+            var result = _construktion.Construct<IFoo>();
+
+            result.GetHashCode().ShouldBe(foo2.GetHashCode());
+        }
+
+        [Fact]
         public void should_not_matter_where_scoped_instance_is_in_the_graph()
         {
             var foo = new Foo();
