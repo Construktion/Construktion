@@ -27,8 +27,6 @@
         /// <returns></returns>
         public T Construct<T>(Action<T> hardCodes)
         {
-            hardCodes.GuardNull();
-
             return DoConstruct(typeof(T), hardCodes);
         }
 
@@ -37,6 +35,7 @@
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public object Construct(Type type)
         {
             type.GuardNull();
@@ -49,6 +48,7 @@
         /// </summary>
         /// <param name="parameterInfo"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public object Construct(ParameterInfo parameterInfo)
         {
             parameterInfo.GuardNull();
@@ -57,7 +57,7 @@
         }
 
         /// <summary>
-        /// Construct an enumerable of the specified type
+        /// Construct an IEnumerable of the specified type
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -67,18 +67,19 @@
         }
 
         /// <summary>
-        /// Construct an enumerable of the specified type with a certain count
+        /// Construct an IEnumerable with a specific count
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="count"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public IEnumerable<T> ConstructMany<T>(int count)
         {
             return ConstructMany<T>(null, count);
         }
 
         /// <summary>
-        /// Construct many objects with hard codes applied after construction
+        /// Construct an IEnumerable with hard codes applied after construction
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="hardCodes"></param>
@@ -89,12 +90,13 @@
         }
 
         /// <summary>
-        /// Construct many objects with hard codes applied after construction and with a certain count
+        /// Construct an IEnumerable with hard codes applied after construction and with a certain count
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="hardCodes"></param>
         /// <param name="count"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes, int count)
         {
             if (count < 0)
@@ -120,7 +122,7 @@
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints(), _registry.GetRecurssionDepth());
+            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints(), _registry.GetRecurssionLimit());
 
             var result = (T)pipeline.Construct(context);
 

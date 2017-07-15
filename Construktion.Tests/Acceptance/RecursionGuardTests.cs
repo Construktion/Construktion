@@ -1,5 +1,6 @@
 ﻿namespace Construktion.Tests.Acceptance
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Shouldly;
@@ -62,6 +63,14 @@
             firstRecurssiveParent.ShouldNotBe(null);
             secondRecurssiveParent.ShouldBe(null);
         }
+
+        [Fact]
+        public void should_throw_when_set_to_negative_depth()
+        {
+            Should.Throw<ArgumentException>(() => new Construktion().With(x => x.RecurssionLimit(-1)));
+        }
+
+        public class Class<T> { }
 
         public class Parent
         {

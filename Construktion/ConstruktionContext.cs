@@ -3,6 +3,9 @@
     using System;
     using System.Reflection;
 
+    /// <summary>
+    /// The context of the type currently being constructed
+    /// </summary>
     public class ConstruktionContext
     {
         /// <summary>

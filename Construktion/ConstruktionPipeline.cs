@@ -10,7 +10,7 @@
         object Construct(ConstruktionContext requestContext);
     }
 
-    public class DefaultConstruktionPipeline : ConstruktionPipeline
+    internal class DefaultConstruktionPipeline : ConstruktionPipeline
     {
         private readonly IEnumerable<Blueprint> _blueprints;
         private readonly List<Type> _underConstruction = new List<Type>();

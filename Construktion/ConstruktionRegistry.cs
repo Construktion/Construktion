@@ -9,6 +9,9 @@ namespace Construktion
     using Blueprints.Recursive;
     using Blueprints.Simple;
 
+    /// <summary>
+    /// Base class for configuration settings
+    /// </summary>
     public class ConstruktionRegistry
     {
         private readonly List<Blueprint> _defaultBlueprints = Default.Blueprints;
@@ -18,11 +21,26 @@ namespace Construktion
         private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
         private Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
         private int? _recurssionLimit;
-        private Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
-        private List<Blueprint> _customBlueprints { get; } = new List<Blueprint>();
 
-        public int GetRecurssionDepth() => _recurssionLimit ?? 0;
+        private readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
+        private readonly List<Blueprint> _customBlueprints = new List<Blueprint>();
+
+        /// <summary>
+        /// Get the configured recurssion limit
+        /// </summary>
+        /// <returns></returns>
+        public int GetRecurssionLimit() => _recurssionLimit ?? 0;
+
+        /// <summary>
+        /// Get the configured enumerable count
+        /// </summary>
+        /// <returns></returns>
         public int GetEnumerableCount() => _enumerableCount ?? 3;
+        
+        /// <summary>
+        /// Get all configured blueprints. (The pipeline evaluates the blueprints in the returned order)
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Blueprint> GetBlueprints() => _customBlueprints.Concat(_defaultBlueprints).ToList();
 
         public ConstruktionRegistry()
@@ -36,11 +54,11 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register a blueprint to be added to the pipeline. Will replace
-        /// any built-in blueprint that may match
+        /// Register a blueprint to be added to the pipeline
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public ConstruktionRegistry AddBlueprint(Blueprint blueprint)
         {
             blueprint.GuardNull();
@@ -50,8 +68,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register a blueprint to be added to the pipeline. Will replace
-        /// any built-in blueprint that may match
+        /// Register a blueprint to be added to the pipeline
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
@@ -61,10 +78,10 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register blueprints to be added to the pipeline. Will replace
-        /// any built-in blueprints that may match
+        /// Register blueprints to be added to the pipeline.
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public ConstruktionRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
             blueprints.GuardNull();
@@ -74,8 +91,8 @@ namespace Construktion
         }
 
         /// <summary>
-        /// When TContact is requested, construct TImplementation instead.
-        /// Useful when you want to construct a specific implementation whenever an interface is requested. 
+        /// When TContrac is requested, construct TImplementation instead.
+        /// Useful when you want to construct a specific implementation whenever an interface is requested 
         /// </summary>
         /// <typeparam name="TContract">The type to be substituted</typeparam>
         /// <typeparam name="TImplementation">Will be used for substitution</typeparam>
@@ -86,7 +103,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register an instance that will be supplied whenever the type is requested.  
+        /// Register an instance that will be supplied whenever the type is requested
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
@@ -164,29 +181,8 @@ namespace Construktion
             return this;
         }
 
-        internal void AddRegistry(ConstruktionRegistry registry)
-        {
-            _customBlueprints.AddRange(registry._customBlueprints);
-
-            foreach (var map in registry._typeMap)
-                _typeMap[map.Key] = map.Value;
-
-            //todo yuck
-            _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy ?? Extensions.GreedyCtor;
-            _propertiesSelector = registry._propertiesSelector ??_propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
-            _enumerableCount = registry._enumerableCount ?? _enumerableCount;
-            _recurssionLimit = registry._recurssionLimit ?? _recurssionLimit;
-
-            _defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
-
-            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint),
-                new NonEmptyCtorBlueprint(_ctorStrategy, _propertiesSelector));
-
-            _defaultBlueprints.Replace(typeof(EmptyCtorBlueprint), new EmptyCtorBlueprint(_propertiesSelector));
-        }
-
         /// <summary>
-        /// Return 0 for ints and null for nullable ints ending in "Id". 
+        /// Return 0 for ints and null for nullable ints ending in "Id"
         /// </summary>
         public ConstruktionRegistry OmitIds()
         {
@@ -196,7 +192,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Specify a convention to omit properties of the specified type.
+        /// Specify a convention to omit properties of the specified type
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
         {
@@ -204,24 +200,57 @@ namespace Construktion
             return this;
         }
 
+        /// <summary>
+        /// Configure how many items to be returned in an IEnumerable 
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws argument exception when count is less than 0</exception>
         public ConstruktionRegistry EnumerableCount(int count)
         {
             if (count < 0)
-                throw new ArgumentException("Cannot set count less than 0");
+                throw new ArgumentException("Count cannot be less than 0");
 
             _enumerableCount = count;
             return this;
         }
 
         /// <summary>
-        /// Configure how many levels of recurssion you want to construct 
+        /// Configure how many levels of recurssion to construct
         /// </summary>
         /// <param name="limit"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws argument exception when limit is less than 0</exception>
         public ConstruktionRegistry RecurssionLimit(int limit)
         {
+            if (limit < 0)
+                throw new ArgumentException("Recurssion limit cannot be less than 0");
+
             _recurssionLimit = limit;
             return this;
+        }
+
+        internal void AddRegistry(ConstruktionRegistry registry)
+        {
+            registry.GuardNull();
+
+            _customBlueprints.AddRange(registry._customBlueprints);
+
+            foreach (var map in registry._typeMap)
+                _typeMap[map.Key] = map.Value;
+
+            //todo yuck
+            _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy ?? Extensions.GreedyCtor;
+            _propertiesSelector = registry._propertiesSelector ?? _propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
+            _enumerableCount = registry._enumerableCount ?? _enumerableCount;
+            _recurssionLimit = registry._recurssionLimit ?? _recurssionLimit;
+
+            _defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
+
+            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint),
+                new NonEmptyCtorBlueprint(_ctorStrategy, _propertiesSelector));
+
+            _defaultBlueprints.Replace(typeof(EmptyCtorBlueprint), new EmptyCtorBlueprint(_propertiesSelector));
         }
     }
 }

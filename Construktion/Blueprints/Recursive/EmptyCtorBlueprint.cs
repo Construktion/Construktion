@@ -20,7 +20,6 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            //need to see what happens for Class<TClass>
             return context.RequestType.GetTypeInfo().IsClass &&
                    context.RequestType.HasDefaultCtor();
         }

@@ -5,7 +5,7 @@
     using Blueprints.Recursive;
     using Blueprints.Simple;
 
-    public static class Default
+    internal static class Default
     {
         public static List<Blueprint> Blueprints => new List<Blueprint>
         {
