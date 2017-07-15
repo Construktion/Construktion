@@ -24,7 +24,7 @@
             if (key.GetTypeInfo().IsEnum)
                 count = Enum.GetNames(key).Length;
 
-            var keys = UniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
+            var keys = CreateUniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
             var values = Values(count, value, pipeline).ToList();
 
             var dictionary = (IDictionary)Activator.CreateInstance(typeof(Dictionary<,>).MakeGenericType(key, value));
@@ -37,7 +37,7 @@
             return dictionary;
         }
 
-        private HashSet<object> UniqueKeys(int count, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
+        private HashSet<object> CreateUniqueKeys(int count, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
         {
             var newItem = pipeline.Construct(new ConstruktionContext(key));
 
@@ -46,7 +46,7 @@
 
             return items.Count == count
                 ? items 
-                : UniqueKeys(count, key, pipeline, items);
+                : CreateUniqueKeys(count, key, pipeline, items);
         }
 
         private IEnumerable<object> Values(int count, Type closedType, ConstruktionPipeline pipeline)
