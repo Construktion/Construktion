@@ -210,6 +210,14 @@ namespace Construktion
         }
 
         /// <summary>
+        /// Omit all virtual properties
+        /// </summary>
+        public void OmitVirtualProperties()
+        {
+            _customBlueprints.Add(new IgnoreVirtualPropertiesBlueprint());
+        }
+
+        /// <summary>
         /// Configure how many items to be returned in an IEnumerable 
         /// </summary>
         /// <param name="count"></param>

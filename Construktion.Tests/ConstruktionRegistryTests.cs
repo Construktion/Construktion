@@ -1,6 +1,7 @@
 ﻿namespace Construktion.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using Blueprints;
@@ -303,7 +304,7 @@
 
         //config
         [Fact]
-        public void new_registry_should_not_overwrite_previous_enumerable_count_but_it_should_if_its_Set()
+        public void new_registry_should_not_overwrite_previous_enumerable_count_but_it_should_if_its_set()
         {
             _registry.EnumerableCount(1);
             _registry.AddRegistry(new ConstruktionRegistry(x => x.EnumerableCount(2)));
@@ -311,6 +312,17 @@
             var ints = _construktion.With(_registry).ConstructMany<int>();
 
             ints.Count().ShouldBe(2);
+        }
+
+        [Fact]
+        public void should_ignore_virtual_properties_when_opted_in()
+        {
+            _registry.OmitVirtualProperties();
+
+            var foo = _construktion.With(_registry).Construct<Foo>();
+
+            foo.VirtualFoo2s.ShouldBe(null);
+            foo.VirtualInt.ShouldBe(0);
         }
 
         [Fact]
@@ -395,6 +407,9 @@
             public string Bar { get; set; }
 
             public string StringWithPrivateSetter { get; private set; }
+
+            public virtual ICollection<Foo2> VirtualFoo2s { get; set; }
+            public virtual int VirtualInt { get; set; }
         }
 
         public class Foo2 : IFoo { }
