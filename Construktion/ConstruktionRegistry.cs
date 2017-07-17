@@ -192,6 +192,15 @@ namespace Construktion
         }
 
         /// <summary>
+        /// Omit all properties of the specified type.
+        /// </summary>
+        public ConstruktionRegistry OmitProperties(Type propertyType)
+        {
+            _customBlueprints.Add(new OmitPropertyBlueprint(x => true, propertyType));
+            return this;
+        }
+
+        /// <summary>
         /// Specify a convention to omit properties of the specified type.
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
