@@ -256,6 +256,18 @@ namespace Construktion
             return this;
         }
 
+        /// <summary>
+        /// Construct properties from a supplied function matching a convention.
+        /// </summary>
+        /// <param name="convention"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public ConstruktionRegistry ConstructPropertyUsing(Func<PropertyInfo, bool> convention, Func<object> value)
+        {
+            _customBlueprints.Add(new CustomPropertyValueBlueprint(convention, value));
+            return this;
+        }
+
         internal void AddRegistry(ConstruktionRegistry registry)
         {
             registry.GuardNull();
