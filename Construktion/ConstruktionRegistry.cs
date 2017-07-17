@@ -186,7 +186,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitIds()
         {
-            _customBlueprints.Add(new OmitPropertyBlueprint(x => x.EndsWith("Id", StringComparison.Ordinal),
+            _customBlueprints.Add(new OmitPropertyBlueprint(x => x.Name.EndsWith("Id", StringComparison.Ordinal),
                 new List<Type> { typeof(int), typeof(int?) }));
             return this;
         }
@@ -203,7 +203,7 @@ namespace Construktion
         /// <summary>
         /// Specify a convention to omit properties of the specified type.
         /// </summary>
-        public ConstruktionRegistry OmitProperties(Func<string, bool> convention, Type propertyType)
+        public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, Type propertyType)
         {
             _customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyType));
             return this;
@@ -212,7 +212,7 @@ namespace Construktion
         /// <summary>
         /// Specify a convention to omit properties of the specified types.
         /// </summary>
-        public ConstruktionRegistry OmitProperties(Func<string, bool> convention, IEnumerable<Type> propertyTypes)
+        public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, params Type[]  propertyTypes)
         {
             _customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyTypes));
             return this;

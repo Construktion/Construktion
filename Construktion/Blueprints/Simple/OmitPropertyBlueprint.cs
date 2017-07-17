@@ -8,15 +8,15 @@
 
     public class OmitPropertyBlueprint : Blueprint
     {
-        private readonly Func<string, bool> _convention;
+        private readonly Func<PropertyInfo, bool> _convention;
         private readonly IEnumerable<Type> _propertyTypes;
 
-        public OmitPropertyBlueprint(Func<string, bool> convention, Type propertyType) : this(convention,
+        public OmitPropertyBlueprint(Func<PropertyInfo, bool> convention, Type propertyType) : this(convention,
             new List<Type> { propertyType })
         {
         }
 
-        public OmitPropertyBlueprint(Func<string, bool> convention, IEnumerable<Type> propertyTypes)
+        public OmitPropertyBlueprint(Func<PropertyInfo, bool> convention, IEnumerable<Type> propertyTypes)
         {
             convention.GuardNull();
             propertyTypes.GuardNull();
@@ -29,7 +29,7 @@
         {
             return
                 context.PropertyInfo != null &&
-                _convention(context.PropertyInfo.Name) &&
+                _convention(context.PropertyInfo) &&
                 (_propertyTypes.Contains(context.RequestType) ||
                 ContainsGeneric(context.RequestType));
         }
