@@ -74,6 +74,18 @@
         }
 
         [Fact]
+        public void should_omit_all_properties_of_a_open_generic()
+        {
+            _registry.OmitProperties(typeof(List<>));
+            _construktion.With(_registry);
+
+            var foo = _construktion.Construct<Foo>();
+
+            foo.ListInts.ShouldBe(null);
+            foo.ListStrings.ShouldBe(null);
+        }
+
+        [Fact]
         public void should_register_via_generic_parameter()
         {
             _registry.AddBlueprint<StringOneBlueprint>();
@@ -410,6 +422,8 @@
 
             public virtual ICollection<Foo2> VirtualFoo2s { get; set; }
             public virtual int VirtualInt { get; set; }
+            public List<int> ListInts { get; set; }
+            public List<string> ListStrings { get; set; }
         }
 
         public class Foo2 : IFoo { }
