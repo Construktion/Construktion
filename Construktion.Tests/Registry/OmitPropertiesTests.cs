@@ -1,4 +1,4 @@
-namespace Construktion.Tests
+namespace Construktion.Tests.Registry
 {
     using System.Collections.Generic;
     using Shouldly;
@@ -51,7 +51,7 @@ namespace Construktion.Tests
         [Fact]
         public void should_be_able_to_define_a_custom_convention()
         {
-            _registry.OmitProperties(prop => prop.EndsWith("_Id"), typeof(string));
+            _registry.OmitProperties(prop => prop.Name.EndsWith("_Id"), typeof(string));
             _construktion.With(_registry);
 
             var foo = _construktion.Construct<Foo>();
