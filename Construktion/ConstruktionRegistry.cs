@@ -289,8 +289,7 @@ namespace Construktion
 
             _defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
 
-            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint),
-                new NonEmptyCtorBlueprint(_ctorStrategy, _propertiesSelector));
+            _defaultBlueprints.Replace(typeof(NonEmptyCtorBlueprint), new NonEmptyCtorBlueprint(_ctorStrategy, _propertiesSelector));
 
             _defaultBlueprints.Replace(typeof(EmptyCtorBlueprint), new EmptyCtorBlueprint(_propertiesSelector));
         }

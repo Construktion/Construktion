@@ -1,6 +1,6 @@
-Getting started
+Quick Start
 ---
-Objects are built using the Construktion class.
+The Construktion class will build objects with randomized values.
 
 ```c#
 var construktion = new Construktion();
@@ -28,7 +28,3 @@ This [package](https://www.nuget.org/packages/Construktion) supports .NetFramewo
 ```
 Install-Package Construktion -Pre
 ```
-
-Owner
----
-Joe Gannon, joegannon15@gmail.com
