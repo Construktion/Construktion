@@ -34,14 +34,14 @@
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {         
-            var ctor = BuildCtor(context.RequestType, pipeline);
+            var instance = NewUp(context.RequestType, pipeline);
 
-            var instance = construct(ctor(), pipeline);
+            var result = construct(instance, pipeline);
 
-            return instance;
+            return result;
         }
 
-        private Func<object> BuildCtor(Type type, ConstruktionPipeline pipeline)
+        private object NewUp(Type type, ConstruktionPipeline pipeline)
         {
             var ctors = type.GetTypeInfo()
                 .DeclaredConstructors
@@ -49,17 +49,17 @@
 
             var ctor = _ctorStrategy(ctors);
 
-            var @params = new List<ConstantExpression>();
+            var @params = new List<object>();
             foreach (var parameter in ctor.GetParameters())
             {
                 var ctorArg = parameter.ParameterType;
 
                 var value = pipeline.Send(new ConstruktionContext(ctorArg));
 
-                @params.Add(Expression.Constant(value));
+                @params.Add(value);
             }
 
-            return Expression.Lambda<Func<object>>(Expression.New(ctor, @params)).Compile();
+            return type.NewUp(@params.ToArray());
         }
 
         private object construct(object instance, ConstruktionPipeline pipeline)
@@ -70,7 +70,7 @@
             {
                 var result = pipeline.Send(new ConstruktionContext(property));
 
-                property.SetValue(instance, result);
+                property.SetPropertyValue(instance, result);
             }
 
             return instance;

@@ -26,7 +26,7 @@
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var instance = Activator.CreateInstance(context.RequestType);
+            var instance = context.RequestType.NewUp();
 
             var properties = _propertiesSelector(context.RequestType);
 
@@ -34,7 +34,7 @@
             {
                 var result = pipeline.Send(new ConstruktionContext(property));
 
-                property.SetValue(instance, result);
+                property.SetPropertyValue(instance, result);
             }
 
             return instance;

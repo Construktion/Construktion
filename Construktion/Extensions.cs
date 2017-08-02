@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Construktion.Tests")]
+[assembly: InternalsVisibleTo("Construktion.Benchmarks")]
 
 namespace Construktion
 {

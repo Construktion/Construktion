@@ -42,6 +42,17 @@
             bar.Foo.Age.ShouldNotBe(0);
         }
 
+        [Fact]
+        public void resolved_ctor_args_should_be_different_objects()
+        {
+            var result1 = new Construktion().Construct<NonEmptyCtor>();
+            var result2 = new Construktion().Construct<NonEmptyCtor>();
+
+            result1.Foo.ShouldNotBeNull();
+            result2.Foo.ShouldNotBeNull();
+            result1.Foo.GetHashCode().ShouldNotBe(result2.Foo.GetHashCode());
+        }
+
         public class EmptyCtor { }      
 
         public class NonEmptyCtor

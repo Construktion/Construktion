@@ -16,6 +16,7 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
     <DefineConstants>NET45;NETFULL</DefineConstants>
   </PropertyGroup>
+  
 
   <!-- Nuget information -->
   <PropertyGroup>
@@ -35,6 +36,7 @@
     <copyright>Copyright 2017</copyright>
   </PropertyGroup>
   
+  <!-- Ignore Missing Xml Comment for Public Member -->
     <PropertyGroup>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>

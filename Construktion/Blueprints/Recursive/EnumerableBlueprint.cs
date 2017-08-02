@@ -37,6 +37,7 @@
 
         private IList construct(Type closedType, ConstruktionPipeline pipeline)
         {
+            //todo benchmark
             var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
 
             for (var i = 0; i < _enumerableCount; i++)
