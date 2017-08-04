@@ -1,3 +1,6 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/elx7hqdcjl9v46mf?svg=true)](https://ci.appveyor.com/project/JoeGannon/construktion)
+[![NuGet](http://img.shields.io/nuget/v/Construktion.svg)](https://www.nuget.org/packages/Construktion/)
+
 Quick Start
 ---
 The Construktion class will build objects with randomized values.
