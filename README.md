@@ -1,5 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/elx7hqdcjl9v46mf?svg=true)](https://ci.appveyor.com/project/JoeGannon/construktion)
 [![NuGet](http://img.shields.io/nuget/v/Construktion.svg)](https://www.nuget.org/packages/Construktion/)
+[![Join the chat at https://gitter.im/Construktion_/Lobby](https://badges.gitter.im/Construktion_/Lobby.svg)](https://gitter.im/Construktion_/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Quick Start
 ---
