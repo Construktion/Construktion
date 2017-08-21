@@ -6,21 +6,21 @@
 
     public class RegisteredInstanceTests
     {
-        private readonly ConstruktionRegistry _registry;
-        private readonly Construktion _construktion;
+        private readonly ConstruktionRegistry registry;
+        private readonly Construktion construktion;
 
         public RegisteredInstanceTests()
         {
-            _registry = new ConstruktionRegistry();
-            _construktion = new Construktion();
+            registry = new ConstruktionRegistry();
+            construktion = new Construktion();
         }
 
         [Fact]
         public void should_register_instance_with_contract()
         {
-            _registry.Register<IFoo, Foo>();
+            registry.Register<IFoo, Foo>();
 
-            var result = _construktion.With(_registry).Construct<IFoo>();
+            var result = construktion.With(registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -28,10 +28,10 @@
         [Fact]
         public void last_registered_instance_should_be_chosen()
         {
-            _registry.Register<IFoo, Foo>();
-            _registry.Register<IFoo, Foo2>();
+            registry.Register<IFoo, Foo>();
+            registry.Register<IFoo, Foo2>();
 
-            var result = _construktion.With(_registry).Construct<IFoo>();
+            var result = construktion.With(registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo2>();
         }
@@ -40,9 +40,9 @@
         public void should_register_scoped_instance()
         {
             var foo = new Foo { FooId = -1};
-            _registry.UseInstance<IFoo>(foo);
+            registry.UseInstance<IFoo>(foo);
 
-            var result = _construktion.With(_registry).Construct<IFoo>();
+            var result = construktion.With(registry).Construct<IFoo>();
 
             var fooResult = result.ShouldBeOfType<Foo>();
             fooResult.FooId.ShouldBe(-1);
@@ -54,12 +54,12 @@
         {
             var foo = new Foo();
             var foo2 = new Foo();
-            _registry.UseInstance<IFoo>(foo);
-            _registry.UseInstance<IFoo>(foo2);
+            registry.UseInstance<IFoo>(foo);
+            registry.UseInstance<IFoo>(foo2);
 
-            _construktion.With(_registry);
+            construktion.With(registry);
 
-            var result = _construktion.Construct<IFoo>();
+            var result = construktion.Construct<IFoo>();
 
             result.GetHashCode().ShouldBe(foo2.GetHashCode());
         }
@@ -68,11 +68,11 @@
         public void should_use_instance_across_graph()
         {
             var foo = new Foo();
-            _registry.UseInstance<IFoo>(foo);
+            registry.UseInstance<IFoo>(foo);
 
-            _construktion.With(_registry);
+            construktion.With(registry);
 
-            var result = _construktion.Construct<FooCollector>();
+            var result = construktion.Construct<FooCollector>();
 
             result.CtorFoo.GetHashCode().ShouldBe(foo.GetHashCode());
             result.PropertyFoo.GetHashCode().ShouldBe(foo.GetHashCode());
@@ -84,7 +84,7 @@
             //_blueprintRegistry.Register<IFoo, Foo>();
 
             Should.Throw<Exception>
-                (() => _construktion.With(_registry).Construct<IFoo>())
+                (() => construktion.With(registry).Construct<IFoo>())
                 .Message
                 .ShouldContain("Cannot construct the interface IFoo.");
         }

@@ -6,22 +6,22 @@ namespace Construktion.Tests.Registry
 
     public class OmitPropertiesTests
     {
-        private readonly ConstruktionRegistry _registry;
-        private readonly Construktion _construktion;
+        private readonly ConstruktionRegistry registry;
+        private readonly Construktion construktion;
         
         public OmitPropertiesTests()
         {
-            _registry = new ConstruktionRegistry();
-            _construktion = new Construktion();
+            registry = new ConstruktionRegistry();
+            construktion = new Construktion();
         }
 
         [Fact]
         public void omit_ids_should_omit_an_int_that_ends_in_Id()
         {
-            _registry.OmitIds();
-            _construktion.With(_registry);
+            registry.OmitIds();
+            construktion.With(registry);
 
-            var foo = _construktion.Construct<Foo>();
+            var foo = construktion.Construct<Foo>();
 
             foo.FooId.ShouldBe(0);
         }
@@ -29,10 +29,10 @@ namespace Construktion.Tests.Registry
         [Fact]
         public void omit_ids_should_omit_a_nullable_int_that_ends_in_Id()
         {
-            _registry.OmitIds();
-            _construktion.With(_registry);
+            registry.OmitIds();
+            construktion.With(registry);
 
-            var foo = _construktion.Construct<Foo>();
+            var foo = construktion.Construct<Foo>();
 
             foo.NullableFooId.ShouldBe(null);
         }
@@ -40,10 +40,10 @@ namespace Construktion.Tests.Registry
         [Fact]
         public void should_be_case_sensitive()
         {
-            _registry.OmitIds();
-            _construktion.With(_registry);
+            registry.OmitIds();
+            construktion.With(registry);
 
-            var foo = _construktion.Construct<Foo>();
+            var foo = construktion.Construct<Foo>();
 
             foo.Fooid.ShouldNotBe(0);
         }
@@ -51,10 +51,10 @@ namespace Construktion.Tests.Registry
         [Fact]
         public void should_be_able_to_define_a_custom_convention()
         {
-            _registry.OmitProperties(prop => prop.Name.EndsWith("_Id"), typeof(string));
-            _construktion.With(_registry);
+            registry.OmitProperties(prop => prop.Name.EndsWith("_Id"), typeof(string));
+            construktion.With(registry);
 
-            var foo = _construktion.Construct<Foo>();
+            var foo = construktion.Construct<Foo>();
 
             foo.String_Id.ShouldBe(null);
         }
@@ -62,10 +62,10 @@ namespace Construktion.Tests.Registry
         [Fact]
         public void should_omit_all_properties_of_a_open_generic()
         {
-            _registry.OmitProperties(typeof(List<>));
-            _construktion.With(_registry);
+            registry.OmitProperties(typeof(List<>));
+            construktion.With(registry);
 
-            var foo = _construktion.Construct<Foo>();
+            var foo = construktion.Construct<Foo>();
 
             foo.ListInts.ShouldBe(null);
             foo.ListStrings.ShouldBe(null);
@@ -74,9 +74,9 @@ namespace Construktion.Tests.Registry
         [Fact]
         public void should_ignore_virtual_properties_when_opted_in()
         {
-            _registry.OmitVirtualProperties();
+            registry.OmitVirtualProperties();
 
-            var foo = _construktion.With(_registry).Construct<Foo>();
+            var foo = construktion.With(registry).Construct<Foo>();
 
             foo.MyVirtualClasses.ShouldBe(null);
             foo.VirtualInt.ShouldBe(0);

@@ -6,17 +6,17 @@ namespace Construktion.Tests.Acceptance
 
     public class PrimitiveConstruktionTests
     {
-        private readonly Construktion _construktion;
+        private readonly Construktion construktion;
 
         public PrimitiveConstruktionTests()
         {
-            _construktion = new Construktion();
+            construktion = new Construktion();
         }
 
         [Fact]
         public void strings()
         {
-            var result = _construktion.Construct<string>();
+            var result = construktion.Construct<string>();
 
             result.Substring(0, 7).ShouldBe("String-");
         }
@@ -24,7 +24,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void chars()
         {
-            var result = _construktion.Construct<char>();
+            var result = construktion.Construct<char>();
 
             result.ShouldNotBeNull();
         }
@@ -32,7 +32,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void guids()
         {
-            var result = _construktion.Construct<Guid>();
+            var result = construktion.Construct<Guid>();
 
             result.ShouldNotBe(new Guid());
         }
@@ -40,7 +40,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void datetime()
         {
-            var result = _construktion.Construct<DateTime>();
+            var result = construktion.Construct<DateTime>();
 
             result.ShouldNotBe(default(DateTime));
         }
@@ -48,7 +48,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void bytes()
         {
-            var result = _construktion.Construct<byte>();
+            var result = construktion.Construct<byte>();
 
             result.ShouldNotBe(default(byte));
         }
@@ -56,7 +56,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void decimals()
         {
-            var result = _construktion.Construct<decimal>();
+            var result = construktion.Construct<decimal>();
 
             result.ShouldNotBe(default(decimal));
         }
@@ -64,7 +64,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void doubles()
         {
-            var result = _construktion.Construct<double>();
+            var result = construktion.Construct<double>();
 
             result.ShouldNotBe(default(double));
         }
@@ -72,7 +72,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void shorts()
         {
-            var result = _construktion.Construct<short>();
+            var result = construktion.Construct<short>();
 
             result.ShouldNotBe(default(short));
         }
@@ -80,7 +80,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void ints()
         {
-            var result = _construktion.Construct<int>();
+            var result = construktion.Construct<int>();
 
             result.ShouldNotBe(default(int));
         }
@@ -88,7 +88,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void sbytes()
         {
-            var result = _construktion.Construct<sbyte>();
+            var result = construktion.Construct<sbyte>();
 
             result.ShouldNotBe(default(sbyte));
         }
@@ -96,7 +96,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void floats()
         {
-            var result = _construktion.Construct<float>();
+            var result = construktion.Construct<float>();
 
             result.ShouldNotBe(default(float));
         }
@@ -104,7 +104,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void ushorts()
         {
-            var result = _construktion.Construct<ushort>();
+            var result = construktion.Construct<ushort>();
 
             result.ShouldNotBe(default(ushort));
         }
@@ -112,7 +112,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void uints()
         {
-            var result = _construktion.Construct<uint>();
+            var result = construktion.Construct<uint>();
 
             result.ShouldNotBe(default(uint));
         }
@@ -120,7 +120,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void ulongs()
         {
-            var result = _construktion.Construct<ulong>();
+            var result = construktion.Construct<ulong>();
 
             result.ShouldNotBe(default(ulong));
         }
@@ -128,7 +128,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void single()
         {
-            var result = _construktion.Construct<Single>();
+            var result = construktion.Construct<Single>();
 
             result.ShouldNotBe(default(Single));
         }
@@ -136,7 +136,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void bools()
         {
-            var result = _construktion.Construct<bool>();
+            var result = construktion.Construct<bool>();
 
             result.ShouldBeOneOf(true, false);
         }
@@ -144,7 +144,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void timespans()
         {
-            var result = _construktion.Construct<TimeSpan>();
+            var result = construktion.Construct<TimeSpan>();
 
             result.ShouldNotBe(default(TimeSpan));
         }

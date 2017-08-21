@@ -9,21 +9,21 @@
 
     public class AttributeUsageTests
     {
-        private readonly ConstruktionRegistry _registry;
-        private readonly Construktion _construktion;
+        private readonly ConstruktionRegistry registry;
+        private readonly Construktion construktion;
 
         public AttributeUsageTests()
         {
-            _registry = new ConstruktionRegistry();
-            _construktion = new Construktion();
+            registry = new ConstruktionRegistry();
+            construktion = new Construktion();
         }
 
         [Fact]
         public void should_register_property_attribute_blueprint()
         {
-            _registry.AddPropertyAttribute<Set>(x => x.Value);
+            registry.AddPropertyAttribute<Set>(x => x.Value);
 
-            var foo = _construktion.With(_registry).Construct<Foo>();
+            var foo = construktion.With(registry).Construct<Foo>();
 
             foo.WithAttribute.ShouldBe("Set");
         }
@@ -31,14 +31,14 @@
         [Fact]
         public void should_register_parameter_attribute_blueprint()
         {
-            _registry.AddParameterAttribute<Set>(x => x.Value);
+            registry.AddParameterAttribute<Set>(x => x.Value);
 
             var parameterInfo =
                 typeof(AttributeUsageTests).GetMethod(nameof(ParameterTest))
                     .GetParameters()
                     .Single();
 
-            var parameter = (string)_construktion.With(_registry).Construct(parameterInfo);
+            var parameter = (string)construktion.With(registry).Construct(parameterInfo);
 
             parameter.ShouldBe("Set");
         }

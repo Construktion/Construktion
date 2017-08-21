@@ -6,21 +6,21 @@
 
     public class BlueprintUsageTests
     {
-        private readonly ConstruktionRegistry _registry;
-        private readonly Construktion _construktion;
+        private readonly ConstruktionRegistry registry;
+        private readonly Construktion construktion;
 
         public BlueprintUsageTests()
         {
-            _registry = new ConstruktionRegistry();
-            _construktion = new Construktion();
+            registry = new ConstruktionRegistry();
+            construktion = new Construktion();
         }
 
         [Fact]
         public void should_register_a_custom_blueprint()
         {
-            _registry.AddBlueprint(new StringOneBlueprint());
+            registry.AddBlueprint(new StringOneBlueprint());
 
-            var result = _construktion.With(_registry).Construct<string>();
+            var result = construktion.With(registry).Construct<string>();
 
             result.ShouldBe("StringOne");
         }
@@ -28,9 +28,9 @@
         [Fact]
         public void should_register_via_generic_parameter()
         {
-            _registry.AddBlueprint<StringOneBlueprint>();
+            registry.AddBlueprint<StringOneBlueprint>();
 
-            var result = _construktion.With(_registry).Construct<string>();
+            var result = construktion.With(registry).Construct<string>();
 
             result.ShouldBe("StringOne");
         }
@@ -38,10 +38,10 @@
         [Fact]
         public void blue_prints_registered_first_are_chosen_first()
         {
-            _registry.AddBlueprint(new StringTwoBlueprint());
-            _registry.AddBlueprint(new StringOneBlueprint());
+            registry.AddBlueprint(new StringTwoBlueprint());
+            registry.AddBlueprint(new StringOneBlueprint());
 
-            var result = _construktion.With(_registry).Construct<string>();
+            var result = construktion.With(registry).Construct<string>();
 
             result.ShouldBe("StringTwo");
         }
@@ -49,11 +49,11 @@
         [Fact]
         public void registries_registered_first_should_have_their_blueprints_used_first()
         {
-            _construktion
+            construktion
                 .With(new StringTwoRegistry())
                 .With(new StringOneRegistry());
 
-            var result = _construktion.Construct<string>();
+            var result = construktion.Construct<string>();
 
             result.ShouldBe("StringTwo");
         }

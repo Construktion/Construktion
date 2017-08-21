@@ -10,17 +10,17 @@ namespace Construktion.Tests.Acceptance
 
     public class ComplexConstruktionTests
     {
-        private readonly Construktion _construktion;
+        private readonly Construktion construktion;
 
         public ComplexConstruktionTests()
         {
-            _construktion = new Construktion();
+            construktion = new Construktion();
         }
 
         [Fact]
         public void enums()
         {
-            var result = _construktion.Construct<TestResult>();
+            var result = construktion.Construct<TestResult>();
 
             result.ShouldBeOneOf(TestResult.Pass, TestResult.Fail);
         }
@@ -28,7 +28,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_build_classes()
         {
-            var result = _construktion.Construct<Child>();
+            var result = construktion.Construct<Child>();
 
             result.Name.ShouldNotBeNullOrEmpty();
             result.Age.ShouldNotBe(default(int));
@@ -37,7 +37,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_build_nested_classes()
         {
-            var result = _construktion.Construct<Parent>();
+            var result = construktion.Construct<Parent>();
 
             result.Name.ShouldNotBeNullOrEmpty();
             result.Age.ShouldNotBe(default(int));
@@ -48,7 +48,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_prefix_properties_with_property_name()
         {
-            var child = _construktion.Construct<Child>();
+            var child = construktion.Construct<Child>();
 
             child.Name.ShouldStartWith("Name-");
         }
@@ -56,7 +56,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_hardcode_properties()
         {
-            var result = _construktion.Construct<Parent>(x =>
+            var result = construktion.Construct<Parent>(x =>
             {
                 x.Name = "Foo";
                 x.Child.Name = "Lil Foo";
@@ -71,7 +71,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_ignore_private_and_no_setters_by_default()
         {
-            var result = _construktion.Construct<Private>();
+            var result = construktion.Construct<Private>();
 
             result.PrivateName.ShouldBe(null);
             result.PrivateAge.ShouldBe(0);
@@ -81,7 +81,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_build_any_type_implementing_ienumerable()
         {
-            var result = _construktion.Construct<IReadOnlyCollection<Child>>();
+            var result = construktion.Construct<IReadOnlyCollection<Child>>();
 
             result.Count.ShouldBe(3);
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Name));
@@ -91,7 +91,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_build_arrays()
         {
-            var result = _construktion.Construct<string[]>();
+            var result = construktion.Construct<string[]>();
 
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x));
         }
@@ -99,7 +99,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_build_dictionaries()
         {
-            var result = _construktion.Construct<Dictionary<string,int>>();
+            var result = construktion.Construct<Dictionary<string,int>>();
 
             result.ShouldNotBe(null);
             result.Count.ShouldBe(4);
@@ -110,7 +110,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_resolve_runtime_type()
         {
-            var result = _construktion.Construct(typeof(Child)) as Child;
+            var result = construktion.Construct(typeof(Child)) as Child;
 
             result.Name.ShouldNotBeNullOrWhiteSpace();
             result.Age.ShouldNotBe(0);
@@ -122,7 +122,7 @@ namespace Construktion.Tests.Acceptance
             var methodInfo = typeof(ComplexConstruktionTests).GetMethod(nameof(TestMethod));
 
             var values = methodInfo.GetParameters()
-                .Select(pi => _construktion.Construct(pi))
+                .Select(pi => construktion.Construct(pi))
                 .ToList();
 
             values.Count.ShouldBe(2);
