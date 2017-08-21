@@ -51,12 +51,12 @@ namespace Construktion.Tests.Registry
         [Fact]
         public void should_be_able_to_define_a_custom_convention()
         {
-            registry.OmitProperties(prop => prop.Name.EndsWith("_Id"), typeof(string));
+            registry.OmitProperties(prop => prop.Name.EndsWith("_Idx"), typeof(string));
             construktion.With(registry);
 
             var foo = construktion.Construct<Foo>();
 
-            foo.String_Id.ShouldBe(null);
+            foo.String_Idx.ShouldBe(null);
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Construktion.Tests.Registry
             public int FooId { get; set; }
             public int? NullableFooId { get; set; }
             public int Fooid { get; set; }
-            public string String_Id { get; set; }
+            public string String_Idx { get; set; }
 
             public List<int> ListInts { get; set; }
             public List<string> ListStrings { get; set; }
