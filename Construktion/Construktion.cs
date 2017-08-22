@@ -179,5 +179,15 @@
             _registry.AddBlueprints(blueprints);
             return this;
         }
+
+        internal IEnumerable<Blueprint> GetBlueprints()
+        {
+            return _registry.GetBlueprints();
+        }
+
+        internal int GetRecurssionLimit()
+        {
+            return _registry.GetRecurssionLimit();
+        }
     }
 }
