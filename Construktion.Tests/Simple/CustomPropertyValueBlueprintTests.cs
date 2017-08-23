@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Tests.Simple
 {
     using System;
-    using System.Reflection;
     using Blueprints.Simple;
     using Shouldly;
     using Xunit;

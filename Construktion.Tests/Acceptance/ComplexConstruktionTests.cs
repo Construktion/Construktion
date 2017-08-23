@@ -5,7 +5,6 @@ namespace Construktion.Tests.Acceptance
     using Shouldly;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Xunit;
 
     public class ComplexConstruktionTests

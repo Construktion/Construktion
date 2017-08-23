@@ -2,10 +2,8 @@
 {
     using System;
     using System.Linq;
-    using System.Reflection;
     using Shouldly;
     using Xunit;
-    using Xunit.Sdk;
 
     public class AttributeUsageTests
     {
