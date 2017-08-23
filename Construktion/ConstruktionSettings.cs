@@ -32,16 +32,16 @@ namespace Construktion
 
         public DefaultConstruktionSettings(ConstruktionRegistry registry)
         {
-            Blueprints = registry.customBlueprints;
-            Blueprints.AddRange(registry.defaultBlueprints);
+            Blueprints = registry.CustomBlueprints;
+            Blueprints.AddRange(registry.DefaultBlueprints);
 
             foreach (var map in registry._typeMap)
                 Mappings[map.Key] = map.Value;
 
-            CtorStrategy = registry._ctorStrategy ?? Extensions.GreedyCtor;
-            PropertyStrategy = registry._propertiesSelector ?? Extensions.PropertiesWithPublicSetter;
-            EnumuerableCount = registry._enumerableCount ?? 3;
-            RecurssionDepth = registry._recurssionLimit ?? 0;
+            CtorStrategy = registry.CtorStrategy ?? Extensions.GreedyCtor;
+            PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;
+            EnumuerableCount = registry.RepeatCount ?? 3;
+            RecurssionDepth = registry.RecurssionDepth ?? 0;
         }
 
         internal void SubstituteBlueprints(IEnumerable<Blueprint> blueprints)

@@ -12,16 +12,14 @@ namespace Construktion
     /// </summary>
     public class ConstruktionRegistry
     {
-        internal IEnumerable<Blueprint> defaultBlueprints = new DefaultBlueprints();
+        internal List<Blueprint> CustomBlueprints { get; } = new List<Blueprint>();
+        internal IEnumerable<Blueprint> DefaultBlueprints { get; private set; } = new DefaultBlueprints();
+        internal Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; } 
+        internal Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
+        internal int? RepeatCount { get; private set; }
+        internal int? RecurssionDepth { get; private set; } 
 
-        //need to move all these defaults into a config class
-        internal int? _enumerableCount;
-        internal Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
-        internal Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
-        internal int? _recurssionLimit;
-
-        internal readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
-        internal readonly List<Blueprint> customBlueprints = new List<Blueprint>();
+        internal Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
 
         public ConstruktionRegistry()
         {
@@ -43,7 +41,7 @@ namespace Construktion
         {
             blueprint.GuardNull();
 
-            customBlueprints.Add(blueprint);
+            CustomBlueprints.Add(blueprint);
             return this;
         }
 
@@ -53,7 +51,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
-            customBlueprints.Add((Blueprint) Activator.CreateInstance(typeof(TBlueprint)));
+            CustomBlueprints.Add((Blueprint) Activator.CreateInstance(typeof(TBlueprint)));
             return this;
         }
 
@@ -66,7 +64,7 @@ namespace Construktion
         {
             blueprints.GuardNull();
 
-            customBlueprints.AddRange(blueprints);
+            CustomBlueprints.AddRange(blueprints);
             return this;
         }
 
@@ -89,7 +87,7 @@ namespace Construktion
         /// <param name="instance"></param>
         public ConstruktionRegistry UseInstance<T>(T instance)
         {
-            customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
+            CustomBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
             return this;
         }
 
@@ -103,7 +101,7 @@ namespace Construktion
         {
             var attributeBlueprint = new PropertyAttributeBlueprint<T>(value);
 
-            customBlueprints.Add(attributeBlueprint);
+            CustomBlueprints.Add(attributeBlueprint);
             return this;
         }
 
@@ -117,7 +115,7 @@ namespace Construktion
         {
             var attributeBlueprint = new ParameterAttributeBlueprint<T>(value);
 
-            customBlueprints.Add(attributeBlueprint);
+            CustomBlueprints.Add(attributeBlueprint);
             return this;
         }
 
@@ -127,7 +125,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry UseModestCtor()
         {
-            _ctorStrategy = Extensions.ModestCtor;
+            CtorStrategy = Extensions.ModestCtor;
             return this;
         }
 
@@ -137,7 +135,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry UseGreedyCtor()
         {
-            _ctorStrategy = Extensions.GreedyCtor;
+            CtorStrategy = Extensions.GreedyCtor;
             return this;
         }
 
@@ -147,7 +145,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry OmitPrivateSetters()
         {
-            _propertiesSelector = Extensions.PropertiesWithPublicSetter;
+            PropertyStrategy = Extensions.PropertiesWithPublicSetter;
             return this;
         }
 
@@ -157,7 +155,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry ConstructPrivateSetters()
         {
-            _propertiesSelector = Extensions.PropertiesWithAccessibleSetter;
+            PropertyStrategy = Extensions.PropertiesWithAccessibleSetter;
             return this;
         }
 
@@ -166,7 +164,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitIds()
         {
-            customBlueprints.Add(new OmitPropertyBlueprint(x => x.Name.EndsWith("Id", StringComparison.Ordinal),
+            CustomBlueprints.Add(new OmitPropertyBlueprint(x => x.Name.EndsWith("Id", StringComparison.Ordinal),
                 new List<Type> { typeof(int), typeof(int?) }));
             return this;
         }
@@ -176,7 +174,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitProperties(Type propertyType)
         {
-            customBlueprints.Add(new OmitPropertyBlueprint(x => true, propertyType));
+            CustomBlueprints.Add(new OmitPropertyBlueprint(x => true, propertyType));
             return this;
         }
 
@@ -185,7 +183,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, Type propertyType)
         {
-            customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyType));
+            CustomBlueprints.Add(new OmitPropertyBlueprint(convention, propertyType));
             return this;
         }
 
@@ -194,7 +192,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, params Type[]  propertyTypes)
         {
-            customBlueprints.Add(new OmitPropertyBlueprint(convention, propertyTypes));
+            CustomBlueprints.Add(new OmitPropertyBlueprint(convention, propertyTypes));
             return this;
         }
 
@@ -203,7 +201,7 @@ namespace Construktion
         /// </summary>
         public void OmitVirtualProperties()
         {
-            customBlueprints.Add(new IgnoreVirtualPropertiesBlueprint());
+            CustomBlueprints.Add(new IgnoreVirtualPropertiesBlueprint());
         }
 
         /// <summary>
@@ -217,7 +215,7 @@ namespace Construktion
             if (count < 0)
                 throw new ArgumentException("Count cannot be less than 0");
 
-            _enumerableCount = count;
+            RepeatCount = count;
             return this;
         }
 
@@ -232,7 +230,7 @@ namespace Construktion
             if (limit < 0)
                 throw new ArgumentException("Recurssion limit cannot be less than 0");
 
-            _recurssionLimit = limit;
+            RecurssionDepth = limit;
             return this;
         }
 
@@ -244,7 +242,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry ConstructPropertyUsing(Func<PropertyInfo, bool> convention, Func<object> value)
         {
-            customBlueprints.Add(new CustomPropertyValueBlueprint(convention, value));
+            CustomBlueprints.Add(new CustomPropertyValueBlueprint(convention, value));
             return this;
         }
 
@@ -252,17 +250,17 @@ namespace Construktion
         {
             registry.GuardNull();
 
-            customBlueprints.AddRange(registry.customBlueprints);
+            CustomBlueprints.AddRange(registry.CustomBlueprints);
 
             foreach (var map in registry._typeMap)
                 _typeMap[map.Key] = map.Value;
 
-            _ctorStrategy = registry._ctorStrategy ?? _ctorStrategy;
-            _propertiesSelector = registry._propertiesSelector ?? _propertiesSelector;
-            _enumerableCount = registry._enumerableCount ?? _enumerableCount;
-            _recurssionLimit = registry._recurssionLimit ?? _recurssionLimit;
+            CtorStrategy = registry.CtorStrategy ?? CtorStrategy;
+            PropertyStrategy = registry.PropertyStrategy ?? PropertyStrategy;
+            RepeatCount = registry.RepeatCount ?? RepeatCount;
+            RecurssionDepth = registry.RecurssionDepth ?? RecurssionDepth;
 
-            defaultBlueprints = new DefaultBlueprints(_typeMap);
+            DefaultBlueprints = new DefaultBlueprints(_typeMap);
         }
 
         internal ConstruktionSettings GetSettings()
