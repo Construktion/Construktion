@@ -24,7 +24,7 @@
             var blueprint = new CustomPropertyValueBlueprint(x => x.Name.Equals("HireDate"), () => DateTime.MaxValue);
 
             var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty(nameof(Foo.HireDate))),
-                Default.Pipeline);
+                new DefaultConstruktionPipeline());
 
             result.ShouldBeOfType<DateTime>().ShouldBe(DateTime.MaxValue);
         }

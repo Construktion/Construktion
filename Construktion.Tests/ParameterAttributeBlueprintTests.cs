@@ -44,7 +44,7 @@
                     .GetParameters()[0];
 
 
-            var result = blueprint.Construct(new ConstruktionContext(parameterInfo), Default.Pipeline);
+            var result = blueprint.Construct(new ConstruktionContext(parameterInfo), new DefaultConstruktionPipeline());
 
             result.ShouldBe("Set");
         }

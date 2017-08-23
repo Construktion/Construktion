@@ -11,7 +11,7 @@
         {
             var blueprint = new CharBlueprint();
 
-            var result = (char)blueprint.Construct(new ConstruktionContext(typeof(char)), Default.Pipeline);
+            var result = (char)blueprint.Construct(new ConstruktionContext(typeof(char)), new DefaultConstruktionPipeline());
 
             result.ShouldNotBeNull();
         }

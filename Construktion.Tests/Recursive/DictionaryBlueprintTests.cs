@@ -21,7 +21,7 @@
         {
             var blueprint = new DictionaryBlueprint();
 
-            var dictionary = (Dictionary<int, string>) blueprint.Construct(new ConstruktionContext(typeof(Dictionary<int, string>)), Default.Pipeline);
+            var dictionary = (Dictionary<int, string>) blueprint.Construct(new ConstruktionContext(typeof(Dictionary<int, string>)), new DefaultConstruktionPipeline());
 
             dictionary.ShouldNotBe(null);
             dictionary.Count.ShouldBe(4);
@@ -32,7 +32,7 @@
         {
             var blueprint = new DictionaryBlueprint();
 
-            var dictionary = (Dictionary<Genres, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<Genres, string>)), Default.Pipeline);
+            var dictionary = (Dictionary<Genres, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<Genres, string>)), new DefaultConstruktionPipeline());
 
             dictionary.ShouldNotBe(null);
             dictionary.Count.ShouldBe(5);

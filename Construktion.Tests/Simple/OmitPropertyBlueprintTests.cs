@@ -22,7 +22,7 @@
         {
             var blueprint = new OmitPropertyBlueprint(x => x.Name.EndsWith("Id"), typeof(int));
 
-            var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("FooId")), Default.Pipeline);
+            var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("FooId")), new DefaultConstruktionPipeline());
 
             result.ShouldBe(0);
         }        

@@ -39,7 +39,7 @@
             var property = typeof(Foo).GetProperty("WithAttribute");
             var context = new ConstruktionContext(property);
 
-            var result = (string)blueprint.Construct(context, Default.Pipeline);
+            var result = (string)blueprint.Construct(context, new DefaultConstruktionPipeline());
 
             result.ShouldBe("Set");
         }

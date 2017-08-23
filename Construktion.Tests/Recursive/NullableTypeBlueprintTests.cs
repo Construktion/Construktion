@@ -41,7 +41,7 @@
 
             for (var i = 0; i <= 30; i++)
             {
-                var value = blueprint.Construct(context, Default.Pipeline);
+                var value = blueprint.Construct(context, new DefaultConstruktionPipeline());
                 values.Add((int?)value);
             }
 

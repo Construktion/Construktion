@@ -14,7 +14,7 @@ namespace Construktion
     /// </summary>
     public class ConstruktionRegistry
     {
-        internal readonly List<Blueprint> defaultBlueprints = Default.Blueprints;
+        internal IEnumerable<Blueprint> defaultBlueprints = new DefaultBlueprints();
 
         //need to move all these defaults into a config class
         internal int? _enumerableCount;
@@ -264,7 +264,7 @@ namespace Construktion
             _enumerableCount = registry._enumerableCount ?? _enumerableCount;
             _recurssionLimit = registry._recurssionLimit ?? _recurssionLimit;
 
-            defaultBlueprints.Replace(typeof(InterfaceBlueprint), new InterfaceBlueprint(_typeMap));
+            defaultBlueprints = new DefaultBlueprints(_typeMap);
         }
 
         internal ConstruktionSettings GetSettings()

@@ -24,7 +24,7 @@ namespace Construktion.Tests.Recursive
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (IEnumerable<int>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<int>)), Default.Pipeline);
+            var result = (IEnumerable<int>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<int>)), new DefaultConstruktionPipeline());
             
             result.Count().ShouldBe(3);
             result.ShouldAllBe(x => x != 0);
@@ -35,7 +35,7 @@ namespace Construktion.Tests.Recursive
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (IEnumerable<Foo>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Foo>)), Default.Pipeline);
+            var result = (IEnumerable<Foo>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Foo>)), new DefaultConstruktionPipeline());
 
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Bar));
             result.ShouldAllBe(x => x.Baz != 0);
@@ -46,7 +46,7 @@ namespace Construktion.Tests.Recursive
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (IEnumerable<Bar>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Bar>)), Default.Pipeline);
+            var result = (IEnumerable<Bar>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Bar>)), new DefaultConstruktionPipeline());
 
             result.ShouldAllBe(x => x != null);
 
@@ -60,7 +60,7 @@ namespace Construktion.Tests.Recursive
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (List<int>)blueprint.Construct(new ConstruktionContext(typeof(List<int>)), Default.Pipeline);
+            var result = (List<int>)blueprint.Construct(new ConstruktionContext(typeof(List<int>)), new DefaultConstruktionPipeline());
 
             result.ShouldNotBe(null);
             result.ShouldAllBe(x => x != default(int));
@@ -71,7 +71,7 @@ namespace Construktion.Tests.Recursive
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (ICollection<Foo>)blueprint.Construct(new ConstruktionContext(typeof(ICollection<Foo>)), Default.Pipeline);
+            var result = (ICollection<Foo>)blueprint.Construct(new ConstruktionContext(typeof(ICollection<Foo>)), new DefaultConstruktionPipeline());
 
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Bar));
             result.ShouldAllBe(x => x.Baz != 0);

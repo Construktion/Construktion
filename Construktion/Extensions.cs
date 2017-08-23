@@ -46,15 +46,6 @@ namespace Construktion
             return ctors.Any(x => x.GetParameters().Length > 0);
         }
 
-        public static List<T> Replace<T>(this List<T> items, Type item, T newItem)
-        {
-            var idx = items.FindIndex(x => x.GetType() == item);
-
-            items[idx] = newItem;
-
-            return items;
-        }
-
         public static IEnumerable<PropertyInfo> PropertiesWithPublicSetter(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)

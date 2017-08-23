@@ -11,9 +11,9 @@
         {
             var blueprint = new BoolBlueprint();
 
-            var result1 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), Default.Pipeline);
-            var result2 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), Default.Pipeline);
-            var result3 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), Default.Pipeline);
+            var result1 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), new DefaultConstruktionPipeline());
+            var result2 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), new DefaultConstruktionPipeline());
+            var result3 = (bool)blueprint.Construct(new ConstruktionContext(typeof(bool)), new DefaultConstruktionPipeline());
 
             result1.ShouldBe(true);
             result2.ShouldBe(false);

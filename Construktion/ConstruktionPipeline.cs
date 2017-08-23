@@ -24,6 +24,8 @@
     {
         public ConstruktionSettings Settings { get; }
 
+        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings()) { }
+
         public DefaultConstruktionPipeline(ConstruktionSettings settings)
         {
             Settings = settings;

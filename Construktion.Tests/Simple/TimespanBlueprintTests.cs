@@ -12,7 +12,7 @@
         {
             var blueprint = new TimespanBlueprint();
 
-            var result = blueprint.Construct(new ConstruktionContext(typeof(TimeSpan)), Default.Pipeline);
+            var result = blueprint.Construct(new ConstruktionContext(typeof(TimeSpan)), new DefaultConstruktionPipeline());
 
             result.ShouldNotBe(default(TimeSpan));
         }

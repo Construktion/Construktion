@@ -21,7 +21,7 @@
         {
             var blueprint = new ArrayBlueprint();
 
-            var ints = (int[])blueprint.Construct(new ConstruktionContext(typeof(int[])), Default.Pipeline);
+            var ints = (int[])blueprint.Construct(new ConstruktionContext(typeof(int[])), new DefaultConstruktionPipeline());
             
             ints.ShouldNotBe(null);
             ints.ShouldAllBe(x => x != 0);

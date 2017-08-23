@@ -25,7 +25,7 @@
             var foo = new Foo { Name = "Name", Age = 10 };
             var blueprint = new ScopedBlueprint(typeof(IFoo), foo);
 
-            var result = blueprint.Construct(new ConstruktionContext(typeof(IFoo)), Default.Pipeline);
+            var result = blueprint.Construct(new ConstruktionContext(typeof(IFoo)), new DefaultConstruktionPipeline());
 
             var fooResult = result.ShouldBeOfType<Foo>();
             fooResult.Name.ShouldBe("Name");

@@ -31,7 +31,7 @@
         {
             var blueprint = new NonEmptyCtorBlueprint();
             
-            var bar = (NonEmptyCtor)blueprint.Construct(new ConstruktionContext(typeof(NonEmptyCtor)), Default.Pipeline);
+            var bar = (NonEmptyCtor)blueprint.Construct(new ConstruktionContext(typeof(NonEmptyCtor)), new DefaultConstruktionPipeline());
             
             bar.Name.ShouldNotBeNullOrWhiteSpace();
             bar.Age.ShouldNotBe(0);
