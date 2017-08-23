@@ -30,9 +30,8 @@
         public void should_construct_ctor_arg_and_properties()
         {
             var blueprint = new NonEmptyCtorBlueprint();
-            var pipeline = new DefaultConstruktionPipeline(Default.Blueprints.Replace(typeof(NonEmptyCtorBlueprint), blueprint));
-
-            var bar = (NonEmptyCtor)blueprint.Construct(new ConstruktionContext(typeof(NonEmptyCtor)), pipeline);
+            
+            var bar = (NonEmptyCtor)blueprint.Construct(new ConstruktionContext(typeof(NonEmptyCtor)), Default.Pipeline);
             
             bar.Name.ShouldNotBeNullOrWhiteSpace();
             bar.Age.ShouldNotBe(0);

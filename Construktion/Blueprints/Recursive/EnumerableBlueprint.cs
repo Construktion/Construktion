@@ -8,18 +8,6 @@
 
     public class EnumerableBlueprint : Blueprint
     {
-        private readonly int _enumerableCount;
-
-        public EnumerableBlueprint() : this(3)
-        {
-            
-        }
-
-        public EnumerableBlueprint(int enumerableCount)
-        {
-            _enumerableCount = enumerableCount;
-        }
-
         public bool Matches(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsGenericType &&
@@ -40,7 +28,7 @@
             //todo benchmark
             var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
 
-            for (var i = 0; i < _enumerableCount; i++)
+            for (var i = 0; i < pipeline.Settings.EnumuerableCount; i++)
             {
                 var result = pipeline.Send(new ConstruktionContext(closedType));
 

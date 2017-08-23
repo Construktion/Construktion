@@ -6,18 +6,6 @@
 
     public class EmptyCtorBlueprint : Blueprint
     {
-        private readonly Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
-
-        public EmptyCtorBlueprint() : this (Extensions.PropertiesWithPublicSetter)
-        {
-
-        }
-
-        public EmptyCtorBlueprint(Func<Type, IEnumerable<PropertyInfo>> propertiesSelector)
-        {
-            _propertiesSelector = propertiesSelector;
-        }
-
         public bool Matches(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsClass &&
@@ -28,7 +16,7 @@
         {
             var instance = context.RequestType.NewUp();
 
-            var properties = _propertiesSelector(context.RequestType);
+            var properties = pipeline.Settings.PropertyStrategy(context.RequestType);
 
             foreach (var property in properties)
             {

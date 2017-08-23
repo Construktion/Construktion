@@ -8,21 +8,6 @@
 
     public class NonEmptyCtorBlueprint : Blueprint
     {
-        private readonly Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
-        private readonly Func<Type, IEnumerable<PropertyInfo>> _propertiesSelector;
-
-        public NonEmptyCtorBlueprint()
-            : this (Extensions.GreedyCtor, Extensions.PropertiesWithPublicSetter)
-        {
-
-        }
-
-        public NonEmptyCtorBlueprint(Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy, Func<Type, IEnumerable<PropertyInfo>> propertiesSelector)
-        {
-            _ctorStrategy = ctorStrategy;
-            _propertiesSelector = propertiesSelector;
-        }
-
         public bool Matches(ConstruktionContext context)
         {
             var typeInfo = context.RequestType.GetTypeInfo();
@@ -47,7 +32,7 @@
                 .DeclaredConstructors
                 .ToList();
 
-            var ctor = _ctorStrategy(ctors);
+            var ctor = pipeline.Settings.CtorStrategy(ctors);
 
             var @params = new List<object>();
             foreach (var parameter in ctor.GetParameters())
@@ -64,7 +49,7 @@
 
         private object construct(object instance, ConstruktionPipeline pipeline)
         {
-            var properties = _propertiesSelector(instance.GetType());
+            var properties = pipeline.Settings.PropertyStrategy(instance.GetType());
 
             foreach (var property in properties)
             {

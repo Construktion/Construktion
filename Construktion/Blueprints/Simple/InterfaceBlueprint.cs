@@ -5,14 +5,11 @@
 
     public class InterfaceBlueprint : Blueprint
     {
-        private readonly Dictionary<Type, Type> _typeMap;
+        private readonly IDictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
 
-        public InterfaceBlueprint() : this (new Dictionary<Type, Type>())
-        {
+        public InterfaceBlueprint() { }
 
-        }
-
-        public InterfaceBlueprint(Dictionary<Type, Type> typeMap)
+        public InterfaceBlueprint(IDictionary<Type, Type> typeMap)
         {
             _typeMap = typeMap;
         }

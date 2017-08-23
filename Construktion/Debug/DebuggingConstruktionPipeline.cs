@@ -12,14 +12,12 @@
     {
         private readonly List<string> _log = new List<string>();
         private readonly List<Type> _underConstruction = new List<Type>();
-        private readonly IEnumerable<Blueprint> _blueprints;
-        private readonly int _limit;
         private int _level = -1;
+        public ConstruktionSettings Settings { get; }
 
-        public DebuggingConstruktionPipeline(IEnumerable<Blueprint> blueprints, int recurrsionDepth)
+        public DebuggingConstruktionPipeline(ConstruktionSettings settings)
         {
-            _blueprints = blueprints;
-            _limit = recurrsionDepth;
+            Settings = settings;
         }
 
         public object Send(ConstruktionContext requestContext)
@@ -31,9 +29,9 @@
         {
             var depth = _underConstruction.Count(x => requestContext.RequestType == x);
 
-            var blueprint = _blueprints.First(x => x.Matches(requestContext));
+            var blueprint = Settings.Blueprints.First(x => x.Matches(requestContext));
 
-            if (depth > _limit)
+            if (depth > Settings.RecurssionDepth)
             {
                 debugLog = _log;
                 return default(object);

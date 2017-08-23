@@ -24,7 +24,7 @@
         }
 
         [Fact]
-        public void a_newregistry_should_not_overwrite_enumerable_count()
+        public void a_new_registry_should_not_overwrite_enumerable_count()
         {
             registry.EnumerableCount(1);
             registry.AddRegistry(new ConstruktionRegistry());
@@ -35,7 +35,7 @@
         }
 
         [Fact]
-        public void aregistry_with_explicit_enumerable_count_should_overwrite_previous()
+        public void a_registry_with_explicit_enumerable_count_should_overwrite_previous()
         {
             registry.EnumerableCount(1);
             registry.AddRegistry(new ConstruktionRegistry(x => x.EnumerableCount(2)));

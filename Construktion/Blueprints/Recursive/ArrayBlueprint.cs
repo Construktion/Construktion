@@ -4,17 +4,6 @@ namespace Construktion.Blueprints.Recursive
 
     public class ArrayBlueprint : Blueprint
     {
-        private readonly int _count;
-
-        public ArrayBlueprint() : this(3)
-        {
-            
-        }
-
-        public ArrayBlueprint(int count)
-        {
-            _count = count;
-        }
         public bool Matches(ConstruktionContext context)
         {
             return context.RequestType.IsArray;
@@ -31,9 +20,9 @@ namespace Construktion.Blueprints.Recursive
 
         private Array construct(Type arrayType, ConstruktionPipeline pipeline)
         {
-            var array = Array.CreateInstance(arrayType, _count);
+            var array = Array.CreateInstance(arrayType, pipeline.Settings.EnumuerableCount);
 
-            for (var i = 0; i <= _count - 1; i++)
+            for (var i = 0; i <= pipeline.Settings.EnumuerableCount - 1; i++)
             {
                 var value = pipeline.Send(new ConstruktionContext(arrayType));
 

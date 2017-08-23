@@ -21,11 +21,10 @@
         /// <summary>
         /// DO NOT use for normal operations. Should be used for ad hoc debugging ONLY.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public object DebuggingConstruct(ConstruktionContext context, out string debugLog)
         {
-            var pipeline = new DebuggingConstruktionPipeline(_construktion.GetBlueprints(), _construktion.GetRecurssionLimit());
+            var pipeline = new DebuggingConstruktionPipeline(_construktion._registry.GetSettings());
 
             var result = pipeline.DebugSend(context, out List<string> log);
 

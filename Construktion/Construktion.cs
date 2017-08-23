@@ -7,7 +7,7 @@
 
     public class Construktion
     {
-        private readonly ConstruktionRegistry _registry = new ConstruktionRegistry();
+        internal readonly ConstruktionRegistry _registry = new ConstruktionRegistry();
 
         /// <summary>
         /// Construct an object of the specified type.
@@ -63,7 +63,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>()
         {
-            return ConstructMany<T>(_registry.GetEnumerableCount());
+            return ConstructMany<T>(_registry.GetSettings().EnumuerableCount);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
         {
-            return ConstructMany(hardCodes, _registry.GetEnumerableCount());
+            return ConstructMany(hardCodes, _registry.GetSettings().EnumuerableCount);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_registry.GetBlueprints(), _registry.GetRecurssionLimit());
+            var pipeline = new DefaultConstruktionPipeline(_registry.GetSettings());
 
             var result = (T)pipeline.Send(context);
 
@@ -178,16 +178,6 @@
         {
             _registry.AddBlueprints(blueprints);
             return this;
-        }
-
-        internal IEnumerable<Blueprint> GetBlueprints()
-        {
-            return _registry.GetBlueprints();
-        }
-
-        internal int GetRecurssionLimit()
-        {
-            return _registry.GetRecurssionLimit();
         }
     }
 }

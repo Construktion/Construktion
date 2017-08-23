@@ -1,5 +1,6 @@
 ﻿namespace Construktion
 {
+    using System;
     using System.Collections.Generic;
     using Blueprints;
     using Blueprints.Recursive;
@@ -28,6 +29,6 @@
             new DefensiveBlueprint()
         };
 
-        public static ConstruktionPipeline Pipeline => new DefaultConstruktionPipeline(Blueprints);
+        public static ConstruktionPipeline Pipeline => new DefaultConstruktionPipeline(new DefaultConstruktionSettings());
     }
 }

@@ -24,23 +24,6 @@
             matchesUnRegistered.ShouldBe(false);
         }
 
-        [Fact]
-        public void should_construct()
-        {
-            var typeMap = new Dictionary<Type, Type>
-            {
-              { typeof(IFoo), typeof(Foo)}
-            };
-            var blueprint = new InterfaceBlueprint(typeMap);
-            var pipeline = new DefaultConstruktionPipeline(Default.Blueprints.Replace(typeof(InterfaceBlueprint), blueprint));
-
-            var result = blueprint.Construct(new ConstruktionContext(typeof(IFoo)), pipeline);
-
-            result
-                .ShouldBeOfType<Foo>()
-                .Age.ShouldNotBe(0);
-        }
-
         public interface IFoo
         {
 
