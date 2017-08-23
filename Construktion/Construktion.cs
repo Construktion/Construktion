@@ -63,7 +63,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>()
         {
-            return ConstructMany<T>(_registry.GetSettings().EnumuerableCount);
+            return ConstructMany<T>(_registry.ToSettings().EnumuerableCount);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
         {
-            return ConstructMany(hardCodes, _registry.GetSettings().EnumuerableCount);
+            return ConstructMany(hardCodes, _registry.ToSettings().EnumuerableCount);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_registry.GetSettings());
+            var pipeline = new DefaultConstruktionPipeline(_registry.ToSettings());
 
             var result = (T)pipeline.Send(context);
 

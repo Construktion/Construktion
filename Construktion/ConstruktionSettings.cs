@@ -9,7 +9,7 @@ namespace Construktion
     public interface ConstruktionSettings
     {
         List<Blueprint> Blueprints { get; }
-        IDictionary<Type, Type> Mappings { get; }
+        IDictionary<Type, Type> TypeMap { get; }
         Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
         Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
         int EnumuerableCount { get; }
@@ -19,7 +19,7 @@ namespace Construktion
     internal class DefaultConstruktionSettings : ConstruktionSettings
     {
         public List<Blueprint> Blueprints { get; private set; }
-        public IDictionary<Type, Type> Mappings { get; } = new Dictionary<Type, Type>();
+        public IDictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
         public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
         public int EnumuerableCount { get; }
@@ -35,8 +35,8 @@ namespace Construktion
             Blueprints = registry.CustomBlueprints;
             Blueprints.AddRange(registry.DefaultBlueprints);
 
-            foreach (var map in registry._typeMap)
-                Mappings[map.Key] = map.Value;
+            foreach (var map in registry.TypeMap)
+                TypeMap[map.Key] = map.Value;
 
             CtorStrategy = registry.CtorStrategy ?? Extensions.GreedyCtor;
             PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;

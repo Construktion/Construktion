@@ -19,7 +19,7 @@ namespace Construktion
         internal int? RepeatCount { get; private set; }
         internal int? RecurssionDepth { get; private set; } 
 
-        internal Dictionary<Type, Type> _typeMap { get; } = new Dictionary<Type, Type>();
+        internal Dictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
 
         public ConstruktionRegistry()
         {
@@ -76,7 +76,7 @@ namespace Construktion
         /// <typeparam name="TImplementation">Will be used for substitution</typeparam>
         public ConstruktionRegistry Register<TContract, TImplementation>() where TImplementation : TContract
         {
-            _typeMap[typeof(TContract)] = typeof(TImplementation);
+            TypeMap[typeof(TContract)] = typeof(TImplementation);
             return this;
         }
 
@@ -252,18 +252,18 @@ namespace Construktion
 
             CustomBlueprints.AddRange(registry.CustomBlueprints);
 
-            foreach (var map in registry._typeMap)
-                _typeMap[map.Key] = map.Value;
+            foreach (var map in registry.TypeMap)
+                TypeMap[map.Key] = map.Value;
 
             CtorStrategy = registry.CtorStrategy ?? CtorStrategy;
             PropertyStrategy = registry.PropertyStrategy ?? PropertyStrategy;
             RepeatCount = registry.RepeatCount ?? RepeatCount;
             RecurssionDepth = registry.RecurssionDepth ?? RecurssionDepth;
 
-            DefaultBlueprints = new DefaultBlueprints(_typeMap);
+            DefaultBlueprints = new DefaultBlueprints(TypeMap);
         }
 
-        internal ConstruktionSettings GetSettings()
+        internal ConstruktionSettings ToSettings()
         {
             return new DefaultConstruktionSettings(this);
         }
