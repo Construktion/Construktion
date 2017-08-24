@@ -2,7 +2,6 @@ namespace Construktion
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using Blueprints;
 
@@ -18,7 +17,7 @@ namespace Construktion
 
     internal class DefaultConstruktionSettings : ConstruktionSettings
     {
-        public List<Blueprint> Blueprints { get; private set; }
+        public List<Blueprint> Blueprints { get; }
         public IDictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
         public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
@@ -42,11 +41,6 @@ namespace Construktion
             PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;
             EnumuerableCount = registry.RepeatCount ?? 3;
             RecurssionDepth = registry.RecurssionDepth ?? 0;
-        }
-
-        internal void SubstituteBlueprints(IEnumerable<Blueprint> blueprints)
-        {
-            Blueprints= blueprints.ToList();
         }
     }
 }

@@ -2,18 +2,17 @@
 {
     using System.Collections.Generic;
     using global::Construktion;
-    using Construktion.Debug;
 
     public class DebuggingConstruktion
     {
-        private readonly global::Construktion.Construktion _construktion;
+        private readonly Construktion _construktion;
 
-        public DebuggingConstruktion() : this (new global::Construktion.Construktion())
+        public DebuggingConstruktion() : this (new Construktion())
         {
             
         }
 
-        public DebuggingConstruktion(global::Construktion.Construktion construktion)
+        public DebuggingConstruktion(Construktion construktion)
         {
             _construktion = construktion;
         }

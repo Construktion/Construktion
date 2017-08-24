@@ -1,4 +1,4 @@
-﻿namespace Construktion.Debug.Construktion.Debug
+﻿namespace Construktion.Debug
 {
     using System;
     using System.Collections.Generic;
@@ -51,12 +51,12 @@
             }
 
             _level++;
-            var buffer = new string(' ', _level * 5);
             _underConstruction.Add(requestContext.RequestType);
 
             if (_level != 0)
                 _log.Add("");
 
+            var buffer = new string(' ', _level * 5);
             _log.Add($"{buffer}{start}");
             _log.Add($"{buffer}{blueprint}");
 
