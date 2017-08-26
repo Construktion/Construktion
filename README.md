@@ -20,6 +20,23 @@ int.ShouldNotBe(0);
 person.Name.ShouldStartWith("Name-");
 person.Age.ShouldNotBe(0);
 
+//with hardcodes
+construktion.Construct<Person>(x => x.Name = "HardCode");
+
+//construct runtime type
+construktion.Construct(typeof(Person));
+
+//IEnumerable<Person>
+construktion.ConstructMany<Person>();
+
+//IEnumerable<Person> with 5 items
+construktion.ConstructMany<Person>(5);
+
+//IEnumerable<Person> with hardcodes
+construktion.ConstructMany<Person>(x => x.Name = "HardCode" );
+
+//IEnumerable<Person> with hardcodes and 5 items
+construktion.ConstructMany<Person>(x => x.Name = "HardCode", 5);
 ```
 
 Customizing
@@ -30,5 +47,5 @@ Nuget
 ---
 This [package](https://www.nuget.org/packages/Construktion) supports .NetFramework 4.5 and .NetStandard 1.6.
 ```
-Install-Package Construktion -Pre
+Install-Package Construktion
 ```
