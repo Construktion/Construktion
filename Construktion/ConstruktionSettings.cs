@@ -36,17 +36,23 @@ namespace Construktion
         /// How many levels of recurssion to construct. By default recursive properties are ignored.
         /// </summary>
         int RecurssionDepth { get; }
+
+        /// <summary>
+        /// Determines whether an exception should be thrown when Recurssion is detected
+        /// </summary>
+        bool ThrowOnRecurrsion { get; }
     }
 
     internal class DefaultConstruktionSettings : ConstruktionSettings
     {
         private readonly List<Blueprint> _blueprints;
         public IEnumerable<Blueprint> Blueprints => _blueprints;
-        public IDictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
+        public IDictionary<Type, Type> TypeMap { get; }
         public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
         public int EnumuerableCount { get; }
         public int RecurssionDepth { get; }
+        public bool ThrowOnRecurrsion { get; }
 
         public DefaultConstruktionSettings() : this (new ConstruktionRegistry())
         {
@@ -58,13 +64,12 @@ namespace Construktion
             _blueprints = registry.CustomBlueprints;
             _blueprints.AddRange(registry.DefaultBlueprints);
 
-            foreach (var map in registry.TypeMap)
-                TypeMap[map.Key] = map.Value;
-
+            TypeMap = registry.TypeMap;
             CtorStrategy = registry.CtorStrategy ?? Extensions.ModestCtor;
             PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;
             EnumuerableCount = registry.RepeatCount ?? 3;
             RecurssionDepth = registry.RecurssionDepth ?? 0;
+            ThrowOnRecurrsion = registry.ShouldThrowOnRecurssion ?? false;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Construktion
         internal int? RepeatCount { get; private set; }
         internal int? RecurssionDepth { get; private set; } 
         internal Dictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
+        internal bool? ShouldThrowOnRecurssion { get; private set; }
 
         public ConstruktionRegistry()
         {
@@ -234,6 +235,17 @@ namespace Construktion
         }
 
         /// <summary>
+        /// Configure whether an exception should be thrown when recursive properties are detected. By default it won't throw
+        /// </summary>
+        /// <param name="shouldThrow"></param>
+        /// <returns></returns>
+        public ConstruktionRegistry ThrowOnRecurssion(bool shouldThrow)
+        {
+            ShouldThrowOnRecurssion = shouldThrow;
+            return this;
+        }
+
+        /// <summary>
         /// Construct properties from a supplied function matching a convention.
         /// </summary>
         /// <param name="convention"></param>
@@ -258,6 +270,7 @@ namespace Construktion
             PropertyStrategy = registry.PropertyStrategy ?? PropertyStrategy;
             RepeatCount = registry.RepeatCount ?? RepeatCount;
             RecurssionDepth = registry.RecurssionDepth ?? RecurssionDepth;
+            ShouldThrowOnRecurssion = registry.ShouldThrowOnRecurssion ?? ShouldThrowOnRecurssion;
 
             DefaultBlueprints = new DefaultBlueprints(TypeMap);
         }

@@ -46,8 +46,14 @@
         {
             var depth = _underConstruction.Count(x => requestContext.RequestType == x);
 
-            if (depth > Settings.RecurssionDepth)
+            if (depth > Settings.RecurssionDepth ||
+                (depth > 0 && Settings.ThrowOnRecurrsion))
+            {
+                if (Settings.ThrowOnRecurrsion)
+                    throw new Exception($"Recurssion Detected: {requestContext.RequestType.FullName}");
+
                 return default(object);
+            }
 
             _underConstruction.Add(requestContext.RequestType);
 
