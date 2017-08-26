@@ -42,26 +42,29 @@
 
         private readonly List<Type> _underConstruction = new List<Type>();
 
-        private object Construct(ConstruktionContext requestContext, Blueprint blueprint)
+        private object Construct(ConstruktionContext context, Blueprint blueprint)
         {
-            var depth = _underConstruction.Count(x => requestContext.RequestType == x);
-
-            if (depth > Settings.RecurssionDepth ||
-                (depth > 0 && Settings.ThrowOnRecurrsion))
+            if (RecurssionDetected(context))
             {
-                if (Settings.ThrowOnRecurrsion)
-                    throw new Exception($"Recurssion Detected: {requestContext.RequestType.FullName}");
-
-                return default(object);
+                return Settings.ThrowOnRecurrsion
+                    ? throw new Exception($"Recurssion Detected: {context.RequestType.FullName}")
+                    : default(object);
             }
 
-            _underConstruction.Add(requestContext.RequestType);
+            _underConstruction.Add(context.RequestType);
 
-            var result = blueprint.Construct(requestContext, this);
+            var result = blueprint.Construct(context, this);
 
-            _underConstruction.Remove(requestContext.RequestType);
+            _underConstruction.Remove(context.RequestType);
 
             return result;
+        }
+
+        private bool RecurssionDetected(ConstruktionContext context)
+        {
+            var depth = _underConstruction.Count(x => context.RequestType == x);
+
+            return depth > Settings.RecurssionDepth || (depth > 0 && Settings.ThrowOnRecurrsion);
         }
     }
 }
