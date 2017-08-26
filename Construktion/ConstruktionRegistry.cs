@@ -188,6 +188,15 @@ namespace Construktion
         }
 
         /// <summary>
+        /// Specify a convention to omit properties.
+        /// </summary>
+        public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention)
+        {
+            CustomBlueprints.Add(new OmitPropertyBlueprint(convention, new List<Type>()));
+            return this;
+        }
+
+        /// <summary>
         /// Specify a convention to omit properties of the specified types.
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, params Type[]  propertyTypes)
@@ -235,7 +244,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Configure whether an exception should be thrown when recursive properties are detected. By default it won't throw
+        /// Configure whether an exception should be thrown when recursive properties are detected. By default it won't throw.
         /// </summary>
         /// <param name="shouldThrow"></param>
         /// <returns></returns>

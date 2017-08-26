@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Debug
 {
     using System.Collections.Generic;
-    using global::Construktion;
 
     public class DebuggingConstruktion
     {

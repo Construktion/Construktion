@@ -1,6 +1,7 @@
 namespace Construktion.Tests.Registry
 {
     using System.Collections.Generic;
+    using System.Reflection;
     using Shouldly;
     using Xunit;
 
@@ -82,6 +83,20 @@ namespace Construktion.Tests.Registry
             foo.VirtualInt.ShouldBe(0);
         }
 
+        [Fact]
+        public void should_omit_all_properties_that_inherit_a_generic()
+        {
+            registry.OmitProperties(prop => prop.PropertyType.GetTypeInfo().BaseType != null &&
+                                            prop.PropertyType.BaseType.IsGenericType &&
+                                            prop.PropertyType.BaseType.GetGenericTypeDefinition() ==
+                                            typeof(OpenGeneric<>));
+            construktion.With(registry);
+
+            var foo = construktion.Construct<Foo>();
+
+            foo.InheritsGeneric.ShouldBe(null);
+        }
+
         public class Foo 
         {
             public int FooId { get; set; }
@@ -93,9 +108,16 @@ namespace Construktion.Tests.Registry
             public List<string> ListStrings { get; set; }
             public virtual ICollection<MyClass> MyVirtualClasses { get; set; }
             public virtual int VirtualInt { get; set; }
-
+            public InheritsGeneric InheritsGeneric { get; set; }
         }
 
         public class MyClass { }
+
+        public class InheritsGeneric : OpenGeneric<string> { }
+
+        public class OpenGeneric<T>
+        {
+
+        }
     }
 }

@@ -27,11 +27,11 @@
 
         public bool Matches(ConstruktionContext context)
         {
-            return
-                context.PropertyInfo != null &&
-                _convention(context.PropertyInfo) &&
-                (_propertyTypes.Contains(context.RequestType) ||
-                ContainsGeneric(context.RequestType));
+            var matchesType = _propertyTypes.Contains(context.RequestType) ||
+                              ContainsGeneric(context.RequestType) ||
+                              !_propertyTypes.Any();
+
+            return context.PropertyInfo != null && _convention(context.PropertyInfo) && matchesType;
         }
 
         private bool ContainsGeneric(Type requestType)
