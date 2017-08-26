@@ -15,11 +15,11 @@
         }
 
         [Fact]
-        public void should_resolve_greediest_ctor_by_default()
+        public void should_resolve_modest_ctor_by_default()
         {
             var result = construktion.Construct<MultiCtor>();
 
-            result.UsedGreedyCtor.ShouldBe(true);
+            result.UsedModestCtor.ShouldBe(true);
         }
 
         [Fact]

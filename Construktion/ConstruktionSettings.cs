@@ -37,7 +37,7 @@ namespace Construktion
             foreach (var map in registry.TypeMap)
                 TypeMap[map.Key] = map.Value;
 
-            CtorStrategy = registry.CtorStrategy ?? Extensions.GreedyCtor;
+            CtorStrategy = registry.CtorStrategy ?? Extensions.ModestCtor;
             PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;
             EnumuerableCount = registry.RepeatCount ?? 3;
             RecurssionDepth = registry.RecurssionDepth ?? 0;

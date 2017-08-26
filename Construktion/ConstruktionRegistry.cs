@@ -120,7 +120,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Construct objects using the constructor with the fewest arguments.
+        /// Construct objects using the constructor with the fewest arguments. This is the default behavior.
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry UseModestCtor()
@@ -130,7 +130,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Construct objects using the constructor with the most arguments. This is the default behavior.
+        /// Construct objects using the constructor with the most arguments.
         /// </summary>
         /// <returns></returns>
         public ConstruktionRegistry UseGreedyCtor()
