@@ -20,8 +20,7 @@
 
   <!-- Nuget information -->
   <PropertyGroup>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>beta-0000</VersionSuffix>
+    <PackageVersion>1.0.0</PackageVersion>
     <Configuration>Release</Configuration>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <title>Construktion</title>
