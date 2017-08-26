@@ -18,7 +18,6 @@ namespace Construktion
         internal Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
         internal int? RepeatCount { get; private set; }
         internal int? RecurssionDepth { get; private set; } 
-
         internal Dictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
 
         public ConstruktionRegistry()

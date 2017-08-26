@@ -30,8 +30,12 @@
 
             var blueprint = Settings.Blueprints.First(x => x.Matches(requestContext));
 
+            _level++;
+            var buffer = new string(' ', _level * 5);
+
             if (depth > Settings.RecurssionDepth)
             {
+                _log.Add($"{buffer}Recursion detected over the allowed limit. Omitting {requestContext.RequestType.FullName}");
                 debugLog = _log;
                 return default(object);
             }
@@ -50,17 +54,28 @@
                 start = $"Start Parameter: {name}";
             }
 
-            _level++;
             _underConstruction.Add(requestContext.RequestType);
 
             if (_level != 0)
                 _log.Add("");
 
-            var buffer = new string(' ', _level * 5);
             _log.Add($"{buffer}{start}");
             _log.Add($"{buffer}{blueprint}");
 
-            var result = blueprint.Construct(requestContext, this);
+            object result;
+            try
+            {
+                result = blueprint.Construct(requestContext, this);
+            }
+            catch (Exception ex)
+            {
+                _log.Add($"{buffer}An exception occured in blueprint {blueprint.GetType().FullName}, when constructing {name}");
+                _log.Add($"{buffer}Exception is: {ex.Message}");
+                _log.Add("");
+                debugLog = _log;
+
+                return default(object);
+            }
 
             _level--;
             _underConstruction.Remove(requestContext.RequestType);
