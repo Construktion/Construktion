@@ -7,17 +7,41 @@ namespace Construktion
 
     public interface ConstruktionSettings
     {
-        List<Blueprint> Blueprints { get; }
+        /// <summary>
+        /// All configured blueprints. The pipeline will evaulate them in the returned order.
+        /// </summary>
+        IEnumerable<Blueprint> Blueprints { get; }
+
+        /// <summary>
+        /// When a key in the dictionary is requested, will construct the value. Usually used to construct interfaces.
+        /// </summary>
         IDictionary<Type, Type> TypeMap { get; }
+
+        /// <summary>
+        /// Resolve the constructor (Greedy or Modest). 
+        /// </summary>
         Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
+
+        /// <summary>
+        /// Resolve an objects properties to construct. 
+        /// </summary>
         Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
+
+        /// <summary>
+        /// The amount of items to create when any IEnumerable (or array) is requested. The Default is 3.
+        /// </summary>
         int EnumuerableCount { get; }
+
+        /// <summary>
+        /// How many levels of recurssion to construct. By default recursive properties are ignored.
+        /// </summary>
         int RecurssionDepth { get; }
     }
 
     internal class DefaultConstruktionSettings : ConstruktionSettings
     {
-        public List<Blueprint> Blueprints { get; }
+        private readonly List<Blueprint> _blueprints;
+        public IEnumerable<Blueprint> Blueprints => _blueprints;
         public IDictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
         public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
@@ -31,8 +55,8 @@ namespace Construktion
 
         public DefaultConstruktionSettings(ConstruktionRegistry registry)
         {
-            Blueprints = registry.CustomBlueprints;
-            Blueprints.AddRange(registry.DefaultBlueprints);
+            _blueprints = registry.CustomBlueprints;
+            _blueprints.AddRange(registry.DefaultBlueprints);
 
             foreach (var map in registry.TypeMap)
                 TypeMap[map.Key] = map.Value;
