@@ -61,7 +61,7 @@ namespace Construktion
 
         public DefaultConstruktionSettings(ConstruktionRegistry registry)
         {
-            _blueprints = registry.CustomBlueprints;
+            _blueprints = new List<Blueprint>(registry.CustomBlueprints);
             _blueprints.AddRange(registry.DefaultBlueprints);
 
             TypeMap = registry.TypeMap;
