@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using System.Reflection;
     using Blueprints;
+    using Debug;
 
     public class Construktion
     {
-        internal readonly ConstruktionRegistry _registry = new ConstruktionRegistry();
+        internal readonly ConstruktionRegistry Registry = new ConstruktionRegistry();
 
         /// <summary>
         /// Construct an object of the specified type.
@@ -63,7 +64,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>()
         {
-            return ConstructMany<T>(_registry.ToSettings().EnumuerableCount);
+            return ConstructMany<T>(Registry.ToSettings().EnumuerableCount);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
         {
-            return ConstructMany(hardCodes, _registry.ToSettings().EnumuerableCount);
+            return ConstructMany(hardCodes, Registry.ToSettings().EnumuerableCount);
         }
 
         /// <summary>
@@ -116,13 +117,24 @@
             return items;
         }
 
+        /// <summary>
+        /// Get detailed log information about the way Construktion is constructing your objects. DO NOT use for normal operations. Should be used for ad hoc debugging only.
+        /// </summary>
+        /// <returns></returns>
+        public object DebuggingConstruct(ConstruktionContext context, out string log)
+        {
+            var result = new DebuggingConstruktion(this).DebuggingConstruct(context, out log);
+
+            return result;
+        }
+
         private T DoConstruct<T>(Type type, Action<T> hardCodes, ParameterInfo parameterInfo = null)
         {
             var context = type != null
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_registry.ToSettings());
+            var pipeline = new DefaultConstruktionPipeline(Registry.ToSettings());
 
             var result = (T)pipeline.Send(context);
 
@@ -138,7 +150,7 @@
         /// <returns></returns>
         public Construktion With(ConstruktionRegistry registry)
         {
-            _registry.AddRegistry(registry);
+            Registry.AddRegistry(registry);
             return this;
         }
 
@@ -153,7 +165,7 @@
 
             configure(registry);
 
-            _registry.AddRegistry(registry);
+            Registry.AddRegistry(registry);
 
             return this;
         }
@@ -165,7 +177,7 @@
         /// <returns></returns>
         public Construktion With(Blueprint blueprint)
         {
-            _registry.AddBlueprint(blueprint);
+            Registry.AddBlueprint(blueprint);
             return this;
         }
 
@@ -176,7 +188,7 @@
         /// <returns></returns>
         public Construktion With(IEnumerable<Blueprint> blueprints)
         {
-            _registry.AddBlueprints(blueprints);
+            Registry.AddBlueprints(blueprints);
             return this;
         }
     }

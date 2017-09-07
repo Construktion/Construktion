@@ -9,10 +9,9 @@
         [Fact]
         public void visually_inspect_log()
         {
-            var debuggingConstruktion = new DebuggingConstruktion();
             var context = new ConstruktionContext(typeof(Foo));
 
-            var result = debuggingConstruktion.DebuggingConstruct(context, out string log);
+            var result = new Construktion().DebuggingConstruct(context, out string log);
 
             //not going to assert on the message, a visual check is good enough 
             true.ShouldBe(true);
@@ -21,10 +20,9 @@
         [Fact]
         public void log_should_power_through_exceptions()
         {
-            var debuggingConstruktion = new DebuggingConstruktion();
             var context = new ConstruktionContext(typeof(WillThrowFoo));
 
-            var result = debuggingConstruktion.DebuggingConstruct(context, out string log);
+            var result = new Construktion().DebuggingConstruct(context, out string log);
 
             log.ShouldContain("Cannot construct the interface");
             log.ShouldContain("End Construktion.Tests.DebuggingConstruktionTests+WillThrowFoo");

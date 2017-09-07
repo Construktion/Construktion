@@ -22,7 +22,7 @@
         /// <returns></returns>
         public object DebuggingConstruct(ConstruktionContext context, out string log)
         {
-            var pipeline = new DebuggingConstruktionPipeline(_construktion._registry.ToSettings());
+            var pipeline = new DebuggingConstruktionPipeline(_construktion.Registry.ToSettings());
 
             var result = pipeline.DebugSend(context, out List<string> debugLog);
 

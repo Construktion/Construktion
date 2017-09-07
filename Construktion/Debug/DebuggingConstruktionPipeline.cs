@@ -60,7 +60,7 @@
                 _log.Add("");
 
             _log.Add($"{buffer}{start}");
-            _log.Add($"{buffer}{blueprint}");
+            _log.Add($"{buffer}Blueprint: {blueprint}");
 
             object result;
             try
