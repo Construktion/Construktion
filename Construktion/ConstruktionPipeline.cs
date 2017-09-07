@@ -15,9 +15,9 @@
         /// <summary>
         /// Send a request through the pipeline to be constructed.
         /// </summary>
-        /// <param name="requestContext"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        object Send(ConstruktionContext requestContext);
+        object Send(ConstruktionContext context);
     }
 
     internal class DefaultConstruktionPipeline : ConstruktionPipeline
@@ -31,11 +31,11 @@
             Settings = settings;
         }
 
-        public object Send(ConstruktionContext requestContext)
+        public object Send(ConstruktionContext context)
         {
-            var blueprint = Settings.Blueprints.First(x => x.Matches(requestContext));
+            var blueprint = Settings.Blueprints.First(x => x.Matches(context));
 
-            var result = Construct(requestContext, blueprint);
+            var result = Construct(context, blueprint);
 
             return result;
         }
