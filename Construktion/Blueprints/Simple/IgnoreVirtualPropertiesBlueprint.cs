@@ -1,5 +1,7 @@
 ﻿namespace Construktion.Blueprints.Simple
 {
+    using System.Reflection;
+
     public class IgnoreVirtualPropertiesBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

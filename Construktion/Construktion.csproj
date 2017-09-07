@@ -1,22 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net45;</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;net45;</TargetFrameworks>
   </PropertyGroup>
   
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6'">
-    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
   </ItemGroup>
-
-  
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
-    <DefineConstants>NET45;NETFULL</DefineConstants>
-  </PropertyGroup>
-  
 
   <!-- Nuget information -->
   <PropertyGroup>
@@ -32,6 +22,8 @@
       Construktion is a library created to assist with unit testing by simplifying the arrange portion of your tests. It helps by creating objects and properties with pseudo random data.
     </description>
     <copyright>Copyright 2017</copyright>
+    <PackageProjectUrl>https://github.com/Construktion/Construktion</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Construktion/Construktion/blob/master/LICENSE.txt</PackageLicenseUrl>
   </PropertyGroup>
   
   <!-- Ignore Missing Xml Comment for Public Member -->
