@@ -20,7 +20,7 @@
 
   <!-- Nuget information -->
   <PropertyGroup>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Configuration>Release</Configuration>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <title>Construktion</title>
@@ -29,8 +29,7 @@
     <projectUrl>https://github.com/Construktion/Construktion</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      Construktion is a library created to assist with unit testing by simplifying the 
-      arrange portion of your tests. It does this by creating objects and populating its properties with random data.
+      Construktion is a library created to assist with unit testing by simplifying the arrange portion of your tests. It helps by creating objects and properties with pseudo random data.
     </description>
     <copyright>Copyright 2017</copyright>
   </PropertyGroup>
