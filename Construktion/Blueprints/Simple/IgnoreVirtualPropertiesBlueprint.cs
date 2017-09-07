@@ -4,7 +4,9 @@
     {
         public bool Matches(ConstruktionContext context)
         {
-            return context.PropertyInfo?.GetGetMethod().IsVirtual ?? false;
+            var getMethod = context.PropertyInfo?.GetGetMethod();
+
+            return getMethod != null && (getMethod.IsVirtual && !getMethod.IsFinal);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
