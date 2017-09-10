@@ -11,7 +11,7 @@ namespace Construktion.Blueprints
         internal readonly Random _random = new Random();
 
         /// <summary>
-        /// Mathces types of the closed generic. Can be overridden in derived classes.
+        /// Matches types of the closed generic. Can be overridden in derived classes.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -32,7 +32,7 @@ namespace Construktion.Blueprints
         }
 
         /// <summary>
-        /// Contruct an object of T.
+        /// Construct an object of T.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="pipeline"></param>

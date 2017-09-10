@@ -69,7 +69,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// When the type is requested, construct the subtitute type instead.
+        /// When the type is requested, construct the substitute type instead.
         /// Useful when you want to construct a specific implementation whenever an interface is requested.
         /// </summary>
         /// <typeparam name="TContract">The type to be substituted</typeparam>
@@ -229,7 +229,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Configure how many levels of recurssion to construct. By default recurssive properties are ignored.
+        /// Configure how many levels of recursion to construct. By default recursive properties are ignored.
         /// </summary>
         /// <param name="limit"></param>
         /// <returns></returns>
@@ -237,7 +237,7 @@ namespace Construktion
         public ConstruktionRegistry RecurssionLimit(int limit)
         {
             if (limit < 0)
-                throw new ArgumentException("Recurssion limit cannot be less than 0");
+                throw new ArgumentException("Recursion limit cannot be less than 0");
 
             RecurssionDepth = limit;
             return this;

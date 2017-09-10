@@ -8,7 +8,7 @@ namespace Construktion
     public interface ConstruktionSettings
     {
         /// <summary>
-        /// All configured blueprints. The pipeline will evaulate them in the returned order.
+        /// All configured blueprints. The pipeline will evaluate them in the returned order.
         /// </summary>
         IEnumerable<Blueprint> Blueprints { get; }
 
@@ -18,7 +18,7 @@ namespace Construktion
         IDictionary<Type, Type> TypeMap { get; }
 
         /// <summary>
-        /// Resolve the constructor (Greedy or Modest). 
+        /// Resolve the constructor (Greedy or Modest). Uses modest by default.
         /// </summary>
         Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
 
@@ -33,12 +33,12 @@ namespace Construktion
         int EnumuerableCount { get; }
 
         /// <summary>
-        /// How many levels of recurssion to construct. By default recursive properties are ignored.
+        /// How many levels of recursion to construct. By default recursive properties are ignored.
         /// </summary>
         int RecurssionDepth { get; }
 
         /// <summary>
-        /// Determines whether an exception should be thrown when Recurssion is detected
+        /// When true, an exception will be thrown when Recursion is detected. False by default.
         /// </summary>
         bool ThrowOnRecurrsion { get; }
     }
@@ -54,9 +54,9 @@ namespace Construktion
         public int RecurssionDepth { get; }
         public bool ThrowOnRecurrsion { get; }
 
-        public DefaultConstruktionSettings() : this (new ConstruktionRegistry())
+        public DefaultConstruktionSettings() : this(new ConstruktionRegistry())
         {
-            
+
         }
 
         public DefaultConstruktionSettings(ConstruktionRegistry registry)

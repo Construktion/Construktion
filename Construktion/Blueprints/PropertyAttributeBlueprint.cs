@@ -32,7 +32,7 @@
         }
 
         /// <summary>
-        /// Constrcut a property using its attribute value.
+        /// Construct a property using its attribute value.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="pipeline"></param>

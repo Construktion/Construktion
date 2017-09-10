@@ -47,7 +47,7 @@
             if (RecurssionDetected(context))
             {
                 return Settings.ThrowOnRecurrsion
-                    ? throw new Exception($"Recurssion Detected: {context.RequestType.FullName}")
+                    ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
                     : default(object);
             }
 

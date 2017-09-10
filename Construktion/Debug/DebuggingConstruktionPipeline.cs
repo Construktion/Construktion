@@ -19,39 +19,66 @@
             Settings = settings;
         }
 
-        public object Send(ConstruktionContext requestContext)
+        public object Send(ConstruktionContext context)
         {
-            return DebugSend(requestContext, out List<string> debugLog);
+            return DebugSend(context, out List<string> debugLog);
         }
 
-        public object DebugSend(ConstruktionContext requestContext, out List<string> debugLog)
+        public object DebugSend(ConstruktionContext context, out List<string> debugLog)
         {
-            var depth = _underConstruction.Count(x => requestContext.RequestType == x);
+            var depth = _underConstruction.Count(x => context.RequestType == x);
 
-            var blueprint = Settings.Blueprints.First(x => x.Matches(requestContext));
+            var blueprint = Settings.Blueprints.First(x => x.Matches(context));
 
             _level++;
             var buffer = new string(' ', _level * 5);
 
             if (depth > Settings.RecurssionDepth)
             {
-                _log.Add($"{buffer}Recursion detected over the allowed limit. Omitting {requestContext.RequestType.FullName}");
+                _log.Add($"{buffer}Recursion detected over the allowed limit. Omitting {context.RequestType.FullName}");
                 debugLog = _log;
+
                 return default(object);
             }
 
-            var name = requestContext.RequestType.FullName;
-            var start = $"Start: {name}";
+            var requestName = StartLog(context, blueprint, buffer);
+
+            object result;
+            try
+            {
+                result = blueprint.Construct(context, this);
+            }
+            catch (Exception ex)
+            {
+                _log.Add($"{buffer}An exception occurred in blueprint {blueprint.GetType().FullName}, when constructing {requestName}");
+                _log.Add($"{buffer}Exception is: {ex.Message}");
+                _log.Add("");
+                debugLog = _log;
+
+                return default(object);
+            }
+
+            EndLog(context, buffer, requestName);
+
+            debugLog = _log;
+
+            return result;
+        }
+
+        private string StartLog(ConstruktionContext requestContext, Blueprints.Blueprint blueprint, string buffer)
+        {
+            var requestName = requestContext.RequestType.FullName;
+            var start = $"Start: {requestName}";
 
             if (requestContext.PropertyInfo != null)
             {
-                name = requestContext.PropertyInfo.Name;
-                start = $"Start Property: {name}";
+                requestName = requestContext.PropertyInfo.Name;
+                start = $"Start Property: {requestName}";
             }
             else if (requestContext.ParameterInfo != null)
             {
-                name = requestContext.ParameterInfo.Name;
-                start = $"Start Parameter: {name}";
+                requestName = requestContext.ParameterInfo.Name;
+                start = $"Start Parameter: {requestName}";
             }
 
             _underConstruction.Add(requestContext.RequestType);
@@ -62,32 +89,18 @@
             _log.Add($"{buffer}{start}");
             _log.Add($"{buffer}Blueprint: {blueprint}");
 
-            object result;
-            try
-            {
-                result = blueprint.Construct(requestContext, this);
-            }
-            catch (Exception ex)
-            {
-                _log.Add($"{buffer}An exception occured in blueprint {blueprint.GetType().FullName}, when constructing {name}");
-                _log.Add($"{buffer}Exception is: {ex.Message}");
-                _log.Add("");
-                debugLog = _log;
+            return requestName;
+        }
 
-                return default(object);
-            }
-
+        private void EndLog(ConstruktionContext context, string buffer, string requestName)
+        {
             _level--;
-            _underConstruction.Remove(requestContext.RequestType);
+            _underConstruction.Remove(context.RequestType);
 
             if (_log.Last().Trim().StartsWith("End"))
                 _log.Add("");
 
-            _log.Add($"{buffer}End {name}");
-
-            debugLog = _log;
-
-            return result;
+            _log.Add($"{buffer}End {requestName}");
         }
     }
 }

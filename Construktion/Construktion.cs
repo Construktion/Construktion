@@ -9,6 +9,7 @@
     public class Construktion
     {
         internal readonly ConstruktionRegistry Registry = new ConstruktionRegistry();
+        private ConstruktionSettings settings = new DefaultConstruktionSettings();
 
         /// <summary>
         /// Construct an object of the specified type.
@@ -64,7 +65,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>()
         {
-            return ConstructMany<T>(Registry.ToSettings().EnumuerableCount);
+            return ConstructMany<T>(settings.EnumuerableCount);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
         {
-            return ConstructMany(hardCodes, Registry.ToSettings().EnumuerableCount);
+            return ConstructMany(hardCodes, settings.EnumuerableCount);
         }
 
         /// <summary>
@@ -134,7 +135,7 @@
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(Registry.ToSettings());
+            var pipeline = new DefaultConstruktionPipeline(settings);
 
             var result = (T)pipeline.Send(context);
 
@@ -144,13 +145,14 @@
         }
 
         /// <summary>
-        /// Adds a registy to be used during construction.
+        /// Adds a registry to be used during construction.
         /// </summary>
         /// <param name="registry"></param>
         /// <returns></returns>
         public Construktion With(ConstruktionRegistry registry)
         {
             Registry.AddRegistry(registry);
+            settings = Registry.ToSettings();
             return this;
         }
 
@@ -166,7 +168,7 @@
             configure(registry);
 
             Registry.AddRegistry(registry);
-
+            settings = Registry.ToSettings();
             return this;
         }
 
@@ -178,6 +180,7 @@
         public Construktion With(Blueprint blueprint)
         {
             Registry.AddBlueprint(blueprint);
+            settings = Registry.ToSettings();
             return this;
         }
 
@@ -189,6 +192,7 @@
         public Construktion With(IEnumerable<Blueprint> blueprints)
         {
             Registry.AddBlueprints(blueprints);
+            settings = Registry.ToSettings();
             return this;
         }
     }

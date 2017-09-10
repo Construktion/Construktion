@@ -5,15 +5,6 @@
     using Shouldly;
     using Xunit;
 
-    public enum Genres
-    {
-        Fantasy,
-        SciFi,
-        Biography,
-        Fiction,
-        Cooking
-    }
-
     public class DictionaryBlueprintTests
     {
         [Fact]
@@ -32,10 +23,19 @@
         {
             var blueprint = new DictionaryBlueprint();
 
-            var dictionary = (Dictionary<Genres, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<Genres, string>)), new DefaultConstruktionPipeline());
+            var dictionary = (Dictionary<Genre, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<Genre, string>)), new DefaultConstruktionPipeline());
 
             dictionary.ShouldNotBe(null);
             dictionary.Count.ShouldBe(5);
         }      
+    }
+
+    public enum Genre
+    {
+        Fantasy,
+        SciFi,
+        Biography,
+        Fiction,
+        Cooking
     }
 }
