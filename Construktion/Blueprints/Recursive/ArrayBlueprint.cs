@@ -20,9 +20,9 @@ namespace Construktion.Blueprints.Recursive
 
         private Array construct(Type arrayType, ConstruktionPipeline pipeline)
         {
-            var array = Array.CreateInstance(arrayType, pipeline.Settings.EnumuerableCount);
+            var array = Array.CreateInstance(arrayType, pipeline.Settings.EnumerableCount);
 
-            for (var i = 0; i <= pipeline.Settings.EnumuerableCount - 1; i++)
+            for (var i = 0; i <= pipeline.Settings.EnumerableCount - 1; i++)
             {
                 var value = pipeline.Send(new ConstruktionContext(arrayType));
 

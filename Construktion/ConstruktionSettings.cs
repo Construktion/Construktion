@@ -30,17 +30,17 @@ namespace Construktion
         /// <summary>
         /// The amount of items to create when any IEnumerable (or array) is requested. The Default is 3.
         /// </summary>
-        int EnumuerableCount { get; }
+        int EnumerableCount { get; }
 
         /// <summary>
         /// How many levels of recursion to construct. By default recursive properties are ignored.
         /// </summary>
-        int RecurssionDepth { get; }
+        int RecursionDepth { get; }
 
         /// <summary>
         /// When true, an exception will be thrown when Recursion is detected. False by default.
         /// </summary>
-        bool ThrowOnRecurrsion { get; }
+        bool ThrowOnRecursion { get; }
     }
 
     internal class DefaultConstruktionSettings : ConstruktionSettings
@@ -50,9 +50,9 @@ namespace Construktion
         public IDictionary<Type, Type> TypeMap { get; }
         public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
-        public int EnumuerableCount { get; }
-        public int RecurssionDepth { get; }
-        public bool ThrowOnRecurrsion { get; }
+        public int EnumerableCount { get; }
+        public int RecursionDepth { get; }
+        public bool ThrowOnRecursion { get; }
 
         public DefaultConstruktionSettings() : this(new ConstruktionRegistry())
         {
@@ -67,9 +67,9 @@ namespace Construktion
             TypeMap = registry.TypeMap;
             CtorStrategy = registry.CtorStrategy ?? Extensions.ModestCtor;
             PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;
-            EnumuerableCount = registry.RepeatCount ?? 3;
-            RecurssionDepth = registry.RecurssionDepth ?? 0;
-            ThrowOnRecurrsion = registry.ShouldThrowOnRecurssion ?? false;
+            EnumerableCount = registry.RepeatCount ?? 3;
+            RecursionDepth = registry.RecursionDepth ?? 0;
+            ThrowOnRecursion = registry.ShouldThrowOnRecursion ?? false;
         }
     }
 }

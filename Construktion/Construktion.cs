@@ -65,7 +65,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>()
         {
-            return ConstructMany<T>(settings.EnumuerableCount);
+            return ConstructMany<T>(settings.EnumerableCount);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
         {
-            return ConstructMany(hardCodes, settings.EnumuerableCount);
+            return ConstructMany(hardCodes, settings.EnumerableCount);
         }
 
         /// <summary>

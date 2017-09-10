@@ -17,9 +17,9 @@ namespace Construktion
         internal Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; } 
         internal Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
         internal int? RepeatCount { get; private set; }
-        internal int? RecurssionDepth { get; private set; } 
+        internal int? RecursionDepth { get; private set; } 
         internal Dictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
-        internal bool? ShouldThrowOnRecurssion { get; private set; }
+        internal bool? ShouldThrowOnRecursion { get; private set; }
 
         public ConstruktionRegistry()
         {
@@ -234,12 +234,12 @@ namespace Construktion
         /// <param name="limit"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws argument exception when limit is less than 0</exception>
-        public ConstruktionRegistry RecurssionLimit(int limit)
+        public ConstruktionRegistry RecursionLimit(int limit)
         {
             if (limit < 0)
                 throw new ArgumentException("Recursion limit cannot be less than 0");
 
-            RecurssionDepth = limit;
+            RecursionDepth = limit;
             return this;
         }
 
@@ -248,9 +248,9 @@ namespace Construktion
         /// </summary>
         /// <param name="shouldThrow"></param>
         /// <returns></returns>
-        public ConstruktionRegistry ThrowOnRecurssion(bool shouldThrow)
+        public ConstruktionRegistry ThrowOnRecursion(bool shouldThrow)
         {
-            ShouldThrowOnRecurssion = shouldThrow;
+            ShouldThrowOnRecursion = shouldThrow;
             return this;
         }
 
@@ -278,8 +278,8 @@ namespace Construktion
             CtorStrategy = registry.CtorStrategy ?? CtorStrategy;
             PropertyStrategy = registry.PropertyStrategy ?? PropertyStrategy;
             RepeatCount = registry.RepeatCount ?? RepeatCount;
-            RecurssionDepth = registry.RecurssionDepth ?? RecurssionDepth;
-            ShouldThrowOnRecurssion = registry.ShouldThrowOnRecurssion ?? ShouldThrowOnRecurssion;
+            RecursionDepth = registry.RecursionDepth ?? RecursionDepth;
+            ShouldThrowOnRecursion = registry.ShouldThrowOnRecursion ?? ShouldThrowOnRecursion;
 
             DefaultBlueprints = new DefaultBlueprints(TypeMap);
         }

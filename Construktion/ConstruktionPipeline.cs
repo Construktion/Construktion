@@ -44,9 +44,9 @@
 
         private object Construct(ConstruktionContext context, Blueprint blueprint)
         {
-            if (RecurssionDetected(context))
+            if (RecursionDetected(context))
             {
-                return Settings.ThrowOnRecurrsion
+                return Settings.ThrowOnRecursion
                     ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
                     : default(object);
             }
@@ -60,11 +60,11 @@
             return result;
         }
 
-        private bool RecurssionDetected(ConstruktionContext context)
+        private bool RecursionDetected(ConstruktionContext context)
         {
             var depth = _underConstruction.Count(x => context.RequestType == x);
 
-            return depth > Settings.RecurssionDepth || (depth > 0 && Settings.ThrowOnRecurrsion);
+            return depth > Settings.RecursionDepth || (depth > 0 && Settings.ThrowOnRecursion);
         }
     }
 }

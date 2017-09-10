@@ -51,9 +51,9 @@
         }
 
         [Fact]
-        public void should_have_configurable_recurssion_depth()
+        public void should_have_configurable_recursion_depth()
         {
-            var construction = new Construktion().With(x => x.RecurssionLimit(1));
+            var construction = new Construktion().With(x => x.RecursionLimit(1));
 
             var parent = construction.Construct<Parent>();
 
@@ -67,7 +67,7 @@
         [Fact]
         public void should_throw_when_set_to_negative_depth()
         {
-            Should.Throw<ArgumentException>(() => new Construktion().With(x => x.RecurssionLimit(-1)));
+            Should.Throw<ArgumentException>(() => new Construktion().With(x => x.RecursionLimit(-1)));
         }
 
         public class Class<T> { }

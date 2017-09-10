@@ -33,7 +33,7 @@
             _level++;
             var buffer = new string(' ', _level * 5);
 
-            if (depth > Settings.RecurssionDepth)
+            if (depth > Settings.RecursionDepth)
             {
                 _log.Add($"{buffer}Recursion detected over the allowed limit. Omitting {context.RequestType.FullName}");
                 debugLog = _log;

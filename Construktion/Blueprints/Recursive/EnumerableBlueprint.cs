@@ -28,7 +28,7 @@
             //todo benchmark
             var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
 
-            for (var i = 0; i < pipeline.Settings.EnumuerableCount; i++)
+            for (var i = 0; i < pipeline.Settings.EnumerableCount; i++)
             {
                 var result = pipeline.Send(new ConstruktionContext(closedType));
 
