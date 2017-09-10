@@ -12,7 +12,7 @@
         {
             var blueprint = new IgnoreVirtualPropertiesBlueprint();
             var dateProp = typeof(Foo).GetProperty(nameof(Foo.DateTime));
-            var stringProp = typeof(Foo).GetProperty(nameof(Foo.DateTime));
+            var stringProp = typeof(Foo).GetProperty(nameof(Foo.String));
 
             var matchesDate = blueprint.Matches(new ConstruktionContext(dateProp));
             var matchesString = blueprint.Matches(new ConstruktionContext(stringProp));
