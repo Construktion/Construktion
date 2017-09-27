@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests.Registry
-{
-    using Blueprints;
-    using Shouldly;
-    using Xunit;
+﻿using Construktion.Blueprints;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.Registry
+{
     public class BlueprintUsageTests
     {
         private readonly ConstruktionRegistry registry;

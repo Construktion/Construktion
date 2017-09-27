@@ -1,8 +1,7 @@
-﻿namespace Construktion.Blueprints.Simple
-{
-    using System;
-    using Blueprints;
+﻿using System;
 
+namespace Construktion.Blueprints.Simple
+{
     public class ScopedBlueprint : Blueprint
     {
         private readonly Type _type;

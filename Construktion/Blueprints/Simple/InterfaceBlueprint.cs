@@ -1,8 +1,8 @@
-﻿namespace Construktion.Blueprints.Simple
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Construktion.Blueprints.Simple
+{
     public class InterfaceBlueprint : Blueprint
     {
         private readonly IDictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();

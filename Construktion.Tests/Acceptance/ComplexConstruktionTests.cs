@@ -1,12 +1,13 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Local
 // ReSharper disable ArrangeTypeMemberModifiers
+
+using System.Collections.Generic;
+using System.Linq;
+using Shouldly;
+using Xunit;
+
 namespace Construktion.Tests.Acceptance
 {
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Xunit;
-
     public class ComplexConstruktionTests
     {
         private readonly Construktion construktion;

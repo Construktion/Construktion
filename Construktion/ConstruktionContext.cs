@@ -1,8 +1,8 @@
-﻿namespace Construktion
-{
-    using System;
-    using System.Reflection;
+﻿using System;
+using System.Reflection;
 
+namespace Construktion
+{
     /// <summary>
     /// The context of the type currently being constructed
     /// </summary>

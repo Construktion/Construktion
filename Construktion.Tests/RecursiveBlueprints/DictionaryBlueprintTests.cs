@@ -1,10 +1,10 @@
-﻿namespace Construktion.Tests.Recursive
-{
-    using System.Collections.Generic;
-    using Blueprints.Recursive;
-    using Shouldly;
-    using Xunit;
+﻿using System.Collections.Generic;
+using Construktion.Blueprints.Recursive;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.RecursiveBlueprints
+{
     public class DictionaryBlueprintTests
     {
         [Fact]

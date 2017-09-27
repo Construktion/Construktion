@@ -1,10 +1,10 @@
-﻿namespace Construktion.Tests.Registry
-{
-    using System;
-    using System.Linq;
-    using Shouldly;
-    using Xunit;
+﻿using System;
+using System.Linq;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.Registry
+{
     public class AttributeUsageTests
     {
         private readonly ConstruktionRegistry registry;

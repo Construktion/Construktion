@@ -1,7 +1,7 @@
-﻿namespace Construktion.Debug
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Construktion.Debug
+{
     public class DebuggingConstruktion
     {
         private readonly Construktion _construktion;

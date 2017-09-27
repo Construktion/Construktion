@@ -1,7 +1,7 @@
+using System;
+
 namespace Construktion.Blueprints.Recursive
 {
-    using System;
-
     public class ArrayBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

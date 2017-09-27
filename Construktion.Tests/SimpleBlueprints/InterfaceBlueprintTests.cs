@@ -1,11 +1,11 @@
-﻿namespace Construktion.Tests.Simple
-{
-    using Blueprints.Simple;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using Xunit;
+﻿using System;
+using System.Collections.Generic;
+using Construktion.Blueprints.Simple;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.SimpleBlueprints
+{
     public class InterfaceBlueprintTests
     {        
         [Fact]

@@ -1,9 +1,8 @@
-﻿namespace Construktion.Tests
-{
-    using Debug;
-    using Shouldly;
-    using Xunit;
+﻿using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests
+{
     public class DebuggingConstruktionTests
     {
         [Fact]

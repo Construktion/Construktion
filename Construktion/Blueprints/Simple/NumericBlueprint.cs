@@ -1,10 +1,10 @@
-﻿namespace Construktion.Blueprints.Simple
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace Construktion.Blueprints.Simple
+{
     //https://github.com/AutoFixture/AutoFixture/blob/master/Src/AutoFixture/RandomNumericSequenceGenerator.cs
     public class NumericBlueprint : Blueprint
     {

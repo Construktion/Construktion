@@ -1,11 +1,11 @@
-﻿namespace Construktion.Benchmarks
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using BenchmarkDotNet.Attributes;
-    using BenchmarkDotNet.Running;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
 
+namespace Construktion.Benchmarks
+{
     class Program
     {
         static void Main(string[] args)

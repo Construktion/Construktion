@@ -1,10 +1,10 @@
-﻿namespace Construktion.Tests.Bugs
-{
-    using System;
-    using Blueprints.Simple;
-    using Shouldly;
-    using Xunit;
+﻿using System;
+using Construktion.Blueprints.Simple;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.Bugs
+{
     public class Bug_39_interface_properties_are_matching_the_ignore_virtual_properties_blueprint
     {
         [Fact]

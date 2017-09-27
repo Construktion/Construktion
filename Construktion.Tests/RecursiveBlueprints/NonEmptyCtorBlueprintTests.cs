@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests.Recursive
-{
-    using Blueprints.Recursive;
-    using Shouldly;
-    using Xunit;
+﻿using Construktion.Blueprints.Recursive;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.RecursiveBlueprints
+{
     public class NonEmptyCtorBlueprintTests
     {
         [Fact]

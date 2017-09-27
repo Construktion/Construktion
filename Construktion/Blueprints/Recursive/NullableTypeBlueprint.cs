@@ -1,8 +1,8 @@
-﻿namespace Construktion.Blueprints.Recursive
-{
-    using System;
-    using System.Reflection;
+﻿using System;
+using System.Reflection;
 
+namespace Construktion.Blueprints.Recursive
+{
     public class NullableTypeBlueprint : Blueprint
     {
         private readonly Random _random = new Random();

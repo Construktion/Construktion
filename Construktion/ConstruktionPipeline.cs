@@ -1,10 +1,10 @@
-﻿namespace Construktion
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Blueprints;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Construktion.Blueprints;
 
+namespace Construktion
+{
     public interface ConstruktionPipeline
     {
         /// <summary>

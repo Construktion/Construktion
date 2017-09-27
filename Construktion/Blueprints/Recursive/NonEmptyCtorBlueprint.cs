@@ -1,10 +1,10 @@
-﻿namespace Construktion.Blueprints.Recursive
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace Construktion.Blueprints.Recursive
+{
     public class NonEmptyCtorBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

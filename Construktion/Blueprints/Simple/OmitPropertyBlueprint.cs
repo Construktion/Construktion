@@ -1,11 +1,10 @@
-﻿namespace Construktion.Blueprints.Simple
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using Blueprints;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace Construktion.Blueprints.Simple
+{
     public class OmitPropertyBlueprint : Blueprint
     {
         private readonly Func<PropertyInfo, bool> _convention;

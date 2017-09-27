@@ -1,11 +1,11 @@
-﻿namespace Construktion.Blueprints.Recursive
-{
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace Construktion.Blueprints.Recursive
+{
     public class DictionaryBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

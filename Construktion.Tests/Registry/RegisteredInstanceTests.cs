@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests.Registry
-{
-    using System;
-    using Shouldly;
-    using Xunit;
+﻿using System;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.Registry
+{
     public class RegisteredInstanceTests
     {
         private readonly ConstruktionRegistry registry;

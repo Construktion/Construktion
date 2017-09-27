@@ -1,12 +1,12 @@
-﻿namespace Construktion
-{
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Blueprints;
-    using Blueprints.Recursive;
-    using Blueprints.Simple;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Construktion.Blueprints;
+using Construktion.Blueprints.Recursive;
+using Construktion.Blueprints.Simple;
 
+namespace Construktion
+{
     internal class DefaultBlueprints : IEnumerable<Blueprint>
     {
         private readonly IEnumerable<Blueprint> _defaultBlueprints;

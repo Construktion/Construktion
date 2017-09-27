@@ -1,7 +1,7 @@
-﻿namespace Construktion.Blueprints.Recursive
-{
-    using System.Reflection;
+﻿using System.Reflection;
 
+namespace Construktion.Blueprints.Recursive
+{
     public class EmptyCtorBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

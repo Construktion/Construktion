@@ -1,10 +1,10 @@
-﻿namespace Construktion.Tests.Simple
-{
-    using System;
-    using Blueprints.Simple;
-    using Shouldly;
-    using Xunit;
+﻿using System;
+using Construktion.Blueprints.Simple;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.SimpleBlueprints
+{
     public class GuidBlueprintTests
     {
         [Fact]

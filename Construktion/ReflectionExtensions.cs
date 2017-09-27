@@ -1,12 +1,11 @@
-// ReSharper disable PossibleNullReferenceException
-namespace Construktion
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
+namespace Construktion
+{ 
     //https://stackoverflow.com/questions/12307519/activator-createinstancet-vs-compiled-expression-inverse-performance-on-two-da
     internal static class ReflectionExtensions
     {

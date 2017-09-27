@@ -1,9 +1,9 @@
+using System;
+using Shouldly;
+using Xunit;
+
 namespace Construktion.Tests.Acceptance
 {
-    using System;
-    using Shouldly;
-    using Xunit;
-
     public class PrimitiveConstruktionTests
     {
         private readonly Construktion construktion;

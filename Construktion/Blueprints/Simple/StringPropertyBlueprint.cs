@@ -1,7 +1,7 @@
-﻿namespace Construktion.Blueprints.Simple
-{
-    using System;
+﻿using System;
 
+namespace Construktion.Blueprints.Simple
+{
     internal class StringPropertyBlueprint : Blueprint
     { 
         private readonly Random _random = new Random();

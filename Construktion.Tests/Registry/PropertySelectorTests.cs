@@ -1,8 +1,8 @@
-﻿namespace Construktion.Tests.Registry
-{
-    using Shouldly;
-    using Xunit;
+﻿using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.Registry
+{
     public class PropertySelectionTests
     {
         private readonly ConstruktionRegistry registry;

@@ -1,9 +1,9 @@
-﻿namespace Construktion.Blueprints
-{
-    using System;
-    using System.Linq;
-    using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 
+namespace Construktion.Blueprints
+{
     /// <summary>
     /// Base class to construct parameters from an attribute.
     /// </summary>

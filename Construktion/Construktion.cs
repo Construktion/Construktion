@@ -1,11 +1,11 @@
-﻿namespace Construktion
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using Blueprints;
-    using Debug;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Construktion.Blueprints;
+using Construktion.Debug;
 
+namespace Construktion
+{
     public class Construktion
     {
         internal readonly ConstruktionRegistry Registry = new ConstruktionRegistry();

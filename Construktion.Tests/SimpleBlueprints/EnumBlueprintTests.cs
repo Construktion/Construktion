@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests.Simple
-{
-    using Blueprints.Simple;
-    using Shouldly;
-    using Xunit;
+﻿using Construktion.Blueprints.Simple;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.SimpleBlueprints
+{
     public class EnumBlueprintTests
     {
         [Fact]

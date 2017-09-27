@@ -1,7 +1,7 @@
-﻿namespace Construktion.Blueprints.Simple
-{
-    using System;
+﻿using System;
 
+namespace Construktion.Blueprints.Simple
+{
     public class GuidBlueprint : AbstractBlueprint<Guid>
     {
         public override Guid Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

@@ -1,10 +1,10 @@
-﻿namespace Construktion.Tests
-{
-    using System;
-    using Blueprints;
-    using Shouldly;
-    using Xunit;
+﻿using System;
+using Construktion.Blueprints;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests
+{
     public class PropertyAttributeBlueprintTests
     {
         [Fact]

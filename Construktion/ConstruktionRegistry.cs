@@ -1,12 +1,13 @@
 ﻿// ReSharper disable PossibleMultipleEnumeration
+
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Construktion.Blueprints;
+using Construktion.Blueprints.Simple;
+
 namespace Construktion
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using Blueprints;
-    using Blueprints.Simple;
-
     /// <summary>
     /// Base class for configuration settings
     /// </summary>

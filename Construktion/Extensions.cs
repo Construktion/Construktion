@@ -1,15 +1,14 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Construktion.Tests")]
 [assembly: InternalsVisibleTo("Construktion.Benchmarks")]
 
 namespace Construktion
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-
     internal static class Extensions
     {
         public static ConstructorInfo GreedyCtor(this List<ConstructorInfo> ctors)

@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests.Registry
-{
-    using System.Linq;
-    using Shouldly;
-    using Xunit;
+﻿using System.Linq;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests.Registry
+{
     public class EnumerableUsageTests
     {
         private readonly ConstruktionRegistry registry;

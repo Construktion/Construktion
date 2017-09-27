@@ -2,7 +2,7 @@
 using Shouldly;
 using Xunit;
 
-namespace Construktion.Tests.Simple
+namespace Construktion.Tests.SimpleBlueprints
 {
     public class EmailAddressBlueprintTests
     {

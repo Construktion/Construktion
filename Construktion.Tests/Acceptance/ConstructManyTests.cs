@@ -1,12 +1,13 @@
 ﻿// ReSharper disable PossibleMultipleEnumeration
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Shouldly;
+using Xunit;
+
 namespace Construktion.Tests.Acceptance
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Shouldly;
-    using Xunit;
-
     public class ConstructManyTests
     {
         private readonly Construktion construktion;

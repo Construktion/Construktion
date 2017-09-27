@@ -1,8 +1,8 @@
-﻿namespace Construktion.Blueprints.Simple
-{
-    using System;
-    using System.Reflection;
+﻿using System;
+using System.Reflection;
 
+namespace Construktion.Blueprints.Simple
+{
     public class EnumBlueprint : Blueprint 
     {
         private readonly Random _random = new Random();

@@ -1,9 +1,9 @@
-﻿namespace Construktion.Tests
-{
-    using System.Linq;
-    using Shouldly;
-    using Xunit;
+﻿using System.Linq;
+using Shouldly;
+using Xunit;
 
+namespace Construktion.Tests
+{
     public class ConstruktionContextTests
     {
         [Fact]
