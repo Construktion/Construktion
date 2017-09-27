@@ -120,6 +120,26 @@ namespace Construktion
         }
 
         /// <summary>
+        /// Postfixes an email domain to string properties named "Email" or "EmailAddress".
+        /// </summary>
+        /// <returns></returns>
+        public ConstruktionRegistry AddEmailBlueprint()
+        {
+            CustomBlueprints.Add(new EmailAddressBlueprint());
+            return this;
+        }
+
+        /// <summary>
+        /// Postfixes an email domain to string properties that match the convention.
+        /// </summary>
+        /// <returns></returns>
+        public ConstruktionRegistry AddEmailBlueprint(Func<PropertyInfo, bool> convention)
+        {
+            CustomBlueprints.Add(new EmailAddressBlueprint(convention));
+            return this;
+        }
+
+        /// <summary>
         /// Construct objects using the constructor with the fewest arguments. This is the default behavior.
         /// </summary>
         /// <returns></returns>
