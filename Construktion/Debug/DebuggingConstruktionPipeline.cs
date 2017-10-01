@@ -31,34 +31,43 @@ namespace Construktion.Debug
             var blueprint = Settings.Blueprints.First(x => x.Matches(context));
 
             _level++;
-            var buffer = new string(' ', _level * 5);
+            var indent = new string(' ', _level * 5);
 
             if (depth > Settings.RecurssionDepth)
             {
-                _log.Add($"{buffer}Recursion detected over the allowed limit. Omitting {context.RequestType.FullName}");
+                _log.Add($"{indent}Recursion detected over the allowed limit. Omitting {context.RequestType.FullName}");
                 debugLog = _log;
 
                 return default(object);
             }
 
-            var requestName = StartLog(context, blueprint, buffer);
+            var requestName = StartLog(context, blueprint, indent);
 
             object result;
             try
             {
                 result = blueprint.Construct(context, this);
             }
+            catch (OutOfMemoryException)
+            {
+                throw new Exception(
+                    "Oops you ran out of memory! It looks like this object graph is REALLY big. " +
+                    "It might be best to add a blueprint that constructs your object manually, " +
+                    "or revisit the design of your object. The current log can be found in the inner exception.",
+                    new Exception(string.Join("\n", _log)));
+            }
             catch (Exception ex)
             {
-                _log.Add($"{buffer}An exception occurred in blueprint {blueprint.GetType().FullName}, when constructing {requestName}");
-                _log.Add($"{buffer}Exception is: {ex.Message}");
+                _log.Add(
+                    $"{indent}An exception occurred in blueprint {blueprint.GetType().FullName}, when constructing {requestName}");
+                _log.Add($"{indent}Exception is: {ex.Message}");
                 _log.Add("");
                 debugLog = _log;
 
                 return default(object);
             }
 
-            EndLog(context, buffer, requestName);
+            EndLog(context, indent, requestName);
 
             debugLog = _log;
 
