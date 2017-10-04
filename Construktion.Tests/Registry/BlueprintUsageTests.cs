@@ -58,6 +58,16 @@ namespace Construktion.Tests.Registry
             result.ShouldBe("StringTwo");
         }
 
+        [Fact]
+        public void should_be_linq_enabled()
+        {
+            var reg = new ConstruktionRegistry(x => x.AddBlueprint<StringOneBlueprint>());
+
+            var result = construktion.With(reg).Construct<string>();
+
+            result.ShouldBe("StringOne");
+        }
+
         public class StringOneBlueprint : AbstractBlueprint<string>
         {
             public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
