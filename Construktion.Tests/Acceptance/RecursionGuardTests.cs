@@ -67,7 +67,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_throw_when_set_to_negative_depth()
         {
-            Should.Throw<ArgumentException>(() => new Construktion().With(x => x.RecurssionLimit(-1)));
+            Exception<ArgumentException>.ShouldBeThrownBy(() => new Construktion().With(x => x.RecurssionLimit(-1)));
         }
 
         public class Class<T> { }

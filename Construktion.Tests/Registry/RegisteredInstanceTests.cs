@@ -83,8 +83,7 @@ namespace Construktion.Tests.Registry
         {
             //_blueprintRegistry.Register<IFoo, Foo>();
 
-            Should.Throw<Exception>
-                (() => construktion.With(registry).Construct<IFoo>())
+            Exception<Exception>.ShouldBeThrownBy(() => construktion.With(registry).Construct<IFoo>())
                 .Message
                 .ShouldContain("Cannot construct the interface IFoo.");
         }

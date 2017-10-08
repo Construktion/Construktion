@@ -19,7 +19,7 @@ namespace Construktion.Tests.Registry
             registry.ThrowOnRecurssion(true);
             var construktion = new Construktion().With(registry);
 
-            Should.Throw<Exception>(() => construktion.Construct<Parent>());
+            Exception<Exception>.ShouldBeThrownBy(() => construktion.Construct<Parent>());
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace Construktion.Tests.Registry
             var newRegistry = new ConstruktionRegistry();
             var construktion = new Construktion().With(registry).With(newRegistry);
 
-            Should.Throw<Exception>(() => construktion.Construct<Parent>());
+            Exception<Exception>.ShouldBeThrownBy(() => construktion.Construct<Parent>());
         }
 
         [Fact]

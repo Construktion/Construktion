@@ -88,7 +88,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_throw_when_setting_a_negative_count()
         {
-            Should.Throw<ArgumentException>(() => construktion.With(x => x.EnumerableCount(-1)));
+            Exception<ArgumentException>.ShouldBeThrownBy(() => construktion.With(x => x.EnumerableCount(-1)));
         }
 
         public class Bar
