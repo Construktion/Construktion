@@ -9,14 +9,18 @@ namespace Construktion.Debug
     /// </summary>
     internal class DebuggingConstruktionPipeline : ConstruktionPipeline
     {
-        private readonly List<string> _log = new List<string>();
-        private readonly List<Type> _underConstruction = new List<Type>();
-        private int _level = -1;
+        private readonly List<string> _log;
+        private readonly List<Type> _underConstruction;
+        private int _level;
+
         public ConstruktionSettings Settings { get; }
 
         public DebuggingConstruktionPipeline(ConstruktionSettings settings)
         {
             Settings = settings;
+            _log = new List<string>();
+            _underConstruction = new List<Type>();
+            _level = -1;
         }
 
         public object Send(ConstruktionContext context)

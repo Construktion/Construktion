@@ -24,7 +24,7 @@ namespace Construktion
     {
         public ConstruktionSettings Settings { get; }
 
-        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings()) { }
+        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings(new ConstruktionRegistry())) { }
 
         public DefaultConstruktionPipeline(ConstruktionSettings settings)
         {

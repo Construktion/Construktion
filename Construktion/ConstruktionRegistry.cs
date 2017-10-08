@@ -13,21 +13,23 @@ namespace Construktion
     /// </summary>
     public class ConstruktionRegistry
     {
-        internal List<Blueprint> CustomBlueprints { get; } = new List<Blueprint>();
-        internal IEnumerable<Blueprint> DefaultBlueprints { get; private set; } = new DefaultBlueprints();
+        internal List<Blueprint> CustomBlueprints { get; }
+        internal IEnumerable<Blueprint> DefaultBlueprints { get; private set; }
         internal Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; } 
         internal Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
         internal int? RepeatCount { get; private set; }
         internal int? RecurssionDepth { get; private set; } 
-        internal Dictionary<Type, Type> TypeMap { get; } = new Dictionary<Type, Type>();
+        internal Dictionary<Type, Type> TypeMap { get; }
         internal bool? ShouldThrowOnRecurssion { get; private set; }
 
         public ConstruktionRegistry()
         {
-
+            TypeMap = new Dictionary<Type, Type>();
+            DefaultBlueprints = new DefaultBlueprints();
+            CustomBlueprints = new List<Blueprint>();
         }
 
-        public ConstruktionRegistry(Action<ConstruktionRegistry> configure)
+        public ConstruktionRegistry(Action<ConstruktionRegistry> configure) : this()
         {
             configure(this);
         }

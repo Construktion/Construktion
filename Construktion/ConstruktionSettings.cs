@@ -54,11 +54,6 @@ namespace Construktion
         public int RecurssionDepth { get; }
         public bool ThrowOnRecurrsion { get; }
 
-        public DefaultConstruktionSettings() : this(new ConstruktionRegistry())
-        {
-
-        }
-
         public DefaultConstruktionSettings(ConstruktionRegistry registry)
         {
             _blueprints = new List<Blueprint>(registry.CustomBlueprints);

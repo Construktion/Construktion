@@ -8,8 +8,14 @@ namespace Construktion
 {
     public class Construktion
     {
-        internal readonly ConstruktionRegistry Registry = new ConstruktionRegistry();
-        private ConstruktionSettings settings = new DefaultConstruktionSettings();
+        internal readonly ConstruktionRegistry Registry;
+        private ConstruktionSettings settings;
+
+        public Construktion()
+        {
+            Registry = new ConstruktionRegistry();
+            settings = new DefaultConstruktionSettings(Registry);
+        }
 
         /// <summary>
         /// Construct an object of the specified type.
