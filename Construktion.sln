@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Construktion.Tests", "Const
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Construktion.Benchmarks", "Construktion.Benchmarks\Construktion.Benchmarks.csproj", "{26AA0BD8-DE18-4D38-B9A5-9C5CF91D8763}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Construktion.Samples", "Construktion.Samples\Construktion.Samples.csproj", "{14D48704-41D1-45F2-8C2A-DDD3911650FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Construktion.Samples", "Construktion.Samples\Construktion.Samples.csproj", "{14D48704-41D1-45F2-8C2A-DDD3911650FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
