@@ -1,4 +1,6 @@
-﻿namespace Construktion.Samples
+﻿using Construktion.Samples.Entities;
+
+namespace Construktion.Samples
 {
     using System.Collections.Generic;
     using System.Reflection;
@@ -8,12 +10,19 @@
     [DataDiscoverer("Construktion.Samples.NoDataDiscovery", "Construktion.Samples")]
     public class ConstruktionData : DataAttribute
     {
-        private readonly Construktion _construktion;
+        public static readonly Construktion Construktion = new Construktion()
+            .With(x =>
+            {
+                x.OmitIds();
+                x.OmitProperties(typeof(IEnumerable<>));
+                x.ConstructPropertyUsing(pi =>  pi.Name.Equals("IsActive") && 
+                                                pi.PropertyType == typeof(bool),
+                                                () => true);
 
-        public ConstruktionData()
-        {
-            _construktion = new Construktion().With(x => x.OmitIds());
-        }
+                x.ConstructPropertyUsing(pi => pi.PropertyType == typeof(bool), () => false);
+                x.AddBlueprint<FakeBuilderBlueprint>();
+                x.Register<Service, TestService>();
+            });
 
         public override IEnumerable<object[]> GetData(MethodInfo testMethod)
         {
@@ -21,7 +30,7 @@
 
             foreach (var paramInfo in testMethod.GetParameters())
             {
-                var result = _construktion.Construct(paramInfo);
+                var result = Construktion.Construct(paramInfo);
 
                 parameters.Add(result);
             }

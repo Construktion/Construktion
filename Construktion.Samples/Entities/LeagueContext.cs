@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Construktion.Samples.Data
+namespace Construktion.Samples.Entities
 {
     public class LeagueContext : DbContext
     {
@@ -12,5 +12,6 @@ namespace Construktion.Samples.Data
 
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<Agent> Agents { get; set; }
     }
 }

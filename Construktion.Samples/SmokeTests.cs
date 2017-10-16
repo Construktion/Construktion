@@ -1,14 +1,12 @@
-﻿using System;
-using System.Linq;
-using Construktion.Samples.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Extensions.Internal;
+﻿using System.Linq;
+using Construktion.Samples.Entities;
 using Shouldly;
 using Xunit;
+using static Construktion.Samples.TestDSL;
 
 namespace Construktion.Samples
 {
-    public class SmokeTests : IntegrationTestBase
+    public class SmokeTests
     {
         [Theory, ConstruktionData]
         public void should_fill(string name, int age)
@@ -17,31 +15,30 @@ namespace Construktion.Samples
             age.ShouldNotBe(0);
         }
 
-        //todo cleanup
         [Theory, ConstruktionData]
-        public void should_save(Team team, Player player)
+        public void should_insert(Team team)
         {
-            player.Team = team;
+            Insert(team);
 
-            var dbContextOptions =
-                new DbContextOptionsBuilder<LeagueContext>().UseInMemoryDatabase("InMemoryDatabase")
-                .Options;
+            var foundTeam = Query(db => db.Teams.FirstOrDefault(x => x.Id == team.Id));
 
-            using (var dbContext = new LeagueContext(dbContextOptions))
-            {
-                dbContext.Teams.Add(team);
-                dbContext.Players.Add(player);
-                dbContext.SaveChanges();
-            }
+            foundTeam.ShouldNotBeNull();
+            foundTeam.Id.ShouldNotBe(0);
+            foundTeam.Name.ShouldBe(team.Name);
+        }
 
-            using (var dbContext = new LeagueContext(dbContextOptions))
-            {
-                var foundPlayer = dbContext.Players.SingleOrDefault();
+        [Theory, ConstruktionData]
+        public void should_update(Team team)
+        {
+            Insert(team);
+            team.Name = ("Updated");
+            Update(team);
 
-                foundPlayer.ShouldNotBeNull();
-                foundPlayer.Name.ShouldBe(player.Name);
-                foundPlayer.TeamId.ShouldBe(team.Id);
-            }
+            var foundTeam = Query(db => db.Teams.FirstOrDefault(x => x.Id == team.Id));
+
+            foundTeam.ShouldNotBeNull();
+            foundTeam.Id.ShouldNotBe(0);
+            foundTeam.Name.ShouldBe("Updated");
         }
     }
 }

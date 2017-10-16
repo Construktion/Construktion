@@ -1,6 +1,6 @@
-﻿namespace Construktion.Samples.Data
+﻿namespace Construktion.Samples.Entities
 {
-    public class Team
+    public class Team : Entity 
     {
         public int Id { get; set; }
         public string Name { get; set; }
