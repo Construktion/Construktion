@@ -20,32 +20,27 @@ int.ShouldNotBe(0);
 person.Name.ShouldStartWith("Name-");
 person.Age.ShouldNotBe(0);
 
-//with hardcodes
-construktion.Construct<Person>(x => x.Name = "HardCode");
+//XUnit isn't supported out of the box, but the wiki details
+//how to add support using a custom "ConstruktionData" class
+[Theory, ConstruktionData]
+public void should_join_team(Team team, Player player)
+{
+    DbSave(player, team);
+    
+    player.JoinTeam(team);
 
-//construct runtime type
-construktion.Construct(typeof(Person));
-
-//IEnumerable<Person>
-construktion.ConstructMany<Person>();
-
-//IEnumerable<Person> with 5 items
-construktion.ConstructMany<Person>(5);
-
-//IEnumerable<Person> with hardcodes
-construktion.ConstructMany<Person>(x => x.Name = "HardCode" );
-
-//IEnumerable<Person> with hardcodes and 5 items
-construktion.ConstructMany<Person>(x => x.Name = "HardCode", 5);
+    var result = Query(db => db.Players.FirstOrDefault(x => x.Id == player.Id));
+    result.ShouldNotBeNull();
+    result.Name.ShouldBe(player.Name);
+    result.TeamId.ShouldBe(team.Id);
+}
 ```
 
 Customizing
 ---
 The [wiki](https://github.com/Construktion/Construktion/wiki) has more details and documentation. 
 
-Nuget
+Questions, Comments, Concerns
 ---
-This [package](https://www.nuget.org/packages/Construktion) supports .NetFramework 4.5 and .NetStandard 1.6.
-```
-Install-Package Construktion
-```
+For any questions or help you can hop on over to the [gitter room](https://gitter.im/Construktion_/Lobby) or file an [issue](https://github.com/Construktion/Construktion/issues). All feedback is welcomed!
+
