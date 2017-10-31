@@ -5,15 +5,17 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Construktion
-{ 
+{
+    using System.Collections.Concurrent;
+
     //https://stackoverflow.com/questions/12307519/activator-createinstancet-vs-compiled-expression-inverse-performance-on-two-da
     internal static class ReflectionExtensions
     {
         private delegate object Ctor(params object[] args);
         private delegate void Setter(object instance, object value);
 
-        private static readonly IDictionary<string, Ctor> _ctorCache = new Dictionary<string, Ctor>();
-        private static readonly IDictionary<PropertyInfo, Setter> _setterCache = new Dictionary<PropertyInfo, Setter>();
+        private static readonly IDictionary<string, Ctor> _ctorCache = new ConcurrentDictionary<string, Ctor>();
+        private static readonly IDictionary<PropertyInfo, Setter> _setterCache = new ConcurrentDictionary<PropertyInfo, Setter>();
 
         public static object NewUp(this Type input, params object[] args)
         {
