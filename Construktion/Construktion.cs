@@ -6,15 +6,16 @@ using Construktion.Debug;
 
 namespace Construktion
 {
+    using Blueprints.Simple;
+
     public class Construktion
     {
         internal readonly ConstruktionRegistry Registry;
-        private ConstruktionSettings settings;
+        private ConstruktionSettings settings => Registry.ToSettings();
 
         public Construktion()
         {
             Registry = new ConstruktionRegistry();
-            settings = new DefaultConstruktionSettings(Registry);
         }
 
         /// <summary>
@@ -158,7 +159,6 @@ namespace Construktion
         public Construktion With(ConstruktionRegistry registry)
         {
             Registry.AddRegistry(registry);
-            settings = Registry.ToSettings();
             return this;
         }
 
@@ -174,7 +174,6 @@ namespace Construktion
             configure(registry);
 
             Registry.AddRegistry(registry);
-            settings = Registry.ToSettings();
             return this;
         }
 
@@ -186,7 +185,6 @@ namespace Construktion
         public Construktion With(Blueprint blueprint)
         {
             Registry.AddBlueprint(blueprint);
-            settings = Registry.ToSettings();
             return this;
         }
 
@@ -198,7 +196,6 @@ namespace Construktion
         public Construktion With(IEnumerable<Blueprint> blueprints)
         {
             Registry.AddBlueprints(blueprints);
-            settings = Registry.ToSettings();
             return this;
         }
     }
