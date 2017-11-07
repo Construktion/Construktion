@@ -142,7 +142,7 @@ namespace Construktion
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(settings);
+            var pipeline = new DefaultConstruktionPipeline(this);
 
             var result = (T)pipeline.Send(context);
 
@@ -196,6 +196,27 @@ namespace Construktion
         public Construktion With(IEnumerable<Blueprint> blueprints)
         {
             Registry.AddBlueprints(blueprints);
+            return this;
+        }
+
+        /// <summary>
+        /// Inject an object that will be used whenever a value of that type is requested.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="value"></param>
+        public Construktion Inject(Type type, object value)
+        {
+            Registry.CustomBlueprints.Insert(0, new ScopedBlueprint(type, value));
+            return this;
+        }
+
+        /// <summary>
+        /// Inject an object that will be used whenever a value of that type is requested.
+        /// </summary>
+        /// <param name="value"></param>
+        public Construktion Inject<T>(T value)
+        {
+            Registry.CustomBlueprints.Insert(0, new ScopedBlueprint(typeof(T), value));
             return this;
         }
     }

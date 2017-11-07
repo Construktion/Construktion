@@ -18,17 +18,26 @@ namespace Construktion
         /// <param name="context"></param>
         /// <returns></returns>
         object Send(ConstruktionContext context);
+
+        /// <summary>
+        /// Inject an object that will be used whenever a value of that type is requested.
+        /// </summary>
+        /// <param name="requestType"></param>
+        /// <param name="value"></param>
+        void Inject(Type requestType, object value);
     }
 
     internal class DefaultConstruktionPipeline : ConstruktionPipeline
     {
+        private readonly Construktion _construktion;
         public ConstruktionSettings Settings { get; }
 
-        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings(new ConstruktionRegistry())) { }
+        public DefaultConstruktionPipeline() : this(new Construktion()) { }
 
-        public DefaultConstruktionPipeline(ConstruktionSettings settings)
+        public DefaultConstruktionPipeline(Construktion construktion)
         {
-            Settings = settings;
+            _construktion = construktion;
+            Settings = construktion.Registry.ToSettings();
         }
 
         public object Send(ConstruktionContext context)
@@ -38,6 +47,11 @@ namespace Construktion
             var result = Construct(context, blueprint);
 
             return result;
+        }
+
+        public void Inject(Type type, object value)
+        {
+            _construktion.Inject(type, value);
         }
 
         private readonly List<Type> _underConstruction = new List<Type>();
