@@ -19,6 +19,8 @@ namespace Construktion.Samples
 
             var fake = method.Invoke(null, null);
 
+            pipeline.Inject(context.RequestType, fake);
+
             return fake;
         }
     }

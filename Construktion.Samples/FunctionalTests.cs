@@ -9,11 +9,10 @@ namespace Construktion.Samples
     public class FunctionalTests
     {
         [Theory, ConstruktionData]
-        public void should_use_fake_builder(Agent agent, AgentService fakeAgentService)
+        public void should_use_fake_builder(Agent agent, AgentService fakeAgentService, TeamManager teamManager)
         {
             Insert(agent);
             A.CallTo(() => fakeAgentService.CallAgent(agent.Id)).Returns(true);
-            var teamManager = new TeamManager(fakeAgentService);
 
             teamManager.Contact(agent);
 
