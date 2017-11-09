@@ -23,7 +23,7 @@ namespace Construktion.Samples
         }
 
         [Theory, ConstruktionData]
-        public void should_leave_team(Team team, Player player)
+        public void should_leave_team(Player player)
         {
             AssignToATeam(player);
 

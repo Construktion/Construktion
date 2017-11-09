@@ -9,6 +9,8 @@ namespace Construktion.Samples
 {
     public static class TestDSL
     {
+        private static readonly Construktion _construktion = new Construktion().With(new SamplesRegistry());
+
         //In an actual app I would use a real database and wipe it clean before each test case.
         //It's not meant to mimic a Relational Db and behaves differently.
         private static readonly DbContextOptions<LeagueContext> options =
@@ -52,7 +54,7 @@ namespace Construktion.Samples
 
         public static T Construct<T>()
         {
-            return ConstruktionData.Construktion.Construct<T>();
+            return _construktion.Construct<T>();
         }
     }
 }

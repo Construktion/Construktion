@@ -7,77 +7,77 @@
     public class InjectTests
     {
         [Fact]
-        public void should_injected_instance()
+        public void should_inject_instance()
         {
-            var injected = new Inject();
-            var construktion = new Construktion().Inject(injected);
+            var inject = new Inject();
+            var construktion = new Construktion().Inject(inject);
 
-            var injectedHolder = construktion.Construct<InjectHolder>();
+            var injectHolder = construktion.Construct<InjectHolder>();
 
-            injectedHolder.Injected
+            injectHolder.Inject
                 .GetHashCode()
-                .ShouldBe(injected.GetHashCode());
+                .ShouldBe(inject.GetHashCode());
         }
 
         [Fact]
         public void should_always_use_the_same_instance()
         {
-            var injected = new Inject();
-            var construktion = new Construktion().Inject(injected);
+            var inject = new Inject();
+            var construktion = new Construktion().Inject(inject);
 
-            var injectedHolder = construktion.Construct<InjectHolder>();
-            var injectedHolder2 = construktion.Construct<InjectHolder>();
+            var injectHolder = construktion.Construct<InjectHolder>();
+            var injectHolder2 = construktion.Construct<InjectHolder>();
          
-            injectedHolder.Injected
+            injectHolder.Inject
                         .GetHashCode()
-                        .ShouldBe(injected.GetHashCode());
+                        .ShouldBe(inject.GetHashCode());
 
-            injectedHolder2.Injected
+            injectHolder2.Inject
                          .GetHashCode()
-                         .ShouldBe(injected.GetHashCode());
+                         .ShouldBe(inject.GetHashCode());
         }
 
         [Fact]
-        public void should_injected_from_within_pipeline()
+        public void should_inject_from_within_pipeline()
         {
             var construktion = new Construktion().With(new InjectBlueprint());
 
-            var injected = construktion.Construct<Inject>();
-            var injectedHolder = construktion.Construct<InjectHolder>();
+            var inject = construktion.Construct<Inject>();
+            var injectHolder = construktion.Construct<InjectHolder>();
 
-            injectedHolder.Injected
+            injectHolder.Inject
                         .GetHashCode()
-                        .ShouldBe(injected.GetHashCode());
+                        .ShouldBe(inject.GetHashCode());
         }
 
         [Fact]
-        public void should_always_use_the_same_instance_when_injecteded_from_pipeline()
+        public void should_always_use_the_same_instance_when_injected_from_pipeline()
         {
             var construktion = new Construktion().With(new InjectBlueprint());
 
-            var injected = construktion.Construct<Inject>();
-            var injectedHolder = construktion.Construct<InjectHolder>();
-            var injectedHolder2 = construktion.Construct<InjectHolder>();
+            var inject = construktion.Construct<Inject>();
+            var injectHolder = construktion.Construct<InjectHolder>();
+            var injectHolder2 = construktion.Construct<InjectHolder>();
             
-            injected.GetHashCode().ShouldBe(injectedHolder.Injected.GetHashCode());
+            inject.GetHashCode().ShouldBe(injectHolder.Inject.GetHashCode());
 
-            injectedHolder.Injected
+            injectHolder.Inject
                         .GetHashCode()
-                        .ShouldBe(injectedHolder2.Injected.GetHashCode());
+                        .ShouldBe(injectHolder2.Inject.GetHashCode());
         }
 
         [Fact]
-        public void injected_instance_should_be_scoped_to_construktion_instance()
+        public void inject_instance_should_be_scoped_to_construktion_instance()
         {
-            var injected = new Inject();
+            var inject = new Inject();
 
-            var construktion = new Construktion().Inject(injected);
+            var construktion = new Construktion().Inject(inject);
 
-            var injectedHolder = new Construktion().Construct<InjectHolder>();
+            var injectHolder = new Construktion().Construct<InjectHolder>();
 
-            injectedHolder.Injected
+            injectHolder.Inject
                         .GetHashCode()
-                        .ShouldNotBe(injected.GetHashCode());
+                        .ShouldNotBe(inject.GetHashCode());
         }
 
         public class InjectBlueprint : Blueprint
@@ -86,11 +86,11 @@
 
             public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
             {
-                var injected = new Inject();
+                var inject = new Inject();
 
-                pipeline.Inject(context.RequestType, injected);
+                pipeline.Inject(context.RequestType, inject);
 
-                return injected;
+                return inject;
             }
         }
 
@@ -98,11 +98,11 @@
 
         public class InjectHolder
         {
-            public Inject Injected { get; }
+            public Inject Inject { get; }
 
-            public InjectHolder(Inject injected)
+            public InjectHolder(Inject inject)
             {
-                Injected = injected;
+                Inject = inject;
             }
         }
     }

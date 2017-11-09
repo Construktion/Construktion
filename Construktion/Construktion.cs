@@ -198,9 +198,8 @@ namespace Construktion
             Registry.AddBlueprints(blueprints);
             return this;
         }
-
         /// <summary>
-        /// Inject an object that will be used whenever a value of that type is requested.
+        /// Inject an object that will be used whenever a value of that type is requested. Injected objects are scoped to a Construktion instance.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="value"></param>
@@ -211,7 +210,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Inject an object that will be used whenever a value of that type is requested.
+        /// Inject an object that will be used whenever a value of that type is requested. Injected objects are scoped to a Construktion instance.
         /// </summary>
         /// <param name="value"></param>
         public Construktion Inject<T>(T value)
