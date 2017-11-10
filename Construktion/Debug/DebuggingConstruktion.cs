@@ -2,24 +2,21 @@
 
 namespace Construktion.Debug
 {
+    using System;
+
     public class DebuggingConstruktion
     {
-        private readonly Construktion _construktion;
+        [Obsolete("Please use new Construktion().DebuggingConstruct instead.")]
+        public DebuggingConstruktion() : this (new Construktion()) { }
 
-        public DebuggingConstruktion() : this (new Construktion())
-        {
-            
-        }
-
-        public DebuggingConstruktion(Construktion construktion)
-        {
-            _construktion = construktion;
-        }
+        [Obsolete("Please use new Construktion().DebuggingConstruct instead.")]
+        public DebuggingConstruktion(Construktion construktion) { }
 
         /// <summary>
         /// DO NOT use for normal operations. Should be used for ad hoc debugging ONLY.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Please use new Construktion().DebuggingConstruct instead.")]
         public object DebuggingConstruct(ConstruktionContext context, out string log)
         {
             //todo
