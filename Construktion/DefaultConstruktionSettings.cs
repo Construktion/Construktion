@@ -8,7 +8,10 @@ namespace Construktion
     internal class DefaultConstruktionSettings : ConstruktionSettings
     {
         private readonly List<Blueprint> _blueprints;
+
         public IEnumerable<Blueprint> Blueprints => _blueprints;
+        public IEnumerable<ExitBlueprint> ExitBlueprints { get; }
+
         public IDictionary<Type, Type> TypeMap { get; }
         public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
@@ -21,6 +24,7 @@ namespace Construktion
             _blueprints = new List<Blueprint>(registry.CustomBlueprints);
             _blueprints.AddRange(registry.DefaultBlueprints);
 
+            ExitBlueprints = new List<ExitBlueprint>(registry.ExitBlueprints);
             TypeMap = registry.TypeMap;
             CtorStrategy = registry.CtorStrategy ?? Extensions.ModestCtor;
             PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;

@@ -8,13 +8,12 @@ using Construktion.Blueprints.Simple;
 
 namespace Construktion
 {
-    /// <summary>
-    /// Base class for configuration settings
-    /// </summary>
     public class ConstruktionRegistry
     {
-        internal List<Blueprint> CustomBlueprints { get; }
+        //todo push this into the settings
         internal IEnumerable<Blueprint> DefaultBlueprints { get; private set; }
+        internal List<Blueprint> CustomBlueprints { get; }
+        internal List<ExitBlueprint> ExitBlueprints { get; }
         internal Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; } 
         internal Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
         internal int? RepeatCount { get; private set; }
@@ -27,6 +26,7 @@ namespace Construktion
             TypeMap = new Dictionary<Type, Type>();
             DefaultBlueprints = new DefaultBlueprints();
             CustomBlueprints = new List<Blueprint>();
+            ExitBlueprints = new List<ExitBlueprint>();
         }
 
         public ConstruktionRegistry(Action<ConstruktionRegistry> configure) : this()
@@ -289,11 +289,33 @@ namespace Construktion
             return this;
         }
 
+        /// <summary>
+        /// Add an exit blueprint to the pipeline. This is the
+        /// final chance to alter the result of an object.   
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public ConstruktionRegistry AddExitBlueprint<T>() where T : ExitBlueprint, new()
+        {
+            ExitBlueprints.Add(new T());
+            return this;
+        }
+
+        /// <summary>
+        /// Add an exit blueprint to the pipeline. This is the
+        /// final chance to alter the result of an object.   
+        /// </summary>
+        public ConstruktionRegistry AddExitBlueprint(ExitBlueprint blueprint)
+        {
+            ExitBlueprints.Add(blueprint);
+            return this;
+        }
+
         internal void AddRegistry(ConstruktionRegistry registry)
         {
             registry.GuardNull();
 
             CustomBlueprints.AddRange(registry.CustomBlueprints);
+            ExitBlueprints.AddRange(registry.ExitBlueprints);
 
             foreach (var map in registry.TypeMap)
                 TypeMap[map.Key] = map.Value;

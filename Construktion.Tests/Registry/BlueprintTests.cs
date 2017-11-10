@@ -4,12 +4,12 @@ using Xunit;
 
 namespace Construktion.Tests.Registry
 {
-    public class BlueprintUsageTests
+    public class BlueprintTests
     {
         private readonly ConstruktionRegistry registry;
         private readonly Construktion construktion;
 
-        public BlueprintUsageTests()
+        public BlueprintTests()
         {
             registry = new ConstruktionRegistry();
             construktion = new Construktion();
@@ -36,7 +36,7 @@ namespace Construktion.Tests.Registry
         }
 
         [Fact]
-        public void blue_prints_registered_first_are_chosen_first()
+        public void blueprints_registered_first_are_chosen_first()
         {
             registry.AddBlueprint(new StringTwoBlueprint());
             registry.AddBlueprint(new StringOneBlueprint());

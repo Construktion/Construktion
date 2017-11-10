@@ -25,6 +25,10 @@ namespace Construktion
 
             var result = Construct(context, blueprint);
 
+            var exitBlueprint = Settings.ExitBlueprints.FirstOrDefault(x => x.Matches(result, context));
+
+            result = exitBlueprint?.Construct(result, this) ?? result;
+
             return result;
         }
 

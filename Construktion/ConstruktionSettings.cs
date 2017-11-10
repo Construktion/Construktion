@@ -13,6 +13,11 @@ namespace Construktion
         IEnumerable<Blueprint> Blueprints { get; }
 
         /// <summary>
+        /// The configured exit blueprints. These are evaluated the same way the normal ones are.
+        /// </summary>
+        IEnumerable<ExitBlueprint> ExitBlueprints { get; }
+
+        /// <summary>
         /// When a key in the dictionary is requested, will construct the value. Usually used to construct interfaces.
         /// </summary>
         IDictionary<Type, Type> TypeMap { get; }
