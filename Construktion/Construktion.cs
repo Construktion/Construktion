@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Construktion.Blueprints;
 using Construktion.Debug;
+using Construktion.Internal;
 
 namespace Construktion
 {

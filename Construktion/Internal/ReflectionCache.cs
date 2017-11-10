@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Construktion
+namespace Construktion.Internal
 {
     using System.Collections.Concurrent;
 
