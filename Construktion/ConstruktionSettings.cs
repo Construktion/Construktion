@@ -8,7 +8,7 @@ namespace Construktion
     public interface ConstruktionSettings
     {
         /// <summary>
-        /// All configured blueprints. The pipeline will evaluate them in the returned order.
+        /// The configured blueprints. The pipeline will evaluate them in the returned order.
         /// </summary>
         IEnumerable<Blueprint> Blueprints { get; }
 
@@ -41,30 +41,5 @@ namespace Construktion
         /// When true, an exception will be thrown when Recursion is detected. False by default.
         /// </summary>
         bool ThrowOnRecurrsion { get; }
-    }
-
-    internal class DefaultConstruktionSettings : ConstruktionSettings
-    {
-        private readonly List<Blueprint> _blueprints;
-        public IEnumerable<Blueprint> Blueprints => _blueprints;
-        public IDictionary<Type, Type> TypeMap { get; }
-        public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
-        public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
-        public int EnumuerableCount { get; }
-        public int RecurssionDepth { get; }
-        public bool ThrowOnRecurrsion { get; }
-
-        public DefaultConstruktionSettings(ConstruktionRegistry registry)
-        {
-            _blueprints = new List<Blueprint>(registry.CustomBlueprints);
-            _blueprints.AddRange(registry.DefaultBlueprints);
-
-            TypeMap = registry.TypeMap;
-            CtorStrategy = registry.CtorStrategy ?? Extensions.ModestCtor;
-            PropertyStrategy = registry.PropertyStrategy ?? Extensions.PropertiesWithPublicSetter;
-            EnumuerableCount = registry.RepeatCount ?? 3;
-            RecurssionDepth = registry.RecurssionDepth ?? 0;
-            ThrowOnRecurrsion = registry.ShouldThrowOnRecurssion ?? false;
-        }
     }
 }
