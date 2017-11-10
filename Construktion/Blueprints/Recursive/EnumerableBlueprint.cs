@@ -11,7 +11,7 @@ namespace Construktion.Blueprints.Recursive
         public bool Matches(ConstruktionContext context)
         {
             return context.RequestType.GetTypeInfo().IsGenericType &&
-                   context.RequestType.GetInterfaces().Contains(typeof(IEnumerable));
+                   typeof(IEnumerable).IsAssignableFrom(context.RequestType);
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
