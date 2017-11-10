@@ -290,8 +290,9 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Add an exit blueprint to the pipeline. This is the
-        /// final chance to alter the result of an object.   
+        /// Add an exit blueprint to the pipeline. These blueprints are called 
+        /// after the object has been constructed. This is the final chance to 
+        /// alter the result of an object.   
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public ConstruktionRegistry AddExitBlueprint<T>() where T : ExitBlueprint, new()
@@ -301,8 +302,9 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Add an exit blueprint to the pipeline. This is the
-        /// final chance to alter the result of an object.   
+        /// Add an exit blueprint to the pipeline. These blueprints are called 
+        /// after the object has been constructed. This is the final chance to 
+        /// alter the result of an object.   
         /// </summary>
         public ConstruktionRegistry AddExitBlueprint(ExitBlueprint blueprint)
         {

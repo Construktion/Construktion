@@ -53,13 +53,28 @@ namespace Construktion.Tests
         {
             var construktion = new Construktion().With(x =>
             {
-                x.ConstructPropertyUsing(prop => prop.Name == "Name", () => "Ping");
+                x.ConstructPropertyUsing(prop => prop.Name == nameof(Foo.Name), () => "Ping");
                 x.AddExitBlueprint<FooPingPongExitBlueprint>();
             });
 
             var foo = construktion.Construct<Foo>();
 
-            foo.Name.ShouldBe("Pong");
+            foo.Name.ShouldBe("PingPong");
+        }
+
+        [Fact]
+        public void only_types_of_T_should_match()
+        {
+            var construktion = new Construktion().With(x =>
+            {
+                x.ConstructPropertyUsing(prop => prop.Name == nameof(Bar.Name), () => "Ping");
+                x.AddExitBlueprint<FooPingPongExitBlueprint>();
+            });
+
+            var bar = construktion.Construct<Bar>();
+
+            bar.Name.ShouldNotBe("PingPong");
+            bar.Name.ShouldBe("Ping");
         }
 
         public class FooExitBlueprint : AbstractExitBlueprint<Foo>
@@ -88,7 +103,7 @@ namespace Construktion.Tests
 
             public override Foo Construct(Foo item, ConstruktionPipeline pipeline)
             {
-                item.Name = "Pong";
+                item.Name += "Pong";
 
                 return item;
             }
@@ -103,6 +118,11 @@ namespace Construktion.Tests
         public interface IFoo
         {
             int Id { get; set; }
+        }
+
+        public class Bar
+        {
+            public string Name { get; set; }
         }
     }
 }

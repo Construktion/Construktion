@@ -23,12 +23,13 @@ namespace Construktion
         IDictionary<Type, Type> TypeMap { get; }
 
         /// <summary>
-        /// Resolve the constructor (Greedy or Modest). Uses modest by default.
+        /// Resolve the constructor (Greedy or Modest). Uses modest by default. The modest constructor is the one
+        /// with the fewest arguments.
         /// </summary>
         Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
 
         /// <summary>
-        /// Resolve an objects properties to construct. 
+        /// Resolve an objects properties to construct. By default only properties with public setters are constructed.
         /// </summary>
         Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
 

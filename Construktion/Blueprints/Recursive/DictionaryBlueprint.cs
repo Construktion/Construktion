@@ -29,12 +29,10 @@ namespace Construktion.Blueprints.Recursive
             var keys = CreateUniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
             var values = Values(count, value, pipeline).ToList();
 
-            var dictionary = (IDictionary)ReflectionCache.NewGeneric(typeof(Dictionary<,>), key, value );
+            var dictionary = (IDictionary)typeof(Dictionary<,>).NewGeneric(key, value);
 
             for (var i = 0; i <= count - 1; i++)
-            {
                dictionary.Add(keys[i], values[i]);
-            }
 
             return dictionary;
         }
@@ -54,9 +52,7 @@ namespace Construktion.Blueprints.Recursive
         private IEnumerable<object> Values(int count, Type closedType, ConstruktionPipeline pipeline)
         {
             for (var i = 0; i < count; i++)
-            {
                 yield return pipeline.Send(new ConstruktionContext(closedType));
-            }
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Construktion
         }
 
         //https://stackoverflow.com/a/20734641/2612547
-        public static object NewGeneric(Type genericTypeDefinition, params Type[] genericParameters)
+        public static object NewGeneric(this Type genericTypeDefinition, params Type[] genericParameters)
         {
             var cacheKey = genericTypeDefinition.AssemblyQualifiedName + string.Join("", genericParameters.Select(x => x.ToString()));
 
