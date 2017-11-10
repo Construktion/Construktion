@@ -25,8 +25,7 @@ namespace Construktion.Blueprints.Recursive
 
         private IList construct(Type closedType, ConstruktionPipeline pipeline)
         {
-            //todo benchmark
-            var items = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(closedType));
+            var items = (IList)ReflectionCache.NewGeneric(typeof(List<>), closedType);
 
             for (var i = 0; i < pipeline.Settings.EnumuerableCount; i++)
             {

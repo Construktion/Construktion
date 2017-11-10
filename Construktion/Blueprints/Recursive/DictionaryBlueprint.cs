@@ -29,7 +29,7 @@ namespace Construktion.Blueprints.Recursive
             var keys = CreateUniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
             var values = Values(count, value, pipeline).ToList();
 
-            var dictionary = (IDictionary)Activator.CreateInstance(typeof(Dictionary<,>).MakeGenericType(key, value));
+            var dictionary = (IDictionary)ReflectionCache.NewGeneric(typeof(Dictionary<,>), key, value );
 
             for (var i = 0; i <= count - 1; i++)
             {

@@ -16,6 +16,7 @@ namespace Construktion.Benchmarks
         }
     }
 
+    [MemoryDiagnoser]
     public class MyBenchmark
     {
         private readonly Construktion construktion = new Construktion();
@@ -24,6 +25,12 @@ namespace Construktion.Benchmarks
         public List<Foo> TenThousandFoos()
         {
             return construktion.ConstructMany<Foo>(10000).ToList();
+        }
+
+        [Benchmark]
+        public Foo OneFoo()
+        {
+            return construktion.Construct<Foo>();
         }
     }
 
