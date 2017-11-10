@@ -28,6 +28,7 @@ namespace Construktion.Samples
         [Theory, ConstruktionData]
         public void should_omit_enumerables(PlayerBag playerBag)
         {
+            playerBag.ShouldNotBeNull();
             playerBag.Players.ShouldBeNull();
         }
 

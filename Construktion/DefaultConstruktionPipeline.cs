@@ -7,7 +7,7 @@ namespace Construktion
 {
     internal class DefaultConstruktionPipeline : ConstruktionPipeline
     {
-        //todo remove circular reference #
+        //todo remove circular reference #51
         private readonly Construktion _construktion;
         public ConstruktionSettings Settings { get; }
 

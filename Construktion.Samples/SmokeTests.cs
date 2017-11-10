@@ -31,7 +31,7 @@ namespace Construktion.Samples
         public void should_update(Team team)
         {
             Insert(team);
-            team.Name = ("Updated");
+            team.Name = "Updated";
             Update(team);
 
             var foundTeam = Query(db => db.Teams.FirstOrDefault(x => x.Id == team.Id));
