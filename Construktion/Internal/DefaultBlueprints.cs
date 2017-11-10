@@ -5,7 +5,7 @@ using Construktion.Blueprints;
 using Construktion.Blueprints.Recursive;
 using Construktion.Blueprints.Simple;
 
-namespace Construktion
+namespace Construktion.Internal
 {
     internal class DefaultBlueprints : IEnumerable<Blueprint>
     {

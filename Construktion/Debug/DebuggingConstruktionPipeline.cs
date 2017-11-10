@@ -9,17 +9,16 @@ namespace Construktion.Debug
     /// </summary>
     internal class DebuggingConstruktionPipeline : ConstruktionPipeline
     {
-        private readonly Construktion _construktion;
         private readonly List<string> _log;
         private readonly List<Type> _underConstruction;
         private int _level;
 
-        public ConstruktionSettings Settings { get; }
+        private readonly DefaultConstruktionSettings _settings;
+        public ConstruktionSettings Settings => _settings;
 
-        public DebuggingConstruktionPipeline(Construktion construktion, ConstruktionSettings settings)
+        public DebuggingConstruktionPipeline(ConstruktionSettings settings)
         {
-            _construktion = construktion;
-            Settings = settings;
+            _settings = (DefaultConstruktionSettings)settings;
             _log = new List<string>();
             _underConstruction = new List<Type>();
             _level = -1;
@@ -32,7 +31,7 @@ namespace Construktion.Debug
 
         public void Inject(Type type, object value)
         {
-            _construktion.Inject(type, value);
+            _settings.Inject(type, value);
         }
 
         public object DebugSend(ConstruktionContext context, out List<string> debugLog)

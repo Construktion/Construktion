@@ -1,31 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Construktion.Blueprints;
+using System.Collections.Generic;
 
 namespace Construktion
 {
     internal class DefaultConstruktionPipeline : ConstruktionPipeline
     {
-        //todo remove circular reference #51
-        private readonly Construktion _construktion;
-        public ConstruktionSettings Settings { get; }
+        private readonly List<Type> _underConstruction = new List<Type>();
+        private readonly DefaultConstruktionSettings _settings;
+        public ConstruktionSettings Settings => _settings;
 
-        public DefaultConstruktionPipeline() : this(new Construktion()) { }
-
-        public DefaultConstruktionPipeline(Construktion construktion)
+        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings())
         {
-            _construktion = construktion;
-            Settings = construktion.Registry.ToSettings();
+            
+        }
+
+        public DefaultConstruktionPipeline(DefaultConstruktionSettings settings)
+        {
+            _settings = settings;
         }
 
         public object Send(ConstruktionContext context)
         {
-            var blueprint = Settings.Blueprints.First(x => x.Matches(context));
+            var blueprint = _settings.Blueprints.First(x => x.Matches(context));
 
             var result = Construct(context, blueprint);
 
-            var exitBlueprint = Settings.ExitBlueprints.FirstOrDefault(x => x.Matches(result, context));
+            var exitBlueprint = _settings.ExitBlueprints.FirstOrDefault(x => x.Matches(result, context));
 
             result = exitBlueprint?.Construct(result, this) ?? result;
 
@@ -34,16 +36,14 @@ namespace Construktion
 
         public void Inject(Type type, object value)
         {
-            _construktion.Inject(type, value);
+            _settings.Inject(type, value);
         }
-
-        private readonly List<Type> _underConstruction = new List<Type>();
 
         private object Construct(ConstruktionContext context, Blueprint blueprint)
         {
             if (RecurssionDetected(context))
             {
-                return Settings.ThrowOnRecurrsion
+                return _settings.ThrowOnRecurrsion
                     ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
                     : default(object);
             }
@@ -61,7 +61,7 @@ namespace Construktion
         {
             var depth = _underConstruction.Count(x => context.RequestType == x);
 
-            return depth > Settings.RecurssionDepth || (depth > 0 && Settings.ThrowOnRecurrsion);
+            return depth > _settings.RecurssionDepth || (depth > 0 && _settings.ThrowOnRecurrsion);
         }
     }
 }

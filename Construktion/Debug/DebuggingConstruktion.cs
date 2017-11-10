@@ -22,7 +22,8 @@ namespace Construktion.Debug
         /// <returns></returns>
         public object DebuggingConstruct(ConstruktionContext context, out string log)
         {
-            var pipeline = new DebuggingConstruktionPipeline(_construktion, _construktion.Registry.ToSettings());
+            //todo
+            var pipeline = new DebuggingConstruktionPipeline(new DefaultConstruktionSettings());
 
             var result = pipeline.DebugSend(context, out List<string> debugLog);
 

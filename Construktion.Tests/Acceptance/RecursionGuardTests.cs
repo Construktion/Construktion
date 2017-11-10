@@ -65,6 +65,22 @@ namespace Construktion.Tests.Acceptance
         }
 
         [Fact]
+        public void should_not_overwrite_when_not_set()
+        {
+            var construction = new Construktion()
+                .With(x => x.RecurssionLimit(1))
+                .With(new ConstruktionRegistry());
+
+            var parent = construction.Construct<Parent>();
+
+            var firstRecurssiveParent = parent.Child.RecursiveParent;
+            var secondRecurssiveParent = firstRecurssiveParent.Child.RecursiveParent;
+
+            firstRecurssiveParent.ShouldNotBe(null);
+            secondRecurssiveParent.ShouldBe(null);
+        }
+
+        [Fact]
         public void should_throw_when_set_to_negative_depth()
         {
             Exception<ArgumentException>.ShouldBeThrownBy(() => new Construktion().With(x => x.RecurssionLimit(-1)));

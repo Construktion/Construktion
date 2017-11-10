@@ -27,9 +27,10 @@ namespace Construktion.Tests.Registry
         public void a_new_registry_should_not_overwrite_enumerable_count()
         {
             registry.EnumerableCount(1);
-            registry.AddRegistry(new ConstruktionRegistry());
 
-            var ints = construktion.With(registry).ConstructMany<int>();
+            var ints = construktion.With(registry)
+                .With(new ConstruktionRegistry())
+                .ConstructMany<int>();
 
             ints.Count().ShouldBe(1);
         }
@@ -38,9 +39,10 @@ namespace Construktion.Tests.Registry
         public void a_registry_with_explicit_enumerable_count_should_overwrite_previous()
         {
             registry.EnumerableCount(1);
-            registry.AddRegistry(new ConstruktionRegistry(x => x.EnumerableCount(2)));
 
-            var ints = construktion.With(registry).ConstructMany<int>();
+            var ints = construktion.With(registry)
+                                   .With(new ConstruktionRegistry(x => x.EnumerableCount(2)))
+                                   .ConstructMany<int>();
 
             ints.Count().ShouldBe(2);
         }

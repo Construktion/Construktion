@@ -6,16 +6,13 @@ using Construktion.Debug;
 
 namespace Construktion
 {
-    using Blueprints.Simple;
-
     public class Construktion
     {
-        internal readonly ConstruktionRegistry Registry;
-        private ConstruktionSettings settings => Registry.ToSettings();
+        private readonly DefaultConstruktionSettings _settings;
 
         public Construktion()
         {
-            Registry = new ConstruktionRegistry();
+            _settings = new DefaultConstruktionSettings();
         }
 
         /// <summary>
@@ -72,7 +69,7 @@ namespace Construktion
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>()
         {
-            return ConstructMany<T>(settings.EnumuerableCount);
+            return ConstructMany<T>(_settings.EnumuerableCount);
         }
 
         /// <summary>
@@ -95,7 +92,7 @@ namespace Construktion
         /// <returns></returns>
         public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
         {
-            return ConstructMany(hardCodes, settings.EnumuerableCount);
+            return ConstructMany(hardCodes, _settings.EnumuerableCount);
         }
 
         /// <summary>
@@ -142,7 +139,7 @@ namespace Construktion
                 ? new ConstruktionContext(type)
                 : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(this);
+            var pipeline = new DefaultConstruktionPipeline(_settings);
 
             var result = (T)pipeline.Send(context);
 
@@ -158,7 +155,9 @@ namespace Construktion
         /// <returns></returns>
         public Construktion With(ConstruktionRegistry registry)
         {
-            Registry.AddRegistry(registry);
+            registry.GuardNull();
+
+            _settings.Apply(registry);
             return this;
         }
 
@@ -173,7 +172,7 @@ namespace Construktion
 
             configure(registry);
 
-            Registry.AddRegistry(registry);
+            _settings.Apply(registry);
             return this;
         }
 
@@ -184,7 +183,9 @@ namespace Construktion
         /// <returns></returns>
         public Construktion With(Blueprint blueprint)
         {
-            Registry.AddBlueprint(blueprint);
+            blueprint.GuardNull();
+
+            _settings.Apply(blueprint);
             return this;
         }
 
@@ -195,7 +196,9 @@ namespace Construktion
         /// <returns></returns>
         public Construktion With(IEnumerable<Blueprint> blueprints)
         {
-            Registry.AddBlueprints(blueprints);
+            blueprints.GuardNull();
+
+            _settings.Apply(blueprints);
             return this;
         }
         /// <summary>
@@ -205,7 +208,7 @@ namespace Construktion
         /// <param name="value"></param>
         public Construktion Inject(Type type, object value)
         {
-            Registry.CustomBlueprints.Insert(0, new ScopedBlueprint(type, value));
+            _settings.Inject(type, value);
             return this;
         }
 
@@ -215,7 +218,7 @@ namespace Construktion
         /// <param name="value"></param>
         public Construktion Inject<T>(T value)
         {
-            Registry.CustomBlueprints.Insert(0, new ScopedBlueprint(typeof(T), value));
+            _settings.Inject(typeof(T), value);
             return this;
         }
     }
