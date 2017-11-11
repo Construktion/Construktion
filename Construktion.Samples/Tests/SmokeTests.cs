@@ -1,11 +1,10 @@
-﻿using static Construktion.Samples.TestDSL;
-
-namespace Construktion.Samples
+﻿namespace Construktion.Samples.Tests
 {
     using System.Linq;
     using Entities;
     using Shouldly;
     using Xunit;
+    using static TestDSL;
 
     public class SmokeTests
     {

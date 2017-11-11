@@ -1,11 +1,10 @@
-﻿using static Construktion.Samples.TestDSL;
-
-namespace Construktion.Samples
+﻿namespace Construktion.Samples.Tests
 {
     using System.Linq;
     using Entities;
     using Shouldly;
     using Xunit;
+    using static TestDSL;
 
     public class PlayerTests
     {
@@ -16,7 +15,7 @@ namespace Construktion.Samples
 
             Insert(team, player);
 
-            var foundPlayer = Query(db => db.Players.FirstOrDefault(x => x.Id == player.Id));
+            var foundPlayer = Query(db => db.Players.FirstOrDefault<Player>(x => x.Id == player.Id));
 
             foundPlayer.ShouldNotBeNull();
             foundPlayer.Name.ShouldBe(player.Name);
@@ -31,7 +30,7 @@ namespace Construktion.Samples
             player.LeaveTeam();
             Update(player);
 
-            var foundPlayer = Query(db => db.Players.FirstOrDefault(x => x.Id == player.Id));
+            var foundPlayer = Query(db => db.Players.FirstOrDefault<Player>(x => x.Id == player.Id));
 
             foundPlayer.TeamId.ShouldBeNull();
             foundPlayer.Team.ShouldBeNull();
