@@ -4,24 +4,23 @@
 
 Quick Start
 ---
-The Construktion class will build objects with randomized values.
+The Construktion class will build objects with randomized values. If you're using XUnit, you can inject constructed 
+values automatically. 
 
 ```c#
 var construktion = new Construktion();
 
 var string = construktion.Construct<string>();
-
-var int = construktion.Construct<int>();
-
 var person = construktion.Construct<Person>();
 
 string.ShouldNotBeNullOrWhiteSpace();
-int.ShouldNotBe(0);
 person.Name.ShouldStartWith("Name-");
 person.Age.ShouldNotBe(0);
 
+//overloads like ConstructMany<T> or ConstructMany<T>(Action<T> hardCodes) are available.
+
 //XUnit isn't supported out of the box, but the wiki details
-//how to add support using a custom "ConstruktionData" class
+//how to add support
 [Theory, ConstruktionData]
 public void should_join_team(Team team, Player player)
 {
@@ -29,18 +28,52 @@ public void should_join_team(Team team, Player player)
     
     player.JoinTeam(team);
 
-    var result = Query(db => db.Players.FirstOrDefault(x => x.Id == player.Id));
-    result.ShouldNotBeNull();
-    result.Name.ShouldBe(player.Name);
-    result.TeamId.ShouldBe(team.Id);
+    var foundPlayer = Query(db => db.Players.FirstOrDefault(x => x.Id == player.Id));
+    foundPlayer.ShouldNotBeNull();
+    foundPlayer.Name.ShouldBe(player.Name);
+    foundPlayer.TeamId.ShouldBe(team.Id);
 }
 ```
 
 Customizing
 ---
-The [wiki](https://github.com/Construktion/Construktion/wiki) has more details and documentation. 
+At the heart of the library are the blueprints. They are used to customize how 
+objects are built. Below is an example of a blueprint that will asign all bool
+properties named IsActive to true.
 
-Questions, Comments, Concerns
+```c#
+public class IsActiveBlueprint : Blueprint
+{
+    public bool Matches(ConstruktionContext context) => context.RequestType == typeof(bool) &&
+                                                        context.PropertyInfo?.Name == "IsActive";
+
+    public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => true;
+}
+
+var construktion = new Construktion().With(new IsActiveBlueprint());
+```
+
+You can add your customizations through the construktion instance or for more complex scenarios a registry 
+class can be used.
+
+```c#
+var construktion = new Construktion().With(new CustomRegistry());
+
+public class CustomRegistry : ConstruktionRegistry
+{
+    public CustomRegistry()
+    {
+        AddBlueprint<CustomBlueprint>();
+        OmitIds();
+        OmitProperties(typeof(List<>));
+        Register<IService, Service>();
+        //other blueprints and customization options
+    }   
+}
+```
+The [wiki](https://github.com/Construktion/Construktion/wiki) contains full details and documentation. 
+
+Questions, Comments, and Concerns
 ---
-For any questions or help you can hop on over to the [gitter room](https://gitter.im/Construktion_/Lobby) or file an [issue](https://github.com/Construktion/Construktion/issues). All feedback is welcomed!
+For any questions or help you can hop on over to the [gitter room](https://gitter.im/Construktion_/Lobby) or file an [issue](https://github.com/Construktion/Construktion/issues). Feedback is always welcomed!
 
