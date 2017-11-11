@@ -1,6 +1,5 @@
 ﻿namespace Construktion.Tests
 {
-    using Blueprints;
     using Shouldly;
     using Xunit;
 
@@ -49,7 +48,7 @@
         }
 
         [Fact]
-        public void should_add_through_construction()
+        public void should_add_through_construktion()
         {
             var construktion = new Construktion().With(new FooExitBlueprint());
 

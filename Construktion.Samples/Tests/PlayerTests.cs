@@ -15,7 +15,7 @@
 
             Insert(team, player);
 
-            var foundPlayer = Query(db => db.Players.FirstOrDefault<Player>(x => x.Id == player.Id));
+            var foundPlayer = Query(db => db.Players.FirstOrDefault(x => x.Id == player.Id));
 
             foundPlayer.ShouldNotBeNull();
             foundPlayer.Name.ShouldBe(player.Name);
@@ -30,7 +30,7 @@
             player.LeaveTeam();
             Update(player);
 
-            var foundPlayer = Query(db => db.Players.FirstOrDefault<Player>(x => x.Id == player.Id));
+            var foundPlayer = Query(db => db.Players.FirstOrDefault(x => x.Id == player.Id));
 
             foundPlayer.TeamId.ShouldBeNull();
             foundPlayer.Team.ShouldBeNull();

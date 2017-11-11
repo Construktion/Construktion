@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Tests
 {
     using System;
-    using Blueprints;
     using Internal;
     using Shouldly;
     using Xunit;

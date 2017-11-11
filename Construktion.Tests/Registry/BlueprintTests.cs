@@ -1,6 +1,5 @@
 ﻿namespace Construktion.Tests.Registry
 {
-    using Blueprints;
     using Shouldly;
     using Xunit;
 

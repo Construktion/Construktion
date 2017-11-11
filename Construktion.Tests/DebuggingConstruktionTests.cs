@@ -11,7 +11,7 @@
         {
             var context = new ConstruktionContext(typeof(Foo));
 
-            var result = new Construktion().DebuggingConstruct(context, out string log);
+            new Construktion().DebuggingConstruct(context, out string log);
 
             log = removeWhiteSpace(log);
             var expected = removeWhiteSpace(ExpectedLog);
@@ -26,7 +26,7 @@
         {
             var context = new ConstruktionContext(typeof(Foo));
 
-            var result = new Construktion()
+            new Construktion()
                 .With(x => x.AddExitBlueprint<FooExitBlueprint>())
                 .DebuggingConstruct(context, out string log);
 

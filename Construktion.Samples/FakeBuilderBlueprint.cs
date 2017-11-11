@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Samples
 {
     using System;
-    using Blueprints;
     using FakeItEasy;
 
     public class FakeBuilderBlueprint : Blueprint
