@@ -1,6 +1,6 @@
 ﻿namespace Construktion.Blueprints.Simple
 {
-    internal class StringBlueprint : AbstractBlueprint<string>
+    public class StringBlueprint : AbstractBlueprint<string>
     {
         public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

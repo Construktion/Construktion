@@ -1,4 +1,5 @@
-﻿namespace Construktion.Blueprints
+﻿// ReSharper disable once CheckNamespace
+namespace Construktion
 {
     using System.Reflection;
 
