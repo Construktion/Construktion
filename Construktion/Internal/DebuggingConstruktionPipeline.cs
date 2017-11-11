@@ -84,7 +84,7 @@
             return result;
         }
 
-        private string StartLog(ConstruktionContext requestContext, Blueprints.Blueprint blueprint, string buffer)
+        private string StartLog(ConstruktionContext requestContext, Blueprint blueprint, string buffer)
         {
             var requestName = requestContext.RequestType.FullName;
             var start = $"Start: {requestName}";

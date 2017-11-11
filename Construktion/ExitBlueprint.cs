@@ -1,5 +1,5 @@
-﻿namespace Construktion.Blueprints
-{
+﻿namespace Construktion
+{ 
     public interface ExitBlueprint
     {
         bool Matches(object item, ConstruktionContext context);

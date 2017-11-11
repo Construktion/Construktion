@@ -1,4 +1,4 @@
-﻿namespace Construktion.Blueprints
+﻿namespace Construktion
 {
     public interface Blueprint
     {
