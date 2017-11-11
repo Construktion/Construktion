@@ -5,7 +5,6 @@ namespace Construktion
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Blueprints;
     using Blueprints.Simple;
     using Internal;
 
@@ -24,10 +23,9 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register a blueprint to be added to the pipeline.
+        /// Add a custom blueprint to the pipeline that will construct an object.
         /// </summary>
         /// <param name="blueprint"></param>
-        /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public ConstruktionRegistry AddBlueprint(Blueprint blueprint)
         {
@@ -38,9 +36,8 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register a blueprint to be added to the pipeline.
+        /// Add a custom blueprint to the pipeline that will construct an object.
         /// </summary>
-        /// <returns></returns>
         public ConstruktionRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
             Settings.Apply((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
@@ -48,10 +45,8 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Register blueprints to be added to the pipeline.
+        /// Add custom blueprints to the pipeline that will construct an object.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
         public ConstruktionRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
             blueprints.GuardNull();
@@ -279,8 +274,9 @@ namespace Construktion
 
         /// <summary>
         /// Add an exit blueprint to the pipeline. These blueprints are called 
-        /// at the end of the chain after all regular blueprints. This is the final chance to 
-        /// alter the result of an object.   
+        /// at the end of the chain after all regular blueprints. They receive
+        /// a fully constructed object and are the final chance to  alter the
+        ///  result of an object.   
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public ConstruktionRegistry AddExitBlueprint<T>() where T : ExitBlueprint, new()
@@ -291,8 +287,9 @@ namespace Construktion
 
         /// <summary>
         /// Add an exit blueprint to the pipeline. These blueprints are called 
-        /// at the end of the chain after all regular blueprints. This is the final chance to 
-        /// alter the result of an object.   
+        /// at the end of the chain after all regular blueprints. They receive
+        /// a fully constructed object and are the final chance to  alter the
+        ///  result of an object.   
         /// </summary>
         public ConstruktionRegistry AddExitBlueprint(ExitBlueprint blueprint)
         {

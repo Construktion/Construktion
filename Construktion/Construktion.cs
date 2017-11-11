@@ -4,8 +4,6 @@ namespace Construktion
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Blueprints;
-    using Debug;
     using Internal;
 
     public class Construktion
@@ -183,7 +181,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Add a blueprint to be used during construction.
+        /// Add a custom blueprint to the pipeline.
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
@@ -196,7 +194,7 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Add blueprints to be used during construction.
+        /// Add custom blueprints to the pipeline.
         /// </summary>
         /// <param name="blueprints"></param>
         /// <returns></returns>
@@ -209,7 +207,10 @@ namespace Construktion
         }
 
         /// <summary>
-        /// Add an exit blueprint to be used during construction.
+        /// Add an exit blueprint to the pipeline. These blueprints are called 
+        /// at the end of the chain after all regular blueprints. They receive
+        /// a fully constructed object and are the final chance to  alter the
+        ///  result of an object.   
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
