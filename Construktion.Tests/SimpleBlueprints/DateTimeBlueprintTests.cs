@@ -2,6 +2,7 @@
 {
     using System;
     using Blueprints.Simple;
+    using Internal;
     using Shouldly;
     using Xunit;
 

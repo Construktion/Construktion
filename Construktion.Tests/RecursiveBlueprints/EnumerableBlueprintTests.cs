@@ -5,6 +5,7 @@ namespace Construktion.Tests.RecursiveBlueprints
     using System.Collections.Generic;
     using System.Linq;
     using Blueprints.Recursive;
+    using Internal;
     using Shouldly;
     using Xunit;
 

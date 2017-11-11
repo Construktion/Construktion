@@ -7,7 +7,7 @@
     using Blueprints.Recursive;
     using Blueprints.Simple;
 
-    internal class DefaultBlueprints : IEnumerable<Blueprint>
+    public class DefaultBlueprints : IEnumerable<Blueprint>
     {
         private readonly IEnumerable<Blueprint> _defaultBlueprints;
 

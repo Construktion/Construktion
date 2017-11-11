@@ -1,4 +1,4 @@
-namespace Construktion
+namespace Construktion.Internal
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +6,8 @@ namespace Construktion
     using System.Reflection;
     using Blueprints;
     using Blueprints.Simple;
-    using Internal;
 
-    internal class DefaultConstruktionSettings : ConstruktionSettings
+    public class DefaultConstruktionSettings : ConstruktionSettings
     {
         private IEnumerable<Blueprint> _defaultBlueprints;
         private readonly List<Blueprint> _customBlueprints;
@@ -44,7 +43,7 @@ namespace Construktion
             ThrowOnRecurrsion = Default.ThrowOnRecursion;
         }
 
-        public void Apply(ConstruktionRegistry registry)
+        internal void Apply(ConstruktionRegistry registry)
         {
             _customBlueprints.AddRange(registry.Settings._customBlueprints);
             _exitBlueprints.AddRange(registry.Settings._exitBlueprints);
@@ -61,15 +60,15 @@ namespace Construktion
             _defaultBlueprints = new DefaultBlueprints(TypeMap);
         }
 
-        public void Apply(Blueprint blueprint) => _customBlueprints.Add(blueprint);
+        internal void Apply(Blueprint blueprint) => _customBlueprints.Add(blueprint);
 
-        public void Apply(IEnumerable<Blueprint> blueprints) => _customBlueprints.AddRange(blueprints);
+        internal void Apply(IEnumerable<Blueprint> blueprints) => _customBlueprints.AddRange(blueprints);
 
-        public void Apply(ExitBlueprint exitBlueprint) => _exitBlueprints.Add(exitBlueprint);
+        internal void Apply(ExitBlueprint exitBlueprint) => _exitBlueprints.Add(exitBlueprint);
 
-        public void Apply(Type contract, Type implementation) => TypeMap[contract] = implementation;
+        internal void Apply(Type contract, Type implementation) => TypeMap[contract] = implementation;
 
-        public void Apply(Ctors strategy)
+        internal void Apply(Ctors strategy)
         {
             switch (strategy)
             {
@@ -82,7 +81,7 @@ namespace Construktion
             }
         }
 
-        public void Apply(PropertySetters strategy)
+        internal void Apply(PropertySetters strategy)
         {
             switch (strategy)
             {
@@ -95,13 +94,13 @@ namespace Construktion
             }
         }
 
-        public void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
+        internal void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
 
-        public void Inject(Type type, object value) => _customBlueprints.Insert(0, new ScopedBlueprint(type, value));
+        internal void Inject(Type type, object value) => _customBlueprints.Insert(0, new ScopedBlueprint(type, value));
 
-        public void SetEnumerableCount(int count) => enumerableCount = count;
-        public void SetRecursionDepth(int depth) => recursionDepth = depth;
-        public void SetThrowOnRecursion(bool shouldThrow) => throwOnRecursion = shouldThrow;
+        internal void SetEnumerableCount(int count) => enumerableCount = count;
+        internal void SetRecursionDepth(int depth) => recursionDepth = depth;
+        internal void SetThrowOnRecursion(bool shouldThrow) => throwOnRecursion = shouldThrow;
 
         private static class Default
         {

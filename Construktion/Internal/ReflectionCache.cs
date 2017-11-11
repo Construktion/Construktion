@@ -1,3 +1,5 @@
+// ReSharper disable PossibleNullReferenceException
+// ReSharper disable AssignNullToNotNullAttribute
 namespace Construktion.Internal
 {
     using System;
@@ -90,16 +92,16 @@ namespace Construktion.Internal
             var cacheKey = genericTypeDefinition.AssemblyQualifiedName +
                            string.Join("", genericParameters.Select(x => x.ToString()));
 
-            if (_genericTypeCache.TryGetValue(cacheKey, out NewGenericType makeGenericType))
-                return makeGenericType();
+            if (_genericTypeCache.TryGetValue(cacheKey, out NewGenericType newGenericType))
+                return newGenericType();
 
             var genericType = genericTypeDefinition.MakeGenericType(genericParameters);
 
-            makeGenericType = Expression.Lambda<NewGenericType>(Expression.New(genericType)).Compile();
+            newGenericType = Expression.Lambda<NewGenericType>(Expression.New(genericType)).Compile();
 
-            _genericTypeCache[cacheKey] = makeGenericType;
+            _genericTypeCache[cacheKey] = newGenericType;
 
-            return makeGenericType();
+            return newGenericType();
         }
     }
 }

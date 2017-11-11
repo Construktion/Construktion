@@ -1,6 +1,7 @@
 ﻿namespace Construktion.Tests.SimpleBlueprints
 {
     using Blueprints.Simple;
+    using Internal;
     using Shouldly;
     using Xunit;
 
