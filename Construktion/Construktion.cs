@@ -1,4 +1,5 @@
-﻿namespace Construktion
+﻿// ReSharper disable PossibleMultipleEnumeration
+namespace Construktion
 {
     using System;
     using System.Collections.Generic;
@@ -204,6 +205,19 @@
             blueprints.GuardNull();
 
             _settings.Apply(blueprints);
+            return this;
+        }
+
+        /// <summary>
+        /// Add an exit blueprint to be used during construction.
+        /// </summary>
+        /// <param name="blueprint"></param>
+        /// <returns></returns>
+        public Construktion With(ExitBlueprint blueprint)
+        {
+            blueprint.GuardNull();
+
+            _settings.Apply(blueprint);
             return this;
         }
 

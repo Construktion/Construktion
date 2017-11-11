@@ -49,6 +49,16 @@
         }
 
         [Fact]
+        public void should_add_through_construction()
+        {
+            var construktion = new Construktion().With(new FooExitBlueprint());
+
+            var foo = construktion.Construct<Foo>();
+
+            foo.Id.ShouldBe(10);
+        }
+
+        [Fact]
         public void should_override_matches()
         {
             var construktion = new Construktion().With(x =>
