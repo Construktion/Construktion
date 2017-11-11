@@ -129,7 +129,11 @@
         /// <returns></returns>
         public object DebuggingConstruct(ConstruktionContext context, out string log)
         {
-            var result = new DebuggingConstruktion(this).DebuggingConstruct(context, out log);
+            var pipeline = new DebuggingConstruktionPipeline(_settings);
+
+            var result = pipeline.DebugSend(context, out List<string> debugLog);
+
+            log = string.Join("\n", debugLog);
 
             return result;
         }

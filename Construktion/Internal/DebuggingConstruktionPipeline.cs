@@ -4,9 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Quick and dirty diagnostic pipeline
-    /// </summary>
     public class DebuggingConstruktionPipeline : ConstruktionPipeline
     {
         private readonly List<string> _log;
@@ -16,9 +13,9 @@
         private readonly DefaultConstruktionSettings _settings;
         public ConstruktionSettings Settings => _settings;
 
-        public DebuggingConstruktionPipeline(ConstruktionSettings settings)
+        public DebuggingConstruktionPipeline(DefaultConstruktionSettings settings)
         {
-            _settings = (DefaultConstruktionSettings)settings;
+            _settings = settings;
             _log = new List<string>();
             _underConstruction = new List<Type>();
             _level = -1;
@@ -57,6 +54,13 @@
             try
             {
                 result = blueprint.Construct(context, this);
+
+                var exitBlueprint = _settings.ExitBlueprints.FirstOrDefault(x => x.Matches(result, context));
+
+                if (exitBlueprint != null)
+                    _log.Add($"{indent}ExitBlueprint: {exitBlueprint}");
+
+                result = exitBlueprint?.Construct(result, this) ?? result;
             }
             catch (OutOfMemoryException)
             {
@@ -69,7 +73,7 @@
             catch (Exception ex)
             {
                 _log.Add(
-                    $"{indent}An exception occurred in blueprint {blueprint.GetType().FullName}, when constructing {requestName}");
+                    $"{indent}An exception occurred in blueprint {blueprint}, when constructing {requestName}");
                 _log.Add($"{indent}Exception is: {ex.Message}");
                 _log.Add("");
                 debugLog = _log;

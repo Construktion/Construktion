@@ -2,18 +2,40 @@
 {
     using Shouldly;
     using Xunit;
+    using System.Text.RegularExpressions;
 
     public class DebuggingConstruktionTests
     {
         [Fact]
-        public void visually_inspect_log()
+        public void should_log()
         {
             var context = new ConstruktionContext(typeof(Foo));
 
             var result = new Construktion().DebuggingConstruct(context, out string log);
 
-            //not going to assert on the message, a visual check is good enough 
-            true.ShouldBe(true);
+            log = removeWhiteSpace(log);
+            var expected = removeWhiteSpace(ExpectedLog);
+
+            string removeWhiteSpace(string text) => Regex.Replace(text, @"\s+", "");
+
+            log.ShouldBe(expected);
+        }
+
+        [Fact]
+        public void should_log_exit_blueprint()
+        {
+            var context = new ConstruktionContext(typeof(Foo));
+
+            var result = new Construktion()
+                .With(x => x.AddExitBlueprint<FooExitBlueprint>())
+                .DebuggingConstruct(context, out string log);
+
+            log = removeWhiteSpace(log);
+            var expected = removeWhiteSpace(ExpectedLogWithExitBlueprint);
+
+            string removeWhiteSpace(string text) => Regex.Replace(text, @"\s+", "");
+
+            log.ShouldBe(expected);
         }
 
         [Fact]
@@ -33,6 +55,11 @@
             public int Age { get; set; }
         }
 
+        public class FooExitBlueprint : AbstractExitBlueprint<Foo>
+        {
+            public override Foo Construct(Foo item, ConstruktionPipeline pipeline) => item;
+        }
+
         public class WillThrowFoo
         {
             public string Name { get; set; }
@@ -41,5 +68,34 @@
         }
 
         public interface NotRegisteredInterface { }
+
+        private string ExpectedLog =
+            @"Start: Construktion.Tests.DebuggingConstruktionTests+Foo
+Blueprint: Construktion.Blueprints.Recursive.EmptyCtorBlueprint
+
+     Start Property: Name
+     Blueprint: Construktion.Blueprints.Simple.StringPropertyBlueprint
+     End Name
+
+     Start Property: Age
+     Blueprint: Construktion.Blueprints.Simple.NumericBlueprint
+     End Age
+
+End Construktion.Tests.DebuggingConstruktionTests+Foo";
+
+        private string ExpectedLogWithExitBlueprint =
+            @"Start: Construktion.Tests.DebuggingConstruktionTests+Foo
+Blueprint: Construktion.Blueprints.Recursive.EmptyCtorBlueprint
+
+     Start Property: Name
+     Blueprint: Construktion.Blueprints.Simple.StringPropertyBlueprint
+     End Name
+
+     Start Property: Age
+     Blueprint: Construktion.Blueprints.Simple.NumericBlueprint
+     End Age
+
+ExitBlueprint: Construktion.Tests.DebuggingConstruktionTests+FooExitBlueprint
+End Construktion.Tests.DebuggingConstruktionTests+Foo";
     }
 }
