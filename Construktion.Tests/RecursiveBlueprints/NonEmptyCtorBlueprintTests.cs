@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Recursive;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.RecursiveBlueprints
+﻿namespace Construktion.Tests.RecursiveBlueprints
 {
+    using Blueprints.Recursive;
+    using Shouldly;
+    using Xunit;
+
     public class NonEmptyCtorBlueprintTests
     {
         [Fact]
@@ -30,9 +30,10 @@ namespace Construktion.Tests.RecursiveBlueprints
         public void should_construct_ctor_arg_and_properties()
         {
             var blueprint = new NonEmptyCtorBlueprint();
-            
-            var bar = (NonEmptyCtor)blueprint.Construct(new ConstruktionContext(typeof(NonEmptyCtor)), new DefaultConstruktionPipeline());
-            
+
+            var bar = (NonEmptyCtor)blueprint.Construct(new ConstruktionContext(typeof(NonEmptyCtor)),
+                new DefaultConstruktionPipeline());
+
             bar.Name.ShouldNotBeNullOrWhiteSpace();
             bar.Age.ShouldNotBe(0);
 
@@ -52,11 +53,11 @@ namespace Construktion.Tests.RecursiveBlueprints
             result1.Foo.GetHashCode().ShouldNotBe(result2.Foo.GetHashCode());
         }
 
-        public class EmptyCtor { }      
+        public class EmptyCtor { }
 
         public class NonEmptyCtor
         {
-            public Foo Foo { get; private set; } 
+            public Foo Foo { get; private set; }
 
             public string Name { get; set; }
             public int Age { get; set; }

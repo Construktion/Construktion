@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Construktion.Blueprints;
-
 namespace Construktion
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Blueprints;
+
     public interface ConstruktionSettings
     {
         /// <summary>

@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests
+﻿namespace Construktion.Tests
 {
+    using System.Linq;
+    using Shouldly;
+    using Xunit;
+
     public class ConstruktionContextTests
     {
         [Fact]
@@ -28,8 +28,8 @@ namespace Construktion.Tests
         {
             var parameterInfo =
                 typeof(ConstruktionContextTests).GetMethod(nameof(TestMethod))
-                    .GetParameters()
-                    .Single();
+                                                .GetParameters()
+                                                .Single();
 
             var context = new ConstruktionContext(parameterInfo);
 
@@ -37,10 +37,7 @@ namespace Construktion.Tests
             context.ParameterInfo.ShouldNotBe(null);
         }
 
-        public void TestMethod(string name)
-        {
-            
-        }
+        public void TestMethod(string name) { }
 
         public class Foo
         {

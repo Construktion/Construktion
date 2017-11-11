@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class EnumBlueprintTests
     {
         [Fact]
@@ -11,7 +11,8 @@ namespace Construktion.Tests.SimpleBlueprints
         {
             var blueprint = new EnumBlueprint();
 
-            var result = (Gender)blueprint.Construct(new ConstruktionContext(typeof(Gender)), new DefaultConstruktionPipeline());
+            var result = (Gender)blueprint.Construct(new ConstruktionContext(typeof(Gender)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldBeOneOf(Gender.F, Gender.M);
         }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Reflection;
-
-namespace Construktion.Blueprints
+﻿namespace Construktion.Blueprints
 {
+    using System;
+    using System.Reflection;
+
     public class DefensiveBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

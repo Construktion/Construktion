@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Construktion.Blueprints;
-using Construktion.Debug;
-using Construktion.Internal;
-
-namespace Construktion
+﻿namespace Construktion
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Blueprints;
+    using Debug;
+    using Internal;
+
     public class Construktion
     {
         private readonly DefaultConstruktionSettings _settings;
@@ -137,8 +137,8 @@ namespace Construktion
         private T DoConstruct<T>(Type type, Action<T> hardCodes, ParameterInfo parameterInfo = null)
         {
             var context = type != null
-                ? new ConstruktionContext(type)
-                : new ConstruktionContext(parameterInfo);
+                              ? new ConstruktionContext(type)
+                              : new ConstruktionContext(parameterInfo);
 
             var pipeline = new DefaultConstruktionPipeline(_settings);
 
@@ -202,6 +202,7 @@ namespace Construktion
             _settings.Apply(blueprints);
             return this;
         }
+
         /// <summary>
         /// Inject an object that will be used whenever a value of that type is requested. Injected objects are scoped to a Construktion instance.
         /// </summary>

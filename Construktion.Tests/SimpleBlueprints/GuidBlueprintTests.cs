@@ -1,10 +1,10 @@
-﻿using System;
-using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using System;
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class GuidBlueprintTests
     {
         [Fact]
@@ -12,7 +12,8 @@ namespace Construktion.Tests.SimpleBlueprints
         {
             var blueprint = new GuidBlueprint();
 
-            var result = (Guid)blueprint.Construct(new ConstruktionContext(typeof(Guid)), new DefaultConstruktionPipeline());
+            var result = (Guid)blueprint.Construct(new ConstruktionContext(typeof(Guid)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldNotBe(new Guid());
         }

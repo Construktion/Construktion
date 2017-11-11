@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Recursive;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.RecursiveBlueprints
+﻿namespace Construktion.Tests.RecursiveBlueprints
 {
+    using Blueprints.Recursive;
+    using Shouldly;
+    using Xunit;
+
     public class ArrayBlueprintTests
     {
         [Fact]
@@ -21,8 +21,9 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new ArrayBlueprint();
 
-            var ints = (int[])blueprint.Construct(new ConstruktionContext(typeof(int[])), new DefaultConstruktionPipeline());
-            
+            var ints = (int[])blueprint.Construct(new ConstruktionContext(typeof(int[])),
+                new DefaultConstruktionPipeline());
+
             ints.ShouldNotBe(null);
             ints.ShouldAllBe(x => x != 0);
         }

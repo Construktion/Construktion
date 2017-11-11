@@ -1,20 +1,17 @@
-﻿using System;
-using System.Linq;
-using Construktion.Blueprints;
-using System.Collections.Generic;
-
-namespace Construktion
+﻿namespace Construktion
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Blueprints;
+
     internal class DefaultConstruktionPipeline : ConstruktionPipeline
     {
         private readonly List<Type> _underConstruction = new List<Type>();
         private readonly DefaultConstruktionSettings _settings;
         public ConstruktionSettings Settings => _settings;
 
-        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings())
-        {
-            
-        }
+        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings()) { }
 
         public DefaultConstruktionPipeline(DefaultConstruktionSettings settings)
         {
@@ -44,8 +41,8 @@ namespace Construktion
             if (RecurssionDetected(context))
             {
                 return _settings.ThrowOnRecurrsion
-                    ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
-                    : default(object);
+                           ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
+                           : default(object);
             }
 
             _underConstruction.Add(context.RequestType);

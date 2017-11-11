@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class StringPropertyBlueprintTests
     {
         [Fact]
@@ -12,7 +12,7 @@ namespace Construktion.Tests.SimpleBlueprints
             var blueprint = new StringPropertyBlueprint();
             var pi = typeof(Foo).GetProperty(nameof(Foo.Name));
             var result = (string)blueprint.Construct(new ConstruktionContext(pi), new DefaultConstruktionPipeline());
-            
+
             result.ShouldStartWith("Name-");
         }
 

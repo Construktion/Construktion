@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Construktion.Blueprints.Recursive;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.RecursiveBlueprints
+﻿namespace Construktion.Tests.RecursiveBlueprints
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Blueprints.Recursive;
+    using Shouldly;
+    using Xunit;
+
     public class NullableTypeBlueprintTests
     {
         [Fact]

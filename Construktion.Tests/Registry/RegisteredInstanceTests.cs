@@ -1,9 +1,9 @@
-﻿using System;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.Registry
+﻿namespace Construktion.Tests.Registry
 {
+    using System;
+    using Shouldly;
+    using Xunit;
+
     public class RegisteredInstanceTests
     {
         private readonly ConstruktionRegistry registry;
@@ -39,7 +39,7 @@ namespace Construktion.Tests.Registry
         [Fact]
         public void should_register_scoped_instance()
         {
-            var foo = new Foo { FooId = -1};
+            var foo = new Foo { FooId = -1 };
             registry.UseInstance<IFoo>(foo);
 
             var result = construktion.With(registry).Construct<IFoo>();
@@ -84,8 +84,8 @@ namespace Construktion.Tests.Registry
             //_blueprintRegistry.Register<IFoo, Foo>();
 
             Exception<Exception>.ShouldBeThrownBy(() => construktion.With(registry).Construct<IFoo>())
-                .Message
-                .ShouldContain("Cannot construct the interface IFoo.");
+                                .Message
+                                .ShouldContain("Cannot construct the interface IFoo.");
         }
 
         public interface IFoo { }

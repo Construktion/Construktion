@@ -15,8 +15,8 @@
             var injectHolder = construktion.Construct<InjectHolder>();
 
             injectHolder.Inject
-                .GetHashCode()
-                .ShouldBe(inject.GetHashCode());
+                        .GetHashCode()
+                        .ShouldBe(inject.GetHashCode());
         }
 
         [Fact]
@@ -27,7 +27,7 @@
 
             var injectHolder = construktion.Construct<InjectHolder>();
             var injectHolder2 = construktion.Construct<InjectHolder>();
-         
+
             injectHolder.Inject
                         .GetHashCode()
                         .ShouldBe(inject.GetHashCode());
@@ -58,7 +58,7 @@
             var inject = construktion.Construct<Inject>();
             var injectHolder = construktion.Construct<InjectHolder>();
             var injectHolder2 = construktion.Construct<InjectHolder>();
-            
+
             inject.GetHashCode().ShouldBe(injectHolder.Inject.GetHashCode());
 
             injectHolder.Inject

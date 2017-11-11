@@ -1,12 +1,13 @@
-using System;
-using Construktion.Samples.Entities;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace Construktion.Samples
 {
+    using System;
+    using Entities;
+    using Microsoft.EntityFrameworkCore;
+
     public static class TestDSL
     {
         private static readonly Construktion _construktion = new Construktion().With(new SamplesRegistry());
@@ -15,7 +16,7 @@ namespace Construktion.Samples
         //It's not meant to mimic a Relational Db and behaves differently.
         private static readonly DbContextOptions<LeagueContext> options =
             new DbContextOptionsBuilder<LeagueContext>().UseInMemoryDatabase("InMemoryDatabase")
-                .Options;
+                                                        .Options;
 
         public static void Insert(params Entity[] entities)
         {

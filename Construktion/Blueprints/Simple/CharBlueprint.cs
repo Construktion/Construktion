@@ -1,7 +1,7 @@
 ﻿namespace Construktion.Blueprints.Simple
-{    
+{
     public class CharBlueprint : AbstractBlueprint<char>
-    {    
+    {
         public override char Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var chars = "$%#@!*abcdefghijklmnopqrstuvwxyz1234567890?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ^&";

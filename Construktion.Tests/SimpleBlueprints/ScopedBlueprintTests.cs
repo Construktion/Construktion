@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class ScopedBlueprintTests
     {
         [Fact]
@@ -31,17 +31,14 @@ namespace Construktion.Tests.SimpleBlueprints
             fooResult.Name.ShouldBe("Name");
             fooResult.Age.ShouldBe(10);
             fooResult.GetHashCode().ShouldBe(foo.GetHashCode());
-        }       
-
-        public interface IFoo
-        {
-
         }
+
+        public interface IFoo { }
 
         public class Foo : IFoo
         {
             public string Name { get; set; }
             public int Age { get; set; }
-        }       
+        }
     }
 }

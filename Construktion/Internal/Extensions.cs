@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Construktion.Tests")]
 [assembly: InternalsVisibleTo("Construktion.Benchmarks")]
 
 namespace Construktion.Internal
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     internal static class Extensions
     {
         public static ConstructorInfo GreedyCtor(this List<ConstructorInfo> ctors)
@@ -30,8 +31,8 @@ namespace Construktion.Internal
         public static bool HasDefaultCtor(this Type type)
         {
             var ctors = type.GetTypeInfo()
-             .DeclaredConstructors
-             .ToList();
+                            .DeclaredConstructors
+                            .ToList();
 
             return ctors.Any(x => x.GetParameters().Length == 0);
         }
@@ -39,8 +40,8 @@ namespace Construktion.Internal
         public static bool HasNonDefaultCtor(this Type type)
         {
             var ctors = type.GetTypeInfo()
-             .DeclaredConstructors
-             .ToList();
+                            .DeclaredConstructors
+                            .ToList();
 
             return ctors.Any(x => x.GetParameters().Length > 0);
         }
@@ -48,13 +49,13 @@ namespace Construktion.Internal
         public static IEnumerable<PropertyInfo> PropertiesWithPublicSetter(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => x.CanWrite && x.GetSetMethod(/*nonPublic*/ true).IsPublic);
+                       .Where(x => x.CanWrite && x.GetSetMethod( /*nonPublic*/ true).IsPublic);
         }
 
         public static IEnumerable<PropertyInfo> PropertiesWithAccessibleSetter(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => x.CanWrite);
+                       .Where(x => x.CanWrite);
         }
 
         public static void GuardNull<T>(this T item)

@@ -1,9 +1,9 @@
-﻿using System;
-using Construktion.Blueprints;
-using FakeItEasy;
-
-namespace Construktion.Samples
+﻿namespace Construktion.Samples
 {
+    using System;
+    using Blueprints;
+    using FakeItEasy;
+
     public class FakeBuilderBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

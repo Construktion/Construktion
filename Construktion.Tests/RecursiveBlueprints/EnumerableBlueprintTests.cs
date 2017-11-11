@@ -1,14 +1,14 @@
 ﻿// ReSharper disable PossibleMultipleEnumeration
 
-using System.Collections.Generic;
-using System.Linq;
-using Construktion.Blueprints.Recursive;
-using Shouldly;
-using Xunit;
-
 namespace Construktion.Tests.RecursiveBlueprints
 {
-    public class EnumerableBlueprintTests 
+    using System.Collections.Generic;
+    using System.Linq;
+    using Blueprints.Recursive;
+    using Shouldly;
+    using Xunit;
+
+    public class EnumerableBlueprintTests
     {
         [Fact]
         public void should_match_enumerables_of_t()
@@ -25,8 +25,9 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (IEnumerable<int>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<int>)), new DefaultConstruktionPipeline());
-            
+            var result = (IEnumerable<int>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<int>)),
+                new DefaultConstruktionPipeline());
+
             result.Count().ShouldBe(3);
             result.ShouldAllBe(x => x != 0);
         }
@@ -36,7 +37,8 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (IEnumerable<Foo>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Foo>)), new DefaultConstruktionPipeline());
+            var result = (IEnumerable<Foo>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Foo>)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Bar));
             result.ShouldAllBe(x => x.Baz != 0);
@@ -47,7 +49,8 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (IEnumerable<Bar>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Bar>)), new DefaultConstruktionPipeline());
+            var result = (IEnumerable<Bar>)blueprint.Construct(new ConstruktionContext(typeof(IEnumerable<Bar>)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldAllBe(x => x != null);
 
@@ -61,7 +64,8 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (List<int>)blueprint.Construct(new ConstruktionContext(typeof(List<int>)), new DefaultConstruktionPipeline());
+            var result = (List<int>)blueprint.Construct(new ConstruktionContext(typeof(List<int>)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldNotBe(null);
             result.ShouldAllBe(x => x != default(int));
@@ -72,7 +76,8 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new EnumerableBlueprint();
 
-            var result = (ICollection<Foo>)blueprint.Construct(new ConstruktionContext(typeof(ICollection<Foo>)), new DefaultConstruktionPipeline());
+            var result = (ICollection<Foo>)blueprint.Construct(new ConstruktionContext(typeof(ICollection<Foo>)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x.Bar));
             result.ShouldAllBe(x => x.Baz != 0);

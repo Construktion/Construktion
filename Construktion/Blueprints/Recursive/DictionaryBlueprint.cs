@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Construktion.Internal;
-
-namespace Construktion.Blueprints.Recursive
+﻿namespace Construktion.Blueprints.Recursive
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Internal;
+
     public class DictionaryBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)
@@ -33,12 +33,13 @@ namespace Construktion.Blueprints.Recursive
             var dictionary = (IDictionary)typeof(Dictionary<,>).NewGeneric(key, value);
 
             for (var i = 0; i <= count - 1; i++)
-               dictionary.Add(keys[i], values[i]);
+                dictionary.Add(keys[i], values[i]);
 
             return dictionary;
         }
 
-        private HashSet<object> CreateUniqueKeys(int count, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
+        private HashSet<object> CreateUniqueKeys(int count, Type key, ConstruktionPipeline pipeline,
+            HashSet<object> items)
         {
             var newItem = pipeline.Send(new ConstruktionContext(key));
 
@@ -46,8 +47,8 @@ namespace Construktion.Blueprints.Recursive
                 items.Add(newItem);
 
             return items.Count == count
-                ? items 
-                : CreateUniqueKeys(count, key, pipeline, items);
+                       ? items
+                       : CreateUniqueKeys(count, key, pipeline, items);
         }
 
         private IEnumerable<object> Values(int count, Type closedType, ConstruktionPipeline pipeline)

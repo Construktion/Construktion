@@ -1,6 +1,6 @@
 ﻿namespace Construktion.Blueprints
 {
-    public interface Blueprint 
+    public interface Blueprint
     {
         /// <summary>
         /// When true the blueprint will construct the object

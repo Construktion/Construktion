@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests
+﻿namespace Construktion.Tests
 {
+    using Blueprints;
+    using Shouldly;
+    using Xunit;
+
     public class AbstractBlueprintTests
     {
         [Fact]

@@ -1,10 +1,10 @@
-﻿using System;
-using Construktion.Blueprints;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests
+﻿namespace Construktion.Tests
 {
+    using System;
+    using Blueprints;
+    using Shouldly;
+    using Xunit;
+
     public class ParameterAttributeBlueprintTests
     {
         [Fact]
@@ -13,7 +13,7 @@ namespace Construktion.Tests
             var blueprint = new SetBlueprint();
             var parameterInfo =
                 typeof(ParameterAttributeBlueprintTests).GetMethod(nameof(TestMethod))
-                    .GetParameters()[0];
+                                                        .GetParameters()[0];
 
             var matches = blueprint.Matches(new ConstruktionContext(parameterInfo));
 
@@ -26,7 +26,7 @@ namespace Construktion.Tests
             var blueprint = new SetBlueprint();
             var parameterInfo =
                 typeof(ParameterAttributeBlueprintTests).GetMethod(nameof(TestMethod))
-                    .GetParameters()[1];
+                                                        .GetParameters()[1];
 
 
             var matches = blueprint.Matches(new ConstruktionContext(parameterInfo));
@@ -40,7 +40,7 @@ namespace Construktion.Tests
             var blueprint = new SetBlueprint();
             var parameterInfo =
                 typeof(ParameterAttributeBlueprintTests).GetMethod(nameof(TestMethod))
-                    .GetParameters()[0];
+                                                        .GetParameters()[0];
 
 
             var result = blueprint.Construct(new ConstruktionContext(parameterInfo), new DefaultConstruktionPipeline());
@@ -52,10 +52,7 @@ namespace Construktion.Tests
 
         public class SetBlueprint : ParameterAttributeBlueprint<Set>
         {
-            public SetBlueprint() : base (x => x.Value)
-            {
-                
-            }
+            public SetBlueprint() : base(x => x.Value) { }
         }
 
         public class Set : Attribute

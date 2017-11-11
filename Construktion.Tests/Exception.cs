@@ -1,8 +1,7 @@
-﻿using System;
-using Shouldly;
-
-namespace Construktion.Tests
+﻿namespace Construktion.Tests
 {
+    using System;
+    using Shouldly;
 
     /// <summary>
     /// Assert that an action throws an Exception. Shouldly's Should.Throw doesn't catch the exception and 

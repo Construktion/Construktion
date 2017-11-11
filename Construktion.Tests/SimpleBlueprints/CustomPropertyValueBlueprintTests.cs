@@ -1,15 +1,15 @@
-﻿using System;
-using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using System;
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class CustomPropertyValueBlueprintTests
     {
         [Fact]
         public void should_match_defined_convention()
-        { 
+        {
             var blueprint = new CustomPropertyValueBlueprint(x => x.Name.Equals("HireDate"), () => DateTime.MaxValue);
 
             var matches = blueprint.Matches(new ConstruktionContext(typeof(Foo).GetProperty(nameof(Foo.HireDate))));

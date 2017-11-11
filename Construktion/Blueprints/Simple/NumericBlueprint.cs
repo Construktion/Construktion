@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     //https://github.com/AutoFixture/AutoFixture/blob/master/Src/AutoFixture/RandomNumericSequenceGenerator.cs
     public class NumericBlueprint : Blueprint
     {
@@ -106,8 +106,7 @@ namespace Construktion.Blueprints.Simple
                     {
                         result = GetNextInt64InRange();
                     }
-                }
-                while (numbers.Contains(result));
+                } while (numbers.Contains(result));
 
                 numbers.Add(result);
                 return result;
@@ -145,8 +144,8 @@ namespace Construktion.Blueprints.Simple
         private long GetUpperRangeFromLimits()
         {
             return limits[1] >= int.MaxValue
-                ? limits[1]
-                : limits[1] + 1;
+                       ? limits[1]
+                       : limits[1] + 1;
         }
 
         private long GetNextInt64InRange()
@@ -160,8 +159,7 @@ namespace Construktion.Blueprints.Simple
                 var buffer = new byte[sizeof(ulong)];
                 _random.NextBytes(buffer);
                 number = BitConverter.ToUInt64(buffer, 0);
-            }
-            while (number > limit);
+            } while (number > limit);
 
             return (long)(number % range + (ulong)lower);
         }

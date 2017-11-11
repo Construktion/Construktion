@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using System;
+    using System.Collections.Generic;
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class InterfaceBlueprintTests
-    {        
+    {
         [Fact]
         public void should_match_registered_interfaces()
         {
             var typeMap = new Dictionary<Type, Type>
             {
-              { typeof(IFoo), typeof(Foo)}
+                { typeof(IFoo), typeof(Foo) }
             };
             var blueprint = new InterfaceBlueprint(typeMap);
 
@@ -24,19 +24,13 @@ namespace Construktion.Tests.SimpleBlueprints
             matchesUnRegistered.ShouldBe(false);
         }
 
-        public interface IFoo
-        {
-
-        }
+        public interface IFoo { }
 
         public class Foo : IFoo
         {
             public int Age { get; set; }
         }
 
-        public interface IBar
-        {
-
-        }
+        public interface IBar { }
     }
 }

@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Construktion.Blueprints;
-using Construktion.Internal;
-
 namespace Construktion
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+    using Blueprints;
     using Blueprints.Simple;
+    using Internal;
 
     internal class DefaultConstruktionSettings : ConstruktionSettings
     {
@@ -110,7 +109,9 @@ namespace Construktion
             public static int RecursionDepth => 0;
             public static bool ThrowOnRecursion => false;
             public static Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy => Extensions.ModestCtor;
-            public static Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy => Extensions.PropertiesWithPublicSetter;
+
+            public static Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy => Extensions
+                .PropertiesWithPublicSetter;
         }
     }
 }

@@ -1,15 +1,15 @@
-using System.Collections.Generic;
-using System.Reflection;
-using Shouldly;
-using Xunit;
-
 namespace Construktion.Tests.Registry
 {
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Shouldly;
+    using Xunit;
+
     public class OmitPropertiesTests
     {
         private readonly ConstruktionRegistry registry;
         private readonly Construktion construktion;
-        
+
         public OmitPropertiesTests()
         {
             registry = new ConstruktionRegistry();
@@ -97,7 +97,7 @@ namespace Construktion.Tests.Registry
             foo.InheritsGeneric.ShouldBe(null);
         }
 
-        public class Foo 
+        public class Foo
         {
             public int FooId { get; set; }
             public int? NullableFooId { get; set; }
@@ -115,9 +115,6 @@ namespace Construktion.Tests.Registry
 
         public class InheritsGeneric : OpenGeneric<string> { }
 
-        public class OpenGeneric<T>
-        {
-
-        }
+        public class OpenGeneric<T> { }
     }
 }

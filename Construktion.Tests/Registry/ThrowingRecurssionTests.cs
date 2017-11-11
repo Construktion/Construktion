@@ -1,9 +1,9 @@
-﻿using System;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.Registry
+﻿namespace Construktion.Tests.Registry
 {
+    using System;
+    using Shouldly;
+    using Xunit;
+
     public class ThrowingRecurssionTests
     {
         private readonly ConstruktionRegistry registry;

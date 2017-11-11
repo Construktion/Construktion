@@ -1,10 +1,10 @@
-﻿using System;
-using Construktion.Blueprints;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests
+﻿namespace Construktion.Tests
 {
+    using System;
+    using Blueprints;
+    using Shouldly;
+    using Xunit;
+
     public class PropertyAttributeBlueprintTests
     {
         [Fact]
@@ -45,16 +45,14 @@ namespace Construktion.Tests
 
         public class SetBlueprint : PropertyAttributeBlueprint<Set>
         {
-            public SetBlueprint() : base (x => x.Value)
-            {
-                
-            }
+            public SetBlueprint() : base(x => x.Value) { }
         }
 
         public class Foo
         {
             [Set("Set")]
             public string WithAttribute { get; set; }
+
             public string WithoutAttribute { get; set; }
         }
 

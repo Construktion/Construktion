@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+    using System.Collections.Generic;
+
     public class InterfaceBlueprint : Blueprint
     {
         private readonly IDictionary<Type, Type> _typeMap = new Dictionary<Type, Type>();
@@ -15,7 +15,7 @@ namespace Construktion.Blueprints.Simple
         }
 
         public bool Matches(ConstruktionContext context)
-        {          
+        {
             return _typeMap.ContainsKey(context.RequestType);
         }
 
@@ -24,8 +24,8 @@ namespace Construktion.Blueprints.Simple
             var implementation = _typeMap[context.RequestType];
 
             var result = pipeline.Send(new ConstruktionContext(implementation));
-            
+
             return result;
-        }        
+        }
     }
 }

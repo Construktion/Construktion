@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+
     public class DateTimeBlueprint : AbstractBlueprint<DateTime>
     {
         public override DateTime Construct(ConstruktionContext context, ConstruktionPipeline pipeline)

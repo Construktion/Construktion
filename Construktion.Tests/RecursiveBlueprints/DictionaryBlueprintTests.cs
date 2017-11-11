@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using Construktion.Blueprints.Recursive;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.RecursiveBlueprints
+﻿namespace Construktion.Tests.RecursiveBlueprints
 {
+    using System.Collections.Generic;
+    using Blueprints.Recursive;
+    using Shouldly;
+    using Xunit;
+
     public class DictionaryBlueprintTests
     {
         [Fact]
@@ -12,7 +12,9 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new DictionaryBlueprint();
 
-            var dictionary = (Dictionary<int, string>) blueprint.Construct(new ConstruktionContext(typeof(Dictionary<int, string>)), new DefaultConstruktionPipeline());
+            var dictionary =
+                (Dictionary<int, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<int, string>)),
+                    new DefaultConstruktionPipeline());
 
             dictionary.ShouldNotBe(null);
             dictionary.Count.ShouldBe(4);
@@ -23,11 +25,13 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new DictionaryBlueprint();
 
-            var dictionary = (Dictionary<Genre, string>)blueprint.Construct(new ConstruktionContext(typeof(Dictionary<Genre, string>)), new DefaultConstruktionPipeline());
+            var dictionary =
+                (Dictionary<Genre, string>)blueprint.Construct(
+                    new ConstruktionContext(typeof(Dictionary<Genre, string>)), new DefaultConstruktionPipeline());
 
             dictionary.ShouldNotBe(null);
             dictionary.Count.ShouldBe(5);
-        }      
+        }
     }
 
     public enum Genre

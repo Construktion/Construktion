@@ -1,7 +1,7 @@
-using System;
-
 namespace Construktion.Blueprints
 {
+    using System;
+
     /// <summary>
     /// A blueprint that will construct the specified type
     /// </summary>

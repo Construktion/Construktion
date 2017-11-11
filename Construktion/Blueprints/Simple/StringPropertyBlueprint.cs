@@ -1,9 +1,9 @@
-﻿using System;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+
     internal class StringPropertyBlueprint : Blueprint
-    { 
+    {
         private readonly Random _random = new Random();
 
         public bool Matches(ConstruktionContext context)
@@ -18,4 +18,4 @@ namespace Construktion.Blueprints.Simple
             return result;
         }
     }
-} 
+}

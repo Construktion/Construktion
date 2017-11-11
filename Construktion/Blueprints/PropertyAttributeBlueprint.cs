@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using Construktion.Internal;
+﻿namespace Construktion.Blueprints
+{
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using Internal;
 
-namespace Construktion.Blueprints
-{ 
     /// <summary>
     /// Base class to construct properties from an attribute.
     /// </summary>
@@ -28,8 +28,8 @@ namespace Construktion.Blueprints
         public virtual bool Matches(ConstruktionContext context)
         {
             return context.PropertyInfo?.GetCustomAttributes(typeof(T))
-                       .ToList()
-                       .Any() ?? false;
+                          .ToList()
+                          .Any() ?? false;
         }
 
         /// <summary>

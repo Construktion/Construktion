@@ -1,11 +1,12 @@
-﻿using Construktion.Samples.Entities;
-using FakeItEasy;
-using Shouldly;
-using Xunit;
-using static Construktion.Samples.TestDSL;
+﻿using static Construktion.Samples.TestDSL;
 
 namespace Construktion.Samples
 {
+    using Entities;
+    using FakeItEasy;
+    using Shouldly;
+    using Xunit;
+
     public class FunctionalTests
     {
         [Theory, ConstruktionData]

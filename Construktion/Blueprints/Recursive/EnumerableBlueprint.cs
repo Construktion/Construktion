@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using Construktion.Internal;
-
-namespace Construktion.Blueprints.Recursive
+﻿namespace Construktion.Blueprints.Recursive
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Internal;
+
     public class EnumerableBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)

@@ -15,6 +15,6 @@
             ConstructPropertyUsing(pi => pi.PropertyType == typeof(bool), () => false);
             AddBlueprint<FakeBuilderBlueprint>();
             Register<Service, TestService>();
-        }   
+        }
     }
 }

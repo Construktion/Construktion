@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Recursive;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.RecursiveBlueprints
+﻿namespace Construktion.Tests.RecursiveBlueprints
 {
+    using Blueprints.Recursive;
+    using Shouldly;
+    using Xunit;
+
     public class EmptyCtorBlueprintTests
     {
         [Fact]
@@ -11,7 +11,8 @@ namespace Construktion.Tests.RecursiveBlueprints
         {
             var blueprint = new EmptyCtorBlueprint();
 
-            var result = (Person)blueprint.Construct(new ConstruktionContext(typeof(Person)), new DefaultConstruktionPipeline());
+            var result = (Person)blueprint.Construct(new ConstruktionContext(typeof(Person)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldNotBeNull();
             result.Name.ShouldNotBeNullOrEmpty();

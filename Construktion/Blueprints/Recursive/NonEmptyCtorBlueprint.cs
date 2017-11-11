@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Construktion.Internal;
-
-namespace Construktion.Blueprints.Recursive
+﻿namespace Construktion.Blueprints.Recursive
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Internal;
+
     public class NonEmptyCtorBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)
@@ -18,7 +18,7 @@ namespace Construktion.Blueprints.Recursive
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {         
+        {
             var instance = NewUp(context.RequestType, pipeline);
 
             var result = construct(instance, pipeline);
@@ -29,8 +29,8 @@ namespace Construktion.Blueprints.Recursive
         private object NewUp(Type type, ConstruktionPipeline pipeline)
         {
             var ctors = type.GetTypeInfo()
-                .DeclaredConstructors
-                .ToList();
+                            .DeclaredConstructors
+                            .ToList();
 
             var ctor = pipeline.Settings.CtorStrategy(ctors);
 

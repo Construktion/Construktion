@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+
     public class EmailAddressBlueprint : Blueprint
     {
         private readonly Random random = new Random();
         private readonly Func<PropertyInfo, bool> _convention;
+
         private readonly List<string> domains = new List<string>
         {
             "@gmail.com",

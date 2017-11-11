@@ -1,13 +1,13 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Local
 // ReSharper disable ArrangeTypeMemberModifiers
 
-using System.Collections.Generic;
-using System.Linq;
-using Shouldly;
-using Xunit;
-
 namespace Construktion.Tests.Acceptance
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Shouldly;
+    using Xunit;
+
     public class ComplexConstruktionTests
     {
         private readonly Construktion construktion;
@@ -41,7 +41,7 @@ namespace Construktion.Tests.Acceptance
 
             result.Name.ShouldNotBeNullOrEmpty();
             result.Age.ShouldNotBe(default(int));
-            result.Child.Name.ShouldNotBeNullOrEmpty(); 
+            result.Child.Name.ShouldNotBeNullOrEmpty();
             result.Child.Age.ShouldNotBe(default(int));
         }
 
@@ -99,7 +99,7 @@ namespace Construktion.Tests.Acceptance
         [Fact]
         public void should_build_dictionaries()
         {
-            var result = construktion.Construct<Dictionary<string,int>>();
+            var result = construktion.Construct<Dictionary<string, int>>();
 
             result.ShouldNotBe(null);
             result.Count.ShouldBe(4);
@@ -122,17 +122,15 @@ namespace Construktion.Tests.Acceptance
             var methodInfo = typeof(ComplexConstruktionTests).GetMethod(nameof(TestMethod));
 
             var values = methodInfo.GetParameters()
-                .Select(pi => construktion.Construct(pi))
-                .ToList();
+                                   .Select(pi => construktion.Construct(pi))
+                                   .ToList();
 
             values.Count.ShouldBe(2);
             ((string)values[0]).ShouldNotBeNullOrWhiteSpace();
             ((int)values[1]).ShouldNotBe(0);
         }
 
-        public void TestMethod(string name, int age)
-        {
-        }
+        public void TestMethod(string name, int age) { }
 
         private class Private
         {

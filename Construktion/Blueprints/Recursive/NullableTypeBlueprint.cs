@@ -1,8 +1,8 @@
-﻿using System;
-using System.Reflection;
-
-namespace Construktion.Blueprints.Recursive
+﻿namespace Construktion.Blueprints.Recursive
 {
+    using System;
+    using System.Reflection;
+
     public class NullableTypeBlueprint : Blueprint
     {
         private readonly Random _random = new Random();
@@ -21,9 +21,9 @@ namespace Construktion.Blueprints.Recursive
 
             var useNull = _random.Next(1, 5);
 
-            return useNull == 1 
-                ? null 
-                : pipeline.Send(new ConstruktionContext(closedType));
+            return useNull == 1
+                       ? null
+                       : pipeline.Send(new ConstruktionContext(closedType));
         }
     }
 }

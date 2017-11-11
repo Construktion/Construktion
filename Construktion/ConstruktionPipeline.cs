@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Construktion
+﻿namespace Construktion
 {
+    using System;
+
     public interface ConstruktionPipeline
     {
         /// <summary>

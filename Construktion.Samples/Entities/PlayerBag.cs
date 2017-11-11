@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Construktion.Samples.Entities
+﻿namespace Construktion.Samples.Entities
 {
+    using System.Collections.Generic;
+
     public class PlayerBag
     {
         public bool IsActive { get; set; }

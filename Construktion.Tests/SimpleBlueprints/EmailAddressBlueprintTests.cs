@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class EmailAddressBlueprintTests
     {
         [Fact]
@@ -20,7 +20,8 @@ namespace Construktion.Tests.SimpleBlueprints
         [Fact]
         public void should_construct()
         {
-            var result = (string)new EmailAddressBlueprint().Construct(new ConstruktionContext(typeof(string)), new DefaultConstruktionPipeline());
+            var result = (string)new EmailAddressBlueprint().Construct(new ConstruktionContext(typeof(string)),
+                new DefaultConstruktionPipeline());
 
             result.ShouldContain("@");
             result.ShouldContain(".com");

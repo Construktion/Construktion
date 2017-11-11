@@ -1,9 +1,9 @@
-﻿using Construktion.Blueprints.Simple;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.SimpleBlueprints
+﻿namespace Construktion.Tests.SimpleBlueprints
 {
+    using Blueprints.Simple;
+    using Shouldly;
+    using Xunit;
+
     public class OmitPropertyBlueprintTests
     {
         [Fact]
@@ -21,14 +21,15 @@ namespace Construktion.Tests.SimpleBlueprints
         {
             var blueprint = new OmitPropertyBlueprint(x => x.Name.EndsWith("Id"), typeof(int));
 
-            var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("FooId")), new DefaultConstruktionPipeline());
+            var result = blueprint.Construct(new ConstruktionContext(typeof(Foo).GetProperty("FooId")),
+                new DefaultConstruktionPipeline());
 
             result.ShouldBe(0);
-        }        
+        }
 
         public class Foo
         {
-            public int FooId { get; set; }            
+            public int FooId { get; set; }
         }
     }
 }

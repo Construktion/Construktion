@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-
-namespace Construktion.Blueprints
+﻿namespace Construktion.Blueprints
 {
+    using System.Reflection;
+
     public abstract class AbstractExitBlueprint<T> : ExitBlueprint<T>, ExitBlueprint
     {
         public bool Matches(object item, ConstruktionContext context)

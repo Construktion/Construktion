@@ -1,12 +1,12 @@
-﻿using System;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+
     public class ScopedBlueprint : Blueprint
     {
         private readonly Type _type;
         private readonly object _instance;
-       
+
         public ScopedBlueprint(Type type, object instance)
         {
             _type = type;

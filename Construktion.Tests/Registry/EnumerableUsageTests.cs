@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.Registry
+﻿namespace Construktion.Tests.Registry
 {
+    using System.Linq;
+    using Shouldly;
+    using Xunit;
+
     public class EnumerableUsageTests
     {
         private readonly ConstruktionRegistry registry;
@@ -29,8 +29,8 @@ namespace Construktion.Tests.Registry
             registry.EnumerableCount(1);
 
             var ints = construktion.With(registry)
-                .With(new ConstruktionRegistry())
-                .ConstructMany<int>();
+                                   .With(new ConstruktionRegistry())
+                                   .ConstructMany<int>();
 
             ints.Count().ShouldBe(1);
         }

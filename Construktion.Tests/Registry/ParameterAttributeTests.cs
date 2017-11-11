@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using Shouldly;
-using Xunit;
-
-namespace Construktion.Tests.Registry
+﻿namespace Construktion.Tests.Registry
 {
+    using System;
+    using System.Linq;
+    using Shouldly;
+    using Xunit;
+
     public class ParameterAttributeTests
     {
         [Fact]
@@ -14,8 +14,8 @@ namespace Construktion.Tests.Registry
 
             var parameterInfo =
                 typeof(ParameterAttributeTests).GetMethod(nameof(ParameterTest))
-                                                   .GetParameters()
-                                                   .Single();
+                                               .GetParameters()
+                                               .Single();
 
             var parameter = (string)new Construktion().With(registry).Construct(parameterInfo);
 

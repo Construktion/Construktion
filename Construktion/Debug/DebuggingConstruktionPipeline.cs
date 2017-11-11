@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Construktion.Debug
+﻿namespace Construktion.Debug
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Quick and dirty diagnostic pipeline
     /// </summary>

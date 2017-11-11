@@ -1,8 +1,8 @@
-﻿using System;
-using System.Reflection;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+    using System.Reflection;
+
     public class CustomPropertyValueBlueprint : Blueprint
     {
         private readonly Func<PropertyInfo, bool> _convention;

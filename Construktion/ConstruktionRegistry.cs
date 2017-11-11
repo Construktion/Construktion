@@ -1,14 +1,14 @@
 ﻿// ReSharper disable PossibleMultipleEnumeration
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Construktion.Blueprints;
-using Construktion.Blueprints.Simple;
-using Construktion.Internal;
-
 namespace Construktion
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Blueprints;
+    using Blueprints.Simple;
+    using Internal;
+
     public class ConstruktionRegistry
     {
         internal DefaultConstruktionSettings Settings { get; }
@@ -210,7 +210,7 @@ namespace Construktion
         /// <summary>
         /// Specify a convention to omit properties of the specified types.
         /// </summary>
-        public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, params Type[]  propertyTypes)
+        public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, params Type[] propertyTypes)
         {
             Settings.Apply(new OmitPropertyBlueprint(convention, propertyTypes));
             return this;

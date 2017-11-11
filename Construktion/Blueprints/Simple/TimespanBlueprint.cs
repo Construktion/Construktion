@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Simple
 {
+    using System;
+
     public class TimespanBlueprint : AbstractBlueprint<TimeSpan>
     {
         private const int twoDays = 172800;

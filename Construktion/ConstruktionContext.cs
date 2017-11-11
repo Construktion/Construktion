@@ -1,9 +1,9 @@
-﻿using System;
-using System.Reflection;
-using Construktion.Internal;
-
-namespace Construktion
+﻿namespace Construktion
 {
+    using System;
+    using System.Reflection;
+    using Internal;
+
     /// <summary>
     /// The context of the type currently being constructed
     /// </summary>

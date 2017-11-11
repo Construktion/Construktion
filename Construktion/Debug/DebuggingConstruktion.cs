@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace Construktion.Debug
+﻿namespace Construktion.Debug
 {
     using System;
+    using System.Collections.Generic;
 
     public class DebuggingConstruktion
     {
         [Obsolete("Please use new Construktion().DebuggingConstruct instead.")]
-        public DebuggingConstruktion() : this (new Construktion()) { }
+        public DebuggingConstruktion() : this(new Construktion()) { }
 
         [Obsolete("Please use new Construktion().DebuggingConstruct instead.")]
         public DebuggingConstruktion(Construktion construktion) { }
