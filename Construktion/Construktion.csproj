@@ -10,7 +10,7 @@
 
   <!-- Nuget information -->
   <PropertyGroup>
-    <PackageVersion>1.2.0</PackageVersion>
+    <PackageVersion>1.3.0</PackageVersion>
     <Configuration>Release</Configuration>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <title>Construktion</title>
