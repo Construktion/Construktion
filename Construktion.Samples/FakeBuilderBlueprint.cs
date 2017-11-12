@@ -5,10 +5,7 @@
 
     public class FakeBuilderBlueprint : Blueprint
     {
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.ParameterInfo?.Name.StartsWith("fake") ?? false;
-        }
+        public bool Matches(ConstruktionContext context) => context.ParameterInfo?.Name.StartsWith("fake") ?? false;
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

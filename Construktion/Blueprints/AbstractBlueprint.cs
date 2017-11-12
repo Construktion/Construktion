@@ -16,10 +16,7 @@ namespace Construktion
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public virtual bool Matches(ConstruktionContext context)
-        {
-            return context.RequestType == typeof(T);
-        }
+        public virtual bool Matches(ConstruktionContext context) => context.RequestType == typeof(T);
 
         /// <summary>
         /// Defers work to derived classes.
@@ -27,10 +24,7 @@ namespace Construktion
         /// <param name="context"></param>
         /// <param name="pipeline"></param>
         /// <returns></returns>
-        object Blueprint.Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            return Construct(context, pipeline);
-        }
+        object Blueprint.Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => Construct(context, pipeline);
 
         /// <summary>
         /// Construct an object of T.

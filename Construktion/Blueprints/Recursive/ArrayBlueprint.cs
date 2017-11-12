@@ -4,10 +4,7 @@ namespace Construktion.Blueprints.Recursive
 
     public class ArrayBlueprint : Blueprint
     {
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.RequestType.IsArray;
-        }
+        public bool Matches(ConstruktionContext context) => context.RequestType.IsArray;
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

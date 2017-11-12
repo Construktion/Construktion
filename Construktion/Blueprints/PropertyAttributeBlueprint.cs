@@ -26,12 +26,9 @@ namespace Construktion
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public virtual bool Matches(ConstruktionContext context)
-        {
-            return context.PropertyInfo?.GetCustomAttributes(typeof(T))
-                          .ToList()
-                          .Any() ?? false;
-        }
+        public virtual bool Matches(ConstruktionContext context) => context.PropertyInfo?.GetCustomAttributes(typeof(T))
+                                                                           .ToList()
+                                                                           .Any() ?? false;
 
         /// <summary>
         /// Construct a property using its attribute value.

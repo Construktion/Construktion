@@ -14,14 +14,8 @@
             _value = value;
         }
 
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.PropertyInfo != null && _convention(context.PropertyInfo);
-        }
+        public bool Matches(ConstruktionContext context) => context.PropertyInfo != null && _convention(context.PropertyInfo);
 
-        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            return _value();
-        }
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => _value();
     }
 }

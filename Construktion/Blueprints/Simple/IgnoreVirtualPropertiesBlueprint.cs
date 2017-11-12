@@ -11,9 +11,6 @@
             return getMethod != null && (getMethod.IsVirtual && !getMethod.IsFinal);
         }
 
-        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            return default(object);
-        }
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => default(object);
     }
 }

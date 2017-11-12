@@ -37,14 +37,8 @@
             };
         }
 
-        public IEnumerator<Blueprint> GetEnumerator()
-        {
-            return _defaultBlueprints.GetEnumerator();
-        }
+        public IEnumerator<Blueprint> GetEnumerator() => _defaultBlueprints.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

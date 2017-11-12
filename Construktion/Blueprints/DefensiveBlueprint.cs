@@ -5,10 +5,7 @@
 
     public class DefensiveBlueprint : Blueprint
     {
-        public bool Matches(ConstruktionContext context)
-        {
-            return true;
-        }
+        public bool Matches(ConstruktionContext context) => true;
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

@@ -22,16 +22,10 @@
         private readonly Construktion construktion = new Construktion();
 
         [Benchmark]
-        public List<Foo> TenThousandFoos()
-        {
-            return construktion.ConstructMany<Foo>(10000).ToList();
-        }
+        public List<Foo> TenThousandFoos() => construktion.ConstructMany<Foo>(10000).ToList();
 
         [Benchmark]
-        public Foo OneFoo()
-        {
-            return construktion.Construct<Foo>();
-        }
+        public Foo OneFoo() => construktion.Construct<Foo>();
     }
 
     public class Foo

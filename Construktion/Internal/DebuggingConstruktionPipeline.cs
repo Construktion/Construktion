@@ -21,10 +21,7 @@
             _level = -1;
         }
 
-        public object Send(ConstruktionContext context)
-        {
-            return DebugSend(context, out List<string> debugLog);
-        }
+        public object Send(ConstruktionContext context) => DebugSend(context, out List<string> debugLog);
 
         public void Inject(Type type, object value)
         {

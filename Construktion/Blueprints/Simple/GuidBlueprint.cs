@@ -4,9 +4,6 @@
 
     public class GuidBlueprint : AbstractBlueprint<Guid>
     {
-        public override Guid Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            return Guid.NewGuid();
-        }
+        public override Guid Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => Guid.NewGuid();
     }
 }

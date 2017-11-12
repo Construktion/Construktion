@@ -5,11 +5,8 @@
 
     public class EmptyCtorBlueprint : Blueprint
     {
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.RequestType.GetTypeInfo().IsClass &&
-                   context.RequestType.HasDefaultCtor();
-        }
+        public bool Matches(ConstruktionContext context) => context.RequestType.GetTypeInfo().IsClass &&
+                                                            context.RequestType.HasDefaultCtor();
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

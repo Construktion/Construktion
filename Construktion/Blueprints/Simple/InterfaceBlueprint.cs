@@ -14,10 +14,7 @@
             _typeMap = typeMap;
         }
 
-        public bool Matches(ConstruktionContext context)
-        {
-            return _typeMap.ContainsKey(context.RequestType);
-        }
+        public bool Matches(ConstruktionContext context) => _typeMap.ContainsKey(context.RequestType);
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

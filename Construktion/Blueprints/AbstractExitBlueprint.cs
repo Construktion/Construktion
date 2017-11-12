@@ -5,10 +5,8 @@ namespace Construktion
 
     public abstract class AbstractExitBlueprint<T> : ExitBlueprint<T>, ExitBlueprint
     {
-        public bool Matches(object item, ConstruktionContext context)
-        {
-            return typeof(T).IsAssignableFrom(context.RequestType) && Matches((T)item, context);
-        }
+        public bool Matches(object item, ConstruktionContext context) =>
+            typeof(T).IsAssignableFrom(context.RequestType) && Matches((T)item, context);
 
         /// <summary>
         /// Match a context to construct. Note: an additional check is
@@ -17,10 +15,7 @@ namespace Construktion
         /// </summary>
         public virtual bool Matches(T item, ConstruktionContext context) => true;
 
-        public object Construct(object item, ConstruktionPipeline pipeline)
-        {
-            return Construct((T)item, pipeline);
-        }
+        public object Construct(object item, ConstruktionPipeline pipeline) => Construct((T)item, pipeline);
 
         /// <summary>
         /// The final chance to alter an object of T after it 

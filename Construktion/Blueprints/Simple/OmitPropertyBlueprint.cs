@@ -39,11 +39,8 @@
             return typeInfo.IsGenericType && _propertyTypes.Contains(typeInfo.GetGenericTypeDefinition());
         }
 
-        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            return context.RequestType.GetTypeInfo().IsValueType
-                       ? Activator.CreateInstance(context.RequestType)
-                       : null;
-        }
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => context.RequestType.GetTypeInfo().IsValueType
+                                                                                                   ? Activator.CreateInstance(context.RequestType)
+                                                                                                   : null;
     }
 }

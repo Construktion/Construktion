@@ -69,18 +69,12 @@
 
         public class StringExitOneBlueprint : AbstractExitBlueprint<string>
         {
-            public override string Construct(string item, ConstruktionPipeline pipeline)
-            {
-                return item + "One";
-            }
+            public override string Construct(string item, ConstruktionPipeline pipeline) => item + "One";
         }
 
         public class StringExitTwoBlueprint : AbstractExitBlueprint<string>
         {
-            public override string Construct(string item, ConstruktionPipeline pipeline)
-            {
-                return item + "Two";
-            }
+            public override string Construct(string item, ConstruktionPipeline pipeline) => item + "Two";
         }
 
         public class StringOneRegistry : ConstruktionRegistry

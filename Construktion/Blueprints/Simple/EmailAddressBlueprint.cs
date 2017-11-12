@@ -25,10 +25,8 @@
             _convention = convention;
         }
 
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.PropertyInfo?.PropertyType == typeof(string) && _convention(context.PropertyInfo);
-        }
+        public bool Matches(ConstruktionContext context) => context.PropertyInfo?.PropertyType == typeof(string) &&
+                                                            _convention(context.PropertyInfo);
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

@@ -6,10 +6,7 @@
     {
         private readonly Random _random = new Random();
 
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.PropertyInfo?.PropertyType == typeof(string);
-        }
+        public bool Matches(ConstruktionContext context) => context.PropertyInfo?.PropertyType == typeof(string);
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

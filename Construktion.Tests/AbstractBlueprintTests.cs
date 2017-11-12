@@ -26,14 +26,11 @@
 
         public class FooBlueprint : AbstractBlueprint<Foo>
         {
-            public override Foo Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+            public override Foo Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => new Foo
             {
-                return new Foo
-                {
-                    Name = "Name",
-                    Age = 10
-                };
-            }
+                Name = "Name",
+                Age = 10
+            };
         }
 
         public class Foo

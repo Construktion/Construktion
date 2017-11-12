@@ -53,9 +53,6 @@ namespace Construktion.Samples
             }
         }
 
-        public static T Construct<T>()
-        {
-            return _construktion.Construct<T>();
-        }
+        public static T Construct<T>() => _construktion.Construct<T>();
     }
 }

@@ -38,15 +38,10 @@
             CreateRange();
         }
 
-        public bool Matches(ConstruktionContext context)
-        {
-            return _typesHandled.Contains(context.RequestType) && !context.RequestType.GetTypeInfo().IsEnum;
-        }
+        public bool Matches(ConstruktionContext context) => _typesHandled.Contains(context.RequestType) &&
+                                                            !context.RequestType.GetTypeInfo().IsEnum;
 
-        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            return CreateRandom(context.RequestType);
-        }
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => CreateRandom(context.RequestType);
 
         private object CreateRandom(Type request)
         {
@@ -141,12 +136,9 @@
             numbers.Clear();
         }
 
-        private long GetUpperRangeFromLimits()
-        {
-            return limits[1] >= int.MaxValue
-                       ? limits[1]
-                       : limits[1] + 1;
-        }
+        private long GetUpperRangeFromLimits() => limits[1] >= int.MaxValue
+                                                      ? limits[1]
+                                                      : limits[1] + 1;
 
         private long GetNextInt64InRange()
         {

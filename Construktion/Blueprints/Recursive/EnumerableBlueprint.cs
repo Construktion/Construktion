@@ -8,11 +8,8 @@
 
     public class EnumerableBlueprint : Blueprint
     {
-        public bool Matches(ConstruktionContext context)
-        {
-            return context.RequestType.GetTypeInfo().IsGenericType &&
-                   typeof(IEnumerable).IsAssignableFrom(context.RequestType);
-        }
+        public bool Matches(ConstruktionContext context) => context.RequestType.GetTypeInfo().IsGenericType &&
+                                                            typeof(IEnumerable).IsAssignableFrom(context.RequestType);
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {

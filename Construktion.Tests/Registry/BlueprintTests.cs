@@ -69,18 +69,12 @@
 
         public class StringOneBlueprint : AbstractBlueprint<string>
         {
-            public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-            {
-                return "StringOne";
-            }
+            public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => "StringOne";
         }
 
         public class StringTwoBlueprint : AbstractBlueprint<string>
         {
-            public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-            {
-                return "StringTwo";
-            }
+            public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => "StringTwo";
         }
 
         public class StringOneRegistry : ConstruktionRegistry

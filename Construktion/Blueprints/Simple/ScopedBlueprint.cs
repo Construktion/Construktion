@@ -13,14 +13,8 @@
             _instance = instance;
         }
 
-        public bool Matches(ConstruktionContext context)
-        {
-            return _type == context.RequestType;
-        }
+        public bool Matches(ConstruktionContext context) => _type == context.RequestType;
 
-        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-        {
-            return _instance;
-        }
+        public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => _instance;
     }
 }

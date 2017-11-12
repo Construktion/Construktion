@@ -20,10 +20,7 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Construct<T>()
-        {
-            return DoConstruct<T>(typeof(T), null);
-        }
+        public T Construct<T>() => DoConstruct<T>(typeof(T), null);
 
         /// <summary>
         /// Construct an object with hard codes to be applied after construction.
@@ -31,10 +28,7 @@ namespace Construktion
         /// <typeparam name="T"></typeparam>
         /// <param name="hardCodes"></param>
         /// <returns></returns>
-        public T Construct<T>(Action<T> hardCodes)
-        {
-            return DoConstruct(typeof(T), hardCodes);
-        }
+        public T Construct<T>(Action<T> hardCodes) => DoConstruct(typeof(T), hardCodes);
 
         /// <summary>
         /// Construct the type.
@@ -67,10 +61,7 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IEnumerable<T> ConstructMany<T>()
-        {
-            return ConstructMany<T>(_settings.EnumuerableCount);
-        }
+        public IEnumerable<T> ConstructMany<T>() => ConstructMany<T>(_settings.EnumuerableCount);
 
         /// <summary>
         /// Construct an IEnumerable with a specific count. Cannot be negative.
@@ -79,10 +70,7 @@ namespace Construktion
         /// <param name="count"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public IEnumerable<T> ConstructMany<T>(int count)
-        {
-            return ConstructMany<T>(null, count);
-        }
+        public IEnumerable<T> ConstructMany<T>(int count) => ConstructMany<T>(null, count);
 
         /// <summary>
         /// Construct an IEnumerable with hard codes applied after construction.
@@ -90,10 +78,7 @@ namespace Construktion
         /// <typeparam name="T"></typeparam>
         /// <param name="hardCodes"></param>
         /// <returns></returns>
-        public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes)
-        {
-            return ConstructMany(hardCodes, _settings.EnumuerableCount);
-        }
+        public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes) => ConstructMany(hardCodes, _settings.EnumuerableCount);
 
         /// <summary>
         /// Construct an IEnumerable with hard codes applied after construction and with a specific count. Cannot be negative.
