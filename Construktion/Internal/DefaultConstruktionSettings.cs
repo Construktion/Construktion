@@ -16,8 +16,12 @@ namespace Construktion.Internal
         public IEnumerable<ExitBlueprint> ExitBlueprints => _exitBlueprints;
 
         public IDictionary<Type, Type> TypeMap { get; }
-        public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; }
-        public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
+
+	    private Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy;
+		public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; }
+
+	    private Func<Type, IEnumerable<PropertyInfo>> propertyStrategy;
+		public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
 
         private int? enumerableCount;
         public int EnumuerableCount { get; private set; }
@@ -50,8 +54,8 @@ namespace Construktion.Internal
             foreach (var map in registry.Settings.TypeMap)
                 TypeMap[map.Key] = map.Value;
 
-            CtorStrategy = registry.Settings.CtorStrategy ?? CtorStrategy;
-            PropertyStrategy = registry.Settings.PropertyStrategy ?? PropertyStrategy;
+            CtorStrategy = registry.Settings.ctorStrategy ?? CtorStrategy;
+            PropertyStrategy = registry.Settings.propertyStrategy ?? PropertyStrategy;
             EnumuerableCount = registry.Settings.enumerableCount ?? EnumuerableCount;
             RecurssionDepth = registry.Settings.recursionDepth ?? RecurssionDepth;
             ThrowOnRecurrsion = registry.Settings.throwOnRecursion ?? ThrowOnRecurrsion;
@@ -66,38 +70,39 @@ namespace Construktion.Internal
         internal void Apply(ExitBlueprint exitBlueprint) => _exitBlueprints.Add(exitBlueprint);
 
         internal void Apply(Type contract, Type implementation) => TypeMap[contract] = implementation;
+		
 
-        internal void Apply(Ctors strategy)
-        {
-            switch (strategy)
-            {
-                case Ctors.Greedy:
-                    CtorStrategy = Extensions.GreedyCtor;
-                    break;
-                case Ctors.Modest:
-                    CtorStrategy = Extensions.ModestCtor;
-                    break;
-            }
-        }
-
-        internal void Apply(PropertySetters strategy)
-        {
-            switch (strategy)
-            {
-                case PropertySetters.Public:
-                    PropertyStrategy = Extensions.PropertiesWithPublicSetter;
-                    break;
-                case PropertySetters.Accessible:
-                    PropertyStrategy = Extensions.PropertiesWithAccessibleSetter;
-                    break;
-            }
-        }
-
-        internal void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
+		internal void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
 
         internal void Inject(Type type, object value) => _customBlueprints.Insert(0, new ScopedBlueprint(type, value));
 
-        internal void SetEnumerableCount(int count) => enumerableCount = count;
+		internal void SetCtorStrategy(Ctors strategy)
+	    {
+		    switch (strategy)
+		    {
+			    case Ctors.Modest:
+				    ctorStrategy = Extensions.ModestCtor;
+				    break;
+			    case Ctors.Greedy:
+				    ctorStrategy = Extensions.GreedyCtor;
+				    break;
+			}
+	    }
+
+	    internal void SetPropertyStrategy(PropertySetters strategy)
+	    {
+		    switch (strategy)
+		    {
+			    case PropertySetters.Public:
+				    propertyStrategy = Extensions.PropertiesWithPublicSetter;
+				    break;
+			    case PropertySetters.Accessible:
+				    propertyStrategy = Extensions.PropertiesWithAccessibleSetter;
+				    break;
+		    }
+	    }
+
+		internal void SetEnumerableCount(int count) => enumerableCount = count;
         internal void SetRecursionDepth(int depth) => recursionDepth = depth;
         internal void SetThrowOnRecursion(bool shouldThrow) => throwOnRecursion = shouldThrow;
 
@@ -107,9 +112,7 @@ namespace Construktion.Internal
             public static int RecursionDepth => 0;
             public static bool ThrowOnRecursion => false;
             public static Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy => Extensions.ModestCtor;
-
-            public static Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy => Extensions
-                .PropertiesWithPublicSetter;
+            public static Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy => Extensions.PropertiesWithPublicSetter;
         }
     }
 }

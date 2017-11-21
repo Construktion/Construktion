@@ -48,7 +48,21 @@
             foo.PrivateSetter.ShouldBeNullOrWhiteSpace();
         }
 
-        public class Foo
+	    [Fact]
+	    public void a_new_registry_without_a_property_strategy_should_not_overwrite_previous()
+	    {
+		    registry.ConstructPrivateSetters();
+
+		    construktion
+			    .With(registry)
+			    .With(new ConstruktionRegistry());
+
+		    var result = construktion.Construct<Foo>();
+
+		    result.PrivateSetter.ShouldNotBeNullOrWhiteSpace();
+	    }
+
+		public class Foo
         {
             public string PrivateSetter { get; private set; }
         }

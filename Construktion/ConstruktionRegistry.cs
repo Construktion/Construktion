@@ -131,7 +131,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry UseModestCtor()
         {
-            Settings.Apply(Ctors.Modest);
+            Settings.SetCtorStrategy(Ctors.Modest);
             return this;
         }
 
@@ -141,8 +141,8 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry UseGreedyCtor()
         {
-            Settings.Apply(Ctors.Greedy);
-            return this;
+			Settings.SetCtorStrategy(Ctors.Greedy);
+			return this;
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry OmitPrivateSetters()
         {
-            Settings.Apply(PropertySetters.Public);
+            Settings.SetPropertyStrategy(PropertySetters.Public);
             return this;
         }
 
@@ -161,8 +161,8 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry ConstructPrivateSetters()
         {
-            Settings.Apply(PropertySetters.Accessible);
-            return this;
+			Settings.SetPropertyStrategy(PropertySetters.Accessible);
+			return this;
         }
 
         /// <summary>

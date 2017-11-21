@@ -23,19 +23,19 @@
         }
 
         [Fact]
-        public void should_use_modest_ctor_when_opted_in()
+        public void should_use_greedy_ctor_when_opted_in()
         {
-            registry.UseModestCtor();
+            registry.UseGreedyCtor();
 
             var result = construktion.With(registry).Construct<MultiCtor>();
 
-            result.UsedModestCtor.ShouldBe(true);
+            result.UsedGreedyCtor.ShouldBe(true);
         }
 
-        [Fact]
-        public void a_newregistry_without_a_ctor_strategy_should_not_overwrite_previous()
+		[Fact]
+        public void a_new_registry_without_a_ctor_strategy_should_not_overwrite_previous()
         {
-            registry.UseModestCtor();
+            registry.UseGreedyCtor();
 
             construktion
                 .With(registry)
@@ -43,7 +43,7 @@
 
             var result = construktion.Construct<MultiCtor>();
 
-            result.UsedModestCtor.ShouldBe(true);
+            result.UsedGreedyCtor.ShouldBe(true);
         }
 
         [Fact]
