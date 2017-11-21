@@ -18,7 +18,21 @@
                         .ShouldBe(inject.GetHashCode());
         }
 
-        [Fact]
+	    [Fact]
+	    public void should_inject_instance_with_explicit_type()
+	    {
+		    var injected = new StringHolderProxy("value");
+
+		    var construktion = new Construktion().Inject(typeof(StringHolder), injected);
+
+		    var stringHolder = construktion.Construct<StringHolder>();
+
+		    stringHolder.Value.ShouldBe("value");
+		    stringHolder.ShouldBeOfType<StringHolderProxy>();
+			stringHolder.GetHashCode().ShouldBe(injected.GetHashCode());
+	    }
+
+		[Fact]
         public void should_always_use_the_same_instance()
         {
             var inject = new Inject();
@@ -104,5 +118,23 @@
                 Inject = inject;
             }
         }
+
+	    public class StringHolderProxy : StringHolder
+	    {
+		    public StringHolderProxy(string value) : base (value)
+		    {
+			    
+		    }
+	    }
+
+	    public class StringHolder
+	    {
+		    public string Value { get; }
+
+		    public StringHolder(string value)
+		    {
+			    Value = value;
+		    }
+	    }
     }
 }

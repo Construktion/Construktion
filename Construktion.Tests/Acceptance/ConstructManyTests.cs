@@ -91,7 +91,13 @@ namespace Construktion.Tests.Acceptance
             Exception<ArgumentException>.ShouldBeThrownBy(() => construktion.With(x => x.EnumerableCount(-1)));
         }
 
-        public class Bar
+	    [Fact]
+	    public void construt_many_should_throw_when_setting_a_negative_count()
+	    {
+		    Exception<ArgumentException>.ShouldBeThrownBy(() => construktion.ConstructMany<int>(-1));
+	    }
+
+		public class Bar
         {
             public string Name { get; set; }
         }

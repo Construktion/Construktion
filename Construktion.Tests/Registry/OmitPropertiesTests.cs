@@ -83,7 +83,20 @@ namespace Construktion.Tests.Registry
             foo.VirtualInt.ShouldBe(0);
         }
 
-        [Fact]
+	    [Fact]
+	    public void should_omit_all_properties_of_type()
+	    {
+		    registry.OmitProperties(prop => prop.Name == "Omit", typeof(string), typeof(int));
+		    construktion.With(registry);
+
+		    var foo = construktion.Construct<Foo>();
+		    var bar = construktion.Construct<Bar>();
+
+			foo.Omit.ShouldBe(null);
+			bar.Omit.ShouldBe(0);
+	    }
+
+		[Fact]
         public void should_omit_all_properties_that_inherit_a_generic()
         {
             registry.OmitProperties(prop => prop.PropertyType.GetTypeInfo().BaseType != null &&
@@ -94,7 +107,7 @@ namespace Construktion.Tests.Registry
 
             var foo = construktion.Construct<Foo>();
 
-            foo.InheritsGeneric.ShouldBe(null);
+			foo.InheritsGeneric.ShouldBe(null);
         }
 
         public class Foo
@@ -103,6 +116,7 @@ namespace Construktion.Tests.Registry
             public int? NullableFooId { get; set; }
             public int Fooid { get; set; }
             public string String_Idx { get; set; }
+			public string Omit { get; set; }
 
             public List<int> ListInts { get; set; }
             public List<string> ListStrings { get; set; }
@@ -110,6 +124,11 @@ namespace Construktion.Tests.Registry
             public virtual int VirtualInt { get; set; }
             public InheritsGeneric InheritsGeneric { get; set; }
         }
+
+	    public class Bar
+	    {
+		    public int Omit { get; set; }
+	    }
 
         public class MyClass { }
 
