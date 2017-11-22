@@ -11,24 +11,33 @@
         static void Main(string[] args)
         {
             BenchmarkRunner.Run<MyBenchmark>();
-
+			
             Console.ReadLine();
         }
     }
 
-    [MemoryDiagnoser]
-    public class MyBenchmark
-    {
-        private readonly Construktion construktion = new Construktion();
+	[MemoryDiagnoser]
+	public class MyBenchmark
+	{
+		private static readonly Construktion construktion = new Construktion();
 
-        [Benchmark]
-        public List<Foo> TenThousandFoos() => construktion.ConstructMany<Foo>(10000).ToList();
+		[Benchmark]
+		public Foo One() => construktion.Construct<Foo>();
 
-        [Benchmark]
-        public Foo OneFoo() => construktion.Construct<Foo>();
-    }
+		[Benchmark]
+		public List<Foo> FiveThousand()
+		{
+			return createFoo().ToList();
 
-    public class Foo
+			IEnumerable<Foo> createFoo()
+			{
+				for (var i = 1; i <= 5000; i++)
+					yield return construktion.Construct<Foo>();
+			}
+		}
+	}
+
+	public class Foo
     {
         public string Name { get; set; }
         public int Age { get; set; }
