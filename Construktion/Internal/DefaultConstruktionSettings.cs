@@ -4,6 +4,7 @@ namespace Construktion.Internal
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Blueprints;
     using Blueprints.Simple;
 
     public class DefaultConstruktionSettings : ConstruktionSettings
