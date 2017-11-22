@@ -17,19 +17,19 @@ namespace Construktion.Internal
 
         public IDictionary<Type, Type> TypeMap { get; }
 
-	    private Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy;
+	    private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
 		public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; }
 
-	    private Func<Type, IEnumerable<PropertyInfo>> propertyStrategy;
+	    private Func<Type, IEnumerable<PropertyInfo>> _propertyStrategy;
 		public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
 
-        private int? enumerableCount;
+        private int? _enumerableCount;
         public int EnumuerableCount { get; private set; }
 
-        private int? recursionDepth;
+        private int? _recursionDepth;
         public int RecurssionDepth { get; private set; }
 
-        private bool? throwOnRecursion;
+        private bool? _throwOnRecursion;
         public bool ThrowOnRecurrsion { get; private set; }
 
         public DefaultConstruktionSettings()
@@ -54,11 +54,11 @@ namespace Construktion.Internal
             foreach (var map in registry.Settings.TypeMap)
                 TypeMap[map.Key] = map.Value;
 
-            CtorStrategy = registry.Settings.ctorStrategy ?? CtorStrategy;
-            PropertyStrategy = registry.Settings.propertyStrategy ?? PropertyStrategy;
-            EnumuerableCount = registry.Settings.enumerableCount ?? EnumuerableCount;
-            RecurssionDepth = registry.Settings.recursionDepth ?? RecurssionDepth;
-            ThrowOnRecurrsion = registry.Settings.throwOnRecursion ?? ThrowOnRecurrsion;
+            CtorStrategy = registry.Settings._ctorStrategy ?? CtorStrategy;
+            PropertyStrategy = registry.Settings._propertyStrategy ?? PropertyStrategy;
+            EnumuerableCount = registry.Settings._enumerableCount ?? EnumuerableCount;
+            RecurssionDepth = registry.Settings._recursionDepth ?? RecurssionDepth;
+            ThrowOnRecurrsion = registry.Settings._throwOnRecursion ?? ThrowOnRecurrsion;
 
             _defaultBlueprints = new DefaultBlueprints(TypeMap);
         }
@@ -81,10 +81,10 @@ namespace Construktion.Internal
 		    switch (strategy)
 		    {
 			    case Ctors.Modest:
-				    ctorStrategy = Extensions.ModestCtor;
+				    _ctorStrategy = Extensions.ModestCtor;
 				    break;
 			    case Ctors.Greedy:
-				    ctorStrategy = Extensions.GreedyCtor;
+				    _ctorStrategy = Extensions.GreedyCtor;
 				    break;
 			}
 	    }
@@ -94,17 +94,17 @@ namespace Construktion.Internal
 		    switch (strategy)
 		    {
 			    case PropertySetters.Public:
-				    propertyStrategy = Extensions.PropertiesWithPublicSetter;
+				    _propertyStrategy = Extensions.PropertiesWithPublicSetter;
 				    break;
 			    case PropertySetters.Accessible:
-				    propertyStrategy = Extensions.PropertiesWithAccessibleSetter;
+				    _propertyStrategy = Extensions.PropertiesWithAccessibleSetter;
 				    break;
 		    }
 	    }
 
-		internal void SetEnumerableCount(int count) => enumerableCount = count;
-        internal void SetRecursionDepth(int depth) => recursionDepth = depth;
-        internal void SetThrowOnRecursion(bool shouldThrow) => throwOnRecursion = shouldThrow;
+		internal void SetEnumerableCount(int count) => _enumerableCount = count;
+        internal void SetRecursionDepth(int depth) => _recursionDepth = depth;
+        internal void SetThrowOnRecursion(bool shouldThrow) => _throwOnRecursion = shouldThrow;
 
         private static class Default
         {
