@@ -9,10 +9,12 @@ namespace Construktion
     public class Construktion
     {
         private readonly DefaultConstruktionSettings _settings;
+	    private readonly DefaultConstruktionPipeline _pipeline;
 
-        public Construktion()
+	    public Construktion()
         {
             _settings = new DefaultConstruktionSettings();
+			_pipeline = new DefaultConstruktionPipeline(_settings);
         }
 
         /// <summary>
@@ -128,9 +130,7 @@ namespace Construktion
                               ? new ConstruktionContext(type)
                               : new ConstruktionContext(parameterInfo);
 
-            var pipeline = new DefaultConstruktionPipeline(_settings);
-
-            var result = (T)pipeline.Send(context);
+            var result = (T)_pipeline.Send(context);
 
             hardCodes?.Invoke(result);
 
