@@ -2,12 +2,12 @@
 {
     using System;
 
-    public class ScopedBlueprint : Blueprint
+    public class SingletonBlueprint : Blueprint
     {
         private readonly Type _type;
         private readonly object _instance;
 
-        public ScopedBlueprint(Type type, object instance)
+        public SingletonBlueprint(Type type, object instance)
         {
             _type = type;
             _instance = instance;

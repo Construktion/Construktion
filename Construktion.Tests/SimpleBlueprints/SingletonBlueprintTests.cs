@@ -5,13 +5,13 @@
     using Shouldly;
     using Xunit;
 
-    public class ScopedBlueprintTests
+    public class SingletonBlueprintTests
     {
         [Fact]
         public void should_match_specific_objects()
         {
             var foo = new Foo();
-            var blueprint = new ScopedBlueprint(typeof(IFoo), foo);
+            var blueprint = new SingletonBlueprint(typeof(IFoo), foo);
 
             var matchesFoo = blueprint.Matches(new ConstruktionContext(typeof(IFoo)));
             var matchesString = blueprint.Matches(new ConstruktionContext(typeof(string)));
@@ -24,7 +24,7 @@
         public void should_return_the_same_object()
         {
             var foo = new Foo { Name = "Name", Age = 10 };
-            var blueprint = new ScopedBlueprint(typeof(IFoo), foo);
+            var blueprint = new SingletonBlueprint(typeof(IFoo), foo);
 
             var result = blueprint.Construct(new ConstruktionContext(typeof(IFoo)), new DefaultConstruktionPipeline());
 

@@ -73,9 +73,9 @@ namespace Construktion.Internal
         internal void Apply(Type contract, Type implementation) => TypeMap[contract] = implementation;
 		
 
-		internal void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new ScopedBlueprint(typeof(T), instance));
+		internal void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new SingletonBlueprint(typeof(T), instance));
 
-        internal void Inject(Type type, object value) => _customBlueprints.Insert(0, new ScopedBlueprint(type, value));
+        internal void Inject(Type type, object value) => _customBlueprints.Insert(0, new SingletonBlueprint(type, value));
 
 		internal void SetCtorStrategy(Ctors strategy)
 	    {
