@@ -71,7 +71,6 @@ namespace Construktion.Internal
         internal void Apply(ExitBlueprint exitBlueprint) => _exitBlueprints.Add(exitBlueprint);
 
         internal void Apply(Type contract, Type implementation) => TypeMap[contract] = implementation;
-		
 
 		internal void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new SingletonBlueprint(typeof(T), instance));
 

@@ -3,138 +3,124 @@
     using Shouldly;
     using Xunit;
 
-    public class InjectTests
-    {
-        [Fact]
-        public void should_inject_instance()
-        {
-            var inject = new Inject();
-            var construktion = new Construktion().Inject(inject);
+	public class InjectTests
+	{
+		[Fact]
+		public void should_inject_instance()
+		{
+			var foo = new Foo();
+			var construktion = new Construktion().Inject(foo);
 
-            var injectHolder = construktion.Construct<InjectHolder>();
+			var result = construktion.Construct<FooHolder>();
 
-            injectHolder.Inject
-                        .GetHashCode()
-                        .ShouldBe(inject.GetHashCode());
-        }
-
-	    [Fact]
-	    public void should_inject_instance_with_explicit_type()
-	    {
-		    var injected = new StringHolderProxy("value");
-
-		    var construktion = new Construktion().Inject(typeof(StringHolder), injected);
-
-		    var stringHolder = construktion.Construct<StringHolder>();
-
-		    stringHolder.Value.ShouldBe("value");
-		    stringHolder.ShouldBeOfType<StringHolderProxy>();
-			stringHolder.GetHashCode().ShouldBe(injected.GetHashCode());
-	    }
+			result.Foo
+			      .GetHashCode()
+			      .ShouldBe(foo.GetHashCode());
+		}
 
 		[Fact]
-        public void should_always_use_the_same_instance()
-        {
-            var inject = new Inject();
-            var construktion = new Construktion().Inject(inject);
+		public void should_inject_instance_with_explicit_type()
+		{
+			var foo = new Foo() { Name = "Foo" };
+			var fooHolder = new FooHolder(foo);
 
-            var injectHolder = construktion.Construct<InjectHolder>();
-            var injectHolder2 = construktion.Construct<InjectHolder>();
+			var construktion = new Construktion().Inject(typeof(FooHolder), fooHolder);
 
-            injectHolder.Inject
-                        .GetHashCode()
-                        .ShouldBe(inject.GetHashCode());
+			var result = construktion.Construct<FooHolder>();
 
-            injectHolder2.Inject
-                         .GetHashCode()
-                         .ShouldBe(inject.GetHashCode());
-        }
+			result.Foo.Name.ShouldBe("Foo");
+			result.ShouldBeOfType<FooHolder>();
+			result.GetHashCode().ShouldBe(fooHolder.GetHashCode());
+		}
 
-        [Fact]
-        public void should_inject_from_within_pipeline()
-        {
-            var construktion = new Construktion().With(new InjectBlueprint());
+		[Fact]
+		public void should_always_use_the_same_instance()
+		{
+			var foo = new Foo();
+			var construktion = new Construktion().Inject(foo);
 
-            var inject = construktion.Construct<Inject>();
-            var injectHolder = construktion.Construct<InjectHolder>();
+			var result = construktion.Construct<FooHolder>();
+			var result2 = construktion.Construct<FooHolder>();
 
-            injectHolder.Inject
-                        .GetHashCode()
-                        .ShouldBe(inject.GetHashCode());
-        }
+			result.Foo
+			      .GetHashCode()
+			      .ShouldBe(foo.GetHashCode());
 
-        [Fact]
-        public void should_always_use_the_same_instance_when_injected_from_pipeline()
-        {
-            var construktion = new Construktion().With(new InjectBlueprint());
+			result2.Foo
+			       .GetHashCode()
+			       .ShouldBe(foo.GetHashCode());
+		}
 
-            var inject = construktion.Construct<Inject>();
-            var injectHolder = construktion.Construct<InjectHolder>();
-            var injectHolder2 = construktion.Construct<InjectHolder>();
+		[Fact]
+		public void should_inject_from_within_pipeline()
+		{
+			var construktion = new Construktion().With(new FooBlueprint());
 
-            inject.GetHashCode().ShouldBe(injectHolder.Inject.GetHashCode());
+			var foo = construktion.Construct<Foo>();
+			var result = construktion.Construct<FooHolder>();
 
-            injectHolder.Inject
-                        .GetHashCode()
-                        .ShouldBe(injectHolder2.Inject.GetHashCode());
-        }
+			result.Foo
+			      .GetHashCode()
+			      .ShouldBe(foo.GetHashCode());
+		}
 
-        [Fact]
-        public void inject_instance_should_be_scoped_to_construktion_instance()
-        {
-            var inject = new Inject();
+		[Fact]
+		public void should_always_use_the_same_instance_when_injected_from_pipeline()
+		{
+			var construktion = new Construktion().With(new FooBlueprint());
 
-            var construktion = new Construktion().Inject(inject);
+			var foo = construktion.Construct<Foo>();
+			var result = construktion.Construct<FooHolder>();
+			var result2 = construktion.Construct<FooHolder>();
 
-            var injectHolder = new Construktion().Construct<InjectHolder>();
+			foo.GetHashCode().ShouldBe(result.Foo.GetHashCode());
 
-            injectHolder.Inject
-                        .GetHashCode()
-                        .ShouldNotBe(inject.GetHashCode());
-        }
+			result.Foo
+			            .GetHashCode()
+			            .ShouldBe(result2.Foo.GetHashCode());
+		}
 
-        public class InjectBlueprint : Blueprint
-        {
-            public bool Matches(ConstruktionContext context) => context.RequestType == typeof(Inject);
+		[Fact]
+		public void injected_instance_should_be_scoped_to_construktion_instance()
+		{
+			var foo = new Foo();
 
-            public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
-            {
-                var inject = new Inject();
+			var construktion = new Construktion().Inject(foo);
 
-                pipeline.Inject(context.RequestType, inject);
+			var injectHolder = new Construktion().Construct<FooHolder>();
 
-                return inject;
-            }
-        }
+			injectHolder.Foo
+			            .GetHashCode()
+			            .ShouldNotBe(foo.GetHashCode());
+		}
 
-        public class Inject { }
+		public class FooBlueprint : Blueprint
+		{
+			public bool Matches(ConstruktionContext context) => context.RequestType == typeof(Foo);
 
-        public class InjectHolder
-        {
-            public Inject Inject { get; }
+			public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
+			{
+				var inject = new Foo();
 
-            public InjectHolder(Inject inject)
-            {
-                Inject = inject;
-            }
-        }
+				pipeline.Inject(context.RequestType, inject);
 
-	    public class StringHolderProxy : StringHolder
-	    {
-		    public StringHolderProxy(string value) : base (value)
-		    {
-			    
-		    }
-	    }
+				return inject;
+			}
+		}
 
-	    public class StringHolder
-	    {
-		    public string Value { get; }
+		public class Foo
+		{
+			public string Name { get; set; }
+		}
 
-		    public StringHolder(string value)
-		    {
-			    Value = value;
-		    }
-	    }
-    }
+		public class FooHolder
+		{
+			public Foo Foo { get; }
+
+			public FooHolder(Foo foo)
+			{
+				Foo = foo;
+			}
+		}
+	}
 }
