@@ -28,7 +28,7 @@
                 count = Enum.GetNames(key).Length;
 
             var keys = CreateUniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
-            var values = Values(count, value, pipeline).ToList();
+            var values = CreateValues(count, value, pipeline).ToList();
 
             var dictionary = (IDictionary)typeof(Dictionary<,>).NewGeneric(key, value);
 
@@ -38,8 +38,7 @@
             return dictionary;
         }
 
-        private HashSet<object> CreateUniqueKeys(int count, Type key, ConstruktionPipeline pipeline,
-            HashSet<object> items)
+        private HashSet<object> CreateUniqueKeys(int count, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
         {
             var newItem = pipeline.Send(new ConstruktionContext(key));
 
@@ -51,7 +50,7 @@
                        : CreateUniqueKeys(count, key, pipeline, items);
         }
 
-        private IEnumerable<object> Values(int count, Type closedType, ConstruktionPipeline pipeline)
+        private IEnumerable<object> CreateValues(int count, Type closedType, ConstruktionPipeline pipeline)
         {
             for (var i = 0; i < count; i++)
                 yield return pipeline.Send(new ConstruktionContext(closedType));

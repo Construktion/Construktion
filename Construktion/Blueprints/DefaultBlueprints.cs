@@ -16,7 +16,6 @@
         {
             _defaultBlueprints = new List<Blueprint>
             {
-                new StringPropertyBlueprint(),
                 new StringBlueprint(),
                 new NumericBlueprint(),
                 new CharBlueprint(),

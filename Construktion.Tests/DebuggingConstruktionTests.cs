@@ -74,7 +74,7 @@
 Blueprint: Construktion.Blueprints.Recursive.EmptyCtorBlueprint
 
      Start Property: Name
-     Blueprint: Construktion.Blueprints.Simple.StringPropertyBlueprint
+     Blueprint: Construktion.Blueprints.Simple.StringBlueprint
      End Name
 
      Start Property: Age
@@ -88,7 +88,7 @@ End Construktion.Tests.DebuggingConstruktionTests+Foo";
 Blueprint: Construktion.Blueprints.Recursive.EmptyCtorBlueprint
 
      Start Property: Name
-     Blueprint: Construktion.Blueprints.Simple.StringPropertyBlueprint
+     Blueprint: Construktion.Blueprints.Simple.StringBlueprint
      End Name
 
      Start Property: Age
