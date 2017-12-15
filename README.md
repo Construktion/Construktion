@@ -4,7 +4,7 @@
 
 Quick Start
 ---
-The Construktion class will build objects with randomized values. If you're using XUnit, you can inject constructed 
+The Construktion class will build objects with randomized values. If you're using xUnit, you can inject constructed 
 values automatically. 
 
 ```c#
@@ -19,7 +19,7 @@ person.Age.ShouldNotBe(0);
 
 //overloads like ConstructMany<T> or ConstructMany<T>(Action<T> hardCodes) are available.
 
-//XUnit isn't supported out of the box, but the wiki details
+//xUnit isn't supported out of the box, but the wiki details
 //how to add support
 [Theory, ConstruktionData]
 public void should_join_team(Team team, Player player)
@@ -38,7 +38,7 @@ public void should_join_team(Team team, Player player)
 Customizing
 ---
 At the heart of the library are the blueprints. They are used to customize how 
-objects are built. Below is an example of a blueprint that will asign all bool
+objects are built. Below is an example of a blueprint that will assign all bool
 properties named IsActive to true.
 
 ```c#
@@ -53,8 +53,7 @@ public class IsActiveBlueprint : Blueprint
 var construktion = new Construktion().With(new IsActiveBlueprint());
 ```
 
-You can add your customizations through the construktion instance or for more complex scenarios a registry 
-class can be used.
+Customizations can be added through the construktion instance. For most scenarios the registry class should be used to group all configured settings.
 
 ```c#
 var construktion = new Construktion().With(new CustomRegistry());
@@ -73,7 +72,7 @@ public class CustomRegistry : ConstruktionRegistry
 ```
 The [wiki](https://github.com/Construktion/Construktion/wiki) contains full details and documentation. 
 
-Questions, Comments, and Concerns
+Questions and Comments
 ---
-For any questions or help you can hop on over to the [gitter room](https://gitter.im/Construktion_/Lobby) or file an [issue](https://github.com/Construktion/Construktion/issues). Feedback is always welcomed!
+For any questions or help you can hop on over to the [gitter room](https://gitter.im/Construktion_/Lobby) or file an [issue](https://github.com/Construktion/Construktion/issues). If you're currently using Construktion, I'd love to hear any feedback. Right now it's pretty much just me thinking of what people *might* want—instead of what they actually want. 
 
