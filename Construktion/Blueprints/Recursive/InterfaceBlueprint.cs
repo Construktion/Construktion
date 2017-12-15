@@ -1,4 +1,4 @@
-﻿namespace Construktion.Blueprints.Simple
+﻿namespace Construktion.Blueprints.Recursive
 {
     using System;
     using System.Collections.Generic;

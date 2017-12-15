@@ -4,9 +4,6 @@
     using System.Reflection;
     using Internal;
 
-    /// <summary>
-    /// The context of the type currently being constructed
-    /// </summary>
     public class ConstruktionContext
     {
         /// <summary>

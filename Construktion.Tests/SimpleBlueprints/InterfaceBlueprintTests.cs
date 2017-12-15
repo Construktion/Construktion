@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Blueprints.Simple;
+    using Blueprints.Recursive;
     using Shouldly;
     using Xunit;
 
