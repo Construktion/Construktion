@@ -8,8 +8,8 @@ namespace Construktion
 
     public class Construktion
     {
-        private readonly DefaultConstruktionSettings _settings;
-	    private readonly DefaultConstruktionPipeline _pipeline;
+        private readonly InternalConstruktionSettings _settings;
+	    private readonly ConstruktionPipeline _pipeline;
 
 	    public Construktion()
         {

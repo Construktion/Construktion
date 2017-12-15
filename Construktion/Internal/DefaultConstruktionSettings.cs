@@ -7,7 +7,7 @@ namespace Construktion.Internal
     using Blueprints;
     using Blueprints.Simple;
 
-    public class DefaultConstruktionSettings : ConstruktionSettings
+    public class DefaultConstruktionSettings : InternalConstruktionSettings
     {
         private IEnumerable<Blueprint> _defaultBlueprints;
         private readonly List<Blueprint> _customBlueprints;
@@ -47,7 +47,7 @@ namespace Construktion.Internal
             ThrowOnRecurrsion = Default.ThrowOnRecursion;
         }
 
-        internal void Apply(ConstruktionRegistry registry)
+        public void Apply(ConstruktionRegistry registry)
         {
             _customBlueprints.AddRange(registry.Settings._customBlueprints);
             _exitBlueprints.AddRange(registry.Settings._exitBlueprints);
@@ -64,17 +64,17 @@ namespace Construktion.Internal
             _defaultBlueprints = new DefaultBlueprints(TypeMap);
         }
 
-        internal void Apply(Blueprint blueprint) => _customBlueprints.Add(blueprint);
+        public void Apply(Blueprint blueprint) => _customBlueprints.Add(blueprint);
 
-        internal void Apply(IEnumerable<Blueprint> blueprints) => _customBlueprints.AddRange(blueprints);
+        public void Apply(IEnumerable<Blueprint> blueprints) => _customBlueprints.AddRange(blueprints);
 
-        internal void Apply(ExitBlueprint exitBlueprint) => _exitBlueprints.Add(exitBlueprint);
+        public void Apply(ExitBlueprint exitBlueprint) => _exitBlueprints.Add(exitBlueprint);
 
-        internal void Apply(Type contract, Type implementation) => TypeMap[contract] = implementation;
+        public void Apply(Type contract, Type implementation) => TypeMap[contract] = implementation;
 
-		internal void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new SingletonBlueprint(typeof(T), instance));
+        public void UseInstance<T>(T instance) => _customBlueprints.Insert(0, new SingletonBlueprint(typeof(T), instance));
 
-        internal void Inject(Type type, object value) => _customBlueprints.Insert(0, new SingletonBlueprint(type, value));
+        public void Inject(Type type, object value) => _customBlueprints.Insert(0, new SingletonBlueprint(type, value));
 
 		internal void SetCtorStrategy(Ctors strategy)
 	    {

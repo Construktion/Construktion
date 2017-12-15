@@ -7,12 +7,12 @@
     public class DefaultConstruktionPipeline : ConstruktionPipeline
     {
         private readonly List<Type> _underConstruction = new List<Type>();
-        private readonly DefaultConstruktionSettings _settings;
+        private readonly InternalConstruktionSettings _settings;
         public ConstruktionSettings Settings => _settings;
 
         public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings()) { }
 
-        public DefaultConstruktionPipeline(DefaultConstruktionSettings settings)
+        internal DefaultConstruktionPipeline(InternalConstruktionSettings settings)
         {
             _settings = settings;
         }

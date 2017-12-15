@@ -10,10 +10,15 @@
         private readonly List<Type> _underConstruction;
         private int _level;
 
-        private readonly DefaultConstruktionSettings _settings;
+        private readonly InternalConstruktionSettings _settings;
         public ConstruktionSettings Settings => _settings;
 
-        public DebuggingConstruktionPipeline(DefaultConstruktionSettings settings)
+        public DebuggingConstruktionPipeline() : this (new DefaultConstruktionSettings())
+        {
+            
+        }
+
+        internal DebuggingConstruktionPipeline(InternalConstruktionSettings settings)
         {
             _settings = settings;
             _log = new List<string>();
