@@ -1,3 +1,4 @@
+// ReSharper disable AssignNullToNotNullAttribute
 namespace Construktion.Blueprints.Recursive
 {
     using System;
@@ -10,13 +11,6 @@ namespace Construktion.Blueprints.Recursive
         {
             var arrayType = context.RequestType.GetElementType();
 
-            var results = construct(arrayType, pipeline);
-
-            return results;
-        }
-
-        private Array construct(Type arrayType, ConstruktionPipeline pipeline)
-        {
             var array = Array.CreateInstance(arrayType, pipeline.Settings.EnumuerableCount);
 
             for (var i = 0; i <= pipeline.Settings.EnumuerableCount - 1; i++)

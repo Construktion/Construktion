@@ -6,7 +6,7 @@
 
     public class DefaultConstruktionPipeline : ConstruktionPipeline
     {
-        private readonly List<Type> _underConstruction = new List<Type>();
+        private readonly List<Type> _graph = new List<Type>();
         private readonly InternalConstruktionSettings _settings;
         public ConstruktionSettings Settings => _settings;
 
@@ -37,27 +37,27 @@
 
         private object Construct(ConstruktionContext context, Blueprint blueprint)
         {
-            if (RecurssionDetected(context))
+            if (recursionDetected())
             {
                 return _settings.ThrowOnRecurrsion
                            ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
                            : default(object);
             }
 
-            _underConstruction.Add(context.RequestType);
+            _graph.Add(context.RequestType);
 
             var result = blueprint.Construct(context, this);
 
-            _underConstruction.Remove(context.RequestType);
+            _graph.Remove(context.RequestType);
 
             return result;
-        }
 
-        private bool RecurssionDetected(ConstruktionContext context)
-        {
-            var depth = _underConstruction.Count(x => context.RequestType == x);
+            bool recursionDetected()
+            {
+                var depth = _graph.Count(x => context.RequestType == x);
 
-            return depth > _settings.RecurssionDepth || (depth > 0 && _settings.ThrowOnRecurrsion);
+                return depth > _settings.RecurssionDepth || (depth > 0 && _settings.ThrowOnRecurrsion);
+            }
         }
     }
 }

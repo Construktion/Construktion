@@ -1,6 +1,5 @@
 ﻿namespace Construktion.Blueprints.Recursive
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Reflection;
@@ -15,13 +14,6 @@
         {
             var closedType = context.RequestType.GenericTypeArguments[0];
 
-            var results = construct(closedType, pipeline);
-
-            return results;
-        }
-
-        private IList construct(Type closedType, ConstruktionPipeline pipeline)
-        {
             var items = (IList)typeof(List<>).NewGeneric(closedType);
 
             for (var i = 0; i < pipeline.Settings.EnumuerableCount; i++)

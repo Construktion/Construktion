@@ -1,4 +1,5 @@
-﻿namespace Construktion.Blueprints.Simple
+﻿// ReSharper disable UseMethodAny.2
+namespace Construktion.Blueprints.Simple
 {
     using System;
     using System.Collections.Generic;
@@ -26,17 +27,17 @@
         public bool Matches(ConstruktionContext context)
         {
             var matchesType = _propertyTypes.Contains(context.RequestType) ||
-                              ContainsGeneric(context.RequestType) ||
-                              !_propertyTypes.Any();
+                              _propertyTypes.Count() == 0 ||
+                              containsGeneric();
 
             return context.PropertyInfo != null && _convention(context.PropertyInfo) && matchesType;
-        }
 
-        private bool ContainsGeneric(Type requestType)
-        {
-            var typeInfo = requestType.GetTypeInfo();
+            bool containsGeneric()
+            {
+                var typeInfo = context.RequestType.GetTypeInfo();
 
-            return typeInfo.IsGenericType && _propertyTypes.Contains(typeInfo.GetGenericTypeDefinition());
+                return typeInfo.IsGenericType && _propertyTypes.Contains(typeInfo.GetGenericTypeDefinition());
+            }
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => context.RequestType.GetTypeInfo().IsValueType

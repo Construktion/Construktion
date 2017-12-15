@@ -1,4 +1,6 @@
-﻿namespace Construktion.Blueprints.Recursive
+﻿//This is disabled due to a bug in resharper
+// ReSharper disable RedundantAssignment
+namespace Construktion.Blueprints.Recursive
 {
     using System;
     using System.Collections;
@@ -19,41 +21,41 @@
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var count = 4;
+            var itemCount = 4;
 
             var key = context.RequestType.GetGenericArguments()[0];
-            var value = context.RequestType.GetGenericArguments()[1];
+            var valueType = context.RequestType.GetGenericArguments()[1];
 
             if (key.GetTypeInfo().IsEnum)
-                count = Enum.GetNames(key).Length;
+                itemCount = Enum.GetNames(key).Length;
 
-            var keys = CreateUniqueKeys(count, key, pipeline, new HashSet<object>()).ToList();
-            var values = CreateValues(count, value, pipeline).ToList();
+            var keys = createUniqueKeys(new HashSet<object>()).ToList();
+            var values = createValues(valueType).ToList();
 
-            var dictionary = (IDictionary)typeof(Dictionary<,>).NewGeneric(key, value);
+            var dictionary = (IDictionary)typeof(Dictionary<,>).NewGeneric(key, valueType);
 
-            for (var i = 0; i <= count - 1; i++)
+            for (var i = 0; i <= itemCount - 1; i++)
                 dictionary.Add(keys[i], values[i]);
 
             return dictionary;
-        }
 
-        private HashSet<object> CreateUniqueKeys(int count, Type key, ConstruktionPipeline pipeline, HashSet<object> items)
-        {
-            var newItem = pipeline.Send(new ConstruktionContext(key));
+            HashSet<object> createUniqueKeys(HashSet<object> items)
+            {
+                var newItem = pipeline.Send(new ConstruktionContext(key));
 
-            if (newItem != null)
-                items.Add(newItem);
+                if (newItem != null)
+                    items.Add(newItem);
 
-            return items.Count == count
-                       ? items
-                       : CreateUniqueKeys(count, key, pipeline, items);
-        }
+                return items.Count == itemCount
+                    ? items
+                    : createUniqueKeys(items);
+            }
 
-        private IEnumerable<object> CreateValues(int count, Type closedType, ConstruktionPipeline pipeline)
-        {
-            for (var i = 0; i < count; i++)
-                yield return pipeline.Send(new ConstruktionContext(closedType));
+            IEnumerable<object> createValues(Type closedType)
+            {
+                for (var i = 0; i < itemCount; i++)
+                    yield return pipeline.Send(new ConstruktionContext(closedType));
+            }
         }
     }
 }
