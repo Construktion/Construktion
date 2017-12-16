@@ -13,10 +13,8 @@
 
             new Construktion().DebuggingConstruct(context, out string log);
 
-            log = removeWhiteSpace(log);
-            var expected = removeWhiteSpace(ExpectedLog);
-
-            string removeWhiteSpace(string text) => Regex.Replace(text, @"\s+", "");
+            log = RemoveWhiteSpace(log);
+            var expected = RemoveWhiteSpace(ExpectedLog);
 
             log.ShouldBe(expected);
         }
@@ -30,10 +28,8 @@
                 .With(x => x.AddExitBlueprint<FooExitBlueprint>())
                 .DebuggingConstruct(context, out string log);
 
-            log = removeWhiteSpace(log);
-            var expected = removeWhiteSpace(ExpectedLogWithExitBlueprint);
-
-            string removeWhiteSpace(string text) => Regex.Replace(text, @"\s+", "");
+            log = RemoveWhiteSpace(log);
+            var expected = RemoveWhiteSpace(ExpectedLogWithExitBlueprint);
 
             log.ShouldBe(expected);
         }
@@ -48,6 +44,8 @@
             log.ShouldContain("Cannot construct the interface");
             log.ShouldContain("End Construktion.Tests.DebuggingConstruktionTests+WillThrowFoo");
         }
+
+        private string RemoveWhiteSpace(string text) => Regex.Replace(text, @"\s+", "");
 
         public class Foo
         {
