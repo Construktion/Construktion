@@ -31,6 +31,7 @@
                 new EmptyCtorBlueprint(),
                 new NonEmptyCtorBlueprint(),
                 new InterfaceBlueprint(typeMap),
+                //always last
                 new DefensiveBlueprint()
             };
         }
