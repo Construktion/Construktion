@@ -214,9 +214,10 @@ namespace Construktion
         /// <summary>
         /// Omit all virtual properties.
         /// </summary>
-        public void OmitVirtualProperties()
+        public ConstruktionRegistry OmitVirtualProperties()
         {
             Settings.Apply(new IgnoreVirtualPropertiesBlueprint());
+            return this;
         }
 
         /// <summary>
