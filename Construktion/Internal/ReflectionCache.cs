@@ -9,24 +9,28 @@ namespace Construktion.Internal
     using System.Linq.Expressions;
     using System.Reflection;
 
-    //https://stackoverflow.com/questions/12307519/activator-createinstancet-vs-compiled-expression-inverse-performance-on-two-da
-    internal static class ReflectionCache
+    public static class ReflectionCache
+    {
+        public static object NewUp(Type input, params object[] ctorArgs) => input.NewUp(ctorArgs);
+        public static void SetPropertyValue(PropertyInfo propertyInfo, object instance, object value) => propertyInfo.SetPropertyValue(instance, value);
+        public static object NewGeneric(Type genericTypeDefinition, params Type[] genericParameters) => genericTypeDefinition.NewGeneric(genericParameters);
+    }
+
+    /// <summary>
+    /// Internal so end users' intellisense doesn't get cluttered up.
+    /// </summary>
+    internal static class InternalReflectionCache
     {
         private delegate object Ctor(params object[] args);
-
         private delegate void Setter(object instance, object value);
-
         private delegate object NewGenericType();
 
         private static readonly IDictionary<string, Ctor> _ctorCache = new ConcurrentDictionary<string, Ctor>();
+        private static readonly IDictionary<PropertyInfo, Setter> _setterCache = new ConcurrentDictionary<PropertyInfo, Setter>();
+        private static readonly IDictionary<string, NewGenericType> _genericTypeCache = new ConcurrentDictionary<string, NewGenericType>();
 
-        private static readonly IDictionary<PropertyInfo, Setter> _setterCache =
-            new ConcurrentDictionary<PropertyInfo, Setter>();
-
-        private static readonly IDictionary<string, NewGenericType> _genericTypeCache =
-            new ConcurrentDictionary<string, NewGenericType>();
-
-        public static object NewUp(this Type input, params object[] args)
+        // https://stackoverflow.com/questions/12307519/activator-createinstancet-vs-compiled-expression-inverse-performance-on-two-da
+        internal static object NewUp(this Type input, params object[] args)
         {
             var cacheKey = input.AssemblyQualifiedName + string.Join("", args.Select(x => x.ToString()));
 
@@ -59,7 +63,7 @@ namespace Construktion.Internal
             return ctor(args);
         }
 
-        public static void SetPropertyValue(this PropertyInfo propertyInfo, object instance, object value)
+        internal static void SetPropertyValue(this PropertyInfo propertyInfo, object instance, object value)
         {
             if (value == null)
                 return;
@@ -87,7 +91,7 @@ namespace Construktion.Internal
         }
 
         //https://stackoverflow.com/a/20734641/2612547
-        public static object NewGeneric(this Type genericTypeDefinition, params Type[] genericParameters)
+        internal static object NewGeneric(this Type genericTypeDefinition, params Type[] genericParameters)
         {
             var cacheKey = genericTypeDefinition.AssemblyQualifiedName +
                            string.Join("", genericParameters.Select(x => x.ToString()));
