@@ -28,24 +28,6 @@ namespace Construktion.Internal
             return modestCtor;
         }
 
-        public static bool HasDefaultCtor(this Type type)
-        {
-            var ctors = type.GetTypeInfo()
-                            .DeclaredConstructors
-                            .ToList();
-
-            return ctors.Any(x => x.GetParameters().Length == 0);
-        }
-
-        public static bool HasNonDefaultCtor(this Type type)
-        {
-            var ctors = type.GetTypeInfo()
-                            .DeclaredConstructors
-                            .ToList();
-
-            return ctors.Any(x => x.GetParameters().Length > 0);
-        }
-
         public static IEnumerable<PropertyInfo> PropertiesWithPublicSetter(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)

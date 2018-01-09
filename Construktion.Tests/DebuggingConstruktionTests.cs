@@ -69,7 +69,7 @@
 
         private string ExpectedLog =
             @"Start: Construktion.Tests.DebuggingConstruktionTests+Foo
-Blueprint: Construktion.Blueprints.Recursive.EmptyCtorBlueprint
+Blueprint: Construktion.Blueprints.Recursive.ComplexClassBlueprint
 
      Start Property: Name
      Blueprint: Construktion.Blueprints.Simple.StringBlueprint
@@ -83,7 +83,7 @@ End Construktion.Tests.DebuggingConstruktionTests+Foo";
 
         private string ExpectedLogWithExitBlueprint =
             @"Start: Construktion.Tests.DebuggingConstruktionTests+Foo
-Blueprint: Construktion.Blueprints.Recursive.EmptyCtorBlueprint
+Blueprint: Construktion.Blueprints.Recursive.ComplexClassBlueprint
 
      Start Property: Name
      Blueprint: Construktion.Blueprints.Simple.StringBlueprint

@@ -6,22 +6,20 @@
     using System.Reflection;
     using Internal;
 
-    public class NonEmptyCtorBlueprint : Blueprint
+    public class ComplexClassBlueprint : Blueprint
     {
         public bool Matches(ConstruktionContext context)
         {
             var typeInfo = context.RequestType.GetTypeInfo();
 
-            return context.RequestType.HasNonDefaultCtor() &&
-                   !typeInfo.IsGenericType &&
-                   typeInfo.IsClass;
+            return typeInfo.IsClass && !typeInfo.IsGenericType;
         }
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
             var instance = newUp();
 
-            var properties = pipeline.Settings.PropertyStrategy(instance.GetType());
+            var properties = pipeline.Settings.PropertyStrategy(context.RequestType);
 
             foreach (var property in properties)
             {

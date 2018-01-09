@@ -28,8 +28,7 @@
                 new EnumBlueprint(),
                 new DateTimeBlueprint(),
                 new NullableTypeBlueprint(),
-                new EmptyCtorBlueprint(),
-                new NonEmptyCtorBlueprint(),
+                new ComplexClassBlueprint(),
                 new InterfaceBlueprint(typeMap),
                 //always last
                 new DefensiveBlueprint()
