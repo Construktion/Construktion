@@ -8,7 +8,7 @@ namespace Construktion
 
     public class Construktion
     {
-        private readonly InternalConstruktionSettings _settings;
+        private readonly DefaultConstruktionSettings _settings;
 	    private readonly ConstruktionPipeline _pipeline;
 
 	    public Construktion()
@@ -146,7 +146,7 @@ namespace Construktion
         {
             registry.GuardNull();
 
-            _settings.Apply(registry);
+            _settings.Apply(registry.Settings);
             return this;
         }
 
@@ -161,7 +161,7 @@ namespace Construktion
 
             configure(registry);
 
-            _settings.Apply(registry);
+            _settings.Apply(registry.Settings);
             return this;
         }
 

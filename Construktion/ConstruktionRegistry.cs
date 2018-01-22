@@ -10,11 +10,12 @@ namespace Construktion
 
     public class ConstruktionRegistry
     {
-        internal DefaultConstruktionSettings Settings { get; }
+        private readonly DefaultConstruktionSettings _settings;
+        internal DefaultConstruktionSettings Settings => _settings;
 
         public ConstruktionRegistry()
         {
-            Settings = new DefaultConstruktionSettings();
+            _settings = new DefaultConstruktionSettings();
         }
 
         public ConstruktionRegistry(Action<ConstruktionRegistry> configure) : this()
@@ -31,7 +32,7 @@ namespace Construktion
         {
             blueprint.GuardNull();
 
-            Settings.Apply(blueprint);
+            _settings.Apply(blueprint);
             return this;
         }
 
@@ -40,7 +41,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry AddBlueprint<TBlueprint>() where TBlueprint : Blueprint, new()
         {
-            Settings.Apply((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
+            _settings.Apply((Blueprint)Activator.CreateInstance(typeof(TBlueprint)));
             return this;
         }
 
@@ -50,7 +51,7 @@ namespace Construktion
         public ConstruktionRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
             blueprints.GuardNull();
-            Settings.Apply(blueprints);
+            _settings.Apply(blueprints);
             return this;
         }
 
@@ -62,7 +63,7 @@ namespace Construktion
         /// <typeparam name="TImplementation">Will be used for substitution</typeparam>
         public ConstruktionRegistry Register<TContract, TImplementation>() where TImplementation : TContract
         {
-            Settings.Apply(typeof(TContract), typeof(TImplementation));
+            _settings.Apply(typeof(TContract), typeof(TImplementation));
             return this;
         }
 
@@ -73,7 +74,7 @@ namespace Construktion
         /// <param name="instance"></param>
         public ConstruktionRegistry UseInstance<T>(T instance)
         {
-            Settings.UseInstance(instance);
+            _settings.UseInstance(instance);
             return this;
         }
 
@@ -87,7 +88,7 @@ namespace Construktion
         {
             var attributeBlueprint = new PropertyAttributeBlueprint<T>(value);
 
-            Settings.Apply(attributeBlueprint);
+            _settings.Apply(attributeBlueprint);
             return this;
         }
 
@@ -101,7 +102,7 @@ namespace Construktion
         {
             var attributeBlueprint = new ParameterAttributeBlueprint<T>(value);
 
-            Settings.Apply(attributeBlueprint);
+            _settings.Apply(attributeBlueprint);
             return this;
         }
 
@@ -111,7 +112,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry AddEmailBlueprint()
         {
-            Settings.Apply(new EmailAddressBlueprint());
+            _settings.Apply(new EmailAddressBlueprint());
             return this;
         }
 
@@ -121,7 +122,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry AddEmailBlueprint(Func<PropertyInfo, bool> convention)
         {
-            Settings.Apply(new EmailAddressBlueprint(convention));
+            _settings.Apply(new EmailAddressBlueprint(convention));
             return this;
         }
 
@@ -131,7 +132,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry UseModestCtor()
         {
-            Settings.SetCtorStrategy(Ctors.Modest);
+            _settings.SetCtorStrategy(Ctors.Modest);
             return this;
         }
 
@@ -141,7 +142,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry UseGreedyCtor()
         {
-			Settings.SetCtorStrategy(Ctors.Greedy);
+			_settings.SetCtorStrategy(Ctors.Greedy);
 			return this;
         }
 
@@ -151,7 +152,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry OmitPrivateSetters()
         {
-            Settings.SetPropertyStrategy(PropertySetters.Public);
+            _settings.SetPropertyStrategy(PropertySetters.Public);
             return this;
         }
 
@@ -161,7 +162,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry ConstructPrivateSetters()
         {
-			Settings.SetPropertyStrategy(PropertySetters.Accessible);
+			_settings.SetPropertyStrategy(PropertySetters.Accessible);
 			return this;
         }
 
@@ -170,7 +171,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitIds()
         {
-            Settings.Apply(new OmitPropertyBlueprint(x => x.Name.EndsWith("Id", StringComparison.Ordinal),
+            _settings.Apply(new OmitPropertyBlueprint(x => x.Name.EndsWith("Id", StringComparison.Ordinal),
                 new List<Type> { typeof(int), typeof(int?) }));
             return this;
         }
@@ -180,7 +181,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitProperties(Type propertyType)
         {
-            Settings.Apply(new OmitPropertyBlueprint(x => true, propertyType));
+            _settings.Apply(new OmitPropertyBlueprint(x => true, propertyType));
             return this;
         }
 
@@ -189,7 +190,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, Type propertyType)
         {
-            Settings.Apply(new OmitPropertyBlueprint(convention, propertyType));
+            _settings.Apply(new OmitPropertyBlueprint(convention, propertyType));
             return this;
         }
 
@@ -198,7 +199,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention)
         {
-            Settings.Apply(new OmitPropertyBlueprint(convention, new List<Type>()));
+            _settings.Apply(new OmitPropertyBlueprint(convention, new List<Type>()));
             return this;
         }
 
@@ -207,7 +208,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitProperties(Func<PropertyInfo, bool> convention, params Type[] propertyTypes)
         {
-            Settings.Apply(new OmitPropertyBlueprint(convention, propertyTypes));
+            _settings.Apply(new OmitPropertyBlueprint(convention, propertyTypes));
             return this;
         }
 
@@ -216,7 +217,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry OmitVirtualProperties()
         {
-            Settings.Apply(new IgnoreVirtualPropertiesBlueprint());
+            _settings.Apply(new IgnoreVirtualPropertiesBlueprint());
             return this;
         }
 
@@ -231,7 +232,7 @@ namespace Construktion
             if (count < 0)
                 throw new ArgumentException("Count cannot be less than 0");
 
-            Settings.SetEnumerableCount(count);
+            _settings.SetEnumerableCount(count);
             return this;
         }
 
@@ -246,7 +247,7 @@ namespace Construktion
             if (limit < 0)
                 throw new ArgumentException("Recursion limit cannot be less than 0");
 
-            Settings.SetRecursionDepth(limit);
+            _settings.SetRecursionDepth(limit);
             return this;
         }
 
@@ -257,7 +258,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry ThrowOnRecurssion(bool shouldThrow)
         {
-            Settings.SetThrowOnRecursion(shouldThrow);
+            _settings.SetThrowOnRecursion(shouldThrow);
             return this;
         }
 
@@ -269,7 +270,7 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry ConstructPropertyUsing(Func<PropertyInfo, bool> convention, Func<object> value)
         {
-            Settings.Apply(new CustomPropertyValueBlueprint(convention, value));
+            _settings.Apply(new CustomPropertyValueBlueprint(convention, value));
             return this;
         }
 
@@ -282,7 +283,7 @@ namespace Construktion
         /// <typeparam name="T"></typeparam>
         public ConstruktionRegistry AddExitBlueprint<T>() where T : ExitBlueprint, new()
         {
-            Settings.Apply(new T());
+            _settings.Apply(new T());
             return this;
         }
 
@@ -294,7 +295,7 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry AddExitBlueprint(ExitBlueprint blueprint)
         {
-            Settings.Apply(blueprint);
+            _settings.Apply(blueprint);
             return this;
         }
     }

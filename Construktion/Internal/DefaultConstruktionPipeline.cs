@@ -7,12 +7,16 @@
     public class DefaultConstruktionPipeline : ConstruktionPipeline
     {
         private readonly List<Type> _graph = new List<Type>();
-        private readonly InternalConstruktionSettings _settings;
+        private readonly DefaultConstruktionSettings _settings;
+
         public ConstruktionSettings Settings => _settings;
 
-        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings()) { }
+        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings())
+        {
+            
+        }
 
-        internal DefaultConstruktionPipeline(InternalConstruktionSettings settings)
+        internal DefaultConstruktionPipeline(DefaultConstruktionSettings settings)
         {
             _settings = settings;
         }
@@ -28,11 +32,6 @@
             result = exitBlueprint?.Construct(result, this) ?? result;
 
             return result;
-        }
-
-        public void Inject(Type type, object value)
-        {
-            _settings.Inject(type, value);
         }
 
         private object Construct(ConstruktionContext context, Blueprint blueprint)
@@ -59,5 +58,7 @@
                 return depth > _settings.RecurssionDepth || (depth > 0 && _settings.ThrowOnRecurrsion);
             }
         }
+
+        public void Inject(Type type, object value) => _settings.Inject(type, value);
     }
 }

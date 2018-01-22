@@ -10,7 +10,7 @@
         private readonly List<Type> _underConstruction;
         private int _level;
 
-        private readonly InternalConstruktionSettings _settings;
+        private readonly DefaultConstruktionSettings _settings;
         public ConstruktionSettings Settings => _settings;
 
         public DebuggingConstruktionPipeline() : this (new DefaultConstruktionSettings())
@@ -18,7 +18,7 @@
             
         }
 
-        internal DebuggingConstruktionPipeline(InternalConstruktionSettings settings)
+        internal DebuggingConstruktionPipeline(DefaultConstruktionSettings settings)
         {
             _settings = settings;
             _log = new List<string>();
@@ -26,12 +26,9 @@
             _level = -1;
         }
 
-        public object Send(ConstruktionContext context) => DebugSend(context, out List<string> debugLog);
+        public void Inject(Type type, object value) => _settings.Inject(type, value);
 
-        public void Inject(Type type, object value)
-        {
-            _settings.Inject(type, value);
-        }
+        public object Send(ConstruktionContext context) => DebugSend(context, out List<string> debugLog);
 
         public object DebugSend(ConstruktionContext context, out List<string> debugLog)
         {

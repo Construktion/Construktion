@@ -7,7 +7,7 @@ namespace Construktion.Internal
     using Blueprints;
     using Blueprints.Simple;
 
-    public class DefaultConstruktionSettings : InternalConstruktionSettings
+    public class DefaultConstruktionSettings : ConstruktionSettings
     {
         private IEnumerable<Blueprint> _defaultBlueprints;
         private readonly List<Blueprint> _customBlueprints;
@@ -47,19 +47,19 @@ namespace Construktion.Internal
             ThrowOnRecurrsion = Default.ThrowOnRecursion;
         }
 
-        public void Apply(ConstruktionRegistry registry)
+        public void Apply(DefaultConstruktionSettings settings)
         {
-            _customBlueprints.AddRange(registry.Settings._customBlueprints);
-            _exitBlueprints.AddRange(registry.Settings._exitBlueprints);
+            _customBlueprints.AddRange(settings._customBlueprints);
+            _exitBlueprints.AddRange(settings._exitBlueprints);
 
-            foreach (var map in registry.Settings.TypeMap)
+            foreach (var map in settings.TypeMap)
                 TypeMap[map.Key] = map.Value;
 
-            CtorStrategy = registry.Settings._ctorStrategy ?? CtorStrategy;
-            PropertyStrategy = registry.Settings._propertyStrategy ?? PropertyStrategy;
-            EnumuerableCount = registry.Settings._enumerableCount ?? EnumuerableCount;
-            RecurssionDepth = registry.Settings._recursionDepth ?? RecurssionDepth;
-            ThrowOnRecurrsion = registry.Settings._throwOnRecursion ?? ThrowOnRecurrsion;
+            CtorStrategy = settings._ctorStrategy ?? CtorStrategy;
+            PropertyStrategy = settings._propertyStrategy ?? PropertyStrategy;
+            EnumuerableCount = settings._enumerableCount ?? EnumuerableCount;
+            RecurssionDepth = settings._recursionDepth ?? RecurssionDepth;
+            ThrowOnRecurrsion = settings._throwOnRecursion ?? ThrowOnRecurrsion;
 
             _defaultBlueprints = new DefaultBlueprints(TypeMap);
         }
@@ -76,7 +76,7 @@ namespace Construktion.Internal
 
         public void Inject(Type type, object value) => _customBlueprints.Insert(0, new SingletonBlueprint(type, value));
 
-		internal void SetCtorStrategy(Ctors strategy)
+        public void SetCtorStrategy(Ctors strategy)
 	    {
 		    switch (strategy)
 		    {
@@ -89,7 +89,7 @@ namespace Construktion.Internal
 			}
 	    }
 
-	    internal void SetPropertyStrategy(PropertySetters strategy)
+        public void SetPropertyStrategy(PropertySetters strategy)
 	    {
 		    switch (strategy)
 		    {
@@ -102,9 +102,9 @@ namespace Construktion.Internal
 		    }
 	    }
 
-		internal void SetEnumerableCount(int count) => _enumerableCount = count;
-        internal void SetRecursionDepth(int depth) => _recursionDepth = depth;
-        internal void SetThrowOnRecursion(bool shouldThrow) => _throwOnRecursion = shouldThrow;
+        public void SetEnumerableCount(int count) => _enumerableCount = count;
+        public void SetRecursionDepth(int depth) => _recursionDepth = depth;
+        public void SetThrowOnRecursion(bool shouldThrow) => _throwOnRecursion = shouldThrow;
 
         private static class Default
         {
