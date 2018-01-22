@@ -17,11 +17,8 @@ namespace Construktion.Blueprints.Simple
 
         public OmitPropertyBlueprint(Func<PropertyInfo, bool> convention, IEnumerable<Type> propertyTypes)
         {
-            convention.GuardNull();
-            propertyTypes.GuardNull();
-
-            _convention = convention;
-            _propertyTypes = propertyTypes;
+            _convention = convention ?? throw new ArgumentNullException(nameof(convention));
+            _propertyTypes = propertyTypes ?? throw new ArgumentNullException(nameof(propertyTypes));
         }
 
         public bool Matches(ConstruktionContext context)

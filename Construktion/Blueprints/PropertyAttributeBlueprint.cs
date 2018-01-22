@@ -16,9 +16,7 @@ namespace Construktion
 
         public PropertyAttributeBlueprint(Func<T, object> value)
         {
-            value.GuardNull();
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

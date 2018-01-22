@@ -39,11 +39,5 @@ namespace Construktion.Internal
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                        .Where(x => x.CanWrite);
         }
-
-        public static void GuardNull<T>(this T item)
-        {
-            if (item == null)
-                throw new ArgumentNullException(nameof(item));
-        }
     }
 }

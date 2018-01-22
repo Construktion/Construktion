@@ -23,14 +23,14 @@
 
         public ConstruktionContext(Type request)
         {
-            request.GuardNull();
+            request = request ?? throw new ArgumentNullException(nameof(request));
 
             RequestType = request;
         }
 
         public ConstruktionContext(PropertyInfo propertyInfo)
         {
-            propertyInfo.GuardNull();
+            propertyInfo = propertyInfo ?? throw new ArgumentNullException(nameof(propertyInfo));
 
             PropertyInfo = propertyInfo;
             RequestType = propertyInfo.PropertyType;
@@ -38,7 +38,7 @@
 
         public ConstruktionContext(ParameterInfo parameterInfo)
         {
-            parameterInfo.GuardNull();
+            parameterInfo = parameterInfo ?? throw new ArgumentNullException(nameof(parameterInfo));
 
             ParameterInfo = parameterInfo;
             RequestType = parameterInfo.ParameterType;

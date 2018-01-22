@@ -40,7 +40,7 @@ namespace Construktion
         /// <exception cref="ArgumentNullException"></exception>
         public object Construct(Type type)
         {
-            type.GuardNull();
+            type = type ?? throw new ArgumentNullException(nameof(type));
 
             return DoConstruct<object>(type, null);
         }
@@ -53,7 +53,7 @@ namespace Construktion
         /// <exception cref="ArgumentNullException"></exception>
         public object Construct(ParameterInfo parameterInfo)
         {
-            parameterInfo.GuardNull();
+            parameterInfo = parameterInfo ?? throw new ArgumentNullException(nameof(parameterInfo));
 
             return DoConstruct<object>(null, null, parameterInfo);
         }
@@ -144,7 +144,7 @@ namespace Construktion
         /// <returns></returns>
         public Construktion With(ConstruktionRegistry registry)
         {
-            registry.GuardNull();
+            registry = registry ?? throw new ArgumentNullException(nameof(registry));
 
             _settings.Apply(registry.Settings);
             return this;
@@ -172,7 +172,7 @@ namespace Construktion
         /// <returns></returns>
         public Construktion With(Blueprint blueprint)
         {
-            blueprint.GuardNull();
+            blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 
             _settings.Apply(blueprint);
             return this;
@@ -185,7 +185,7 @@ namespace Construktion
         /// <returns></returns>
         public Construktion With(IEnumerable<Blueprint> blueprints)
         {
-            blueprints.GuardNull();
+            blueprints = blueprints ?? throw new ArgumentNullException(nameof(blueprints));
 
             _settings.Apply(blueprints);
             return this;
@@ -201,7 +201,7 @@ namespace Construktion
         /// <returns></returns>
         public Construktion With(ExitBlueprint blueprint)
         {
-            blueprint.GuardNull();
+            blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 
             _settings.Apply(blueprint);
             return this;

@@ -30,7 +30,7 @@ namespace Construktion
         /// <exception cref="ArgumentNullException"></exception>
         public ConstruktionRegistry AddBlueprint(Blueprint blueprint)
         {
-            blueprint.GuardNull();
+            blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 
             _settings.Apply(blueprint);
             return this;
@@ -50,7 +50,8 @@ namespace Construktion
         /// </summary>
         public ConstruktionRegistry AddBlueprints(IEnumerable<Blueprint> blueprints)
         {
-            blueprints.GuardNull();
+            blueprints = blueprints ?? throw new ArgumentNullException(nameof(blueprints));
+
             _settings.Apply(blueprints);
             return this;
         }
