@@ -18,11 +18,11 @@ namespace Construktion.Internal
 
         public IDictionary<Type, Type> TypeMap { get; }
 
-	    private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
-		public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; }
+        private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
+        public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; }
 
-	    private Func<Type, IEnumerable<PropertyInfo>> _propertyStrategy;
-		public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
+        private Func<Type, IEnumerable<PropertyInfo>> _propertyStrategy;
+        public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
 
         private int? _enumerableCount;
         public int EnumuerableCount { get; private set; }
@@ -81,30 +81,30 @@ namespace Construktion.Internal
         public void Inject(Type type, object value) => _customBlueprints.Insert(0, new SingletonBlueprint(type, value));
 
         public void SetCtorStrategy(Ctors strategy)
-	    {
-		    switch (strategy)
-		    {
-			    case Ctors.Modest:
-				    _ctorStrategy = Extensions.ModestCtor;
-				    break;
-			    case Ctors.Greedy:
-				    _ctorStrategy = Extensions.GreedyCtor;
-				    break;
-			}
-	    }
+        {
+            switch (strategy)
+            {
+                case Ctors.Modest:
+                    _ctorStrategy = Extensions.ModestCtor;
+                    break;
+                case Ctors.Greedy:
+                    _ctorStrategy = Extensions.GreedyCtor;
+                    break;
+            }
+        }
 
         public void SetPropertyStrategy(PropertySetters strategy)
-	    {
-		    switch (strategy)
-		    {
-			    case PropertySetters.Public:
-				    _propertyStrategy = Extensions.PropertiesWithPublicSetter;
-				    break;
-			    case PropertySetters.Accessible:
-				    _propertyStrategy = Extensions.PropertiesWithAccessibleSetter;
-				    break;
-		    }
-	    }
+        {
+            switch (strategy)
+            {
+                case PropertySetters.Public:
+                    _propertyStrategy = Extensions.PropertiesWithPublicSetter;
+                    break;
+                case PropertySetters.Accessible:
+                    _propertyStrategy = Extensions.PropertiesWithAccessibleSetter;
+                    break;
+            }
+        }
 
         public void SetEnumerableCount(int count) => _enumerableCount = count;
         public void SetRecursionDepth(int depth) => _recursionDepth = depth;

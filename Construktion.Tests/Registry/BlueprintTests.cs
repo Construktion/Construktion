@@ -1,8 +1,8 @@
 ﻿namespace Construktion.Tests.Registry
 {
-	using System.Collections.Generic;
-	using Blueprints.Simple;
-	using Shouldly;
+    using System.Collections.Generic;
+    using Blueprints.Simple;
+    using Shouldly;
     using Xunit;
 
     public class BlueprintTests
@@ -69,34 +69,34 @@
             result.ShouldBe("StringOne");
         }
 
-	    [Fact]
-	    public void should_add_multiple_blueprints()
-	    {
-			var blueprints = new List<Blueprint>
-			{
-				new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(string), () => "x"),
-				new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(int), () => 1)
-			};
+        [Fact]
+        public void should_add_multiple_blueprints()
+        {
+            var blueprints = new List<Blueprint>
+            {
+                new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(string), () => "x"),
+                new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(int), () => 1)
+            };
 
-			var result = construktion.With(blueprints).Construct<Foo>();
+            var result = construktion.With(blueprints).Construct<Foo>();
 
-		    result.String.ShouldBe("x");
-			result.Int.ShouldBe(1);
-	    }
+            result.String.ShouldBe("x");
+            result.Int.ShouldBe(1);
+        }
 
-	    [Fact]
-	    public void registry_should_add_multiple_blueprints()
-	    {
-		    var stringBlueprint = new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(string), () => "x");
-		    var intBlueprint = new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(int), () => 1);
+        [Fact]
+        public void registry_should_add_multiple_blueprints()
+        {
+            var stringBlueprint = new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(string), () => "x");
+            var intBlueprint = new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(int), () => 1);
 
-		    var result = construktion.With(x => x.AddBlueprints(new List<Blueprint>{stringBlueprint, intBlueprint })).Construct<Foo>();
+            var result = construktion.With(x => x.AddBlueprints(new List<Blueprint>{stringBlueprint, intBlueprint })).Construct<Foo>();
 
-		    result.String.ShouldBe("x");
-		    result.Int.ShouldBe(1);
-	    }
+            result.String.ShouldBe("x");
+            result.Int.ShouldBe(1);
+        }
 
-		public class StringOneBlueprint : AbstractBlueprint<string>
+        public class StringOneBlueprint : AbstractBlueprint<string>
         {
             public override string Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => "StringOne";
         }
@@ -122,10 +122,10 @@
             }
         }
 
-	    public class Foo
-	    {
-		    public string String { get; set; }
-			public int Int { get; set; }
-	    }
+        public class Foo
+        {
+            public string String { get; set; }
+            public int Int { get; set; }
+        }
     }
 }

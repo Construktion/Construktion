@@ -1,12 +1,12 @@
 ﻿namespace Construktion.Blueprints
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using Recursive;
-	using Simple;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using Recursive;
+    using Simple;
 
-	public class DefaultBlueprints : IEnumerable<Blueprint>
+    public class DefaultBlueprints : IEnumerable<Blueprint>
     {
         private readonly IEnumerable<Blueprint> _defaultBlueprints;
 

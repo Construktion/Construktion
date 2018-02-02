@@ -32,7 +32,7 @@
             result.UsedGreedyCtor.ShouldBe(true);
         }
 
-		[Fact]
+        [Fact]
         public void a_new_registry_without_a_ctor_strategy_should_not_overwrite_previous()
         {
             registry.UseGreedyCtor();
