@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Blueprints.Simple;
 
     public class DebuggingConstruktionPipeline : ConstruktionPipeline
     {
@@ -10,7 +11,8 @@
         private readonly List<Type> _underConstruction;
         private int _level;
 
-        private readonly DefaultConstruktionSettings _settings;
+        private readonly List<Blueprint> _blueprints;
+        private readonly ConstruktionSettings _settings;
         public ConstruktionSettings Settings => _settings;
 
         public DebuggingConstruktionPipeline() : this (new DefaultConstruktionSettings())
@@ -18,15 +20,16 @@
             
         }
 
-        internal DebuggingConstruktionPipeline(DefaultConstruktionSettings settings)
+        internal DebuggingConstruktionPipeline(ConstruktionSettings settings)
         {
             _settings = settings;
+            _blueprints = settings.Blueprints.ToList();
             _log = new List<string>();
             _underConstruction = new List<Type>();
             _level = -1;
         }
 
-        public void Inject(Type type, object value) => _settings.Inject(type, value);
+        public void Inject(Type type, object value) => _blueprints.Insert(0, new SingletonBlueprint(type, value));
 
         public object Send(ConstruktionContext context) => DebugSend(context, out List<string> debugLog);
 

@@ -3,27 +3,27 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Blueprints.Simple;
 
     public class DefaultConstruktionPipeline : ConstruktionPipeline
     {
         private readonly List<Type> _graph = new List<Type>();
-        private readonly DefaultConstruktionSettings _settings;
+        private readonly List<Blueprint> _blueprints;
+        private readonly ConstruktionSettings _settings;
 
         public ConstruktionSettings Settings => _settings;
 
-        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings())
-        {
-            
-        }
+        public DefaultConstruktionPipeline() : this(new DefaultConstruktionSettings()) { }
 
-        internal DefaultConstruktionPipeline(DefaultConstruktionSettings settings)
+        public DefaultConstruktionPipeline(ConstruktionSettings settings)
         {
             _settings = settings;
+            _blueprints = settings.Blueprints.ToList();  
         }
 
         public object Send(ConstruktionContext context)
         {
-            var blueprint = _settings.Blueprints.First(x => x.Matches(context));
+            var blueprint = _blueprints.First(x => x.Matches(context));
 
             var result = Construct(context, blueprint);
 
@@ -59,6 +59,6 @@
             }
         }
 
-        public void Inject(Type type, object value) => _settings.Inject(type, value);
+        public void Inject(Type type, object value) => _blueprints.Insert(0, new SingletonBlueprint(type, value));
     }
 }

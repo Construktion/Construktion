@@ -9,7 +9,7 @@ namespace Construktion
     public class Construktion
     {
         private readonly DefaultConstruktionSettings _settings;
-	    private readonly ConstruktionPipeline _pipeline;
+	    private ConstruktionPipeline _pipeline;
 
 	    public Construktion()
         {
@@ -146,7 +146,7 @@ namespace Construktion
         {
             registry = registry ?? throw new ArgumentNullException(nameof(registry));
 
-            _settings.Apply(registry.Settings);
+            apply(x => x.Apply(registry.Settings));
             return this;
         }
 
@@ -161,7 +161,7 @@ namespace Construktion
 
             configure(registry);
 
-            _settings.Apply(registry.Settings);
+            apply(x => x.Apply(registry.Settings));
             return this;
         }
 
@@ -174,7 +174,7 @@ namespace Construktion
         {
             blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 
-            _settings.Apply(blueprint);
+            apply(x => x.Apply(blueprint));
             return this;
         }
 
@@ -187,7 +187,7 @@ namespace Construktion
         {
             blueprints = blueprints ?? throw new ArgumentNullException(nameof(blueprints));
 
-            _settings.Apply(blueprints);
+            apply(x => x.Apply(blueprints));
             return this;
         }
 
@@ -203,7 +203,7 @@ namespace Construktion
         {
             blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 
-            _settings.Apply(blueprint);
+            apply(x => x.Apply(blueprint));
             return this;
         }
 
@@ -214,7 +214,7 @@ namespace Construktion
         /// <param name="value"></param>
         public Construktion Inject(Type type, object value)
         {
-            _settings.Inject(type, value);
+            apply(x => x.Inject(type, value));
             return this;
         }
 
@@ -224,8 +224,14 @@ namespace Construktion
         /// <param name="value"></param>
         public Construktion Inject<T>(T value)
         {
-            _settings.Inject(typeof(T), value);
+            apply(x => x.Inject(typeof(T), value));
             return this;
+        }
+
+        private void apply(Action<DefaultConstruktionSettings> configure)
+        {
+            configure(_settings);
+            _pipeline = new DefaultConstruktionPipeline(_settings);
         }
     }
 }
