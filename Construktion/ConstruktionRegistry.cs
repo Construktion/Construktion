@@ -299,5 +299,16 @@ namespace Construktion
             _settings.Apply(blueprint);
             return this;
         }
+
+        /// <summary>
+        /// Set how many levels of nested properties should be created.When set to 1 for example, only top level properties will be constructed.
+        /// </summary>
+        /// <param name="maxDepth"></param>
+        /// <returns></returns>
+        public ConstruktionRegistry MaxDepth(int maxDepth)
+        {
+            _settings.SetMaxDepth(maxDepth);
+            return this;
+        }
     }
 }

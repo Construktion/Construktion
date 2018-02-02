@@ -46,5 +46,10 @@ namespace Construktion
         /// When true, an exception will be thrown when Recursion is detected. False by default.
         /// </summary>
         bool ThrowOnRecurrsion { get; }
+
+        /// <summary>
+        /// How many levels of nested properties that will be constructed
+        /// </summary>
+        int? MaxDepth { get; }
     }
 }

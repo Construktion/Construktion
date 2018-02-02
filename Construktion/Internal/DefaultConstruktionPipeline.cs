@@ -36,11 +36,11 @@
 
         private object Construct(ConstruktionContext context, Blueprint blueprint)
         {
-            if (recursionDetected())
+            if (depthReached() || recursionDetected())
             {
-                return _settings.ThrowOnRecurrsion
-                           ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
-                           : default(object);
+                return !depthReached() && _settings.ThrowOnRecurrsion
+                    ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
+                    : default(object);
             }
 
             _graph.Add(context.RequestType);
@@ -50,6 +50,8 @@
             _graph.Remove(context.RequestType);
 
             return result;
+
+            bool depthReached() => _graph.Count > _settings.MaxDepth;
 
             bool recursionDetected()
             {

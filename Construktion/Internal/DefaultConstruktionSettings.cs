@@ -33,6 +33,9 @@ namespace Construktion.Internal
         private bool? _throwOnRecursion;
         public bool ThrowOnRecurrsion { get; private set; }
 
+        private int? _maxDepth;
+        public int? MaxDepth { get; private set; }
+
         public DefaultConstruktionSettings()
         {
             _defaultBlueprints = new DefaultBlueprints();
@@ -60,6 +63,7 @@ namespace Construktion.Internal
             EnumuerableCount = settings._enumerableCount ?? EnumuerableCount;
             RecurssionDepth = settings._recursionDepth ?? RecurssionDepth;
             ThrowOnRecurrsion = settings._throwOnRecursion ?? ThrowOnRecurrsion;
+            MaxDepth = settings._maxDepth ?? MaxDepth;
 
             _defaultBlueprints = new DefaultBlueprints(TypeMap);
         }
@@ -105,6 +109,7 @@ namespace Construktion.Internal
         public void SetEnumerableCount(int count) => _enumerableCount = count;
         public void SetRecursionDepth(int depth) => _recursionDepth = depth;
         public void SetThrowOnRecursion(bool shouldThrow) => _throwOnRecursion = shouldThrow;
+        public void SetMaxDepth(int maxDepth) => _maxDepth = maxDepth;
 
         private static class Default
         {
