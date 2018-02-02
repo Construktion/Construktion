@@ -9,12 +9,12 @@ namespace Construktion
     public class Construktion
     {
         private readonly DefaultConstruktionSettings _settings;
-	    private ConstruktionPipeline _pipeline;
+        private ConstruktionPipeline _pipeline;
 
-	    public Construktion()
+        public Construktion()
         {
             _settings = new DefaultConstruktionSettings();
-			_pipeline = new DefaultConstruktionPipeline(_settings);
+            _pipeline = new DefaultConstruktionPipeline(_settings);
         }
 
         /// <summary>

@@ -143,8 +143,8 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry UseGreedyCtor()
         {
-			_settings.SetCtorStrategy(Ctors.Greedy);
-			return this;
+            _settings.SetCtorStrategy(Ctors.Greedy);
+            return this;
         }
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace Construktion
         /// <returns></returns>
         public ConstruktionRegistry ConstructPrivateSetters()
         {
-			_settings.SetPropertyStrategy(PropertySetters.Accessible);
-			return this;
+            _settings.SetPropertyStrategy(PropertySetters.Accessible);
+            return this;
         }
 
         /// <summary>
