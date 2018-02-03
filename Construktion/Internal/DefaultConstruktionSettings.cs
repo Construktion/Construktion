@@ -109,7 +109,7 @@ namespace Construktion.Internal
         public void SetEnumerableCount(int count) => enumerableCount = count;
         public void SetRecursionDepth(int depth) => recursionDepth = depth;
         public void SetThrowOnRecursion(bool shouldThrow) => throwOnRecursion = shouldThrow;
-        public void SetMaxDepth(int maxDepth) => this.maxDepth = maxDepth;
+        public void SetMaxDepth(int depth) => maxDepth = depth;
 
         private static class Default
         {
