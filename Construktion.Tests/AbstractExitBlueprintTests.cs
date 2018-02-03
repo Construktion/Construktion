@@ -5,7 +5,7 @@
     public class AbstractExitBlueprintTests
     {
         [Fact]
-        public void should_apply_value_after_the_pipeline()
+        public void should_apply_value_after_the_normal_blueprints()
         {
             var construktion = new Construktion().With(x =>
             {
