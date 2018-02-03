@@ -9,7 +9,7 @@
     {
         private readonly List<string> _log;
         private readonly List<Type> _underConstruction;
-        private int _level;
+        private int level;
 
         private readonly List<Blueprint> _blueprints;
         private readonly ConstruktionSettings _settings;
@@ -26,7 +26,7 @@
             _blueprints = settings.Blueprints.ToList();
             _log = new List<string>();
             _underConstruction = new List<Type>();
-            _level = -1;
+            level = -1;
         }
 
         public void Inject(Type type, object value) => _blueprints.Insert(0, new SingletonBlueprint(type, value));
@@ -39,8 +39,8 @@
 
             var blueprint = Settings.Blueprints.First(x => x.Matches(context));
 
-            _level++;
-            var indent = new string(' ', _level * 5);
+            level++;
+            var indent = new string(' ', level * 5);
 
             if (depth > Settings.RecurssionDepth)
             {
@@ -108,7 +108,7 @@
 
             _underConstruction.Add(requestContext.RequestType);
 
-            if (_level != 0)
+            if (level != 0)
                 _log.Add("");
 
             _log.Add($"{buffer}{start}");
@@ -119,7 +119,7 @@
 
         private void EndLog(ConstruktionContext context, string buffer, string requestName)
         {
-            _level--;
+            level--;
             _underConstruction.Remove(context.RequestType);
 
             if (_log.Last().Trim().StartsWith("End"))

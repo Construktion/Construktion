@@ -9,36 +9,36 @@ namespace Construktion.Internal
 
     public class DefaultConstruktionSettings : ConstruktionSettings
     {
-        private IEnumerable<Blueprint> _defaultBlueprints;
+        private IEnumerable<Blueprint> defaultBlueprints;
         private readonly List<Blueprint> _customBlueprints;
         private readonly List<ExitBlueprint> _exitBlueprints;
 
-        public IEnumerable<Blueprint> Blueprints => _customBlueprints.Concat(_defaultBlueprints);
+        public IEnumerable<Blueprint> Blueprints => _customBlueprints.Concat(defaultBlueprints);
         public IEnumerable<ExitBlueprint> ExitBlueprints => _exitBlueprints;
 
         public IDictionary<Type, Type> TypeMap { get; }
 
-        private Func<List<ConstructorInfo>, ConstructorInfo> _ctorStrategy;
+        private Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy;
         public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; }
 
-        private Func<Type, IEnumerable<PropertyInfo>> _propertyStrategy;
+        private Func<Type, IEnumerable<PropertyInfo>> propertyStrategy;
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
 
-        private int? _enumerableCount;
+        private int? enumerableCount;
         public int EnumuerableCount { get; private set; }
 
-        private int? _recursionDepth;
+        private int? recursionDepth;
         public int RecurssionDepth { get; private set; }
 
-        private bool? _throwOnRecursion;
+        private bool? throwOnRecursion;
         public bool ThrowOnRecurrsion { get; private set; }
 
-        private int? _maxDepth;
+        private int? maxDepth;
         public int? MaxDepth { get; private set; }
 
         public DefaultConstruktionSettings()
         {
-            _defaultBlueprints = new DefaultBlueprints();
+            defaultBlueprints = new DefaultBlueprints();
             _customBlueprints = new List<Blueprint>();
             _exitBlueprints = new List<ExitBlueprint>();
 
@@ -58,14 +58,14 @@ namespace Construktion.Internal
             foreach (var map in settings.TypeMap)
                 TypeMap[map.Key] = map.Value;
 
-            CtorStrategy = settings._ctorStrategy ?? CtorStrategy;
-            PropertyStrategy = settings._propertyStrategy ?? PropertyStrategy;
-            EnumuerableCount = settings._enumerableCount ?? EnumuerableCount;
-            RecurssionDepth = settings._recursionDepth ?? RecurssionDepth;
-            ThrowOnRecurrsion = settings._throwOnRecursion ?? ThrowOnRecurrsion;
-            MaxDepth = settings._maxDepth ?? MaxDepth;
+            CtorStrategy = settings.ctorStrategy ?? CtorStrategy;
+            PropertyStrategy = settings.propertyStrategy ?? PropertyStrategy;
+            EnumuerableCount = settings.enumerableCount ?? EnumuerableCount;
+            RecurssionDepth = settings.recursionDepth ?? RecurssionDepth;
+            ThrowOnRecurrsion = settings.throwOnRecursion ?? ThrowOnRecurrsion;
+            MaxDepth = settings.maxDepth ?? MaxDepth;
 
-            _defaultBlueprints = new DefaultBlueprints(TypeMap);
+            defaultBlueprints = new DefaultBlueprints(TypeMap);
         }
 
         public void Apply(Blueprint blueprint) => _customBlueprints.Add(blueprint);
@@ -85,10 +85,10 @@ namespace Construktion.Internal
             switch (strategy)
             {
                 case Ctors.Modest:
-                    _ctorStrategy = Extensions.ModestCtor;
+                    ctorStrategy = Extensions.ModestCtor;
                     break;
                 case Ctors.Greedy:
-                    _ctorStrategy = Extensions.GreedyCtor;
+                    ctorStrategy = Extensions.GreedyCtor;
                     break;
             }
         }
@@ -98,18 +98,18 @@ namespace Construktion.Internal
             switch (strategy)
             {
                 case PropertySetters.Public:
-                    _propertyStrategy = Extensions.PropertiesWithPublicSetter;
+                    propertyStrategy = Extensions.PropertiesWithPublicSetter;
                     break;
                 case PropertySetters.Accessible:
-                    _propertyStrategy = Extensions.PropertiesWithAccessibleSetter;
+                    propertyStrategy = Extensions.PropertiesWithAccessibleSetter;
                     break;
             }
         }
 
-        public void SetEnumerableCount(int count) => _enumerableCount = count;
-        public void SetRecursionDepth(int depth) => _recursionDepth = depth;
-        public void SetThrowOnRecursion(bool shouldThrow) => _throwOnRecursion = shouldThrow;
-        public void SetMaxDepth(int maxDepth) => _maxDepth = maxDepth;
+        public void SetEnumerableCount(int count) => enumerableCount = count;
+        public void SetRecursionDepth(int depth) => recursionDepth = depth;
+        public void SetThrowOnRecursion(bool shouldThrow) => throwOnRecursion = shouldThrow;
+        public void SetMaxDepth(int maxDepth) => this.maxDepth = maxDepth;
 
         private static class Default
         {
