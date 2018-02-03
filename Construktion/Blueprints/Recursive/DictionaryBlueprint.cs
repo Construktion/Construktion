@@ -21,40 +21,47 @@ namespace Construktion.Blueprints.Recursive
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var itemCount = pipeline.Settings.EnumuerableCount;
+            var items = pipeline.Settings.EnumuerableCount;
 
             var key = context.RequestType.GetGenericArguments()[0];
             var valueType = context.RequestType.GetGenericArguments()[1];
 
             if (key.GetTypeInfo().IsEnum)
-                itemCount = Enum.GetNames(key).Length;
+                items = Enum.GetNames(key).Length;
 
-            var keys = createUniqueKeys(new HashSet<object>()).ToList();
-            var values = createValues(valueType).ToList();
+            var keys = uniqueKeys();
+            var values = itemValues(valueType);
 
             var dictionary = (IDictionary)typeof(Dictionary<,>).NewGeneric(key, valueType);
 
-            for (var i = 0; i <= itemCount - 1; i++)
+            for (var i = 0; i <= items - 1; i++)
                 dictionary.Add(keys[i], values[i]);
 
             return dictionary;
 
-            HashSet<object> createUniqueKeys(HashSet<object> items)
+            List<object> uniqueKeys()
             {
-                var newItem = pipeline.Send(new ConstruktionContext(key));
+                var builtKeys = new HashSet<object>();
+                while (true)
+                {
+                    var newItem = pipeline.Send(new ConstruktionContext(key));
 
-                if (newItem != null)
-                    items.Add(newItem);
+                    if (newItem != null)
+                        builtKeys.Add(newItem);
 
-                return items.Count == itemCount
-                    ? items
-                    : createUniqueKeys(items);
+                    if (builtKeys.Count == items)
+                        return builtKeys.ToList();
+                }
             }
 
-            IEnumerable<object> createValues(Type closedType)
+            List<object> itemValues(Type closedType)
             {
-                for (var i = 0; i < itemCount; i++)
-                    yield return pipeline.Send(new ConstruktionContext(closedType));
+                var results = new List<object>();
+
+                for (var i = 0; i < items; i++)
+                    results.Add(pipeline.Send(new ConstruktionContext(closedType)));
+
+                return results;
             }
         }
     }
