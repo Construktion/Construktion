@@ -6,7 +6,6 @@
 
     public class CharBlueprintTests
     {
-        [Fact]
         public void should_not_be_null()
         {
             var blueprint = new CharBlueprint();

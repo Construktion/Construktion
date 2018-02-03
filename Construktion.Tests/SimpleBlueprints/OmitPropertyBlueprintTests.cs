@@ -6,7 +6,6 @@
 
     public class OmitPropertyBlueprintTests
     {
-        [Fact]
         public void should_match_defined_convention()
         {
             var blueprint = new OmitPropertyBlueprint(x => x.Name.EndsWith("Id"), typeof(int));
@@ -16,7 +15,6 @@
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_return_default_int()
         {
             var blueprint = new OmitPropertyBlueprint(x => x.Name.EndsWith("Id"), typeof(int));

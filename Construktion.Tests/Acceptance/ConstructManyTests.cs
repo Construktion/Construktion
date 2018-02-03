@@ -16,7 +16,6 @@ namespace Construktion.Tests.Acceptance
             construktion = new Construktion();
         }
 
-        [Fact]
         public void should_construct_many_with_3_items_by_default()
         {
             var results = construktion.ConstructMany<int>();
@@ -25,7 +24,6 @@ namespace Construktion.Tests.Acceptance
             results.ShouldAllBe(x => x != 0);
         }
 
-        [Fact]
         public void should_construct_many_with_specified_count()
         {
             var results = construktion.ConstructMany<int>(5);
@@ -34,7 +32,6 @@ namespace Construktion.Tests.Acceptance
             results.ShouldAllBe(x => x != 0);
         }
 
-        [Fact]
         public void should_construct_many_with_hardcodes()
         {
             var result = construktion.ConstructMany<Bar>(x => x.Name = "Name");
@@ -42,7 +39,6 @@ namespace Construktion.Tests.Acceptance
             result.ShouldAllBe(x => x.Name == "Name");
         }
 
-        [Fact]
         public void should_construct_many_with_hardcodes_and_count()
         {
             var result = construktion.ConstructMany<Bar>(x => x.Name = "Name", 5);
@@ -51,7 +47,6 @@ namespace Construktion.Tests.Acceptance
             result.ShouldAllBe(x => x.Name == "Name");
         }
 
-        [Fact]
         public void should_set_enumerable_count_globally()
         {
             construktion.With(x => x.EnumerableCount(2));
@@ -63,7 +58,6 @@ namespace Construktion.Tests.Acceptance
             bars.Count().ShouldBe(2);
         }
 
-        [Fact]
         public void should_set_enumerable_count_for_entire_graph()
         {
             construktion.With(x => x.EnumerableCount(2));
@@ -74,7 +68,6 @@ namespace Construktion.Tests.Acceptance
             foos.ShouldAllBe(x => x.Bars.Count() == 2);
         }
 
-        [Fact]
         public void should_set_enumerable_count_for_arrays()
         {
             construktion.With(x => x.EnumerableCount(2));
@@ -84,13 +77,11 @@ namespace Construktion.Tests.Acceptance
             ints.Length.ShouldBe(2);
         }
 
-        [Fact]
         public void should_throw_when_setting_a_negative_count()
         {
             Exception<ArgumentException>.ShouldBeThrownBy(() => construktion.With(x => x.EnumerableCount(-1)));
         }
 
-        [Fact]
         public void construt_many_should_throw_when_setting_a_negative_count()
         {
             Exception<ArgumentException>.ShouldBeThrownBy(() => construktion.ConstructMany<int>(-1));

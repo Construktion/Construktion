@@ -5,7 +5,6 @@
 
     public class ConstructUsingTests
     {
-        [Fact]
         public void should_construct_using_supplied_function()
         {
             var registry =

@@ -6,7 +6,6 @@
 
     public class EmailAddressBlueprintTests
     {
-        [Fact]
         public void should_match_email_properties()
         {
             var blueprint = new EmailAddressBlueprint();
@@ -17,7 +16,6 @@
             blueprint.Matches(new ConstruktionContext(emailAddress)).ShouldBe(true);
         }
 
-        [Fact]
         public void should_construct()
         {
             var result = (string)new EmailAddressBlueprint().Construct(new ConstruktionContext(typeof(string)),

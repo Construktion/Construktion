@@ -7,7 +7,6 @@
 
     public class RecursionGuardTests
     {
-        [Fact]
         public void should_ignore_on_recursion()
         {
             var parent = new Construktion().Construct<Parent>();
@@ -18,7 +17,6 @@
             parent.Child.RecursiveParent.ShouldBe(null);
         }
 
-        [Fact]
         public void should_ignore_recursive_property_in_the_graph()
         {
             var sut = new Construktion().Construct<DeepRecursiveParent>();
@@ -34,7 +32,6 @@
             sut.Parent.Child.RecursiveParent.ShouldBe(null);
         }
 
-        [Fact]
         public void should_handle_an_enunmerable_with_recursive_property_correctly()
         {
             var sut = new Construktion().Construct<DeepRecursiveParents>();
@@ -49,7 +46,6 @@
             sut.Parents.Select(x => x.Child).ShouldAllBe(x => x.RecursiveParent == null);
         }
 
-        [Fact]
         public void should_have_configurable_recurssion_depth()
         {
             var construction = new Construktion().With(x => x.RecurssionLimit(1));
@@ -63,7 +59,6 @@
             secondRecurssiveParent.ShouldBe(null);
         }
 
-        [Fact]
         public void should_not_overwrite_when_not_set()
         {
             var construction = new Construktion()
@@ -79,7 +74,6 @@
             secondRecurssiveParent.ShouldBe(null);
         }
 
-        [Fact]
         public void should_throw_when_set_to_negative_depth()
         {
             Exception<ArgumentException>.ShouldBeThrownBy(() => new Construktion().With(x => x.RecurssionLimit(-1)));

@@ -7,7 +7,6 @@
 
     public class DictionaryBlueprintTests
     {
-        [Fact]
         public void should_have_4_dictionary_items_when_not_an_enum()
         {
             var blueprint = new DictionaryBlueprint();
@@ -20,7 +19,6 @@
             dictionary.Count.ShouldBe(4);
         }
 
-        [Fact]
         public void when_dictionary_is_an_enum_should_cover_all_enum_options()
         {
             var blueprint = new DictionaryBlueprint();

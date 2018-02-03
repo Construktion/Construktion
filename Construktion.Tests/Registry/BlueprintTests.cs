@@ -15,7 +15,6 @@
             construktion = new Construktion();
         }
 
-        [Fact]
         public void should_register_a_custom_blueprint()
         {
             registry.AddBlueprint(new StringOneBlueprint());
@@ -25,7 +24,6 @@
             result.ShouldBe("StringOne");
         }
 
-        [Fact]
         public void should_register_via_generic_parameter()
         {
             registry.AddBlueprint<StringOneBlueprint>();
@@ -35,7 +33,6 @@
             result.ShouldBe("StringOne");
         }
 
-        [Fact]
         public void blueprints_registered_first_are_chosen_first()
         {
             registry.AddBlueprint(new StringTwoBlueprint());
@@ -46,7 +43,6 @@
             result.ShouldBe("StringTwo");
         }
 
-        [Fact]
         public void registries_registered_first_should_have_their_blueprints_used_first()
         {
             construktion
@@ -58,7 +54,6 @@
             result.ShouldBe("StringTwo");
         }
 
-        [Fact]
         public void should_be_linq_enabled()
         {
             var reg = new ConstruktionRegistry(x => x.AddBlueprint<StringOneBlueprint>());
@@ -68,7 +63,6 @@
             result.ShouldBe("StringOne");
         }
 
-        [Fact]
         public void should_add_multiple_blueprints()
         {
             var blueprints = new List<Blueprint>
@@ -83,7 +77,6 @@
             result.Int.ShouldBe(1);
         }
 
-        [Fact]
         public void registry_should_add_multiple_blueprints()
         {
             var stringBlueprint = new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(string), () => "x");

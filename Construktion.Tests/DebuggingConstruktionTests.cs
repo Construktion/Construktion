@@ -5,7 +5,6 @@
 
     public class DebuggingConstruktionTests
     {
-        [Fact]
         public void should_log()
         {
             var context = new ConstruktionContext(typeof(Foo));
@@ -18,7 +17,6 @@
             log.ShouldBe(expected);
         }
 
-        [Fact]
         public void should_log_exit_blueprint()
         {
             var context = new ConstruktionContext(typeof(Foo));
@@ -33,7 +31,6 @@
             log.ShouldBe(expected);
         }
 
-        [Fact]
         public void log_should_power_through_exceptions()
         {
             var context = new ConstruktionContext(typeof(WillThrowFoo));

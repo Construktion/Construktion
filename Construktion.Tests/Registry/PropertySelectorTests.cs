@@ -13,7 +13,6 @@
             construktion = new Construktion();
         }
 
-        [Fact]
         public void should_not_construct_private_setters_by_default()
         {
             construktion.With(registry);
@@ -23,7 +22,6 @@
             foo.PrivateSetter.ShouldBeNullOrWhiteSpace();
         }
 
-        [Fact]
         public void should_opt_in_to_constructing_properties_with_private_setter()
         {
             construktion.With(x => x.ConstructPrivateSetters());
@@ -33,7 +31,6 @@
             foo.PrivateSetter.ShouldNotBeNullOrWhiteSpace();
         }
 
-        [Fact]
         public void should_overwrite_previous_property_selector()
         {
             registry
@@ -47,7 +44,6 @@
             foo.PrivateSetter.ShouldBeNullOrWhiteSpace();
         }
 
-        [Fact]
         public void a_new_registry_without_a_property_strategy_should_not_overwrite_previous()
         {
             registry.ConstructPrivateSetters();

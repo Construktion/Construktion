@@ -6,7 +6,6 @@
 
     public class ArrayBlueprintTests
     {
-        [Fact]
         public void should_match_arrays()
         {
             var blueprint = new ArrayBlueprint();
@@ -16,7 +15,6 @@
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_build_arrays()
         {
             var blueprint = new ArrayBlueprint();

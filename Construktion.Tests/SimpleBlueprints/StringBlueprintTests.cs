@@ -6,7 +6,6 @@
 
     public class StringBlueprintTests
     {
-        [Fact]
         public void should_construct()
         {
             var blueprint = new StringBlueprint();
@@ -17,7 +16,6 @@
             result.ShouldStartWith("String-");
         }
 
-        [Fact]
         public void should_prefix_property_with_name()
         {
             var blueprint = new StringBlueprint();

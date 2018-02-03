@@ -14,7 +14,6 @@
             construktion = new Construktion();
         }
 
-        [Fact]
         public void should_register_instance_with_contract()
         {
             registry.Register<IFoo, Foo>();
@@ -24,7 +23,6 @@
             result.ShouldBeOfType<Foo>();
         }
 
-        [Fact]
         public void last_registered_instance_should_be_chosen()
         {
             registry.Register<IFoo, Foo>();
@@ -35,7 +33,6 @@
             result.ShouldBeOfType<Foo2>();
         }
 
-        [Fact]
         public void should_register_scoped_instance()
         {
             var foo = new Foo { FooId = -1 };
@@ -48,7 +45,6 @@
             fooResult.GetHashCode().ShouldBe(foo.GetHashCode());
         }
 
-        [Fact]
         public void should_use_last_scoped_instance_registered()
         {
             var foo = new Foo();
@@ -63,7 +59,6 @@
             result.GetHashCode().ShouldBe(foo2.GetHashCode());
         }
 
-        [Fact]
         public void should_use_instance_across_graph()
         {
             var foo = new Foo();
@@ -77,7 +72,6 @@
             result.PropertyFoo.GetHashCode().ShouldBe(foo.GetHashCode());
         }
 
-        [Fact]
         public void should_throw_when_interface_isnt_registered()
         {
             //_blueprintRegistry.Register<IFoo, Foo>();

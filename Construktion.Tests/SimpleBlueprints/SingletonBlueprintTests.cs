@@ -6,7 +6,6 @@
 
     public class SingletonBlueprintTests
     {
-        [Fact]
         public void should_match_specific_objects()
         {
             var foo = new Foo();
@@ -19,7 +18,6 @@
             matchesString.ShouldBe(false);
         }
 
-        [Fact]
         public void should_return_the_same_object()
         {
             var foo = new Foo { Name = "Name", Age = 10 };

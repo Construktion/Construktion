@@ -5,7 +5,6 @@
 
     public class PropertyAttributeUsageTests
     {
-        [Fact]
         public void should_register_property_attribute_blueprint()
         {
             var registry = new ConstruktionRegistry().AddPropertyAttribute<Set>(x => x.Value);

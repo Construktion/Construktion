@@ -7,7 +7,6 @@
 
     public class TimespanBlueprintTests
     {
-        [Fact]
         public void should_construct()
         {
             var blueprint = new TimespanBlueprint();

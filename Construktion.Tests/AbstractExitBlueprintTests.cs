@@ -4,7 +4,6 @@
 
     public class AbstractExitBlueprintTests
     {
-        [Fact]
         public void should_apply_value_after_the_normal_blueprints()
         {
             var construktion = new Construktion().With(x =>
@@ -18,7 +17,6 @@
             foo.Id.ShouldBe(10);
         }
 
-        [Fact]
         public void should_not_alter_constructed_values()
         {
             var construktion = new Construktion().With(x =>
@@ -32,7 +30,6 @@
             foo.Name.ShouldNotBeNullOrWhiteSpace();
         }
 
-        [Fact]
         public void should_work_for_interfaces()
         {
             var construktion = new Construktion().With(x =>
@@ -46,7 +43,6 @@
             foo.Id.ShouldBe(10);
         }
 
-        [Fact]
         public void should_add_through_construktion()
         {
             var construktion = new Construktion().With(new FooExitBlueprint());
@@ -56,7 +52,6 @@
             foo.Id.ShouldBe(10);
         }
 
-        [Fact]
         public void should_override_matches()
         {
             var construktion = new Construktion().With(x =>
@@ -70,7 +65,6 @@
             foo.Name.ShouldBe("PingPong");
         }
 
-        [Fact]
         public void only_types_of_T_should_match()
         {
             var construktion = new Construktion().With(x =>

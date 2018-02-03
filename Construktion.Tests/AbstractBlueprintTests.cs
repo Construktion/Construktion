@@ -4,7 +4,6 @@
 
     public class AbstractBlueprintTests
     {
-        [Fact]
         public void should_match_t()
         {
             var blueprint = new FooBlueprint();
@@ -12,7 +11,6 @@
             blueprint.Matches(new ConstruktionContext(typeof(Foo))).ShouldBe(true);
         }
 
-        [Fact]
         public void should_construct()
         {
             var context = new Construktion().With(new FooBlueprint());

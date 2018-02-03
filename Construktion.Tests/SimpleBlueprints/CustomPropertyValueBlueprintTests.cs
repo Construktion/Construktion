@@ -7,7 +7,6 @@
 
     public class CustomPropertyValueBlueprintTests
     {
-        [Fact]
         public void should_match_defined_convention()
         {
             var blueprint = new CustomPropertyValueBlueprint(x => x.Name.Equals("HireDate"), () => DateTime.MaxValue);
@@ -17,7 +16,6 @@
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_construct_from_value()
         {
             var blueprint = new CustomPropertyValueBlueprint(x => x.Name.Equals("HireDate"), () => DateTime.MaxValue);

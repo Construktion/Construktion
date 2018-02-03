@@ -4,7 +4,6 @@
 
     public class EmailRegistryTests
     {
-        [Fact]
         public void should_construct_email()
         {
             var construktion = new Construktion().With(x => x.AddEmailBlueprint());
@@ -15,7 +14,6 @@
             result.Custom.ShouldNotContain("@");
         }
 
-        [Fact]
         public void should_allow_custom_convention()
         {
             var construktion = new Construktion().With(x => x.AddEmailBlueprint(p => p.Name.Equals("Custom")));

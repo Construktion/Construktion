@@ -12,7 +12,6 @@
             registry = new ConstruktionRegistry();
         }
 
-        [Fact]
         public void should_throw_when_opted_in()
         {
             registry.ThrowOnRecurssion(true);
@@ -21,7 +20,6 @@
             Exception<Exception>.ShouldBeThrownBy(() => construktion.Construct<Parent>());
         }
 
-        [Fact]
         public void should_still_throw()
         {
             registry.ThrowOnRecurssion(true);
@@ -31,7 +29,6 @@
             Exception<Exception>.ShouldBeThrownBy(() => construktion.Construct<Parent>());
         }
 
-        [Fact]
         public void should_not_throw_when_opted_out()
         {
             registry.ThrowOnRecurssion(true);

@@ -6,7 +6,6 @@
 
     public class PropertyAttributeBlueprintTests
     {
-        [Fact]
         public void should_match_property_with_attribute()
         {
             var blueprint = new SetBlueprint();
@@ -18,7 +17,6 @@
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_not_match_property_without_attribute()
         {
             var blueprint = new SetBlueprint();
@@ -30,7 +28,6 @@
             matches.ShouldBe(false);
         }
 
-        [Fact]
         public void should_construct_from_attribute()
         {
             var blueprint = new SetBlueprint();

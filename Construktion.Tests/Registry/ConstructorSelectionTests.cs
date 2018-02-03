@@ -13,7 +13,6 @@
             construktion = new Construktion();
         }
 
-        [Fact]
         public void should_resolve_modest_ctor_by_default()
         {
             var result = construktion.Construct<MultiCtor>();
@@ -21,7 +20,6 @@
             result.UsedModestCtor.ShouldBe(true);
         }
 
-        [Fact]
         public void should_use_greedy_ctor_when_opted_in()
         {
             registry.UseGreedyCtor();
@@ -31,7 +29,6 @@
             result.UsedGreedyCtor.ShouldBe(true);
         }
 
-        [Fact]
         public void a_new_registry_without_a_ctor_strategy_should_not_overwrite_previous()
         {
             registry.UseGreedyCtor();
@@ -45,7 +42,6 @@
             result.UsedGreedyCtor.ShouldBe(true);
         }
 
-        [Fact]
         public void should_use_the_last_registered_ctor_strategy()
         {
             registry

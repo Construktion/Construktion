@@ -7,7 +7,6 @@
 
     public class InterfaceBlueprintTests
     {
-        [Fact]
         public void should_match_registered_interfaces()
         {
             var typeMap = new Dictionary<Type, Type>

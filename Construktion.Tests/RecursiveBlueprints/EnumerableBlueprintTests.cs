@@ -10,7 +10,6 @@ namespace Construktion.Tests.RecursiveBlueprints
 
     public class EnumerableBlueprintTests
     {
-        [Fact]
         public void should_match_enumerables_of_t()
         {
             var blueprint = new EnumerableBlueprint();
@@ -20,7 +19,6 @@ namespace Construktion.Tests.RecursiveBlueprints
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_build_simple_enumerable()
         {
             var blueprint = new EnumerableBlueprint();
@@ -32,7 +30,6 @@ namespace Construktion.Tests.RecursiveBlueprints
             result.ShouldAllBe(x => x != 0);
         }
 
-        [Fact]
         public void should_build_complex_enumerable()
         {
             var blueprint = new EnumerableBlueprint();
@@ -44,7 +41,6 @@ namespace Construktion.Tests.RecursiveBlueprints
             result.ShouldAllBe(x => x.Baz != 0);
         }
 
-        [Fact]
         public void should_build_nested_enumerables()
         {
             var blueprint = new EnumerableBlueprint();
@@ -59,7 +55,6 @@ namespace Construktion.Tests.RecursiveBlueprints
             foos.ShouldAllBe(x => x.Baz != 0);
         }
 
-        [Fact]
         public void should_build_a_list()
         {
             var blueprint = new EnumerableBlueprint();
@@ -71,7 +66,6 @@ namespace Construktion.Tests.RecursiveBlueprints
             result.ShouldAllBe(x => x != default(int));
         }
 
-        [Fact]
         public void should_build_icollections()
         {
             var blueprint = new EnumerableBlueprint();

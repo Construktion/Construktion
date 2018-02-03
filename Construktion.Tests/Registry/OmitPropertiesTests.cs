@@ -15,7 +15,6 @@ namespace Construktion.Tests.Registry
             construktion = new Construktion();
         }
 
-        [Fact]
         public void omit_ids_should_omit_an_int_that_ends_in_Id()
         {
             registry.OmitIds();
@@ -26,7 +25,6 @@ namespace Construktion.Tests.Registry
             foo.FooId.ShouldBe(0);
         }
 
-        [Fact]
         public void omit_ids_should_omit_a_nullable_int_that_ends_in_Id()
         {
             registry.OmitIds();
@@ -37,7 +35,6 @@ namespace Construktion.Tests.Registry
             foo.NullableFooId.ShouldBe(null);
         }
 
-        [Fact]
         public void should_be_case_sensitive()
         {
             registry.OmitIds();
@@ -48,7 +45,6 @@ namespace Construktion.Tests.Registry
             foo.Fooid.ShouldNotBe(0);
         }
 
-        [Fact]
         public void should_be_able_to_define_a_custom_convention()
         {
             registry.OmitProperties(prop => prop.Name.EndsWith("_Idx"), typeof(string));
@@ -59,7 +55,6 @@ namespace Construktion.Tests.Registry
             foo.String_Idx.ShouldBe(null);
         }
 
-        [Fact]
         public void should_omit_all_properties_of_a_open_generic()
         {
             registry.OmitProperties(typeof(List<>));
@@ -71,7 +66,6 @@ namespace Construktion.Tests.Registry
             foo.ListStrings.ShouldBe(null);
         }
 
-        [Fact]
         public void should_ignore_virtual_properties_when_opted_in()
         {
             registry.OmitVirtualProperties();
@@ -82,7 +76,6 @@ namespace Construktion.Tests.Registry
             foo.VirtualInt.ShouldBe(0);
         }
 
-        [Fact]
         public void should_omit_all_properties_of_type()
         {
             registry.OmitProperties(prop => prop.Name == "Omit", typeof(string), typeof(int));
@@ -95,7 +88,6 @@ namespace Construktion.Tests.Registry
             bar.Omit.ShouldBe(0);
         }
 
-        [Fact]
         public void should_omit_all_properties_that_inherit_a_generic()
         {
             registry.OmitProperties(prop => prop.PropertyType.GetTypeInfo().BaseType != null &&

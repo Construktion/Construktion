@@ -13,7 +13,6 @@
             construktion = new Construktion();
         }
 
-        [Fact]
         public void should_register_a_custom_exit_blueprint()
         {
             registry.AddExitBlueprint(new StringExitOneBlueprint());
@@ -23,7 +22,6 @@
             result.ShouldEndWith("One");
         }
 
-        [Fact]
         public void should_register_via_generic_parameter()
         {
             registry.AddExitBlueprint<StringExitOneBlueprint>();
@@ -33,7 +31,6 @@
             result.ShouldEndWith("One");
         }
 
-        [Fact]
         public void exit_blueprints_registered_first_are_chosen_first()
         {
             registry.AddExitBlueprint<StringExitTwoBlueprint>();
@@ -44,7 +41,6 @@
             result.ShouldEndWith("Two");
         }
 
-        [Fact]
         public void registries_registered_first_should_have_their_exit_blueprints_used_first()
         {
             construktion
@@ -56,7 +52,6 @@
             result.ShouldEndWith("Two");
         }
 
-        [Fact]
         public void should_be_linq_enabled()
         {
             var _registry = new ConstruktionRegistry(x => x.AddExitBlueprint<StringExitOneBlueprint>());

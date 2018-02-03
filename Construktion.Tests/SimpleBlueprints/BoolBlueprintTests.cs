@@ -6,7 +6,6 @@
 
     public class BoolBlueprintTests
     {
-        [Fact]
         public void should_alternate_values()
         {
             var blueprint = new BoolBlueprint();

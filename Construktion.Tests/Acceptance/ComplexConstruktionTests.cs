@@ -5,6 +5,7 @@ namespace Construktion.Tests.Acceptance
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using Shouldly;
 
     public class ComplexConstruktionTests
@@ -16,7 +17,6 @@ namespace Construktion.Tests.Acceptance
             construktion = new Construktion();
         }
 
-        [Fact]
         public void enums()
         {
             var result = construktion.Construct<TestResult>();
@@ -24,7 +24,6 @@ namespace Construktion.Tests.Acceptance
             result.ShouldBeOneOf(TestResult.Pass, TestResult.Fail);
         }
 
-        [Fact]
         public void should_build_classes()
         {
             var result = construktion.Construct<Child>();
@@ -33,7 +32,6 @@ namespace Construktion.Tests.Acceptance
             result.Age.ShouldNotBe(default(int));
         }
 
-        [Fact]
         public void should_build_nested_classes()
         {
             var result = construktion.Construct<Parent>();
@@ -44,7 +42,6 @@ namespace Construktion.Tests.Acceptance
             result.Child.Age.ShouldNotBe(default(int));
         }
 
-        [Fact]
         public void should_prefix_properties_with_property_name()
         {
             var child = construktion.Construct<Child>();
@@ -52,7 +49,6 @@ namespace Construktion.Tests.Acceptance
             child.Name.ShouldStartWith("Name-");
         }
 
-        [Fact]
         public void should_hardcode_properties()
         {
             var result = construktion.Construct<Parent>(x =>
@@ -67,7 +63,6 @@ namespace Construktion.Tests.Acceptance
             result.Child.Age.ShouldNotBe(default(int));
         }
 
-        [Fact]
         public void should_ignore_private_and_no_setters_by_default()
         {
             var result = construktion.Construct<Private>();
@@ -77,7 +72,6 @@ namespace Construktion.Tests.Acceptance
             result.NoSetter.ShouldBe(null);
         }
 
-        [Fact]
         public void should_build_any_type_implementing_ienumerable()
         {
             var result = construktion.Construct<IReadOnlyCollection<Child>>();
@@ -87,7 +81,6 @@ namespace Construktion.Tests.Acceptance
             result.ShouldAllBe(x => x.Age != 0);
         }
 
-        [Fact]
         public void should_build_arrays()
         {
             var result = construktion.Construct<string[]>();
@@ -95,7 +88,6 @@ namespace Construktion.Tests.Acceptance
             result.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x));
         }
 
-        [Fact]
         public void should_build_dictionaries()
         {
             var result = construktion.Construct<Dictionary<string, int>>();
@@ -106,7 +98,6 @@ namespace Construktion.Tests.Acceptance
             result.Values.ShouldAllBe(x => x != 0);
         }
 
-        [Fact]
         public void should_resolve_runtime_type()
         {
             var result = construktion.Construct(typeof(Child)) as Child;
@@ -115,10 +106,10 @@ namespace Construktion.Tests.Acceptance
             result.Age.ShouldNotBe(0);
         }
 
-        [Fact]
         public void should_resolve_parameters_from_method()
         {
-            var methodInfo = typeof(ComplexConstruktionTests).GetMethod(nameof(TestMethod));
+            var methodInfo = typeof(ComplexConstruktionTests).GetMethod(nameof(TestMethod),
+                BindingFlags.NonPublic | BindingFlags.Instance);
 
             var values = methodInfo.GetParameters()
                                    .Select(pi => construktion.Construct(pi))
@@ -129,7 +120,7 @@ namespace Construktion.Tests.Acceptance
             ((int)values[1]).ShouldNotBe(0);
         }
 
-        public void TestMethod(string name, int age) { }
+        private void TestMethod(string name, int age) { }
 
         private class Private
         {

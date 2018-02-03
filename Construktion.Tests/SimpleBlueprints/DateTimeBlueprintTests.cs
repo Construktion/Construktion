@@ -7,7 +7,6 @@
 
     public class DateTimeBlueprintTests
     {
-        [Fact]
         public void should_construct()
         {
             var blueprint = new DateTimeBlueprint();

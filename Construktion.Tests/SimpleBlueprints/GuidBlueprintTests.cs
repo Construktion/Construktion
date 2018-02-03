@@ -7,7 +7,6 @@
 
     public class GuidBlueprintTests
     {
-        [Fact]
         public void should_construct()
         {
             var blueprint = new GuidBlueprint();

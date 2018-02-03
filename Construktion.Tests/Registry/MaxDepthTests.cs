@@ -4,7 +4,6 @@
 
     public class MaxDepthTests
     {
-        [Fact]
         public void should_construct_top_level_properties()
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(1));
@@ -16,7 +15,6 @@
             result.LevelTwo.Name.ShouldBe(null);
         }
 
-        [Fact]
         public void should_construct_deeper()
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(2));
@@ -30,7 +28,6 @@
             result.LevelTwo.LevelThree.Name.ShouldBe(null);
         }
 
-        [Fact]
         public void new_registries_should_overwrite_previous()
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(2));
@@ -43,7 +40,6 @@
             result.LevelTwo.Name.ShouldBe(null);
         }
 
-        [Fact]
         public void new_registries_without_a_setting_should_not_overwrite()
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(1));

@@ -4,7 +4,6 @@
 
     public class InjectTests
     {
-        [Fact]
         public void should_inject_instance()
         {
             var foo = new Foo();
@@ -17,7 +16,6 @@
                   .ShouldBe(foo.GetHashCode());
         }
 
-        [Fact]
         public void should_inject_instance_with_explicit_type()
         {
             var foo = new Foo() { Name = "Foo" };
@@ -32,7 +30,6 @@
             result.GetHashCode().ShouldBe(fooHolder.GetHashCode());
         }
 
-        [Fact]
         public void should_always_use_the_same_instance()
         {
             var foo = new Foo();
@@ -50,7 +47,6 @@
                    .ShouldBe(foo.GetHashCode());
         }
 
-        [Fact]
         public void should_inject_from_within_pipeline()
         {
             var construktion = new Construktion().With(new FooBlueprint());
@@ -63,7 +59,6 @@
                   .ShouldBe(foo.GetHashCode());
         }
 
-        [Fact]
         public void should_always_use_the_same_instance_when_injected_from_pipeline()
         {
             var construktion = new Construktion().With(new FooBlueprint());
@@ -79,7 +74,6 @@
                         .ShouldBe(result2.Foo.GetHashCode());
         }
 
-        [Fact]
         public void injected_instance_should_be_scoped_to_construktion_instance()
         {
             var foo = new Foo();

@@ -8,7 +8,6 @@
 
     public class NullableTypeBlueprintTests
     {
-        [Fact]
         public void should_match_nullable_type()
         {
             var blueprint = new NullableTypeBlueprint();
@@ -19,7 +18,6 @@
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_not_match_non_nullable_type()
         {
             var blueprint = new NullableTypeBlueprint();
@@ -30,7 +28,6 @@
             matches.ShouldBe(false);
         }
 
-        [Fact]
         public void nullable_type_should_be_null_sometimes()
         {
             var blueprint = new NullableTypeBlueprint();
@@ -48,7 +45,6 @@
             values.Any(x => x != null).ShouldBe(true);
         }
 
-        [Fact]
         public void should_not_match_reference_types()
         {
             var blueprint = new NullableTypeBlueprint();

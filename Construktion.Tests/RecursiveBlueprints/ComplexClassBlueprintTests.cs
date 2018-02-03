@@ -6,7 +6,6 @@
 
     public class ComplexClassBlueprintTests
     {
-        [Fact]
         public void should_match_class_with_non_default_ctor()
         {
             var blueprint = new ComplexClassBlueprint();
@@ -16,7 +15,6 @@
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_match_class_with_default_ctor()
         {
             var blueprint = new ComplexClassBlueprint();
@@ -26,7 +24,6 @@
             matches.ShouldBe(true);
         }
 
-        [Fact]
         public void should_construct_ctor_arg_and_properties()
         {
             var blueprint = new ComplexClassBlueprint();
@@ -42,7 +39,6 @@
             bar.Foo.Age.ShouldNotBe(0);
         }
 
-        [Fact]
         public void resolved_ctor_args_should_be_different_objects()
         {
             var result1 = new Construktion().Construct<NonEmptyCtor>();

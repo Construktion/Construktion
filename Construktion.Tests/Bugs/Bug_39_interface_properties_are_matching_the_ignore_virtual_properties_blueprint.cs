@@ -6,7 +6,6 @@
 
     public class Bug_39_interface_properties_are_matching_the_ignore_virtual_properties_blueprint
     {
-        [Fact]
         public void interface_properties_should_not_match_virtual_blueprint()
         {
             var blueprint = new IgnoreVirtualPropertiesBlueprint();
