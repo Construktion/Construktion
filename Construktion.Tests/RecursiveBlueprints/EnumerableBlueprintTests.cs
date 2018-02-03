@@ -7,7 +7,6 @@ namespace Construktion.Tests.RecursiveBlueprints
     using Blueprints.Recursive;
     using Internal;
     using Shouldly;
-    using Xunit;
 
     public class EnumerableBlueprintTests
     {

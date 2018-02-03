@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Tests
 {
     using Shouldly;
-    using Xunit;
     using System.Text.RegularExpressions;
 
     public class DebuggingConstruktionTests

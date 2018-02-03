@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Blueprints.Recursive;
     using Shouldly;
-    using Xunit;
 
     public class InterfaceBlueprintTests
     {

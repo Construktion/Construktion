@@ -3,7 +3,6 @@
     using Blueprints.Simple;
     using Internal;
     using Shouldly;
-    using Xunit;
 
     public class SingletonBlueprintTests
     {

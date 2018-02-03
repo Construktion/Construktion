@@ -2,7 +2,6 @@
 {
     using System;
     using Shouldly;
-    using Xunit;
 
     public class RegisteredInstanceTests
     {

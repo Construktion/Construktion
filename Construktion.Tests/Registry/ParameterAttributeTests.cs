@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using Shouldly;
-    using Xunit;
 
     public class ParameterAttributeTests
     {

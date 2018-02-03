@@ -3,7 +3,6 @@ namespace Construktion.Tests.Registry
     using System.Collections.Generic;
     using System.Reflection;
     using Shouldly;
-    using Xunit;
 
     public class OmitPropertiesTests
     {

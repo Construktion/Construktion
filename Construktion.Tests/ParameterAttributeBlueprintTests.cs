@@ -3,7 +3,6 @@
     using System;
     using Internal;
     using Shouldly;
-    using Xunit;
 
     public class ParameterAttributeBlueprintTests
     {

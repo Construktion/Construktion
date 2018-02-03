@@ -2,7 +2,6 @@ namespace Construktion.Tests.Acceptance
 {
     using System;
     using Shouldly;
-    using Xunit;
 
     public class PrimitiveConstruktionTests
     {

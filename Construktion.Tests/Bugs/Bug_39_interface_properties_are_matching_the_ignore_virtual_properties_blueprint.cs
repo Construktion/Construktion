@@ -3,7 +3,6 @@
     using System;
     using Blueprints.Simple;
     using Shouldly;
-    using Xunit;
 
     public class Bug_39_interface_properties_are_matching_the_ignore_virtual_properties_blueprint
     {

@@ -1,8 +1,6 @@
 ﻿namespace Construktion.Tests.Registry
 {
-    using System.Collections.Generic;
     using Shouldly;
-    using Xunit;
 
     public class MaxDepthTests
     {

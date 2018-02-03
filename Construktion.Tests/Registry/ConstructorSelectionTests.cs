@@ -1,7 +1,6 @@
 ﻿namespace Construktion.Tests.Registry
 {
     using Shouldly;
-    using Xunit;
 
     public class ConstructorSelectionTests
     {

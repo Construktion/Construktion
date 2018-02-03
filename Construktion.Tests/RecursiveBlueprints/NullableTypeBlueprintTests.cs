@@ -5,7 +5,6 @@
     using Blueprints.Recursive;
     using Internal;
     using Shouldly;
-    using Xunit;
 
     public class NullableTypeBlueprintTests
     {

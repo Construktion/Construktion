@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using Blueprints.Simple;
     using Shouldly;
-    using Xunit;
 
     public class BlueprintTests
     {
