@@ -21,7 +21,7 @@ namespace Construktion.Blueprints.Recursive
 
         public object Construct(ConstruktionContext context, ConstruktionPipeline pipeline)
         {
-            var itemCount = 4;
+            var itemCount = pipeline.Settings.EnumuerableCount;
 
             var key = context.RequestType.GetGenericArguments()[0];
             var valueType = context.RequestType.GetGenericArguments()[1];

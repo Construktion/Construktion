@@ -7,7 +7,7 @@
 
     public class DictionaryBlueprintTests
     {
-        public void should_have_4_dictionary_items_when_not_an_enum()
+        public void should_respect_default_count()
         {
             var blueprint = new DictionaryBlueprint();
 
@@ -16,10 +16,10 @@
                     new DefaultConstruktionPipeline());
 
             dictionary.ShouldNotBe(null);
-            dictionary.Count.ShouldBe(4);
+            dictionary.Count.ShouldBe(3);
         }
 
-        public void when_dictionary_is_an_enum_should_cover_all_enum_options()
+        public void should_disregard_preset_and_cover_enum()
         {
             var blueprint = new DictionaryBlueprint();
 

@@ -93,7 +93,7 @@ namespace Construktion.Tests.Acceptance
             var result = construktion.Construct<Dictionary<string, int>>();
 
             result.ShouldNotBe(null);
-            result.Count.ShouldBe(4);
+            result.Count.ShouldBe(3);
             result.Keys.ShouldAllBe(x => !string.IsNullOrWhiteSpace(x));
             result.Values.ShouldAllBe(x => x != 0);
         }
