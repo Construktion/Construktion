@@ -1,4 +1,4 @@
-﻿namespace Construktion.Samples
+﻿namespace Construktion.Samples.XUnit
 {
     using System;
     using FakeItEasy;

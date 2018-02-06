@@ -1,6 +1,6 @@
-﻿namespace Construktion.Samples
+﻿namespace Construktion.Samples.XUnit.Entities
 {
-    public class Foo
+    public class Team : Entity
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Construktion.Samples.Entities
+﻿namespace Construktion.Samples.XUnit.Entities
 {
     public class Player : Entity
     {

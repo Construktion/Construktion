@@ -1,4 +1,4 @@
-﻿namespace Construktion.Samples.Tests
+﻿namespace Construktion.Samples.XUnit.Tests
 {
     using System.Linq;
     using Entities;

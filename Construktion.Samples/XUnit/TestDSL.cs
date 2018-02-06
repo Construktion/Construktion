@@ -2,7 +2,7 @@ using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
-namespace Construktion.Samples
+namespace Construktion.Samples.XUnit
 {
     using System;
     using Entities;

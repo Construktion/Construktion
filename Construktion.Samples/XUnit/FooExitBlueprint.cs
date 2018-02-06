@@ -1,4 +1,4 @@
-﻿namespace Construktion.Samples
+﻿namespace Construktion.Samples.XUnit
 {
     public class FooExitBlueprint : AbstractExitBlueprint<Foo>
     {

@@ -1,11 +1,11 @@
-﻿namespace Construktion.Samples
+﻿namespace Construktion.Samples.XUnit
 {
     using System.Collections.Generic;
     using System.Reflection;
     using Xunit.Abstractions;
     using Xunit.Sdk;
 
-    [DataDiscoverer("Construktion.Samples.NoDataDiscovery", "Construktion.Samples")]
+    [DataDiscoverer("Construktion.Samples.XUnit.NoDataDiscovery", "Construktion.Samples")]
     public class ConstruktionData : DataAttribute
     {
         private readonly Construktion _construktion;
