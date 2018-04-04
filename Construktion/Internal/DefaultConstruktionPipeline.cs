@@ -27,9 +27,12 @@
 
             var result = Construct(context, blueprint);
 
-            var exitBlueprint = _settings.ExitBlueprints.FirstOrDefault(x => x.Matches(result, context));
+            if (result != null)
+            {
+                var exitBlueprint = _settings.ExitBlueprints.FirstOrDefault(x => x.Matches(result, context));
 
-            result = exitBlueprint?.Construct(result, this) ?? result;
+                result = exitBlueprint?.Construct(result, this) ?? result;
+            }
 
             return result;
         }

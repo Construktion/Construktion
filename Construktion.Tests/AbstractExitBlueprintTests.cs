@@ -79,6 +79,17 @@
             bar.Name.ShouldBe("Ping");
         }
 
+        public void should_not_pass_nulls_to_exit_blueprint()
+        {
+            var construktion = new Construktion().With(x =>
+            {
+                x.AddBlueprint<NullFooBlueprint>();
+                x.AddExitBlueprint<IFooExitBlueprint>();
+            });
+
+            Should.NotThrow(() => construktion.Construct<Foo>().ShouldBeNull());
+        }
+
         public class FooExitBlueprint : AbstractExitBlueprint<Foo>
         {
             public override Foo Construct(Foo item, ConstruktionPipeline pipeline)
@@ -109,6 +120,11 @@
 
                 return item;
             }
+        }
+
+        public class NullFooBlueprint : AbstractBlueprint<Foo>
+        {
+            public override Foo Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => null;
         }
 
         public class Foo : IFoo
