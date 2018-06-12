@@ -3,9 +3,9 @@
     using System;
     using Fixie;
 
-    public class FixieConvention : Convention
+    public class FixieDiscovery : Discovery
     {
-        public FixieConvention()
+        public FixieDiscovery()
         {
             Classes
                 .Where(x => x.Name.EndsWith("Tests") || isBugTest(x));
@@ -13,11 +13,7 @@
             Methods
                 .Where(method => method.IsPublic && method.IsVoid());
 
-            ClassExecution
-                .CreateInstancePerCase()
-                .ShuffleCases();
-
-            bool isBugTest(Type @class) => @class.Namespace.StartsWith("Construktion.Tests.Bug") &&
+            bool isBugTest(Type @class) => @class.Namespace.StartsWith("Construktion.Tests.Bugs") &&
                                            @class.IsNested == false;
         }
     }
