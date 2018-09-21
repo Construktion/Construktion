@@ -39,5 +39,25 @@ namespace Construktion.Internal
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                        .Where(x => x.CanWrite);
         }
+
+        public static PropertyInfo NulloPropertyInfo = typeof(Unit).GetProperty(nameof(Unit.Nullo));
+
+        public static ParameterInfo NulloParameterInfo = typeof(Unit)
+                                                    .GetMethod(nameof(Unit.Parameter))
+                                                    .GetParameters()
+                                                    .Single();
+
+        public static bool IsNulloPropertyInfo(this PropertyInfo propertyInfo)
+        {
+            return propertyInfo.DeclaringType == typeof(Unit) &&
+                   propertyInfo.Name == nameof(Unit.Nullo) &&
+                   propertyInfo.PropertyType == typeof(Nullo);
+        }
+
+        public static bool IsNulloParameterInfo(this ParameterInfo parameterInfo)
+        {
+            return parameterInfo.ParameterType == typeof(Nullo) &&
+                   parameterInfo.Name == nameof(Unit.Nullo).ToLower();
+        }
     }
 }

@@ -95,12 +95,12 @@
             var requestName = requestContext.RequestType.FullName;
             var start = $"Start: {requestName}";
 
-            if (requestContext.PropertyInfo != null)
+            if (requestContext.PropertyInfo.IsNulloPropertyInfo() == false) 
             {
                 requestName = requestContext.PropertyInfo.Name;
                 start = $"Start Property: {requestName}";
             }
-            else if (requestContext.ParameterInfo != null)
+            else if (requestContext.ParameterInfo.IsNulloParameterInfo() == false)
             {
                 requestName = requestContext.ParameterInfo.Name;
                 start = $"Start Parameter: {requestName}";

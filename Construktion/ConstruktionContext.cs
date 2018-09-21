@@ -12,14 +12,16 @@
         public Type RequestType { get; }
 
         /// <summary>
-        /// When not null PropertyInfo is being constructed
+        /// The PropertyInfo being constructed. If the context does not represent a PropertyInfo,
+        /// a stand in "Nullo" object will be used. 
         /// </summary>
-        public PropertyInfo PropertyInfo { get; }
+        public PropertyInfo PropertyInfo { get; } = Extensions.NulloPropertyInfo;
 
-        ///<summary>
-        ///When not null ParameterInfo is being constructed
-        ///</summary>
-        public ParameterInfo ParameterInfo { get; }
+        /// <summary>
+        /// The ParameterInfo being constructed. If the context does not represent a ParameterInfo,
+        /// a stand in "Nullo" object will be used. 
+        /// </summary>
+        public ParameterInfo ParameterInfo { get; } = Extensions.NulloParameterInfo;
 
         public ConstruktionContext(Type request)
         {

@@ -11,6 +11,9 @@
             var context = new ConstruktionContext(typeof(string));
 
             context.RequestType.ShouldBe(typeof(string));
+
+            context.PropertyInfo.ShouldBeNulloPropertyInfo();
+            context.ParameterInfo.ShouldBeNulloParameterInfo();
         }
 
         public void should_set_property_info()
@@ -19,6 +22,8 @@
 
             context.RequestType.ShouldBe(typeof(string));
             context.PropertyInfo.ShouldNotBe(null);
+
+            context.ParameterInfo.ShouldBeNulloParameterInfo();
         }
 
         public void should_set_parameter_info()
@@ -32,6 +37,8 @@
 
             context.RequestType.ShouldBe(typeof(string));
             context.ParameterInfo.ShouldNotBe(null);
+
+            context.PropertyInfo.ShouldBeNulloPropertyInfo();
         }
 
         private void TestMethod(string name) { }
