@@ -42,7 +42,7 @@
             level++;
             var indent = new string(' ', level * 5);
 
-            if (depth > Settings.RecurssionDepth)
+            if (depth > Settings.RecursionDepth)
             {
                 _log.Add($"{indent}Recursion detected over the allowed limit. Omitting {context.RequestType.FullName}");
                 debugLog = _log;

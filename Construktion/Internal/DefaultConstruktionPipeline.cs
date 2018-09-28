@@ -41,7 +41,7 @@
         {
             if (depthReached() || recursionDetected())
             {
-                return !depthReached() && _settings.ThrowOnRecurrsion
+                return !depthReached() && _settings.ThrowOnRecursion
                     ? throw new Exception($"Recursion Detected: {context.RequestType.FullName}")
                     : default(object);
             }
@@ -60,7 +60,7 @@
             {
                 var depth = _graph.Count(x => context.RequestType == x);
 
-                return depth > _settings.RecurssionDepth || (depth > 0 && _settings.ThrowOnRecurrsion);
+                return depth > _settings.RecursionDepth || (depth > 0 && _settings.ThrowOnRecursion);
             }
         }
 

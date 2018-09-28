@@ -46,23 +46,23 @@
             sut.Parents.Select(x => x.Child).ShouldAllBe(x => x.RecursiveParent == null);
         }
 
-        public void should_have_configurable_recurssion_depth()
+        public void should_have_configurable_recursion_depth()
         {
-            var construction = new Construktion().With(x => x.RecurssionLimit(1));
+            var construction = new Construktion().With(x => x.RecursionLimit(1));
 
             var parent = construction.Construct<Parent>();
 
-            var firstRecurssiveParent = parent.Child.RecursiveParent;
-            var secondRecurssiveParent = firstRecurssiveParent.Child.RecursiveParent;
+            var firstRecursiveParent = parent.Child.RecursiveParent;
+            var secondRecurssiveParent = firstRecursiveParent.Child.RecursiveParent;
 
-            firstRecurssiveParent.ShouldNotBe(null);
+            firstRecursiveParent.ShouldNotBe(null);
             secondRecurssiveParent.ShouldBe(null);
         }
 
         public void should_not_overwrite_when_not_set()
         {
             var construction = new Construktion()
-                .With(x => x.RecurssionLimit(1))
+                .With(x => x.RecursionLimit(1))
                 .With(new ConstruktionRegistry());
 
             var parent = construction.Construct<Parent>();
@@ -76,7 +76,7 @@
 
         public void should_throw_when_set_to_negative_depth()
         {
-            Exception<ArgumentException>.ShouldBeThrownBy(() => new Construktion().With(x => x.RecurssionLimit(-1)));
+            Exception<ArgumentException>.ShouldBeThrownBy(() => new Construktion().With(x => x.RecursionLimit(-1)));
         }
 
         public class Class<T> { }

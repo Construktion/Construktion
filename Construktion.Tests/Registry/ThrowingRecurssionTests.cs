@@ -3,18 +3,18 @@
     using System;
     using Shouldly;
 
-    public class ThrowingRecurssionTests
+    public class ThrowingRecursionTests
     {
         private readonly ConstruktionRegistry registry;
 
-        public ThrowingRecurssionTests()
+        public ThrowingRecursionTests()
         {
             registry = new ConstruktionRegistry();
         }
 
         public void should_throw_when_opted_in()
         {
-            registry.ThrowOnRecurssion(true);
+            registry.ThrowOnRecursion(true);
             var construktion = new Construktion().With(registry);
 
             Exception<Exception>.ShouldBeThrownBy(() => construktion.Construct<Parent>());
@@ -22,7 +22,7 @@
 
         public void should_still_throw()
         {
-            registry.ThrowOnRecurssion(true);
+            registry.ThrowOnRecursion(true);
             var newRegistry = new ConstruktionRegistry();
             var construktion = new Construktion().With(registry).With(newRegistry);
 
@@ -31,8 +31,8 @@
 
         public void should_not_throw_when_opted_out()
         {
-            registry.ThrowOnRecurssion(true);
-            var newRegistry = new ConstruktionRegistry().ThrowOnRecurssion(false);
+            registry.ThrowOnRecursion(true);
+            var newRegistry = new ConstruktionRegistry().ThrowOnRecursion(false);
             var construktion = new Construktion().With(registry).With(newRegistry);
 
             Should.NotThrow(() => construktion.Construct<Parent>());

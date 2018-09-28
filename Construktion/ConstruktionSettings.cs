@@ -35,17 +35,17 @@ namespace Construktion
         /// <summary>
         /// The amount of items to create when any IEnumerable (or array) is requested. The Default is 3.
         /// </summary>
-        int EnumuerableCount { get; }
+        int EnumerableCount { get; }
 
         /// <summary>
         /// How many levels of recursion to construct. By default recursive properties are ignored.
         /// </summary>
-        int RecurssionDepth { get; }
+        int RecursionDepth { get; }
 
         /// <summary>
         /// When true, an exception will be thrown when Recursion is detected. False by default.
         /// </summary>
-        bool ThrowOnRecurrsion { get; }
+        bool ThrowOnRecursion { get; }
 
         /// <summary>
         /// How many levels of nested properties that will be constructed

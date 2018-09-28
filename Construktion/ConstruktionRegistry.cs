@@ -243,7 +243,7 @@ namespace Construktion
         /// <param name="limit"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws argument exception when limit is less than 0</exception>
-        public ConstruktionRegistry RecurssionLimit(int limit)
+        public ConstruktionRegistry RecursionLimit(int limit)
         {
             if (limit < 0)
                 throw new ArgumentException("Recursion limit cannot be less than 0");
@@ -257,7 +257,7 @@ namespace Construktion
         /// </summary>
         /// <param name="shouldThrow"></param>
         /// <returns></returns>
-        public ConstruktionRegistry ThrowOnRecurssion(bool shouldThrow)
+        public ConstruktionRegistry ThrowOnRecursion(bool shouldThrow)
         {
             _settings.SetThrowOnRecursion(shouldThrow);
             return this;

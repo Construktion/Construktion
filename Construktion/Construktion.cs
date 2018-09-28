@@ -63,7 +63,7 @@ namespace Construktion
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IEnumerable<T> ConstructMany<T>() => ConstructMany<T>(_settings.EnumuerableCount);
+        public IEnumerable<T> ConstructMany<T>() => ConstructMany<T>(_settings.EnumerableCount);
 
         /// <summary>
         /// Construct an IEnumerable with a specific count. Cannot be negative.
@@ -80,7 +80,7 @@ namespace Construktion
         /// <typeparam name="T"></typeparam>
         /// <param name="hardCodes"></param>
         /// <returns></returns>
-        public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes) => ConstructMany(hardCodes, _settings.EnumuerableCount);
+        public IEnumerable<T> ConstructMany<T>(Action<T> hardCodes) => ConstructMany(hardCodes, _settings.EnumerableCount);
 
         /// <summary>
         /// Construct an IEnumerable with hard codes applied after construction and with a specific count. Cannot be negative.

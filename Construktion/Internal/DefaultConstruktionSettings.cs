@@ -25,13 +25,13 @@ namespace Construktion.Internal
         public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
 
         private int? enumerableCount;
-        public int EnumuerableCount { get; private set; }
+        public int EnumerableCount { get; private set; }
 
         private int? recursionDepth;
-        public int RecurssionDepth { get; private set; }
+        public int RecursionDepth { get; private set; }
 
         private bool? throwOnRecursion;
-        public bool ThrowOnRecurrsion { get; private set; }
+        public bool ThrowOnRecursion { get; private set; }
 
         private int? maxDepth;
         public int? MaxDepth { get; private set; }
@@ -45,9 +45,9 @@ namespace Construktion.Internal
             TypeMap = new Dictionary<Type, Type>();
             PropertyStrategy = Default.PropertyStrategy;
             CtorStrategy = Default.CtorStrategy;
-            EnumuerableCount = Default.EnumerableCount;
-            RecurssionDepth = Default.RecursionDepth;
-            ThrowOnRecurrsion = Default.ThrowOnRecursion;
+            EnumerableCount = Default.EnumerableCount;
+            RecursionDepth = Default.RecursionDepth;
+            ThrowOnRecursion = Default.ThrowOnRecursion;
         }
 
         public void Apply(DefaultConstruktionSettings settings)
@@ -60,9 +60,9 @@ namespace Construktion.Internal
 
             CtorStrategy = settings.ctorStrategy ?? CtorStrategy;
             PropertyStrategy = settings.propertyStrategy ?? PropertyStrategy;
-            EnumuerableCount = settings.enumerableCount ?? EnumuerableCount;
-            RecurssionDepth = settings.recursionDepth ?? RecurssionDepth;
-            ThrowOnRecurrsion = settings.throwOnRecursion ?? ThrowOnRecurrsion;
+            EnumerableCount = settings.enumerableCount ?? EnumerableCount;
+            RecursionDepth = settings.recursionDepth ?? RecursionDepth;
+            ThrowOnRecursion = settings.throwOnRecursion ?? ThrowOnRecursion;
             MaxDepth = settings.maxDepth ?? MaxDepth;
 
             defaultBlueprints = new DefaultBlueprints(TypeMap);
