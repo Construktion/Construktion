@@ -11,19 +11,17 @@ namespace Construktion
     {
         internal readonly Random _random = new Random();
 
+        /// <inheritdoc />
+        bool Blueprint.Matches(ConstruktionContext context) => context.RequestType == typeof(T) && Matches(context);
+
         /// <summary>
         /// Matches types of the closed generic. Can be overridden in derived classes.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public virtual bool Matches(ConstruktionContext context) => context.RequestType == typeof(T);
+        public virtual bool Matches(ConstruktionContext context) => true;
 
-        /// <summary>
-        /// Defers work to derived classes.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="pipeline"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
         object Blueprint.Construct(ConstruktionContext context, ConstruktionPipeline pipeline) => Construct(context, pipeline);
 
         /// <summary>
