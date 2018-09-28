@@ -12,7 +12,7 @@ namespace Construktion.Internal
 
     internal static class Extensions
     {
-        public static ConstructorInfo GreedyCtor(this List<ConstructorInfo> ctors)
+        public static ConstructorInfo GreedyCtor(this IEnumerable<ConstructorInfo> ctors)
         {
             var max = ctors.Max(x => x.GetParameters().Length);
             var greedyCtor = ctors.First(x => x.GetParameters().Length == max);
@@ -20,7 +20,7 @@ namespace Construktion.Internal
             return greedyCtor;
         }
 
-        public static ConstructorInfo ModestCtor(this List<ConstructorInfo> ctors)
+        public static ConstructorInfo ModestCtor(this IEnumerable<ConstructorInfo> ctors)
         {
             var min = ctors.Min(x => x.GetParameters().Length);
             var modestCtor = ctors.First(x => x.GetParameters().Length == min);

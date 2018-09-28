@@ -25,12 +25,12 @@ namespace Construktion
         /// Resolve the constructor (Greedy or Modest). Uses modest by default. The modest constructor is the one
         /// with the fewest arguments.
         /// </summary>
-        Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; }
+        ConstructorInfo CtorStrategy(IEnumerable<ConstructorInfo> constructors);
 
         /// <summary>
         /// Resolve an objects properties to construct. By default only properties with public setters are constructed.
         /// </summary>
-        Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; }
+        IEnumerable<PropertyInfo> PropertyStrategy(Type requestType);
 
         /// <summary>
         /// The amount of items to create when any IEnumerable (or array) is requested. The Default is 3.

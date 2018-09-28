@@ -13,16 +13,29 @@ namespace Construktion.Internal
         private readonly List<Blueprint> _customBlueprints;
         private readonly List<ExitBlueprint> _exitBlueprints;
 
+        private Func<IEnumerable<ConstructorInfo>, ConstructorInfo> ctorStrategy;
+        private Func<Type, IEnumerable<PropertyInfo>> propertyStrategy;
+
         public IEnumerable<Blueprint> Blueprints => _customBlueprints.Concat(defaultBlueprints);
         public IEnumerable<ExitBlueprint> ExitBlueprints => _exitBlueprints;
 
         public IDictionary<Type, Type> TypeMap { get; }
 
-        private Func<List<ConstructorInfo>, ConstructorInfo> ctorStrategy;
-        public Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy { get; private set; }
+        public ConstructorInfo CtorStrategy(IEnumerable<ConstructorInfo> constructors)
+        {
+            var ctors = constructors.ToList();
 
-        private Func<Type, IEnumerable<PropertyInfo>> propertyStrategy;
-        public Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy { get; private set; }
+            return ctorStrategy != null
+                ? ctorStrategy(ctors)
+                : Default.CtorStrategy(ctors);
+        }
+
+        public IEnumerable<PropertyInfo> PropertyStrategy(Type request)
+        {
+            return propertyStrategy != null
+                ? propertyStrategy(request)
+                : Default.PropertyStrategy(request);
+        }
 
         private int? enumerableCount;
         public int EnumerableCount { get; private set; }
@@ -43,8 +56,6 @@ namespace Construktion.Internal
             _exitBlueprints = new List<ExitBlueprint>();
 
             TypeMap = new Dictionary<Type, Type>();
-            PropertyStrategy = Default.PropertyStrategy;
-            CtorStrategy = Default.CtorStrategy;
             EnumerableCount = Default.EnumerableCount;
             RecursionDepth = Default.RecursionDepth;
             ThrowOnRecursion = Default.ThrowOnRecursion;
@@ -58,8 +69,8 @@ namespace Construktion.Internal
             foreach (var map in settings.TypeMap)
                 TypeMap[map.Key] = map.Value;
 
-            CtorStrategy = settings.ctorStrategy ?? CtorStrategy;
-            PropertyStrategy = settings.propertyStrategy ?? PropertyStrategy;
+            ctorStrategy = settings.ctorStrategy ?? ctorStrategy;
+            propertyStrategy = settings.propertyStrategy ?? propertyStrategy;
             EnumerableCount = settings.enumerableCount ?? EnumerableCount;
             RecursionDepth = settings.recursionDepth ?? RecursionDepth;
             ThrowOnRecursion = settings.throwOnRecursion ?? ThrowOnRecursion;
@@ -116,7 +127,7 @@ namespace Construktion.Internal
             public static int EnumerableCount => 3;
             public static int RecursionDepth => 0;
             public static bool ThrowOnRecursion => false;
-            public static Func<List<ConstructorInfo>, ConstructorInfo> CtorStrategy => Extensions.ModestCtor;
+            public static Func<IEnumerable<ConstructorInfo>, ConstructorInfo> CtorStrategy => Extensions.ModestCtor;
             public static Func<Type, IEnumerable<PropertyInfo>> PropertyStrategy => Extensions.PropertiesWithPublicSetter;
         }
     }
