@@ -49,7 +49,7 @@
 
         public void should_inject_from_within_pipeline()
         {
-            var construktion = new Construktion().With(new FooBlueprint());
+            var construktion = new Construktion().Apply(new FooBlueprint());
 
             var foo = construktion.Construct<Foo>();
             var result = construktion.Construct<FooHolder>();
@@ -61,7 +61,7 @@
 
         public void should_always_use_the_same_instance_when_injected_from_pipeline()
         {
-            var construktion = new Construktion().With(new FooBlueprint());
+            var construktion = new Construktion().Apply(new FooBlueprint());
 
             var foo = construktion.Construct<Foo>();
             var result = construktion.Construct<FooHolder>();

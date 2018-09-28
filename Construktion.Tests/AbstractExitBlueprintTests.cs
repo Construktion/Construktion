@@ -6,7 +6,7 @@
     {
         public void should_apply_value_after_the_normal_blueprints()
         {
-            var construktion = new Construktion().With(x =>
+            var construktion = new Construktion().Apply(x =>
             {
                 x.OmitIds();
                 x.AddExitBlueprint<FooExitBlueprint>();
@@ -19,7 +19,7 @@
 
         public void should_not_alter_constructed_values()
         {
-            var construktion = new Construktion().With(x =>
+            var construktion = new Construktion().Apply(x =>
             {
                 x.OmitIds();
                 x.AddExitBlueprint<FooExitBlueprint>();
@@ -32,7 +32,7 @@
 
         public void should_work_for_interfaces()
         {
-            var construktion = new Construktion().With(x =>
+            var construktion = new Construktion().Apply(x =>
             {
                 x.OmitIds();
                 x.AddExitBlueprint<IFooExitBlueprint>();
@@ -45,7 +45,7 @@
 
         public void should_add_through_construktion()
         {
-            var construktion = new Construktion().With(new FooExitBlueprint());
+            var construktion = new Construktion().Apply(new FooExitBlueprint());
 
             var foo = construktion.Construct<Foo>();
 
@@ -54,7 +54,7 @@
 
         public void should_override_matches()
         {
-            var construktion = new Construktion().With(x =>
+            var construktion = new Construktion().Apply(x =>
             {
                 x.ConstructPropertyUsing(prop => prop.Name == nameof(Foo.Name), () => "Ping");
                 x.AddExitBlueprint<FooPingPongExitBlueprint>();
@@ -67,7 +67,7 @@
 
         public void only_types_of_T_should_match()
         {
-            var construktion = new Construktion().With(x =>
+            var construktion = new Construktion().Apply(x =>
             {
                 x.ConstructPropertyUsing(prop => prop.Name == nameof(Bar.Name), () => "Ping");
                 x.AddExitBlueprint<FooPingPongExitBlueprint>();
@@ -81,7 +81,7 @@
 
         public void should_not_pass_nulls_to_exit_blueprint()
         {
-            var construktion = new Construktion().With(x =>
+            var construktion = new Construktion().Apply(x =>
             {
                 x.AddBlueprint<NullFooBlueprint>();
                 x.AddExitBlueprint<IFooExitBlueprint>();

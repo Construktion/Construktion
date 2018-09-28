@@ -49,7 +49,7 @@ namespace Construktion.Tests.Acceptance
 
         public void should_set_enumerable_count_globally()
         {
-            construktion.With(x => x.EnumerableCount(2));
+            construktion.Apply(x => x.EnumerableCount(2));
 
             var ints = construktion.ConstructMany<int>();
             var bars = construktion.ConstructMany<Bar>();
@@ -60,7 +60,7 @@ namespace Construktion.Tests.Acceptance
 
         public void should_set_enumerable_count_for_entire_graph()
         {
-            construktion.With(x => x.EnumerableCount(2));
+            construktion.Apply(x => x.EnumerableCount(2));
 
             var foos = construktion.ConstructMany<Foo>();
 
@@ -70,7 +70,7 @@ namespace Construktion.Tests.Acceptance
 
         public void should_set_enumerable_count_for_arrays()
         {
-            construktion.With(x => x.EnumerableCount(2));
+            construktion.Apply(x => x.EnumerableCount(2));
 
             var ints = construktion.Construct<int[]>();
 
@@ -79,7 +79,7 @@ namespace Construktion.Tests.Acceptance
 
         public void should_throw_when_setting_a_negative_count()
         {
-            Exception<ArgumentException>.ShouldBeThrownBy(() => construktion.With(x => x.EnumerableCount(-1)));
+            Exception<ArgumentException>.ShouldBeThrownBy(() => construktion.Apply(x => x.EnumerableCount(-1)));
         }
 
         public void construt_many_should_throw_when_setting_a_negative_count()

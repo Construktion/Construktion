@@ -12,7 +12,7 @@
 
         public ConstruktionData()
         {
-            _construktion = new Construktion().With(new SamplesRegistry());
+            _construktion = new Construktion().Apply(new SamplesRegistry());
         }
 
         public override IEnumerable<object[]> GetData(MethodInfo testMethod)

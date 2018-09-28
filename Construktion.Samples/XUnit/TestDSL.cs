@@ -10,7 +10,7 @@ namespace Construktion.Samples.XUnit
 
     public static class TestDSL
     {
-        private static readonly Construktion _construktion = new Construktion().With(new SamplesRegistry());
+        private static readonly Construktion _construktion = new Construktion().Apply(new SamplesRegistry());
 
         //In an actual app I would use a real database and wipe it clean before each test case.
         //It's not meant to mimic a Relational Db and behaves differently.

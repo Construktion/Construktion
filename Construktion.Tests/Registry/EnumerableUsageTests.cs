@@ -16,7 +16,7 @@
 
         public void default_count_should_be_3()
         {
-            var ints = construktion.With(registry).ConstructMany<int>();
+            var ints = construktion.Apply(registry).ConstructMany<int>();
 
             ints.Count().ShouldBe(3);
         }
@@ -25,8 +25,8 @@
         {
             registry.EnumerableCount(1);
 
-            var ints = construktion.With(registry)
-                                   .With(new ConstruktionRegistry())
+            var ints = construktion.Apply(registry)
+                                   .Apply(new ConstruktionRegistry())
                                    .ConstructMany<int>();
 
             ints.Count().ShouldBe(1);
@@ -36,8 +36,8 @@
         {
             registry.EnumerableCount(1);
 
-            var ints = construktion.With(registry)
-                                   .With(new ConstruktionRegistry(x => x.EnumerableCount(2)))
+            var ints = construktion.Apply(registry)
+                                   .Apply(new ConstruktionRegistry(x => x.EnumerableCount(2)))
                                    .ConstructMany<int>();
 
             ints.Count().ShouldBe(2);

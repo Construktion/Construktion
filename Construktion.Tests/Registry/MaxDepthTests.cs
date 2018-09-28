@@ -7,7 +7,7 @@
         public void should_construct_top_level_properties()
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(1));
-            var construktion = new Construktion().With(registry);
+            var construktion = new Construktion().Apply(registry);
 
             var result = construktion.Construct<LevelOne>();
 
@@ -18,7 +18,7 @@
         public void should_construct_deeper()
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(2));
-            var construktion = new Construktion().With(registry);
+            var construktion = new Construktion().Apply(registry);
 
             var result = construktion.Construct<LevelOne>();
 
@@ -32,7 +32,7 @@
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(2));
             var registry2 = new ConstruktionRegistry(x => x.MaxDepth(1));
-            var construktion = new Construktion().With(registry).With(registry2);
+            var construktion = new Construktion().Apply(registry).Apply(registry2);
 
             var result = construktion.Construct<LevelOne>();
 
@@ -44,7 +44,7 @@
         {
             var registry = new ConstruktionRegistry(x => x.MaxDepth(1));
             var registry2 = new ConstruktionRegistry();
-            var construktion = new Construktion().With(registry).With(registry2);
+            var construktion = new Construktion().Apply(registry).Apply(registry2);
 
             var result = construktion.Construct<LevelOne>();
 

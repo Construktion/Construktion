@@ -16,7 +16,7 @@
                 .GetParameters()
                 .Single();
 
-            var parameter = (string)new Construktion().With(registry).Construct(parameterInfo);
+            var parameter = (string)new Construktion().Apply(registry).Construct(parameterInfo);
 
             parameter.ShouldBe("Set");
         }

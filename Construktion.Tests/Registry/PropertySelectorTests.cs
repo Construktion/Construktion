@@ -15,7 +15,7 @@
 
         public void should_not_construct_private_setters_by_default()
         {
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 
@@ -24,7 +24,7 @@
 
         public void should_opt_in_to_constructing_properties_with_private_setter()
         {
-            construktion.With(x => x.ConstructPrivateSetters());
+            construktion.Apply(x => x.ConstructPrivateSetters());
 
             var foo = construktion.Construct<Foo>();
 
@@ -37,7 +37,7 @@
                 .ConstructPrivateSetters()
                 .OmitPrivateSetters();
 
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 
@@ -49,8 +49,8 @@
             registry.ConstructPrivateSetters();
 
             construktion
-                .With(registry)
-                .With(new ConstruktionRegistry());
+                .Apply(registry)
+                .Apply(new ConstruktionRegistry());
 
             var result = construktion.Construct<Foo>();
 

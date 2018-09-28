@@ -6,7 +6,7 @@
     {
         public void should_construct_email()
         {
-            var construktion = new Construktion().With(x => x.AddEmailBlueprint());
+            var construktion = new Construktion().Apply(x => x.AddEmailBlueprint());
 
             var result = construktion.Construct<Foo>();
 
@@ -16,7 +16,7 @@
 
         public void should_allow_custom_convention()
         {
-            var construktion = new Construktion().With(x => x.AddEmailBlueprint(p => p.Name.Equals("Custom")));
+            var construktion = new Construktion().Apply(x => x.AddEmailBlueprint(p => p.Name.Equals("Custom")));
 
             var result = construktion.Construct<Foo>();
 

@@ -18,7 +18,7 @@ namespace Construktion.Tests.Registry
         public void omit_ids_should_omit_an_int_that_ends_in_Id()
         {
             registry.OmitIds();
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 
@@ -28,7 +28,7 @@ namespace Construktion.Tests.Registry
         public void omit_ids_should_omit_a_nullable_int_that_ends_in_Id()
         {
             registry.OmitIds();
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 
@@ -38,7 +38,7 @@ namespace Construktion.Tests.Registry
         public void should_be_case_sensitive()
         {
             registry.OmitIds();
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 
@@ -48,7 +48,7 @@ namespace Construktion.Tests.Registry
         public void should_be_able_to_define_a_custom_convention()
         {
             registry.OmitProperties(prop => prop.Name.EndsWith("_Idx"), typeof(string));
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 
@@ -58,7 +58,7 @@ namespace Construktion.Tests.Registry
         public void should_omit_all_properties_of_a_open_generic()
         {
             registry.OmitProperties(typeof(List<>));
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 
@@ -70,7 +70,7 @@ namespace Construktion.Tests.Registry
         {
             registry.OmitVirtualProperties();
 
-            var foo = construktion.With(registry).Construct<Foo>();
+            var foo = construktion.Apply(registry).Construct<Foo>();
 
             foo.MyVirtualClasses.ShouldBe(null);
             foo.VirtualInt.ShouldBe(0);
@@ -79,7 +79,7 @@ namespace Construktion.Tests.Registry
         public void should_omit_all_properties_of_type()
         {
             registry.OmitProperties(prop => prop.Name == "Omit", typeof(string), typeof(int));
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
             var bar = construktion.Construct<Bar>();
@@ -94,7 +94,7 @@ namespace Construktion.Tests.Registry
                                             prop.PropertyType.BaseType.IsGenericType &&
                                             prop.PropertyType.BaseType.GetGenericTypeDefinition() ==
                                             typeof(OpenGeneric<>));
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 

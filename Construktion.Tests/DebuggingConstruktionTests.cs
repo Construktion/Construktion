@@ -22,7 +22,7 @@
             var context = new ConstruktionContext(typeof(Foo));
 
             new Construktion()
-                .With(x => x.AddExitBlueprint<FooExitBlueprint>())
+                .Apply(x => x.AddExitBlueprint<FooExitBlueprint>())
                 .DebuggingConstruct(context, out string log);
 
             log = RemoveWhiteSpace(log);

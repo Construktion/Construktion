@@ -15,7 +15,7 @@
         public void should_throw_when_opted_in()
         {
             registry.ThrowOnRecursion(true);
-            var construktion = new Construktion().With(registry);
+            var construktion = new Construktion().Apply(registry);
 
             Exception<Exception>.ShouldBeThrownBy(() => construktion.Construct<Parent>());
         }
@@ -24,7 +24,7 @@
         {
             registry.ThrowOnRecursion(true);
             var newRegistry = new ConstruktionRegistry();
-            var construktion = new Construktion().With(registry).With(newRegistry);
+            var construktion = new Construktion().Apply(registry).Apply(newRegistry);
 
             Exception<Exception>.ShouldBeThrownBy(() => construktion.Construct<Parent>());
         }
@@ -33,7 +33,7 @@
         {
             registry.ThrowOnRecursion(true);
             var newRegistry = new ConstruktionRegistry().ThrowOnRecursion(false);
-            var construktion = new Construktion().With(registry).With(newRegistry);
+            var construktion = new Construktion().Apply(registry).Apply(newRegistry);
 
             Should.NotThrow(() => construktion.Construct<Parent>());
         }

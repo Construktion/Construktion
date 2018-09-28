@@ -19,7 +19,7 @@
         {
             registry.AddBlueprint(new StringOneBlueprint());
 
-            var result = construktion.With(registry).Construct<string>();
+            var result = construktion.Apply(registry).Construct<string>();
 
             result.ShouldBe("StringOne");
         }
@@ -28,7 +28,7 @@
         {
             registry.AddBlueprint<StringOneBlueprint>();
 
-            var result = construktion.With(registry).Construct<string>();
+            var result = construktion.Apply(registry).Construct<string>();
 
             result.ShouldBe("StringOne");
         }
@@ -38,7 +38,7 @@
             registry.AddBlueprint(new StringTwoBlueprint());
             registry.AddBlueprint(new StringOneBlueprint());
 
-            var result = construktion.With(registry).Construct<string>();
+            var result = construktion.Apply(registry).Construct<string>();
 
             result.ShouldBe("StringTwo");
         }
@@ -46,8 +46,8 @@
         public void registries_registered_first_should_have_their_blueprints_used_first()
         {
             construktion
-                .With(new StringTwoRegistry())
-                .With(new StringOneRegistry());
+                .Apply(new StringTwoRegistry())
+                .Apply(new StringOneRegistry());
 
             var result = construktion.Construct<string>();
 
@@ -58,7 +58,7 @@
         {
             var reg = new ConstruktionRegistry(x => x.AddBlueprint<StringOneBlueprint>());
 
-            var result = construktion.With(reg).Construct<string>();
+            var result = construktion.Apply(reg).Construct<string>();
 
             result.ShouldBe("StringOne");
         }
@@ -71,7 +71,7 @@
                 new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(int), () => 1)
             };
 
-            var result = construktion.With(blueprints).Construct<Foo>();
+            var result = construktion.Apply(blueprints).Construct<Foo>();
 
             result.String.ShouldBe("x");
             result.Int.ShouldBe(1);
@@ -82,7 +82,7 @@
             var stringBlueprint = new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(string), () => "x");
             var intBlueprint = new CustomPropertyValueBlueprint(x => x.PropertyType == typeof(int), () => 1);
 
-            var result = construktion.With(x => x.AddBlueprints(new List<Blueprint>{stringBlueprint, intBlueprint })).Construct<Foo>();
+            var result = construktion.Apply(x => x.AddBlueprints(new List<Blueprint>{stringBlueprint, intBlueprint })).Construct<Foo>();
 
             result.String.ShouldBe("x");
             result.Int.ShouldBe(1);

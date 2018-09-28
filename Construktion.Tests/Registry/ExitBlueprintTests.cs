@@ -17,7 +17,7 @@
         {
             registry.AddExitBlueprint(new StringExitOneBlueprint());
 
-            var result = construktion.With(registry).Construct<string>();
+            var result = construktion.Apply(registry).Construct<string>();
 
             result.ShouldEndWith("One");
         }
@@ -26,7 +26,7 @@
         {
             registry.AddExitBlueprint<StringExitOneBlueprint>();
 
-            var result = construktion.With(registry).Construct<string>();
+            var result = construktion.Apply(registry).Construct<string>();
 
             result.ShouldEndWith("One");
         }
@@ -36,7 +36,7 @@
             registry.AddExitBlueprint<StringExitTwoBlueprint>();
             registry.AddExitBlueprint<StringExitOneBlueprint>();
 
-            var result = construktion.With(registry).Construct<string>();
+            var result = construktion.Apply(registry).Construct<string>();
 
             result.ShouldEndWith("Two");
         }
@@ -44,8 +44,8 @@
         public void registries_registered_first_should_have_their_exit_blueprints_used_first()
         {
             construktion
-                .With(new StringTwoRegistry())
-                .With(new StringOneRegistry());
+                .Apply(new StringTwoRegistry())
+                .Apply(new StringOneRegistry());
 
             var result = construktion.Construct<string>();
 
@@ -56,7 +56,7 @@
         {
             var _registry = new ConstruktionRegistry(x => x.AddExitBlueprint<StringExitOneBlueprint>());
 
-            var result = construktion.With(_registry).Construct<string>();
+            var result = construktion.Apply(_registry).Construct<string>();
 
             result.ShouldEndWith("One");
         }

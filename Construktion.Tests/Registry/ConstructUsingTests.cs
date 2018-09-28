@@ -10,7 +10,7 @@
             var registry =
                 new ConstruktionRegistry().ConstructPropertyUsing(p => p.Name.Equals("Credits"),
                     () => new Random().Next(1, 5));
-            var construktion = new Construktion().With(registry);
+            var construktion = new Construktion().Apply(registry);
 
             var foo = construktion.Construct<Foo>();
 

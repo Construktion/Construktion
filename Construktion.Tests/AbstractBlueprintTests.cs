@@ -13,7 +13,7 @@
 
         public void should_construct()
         {
-            var context = new Construktion().With(new FooBlueprint());
+            var context = new Construktion().Apply(new FooBlueprint());
 
             var result = context.Construct<Foo>();
 

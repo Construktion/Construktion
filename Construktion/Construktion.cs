@@ -142,7 +142,7 @@ namespace Construktion
         /// </summary>
         /// <param name="registry"></param>
         /// <returns></returns>
-        public Construktion With(ConstruktionRegistry registry)
+        public Construktion Apply(ConstruktionRegistry registry)
         {
             registry = registry ?? throw new ArgumentNullException(nameof(registry));
 
@@ -155,7 +155,7 @@ namespace Construktion
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
-        public Construktion With(Action<ConstruktionRegistry> configure)
+        public Construktion Apply(Action<ConstruktionRegistry> configure)
         {
             var registry = new ConstruktionRegistry();
 
@@ -170,7 +170,7 @@ namespace Construktion
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
-        public Construktion With(Blueprint blueprint)
+        public Construktion Apply(Blueprint blueprint)
         {
             blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 
@@ -183,7 +183,7 @@ namespace Construktion
         /// </summary>
         /// <param name="blueprints"></param>
         /// <returns></returns>
-        public Construktion With(IEnumerable<Blueprint> blueprints)
+        public Construktion Apply(IEnumerable<Blueprint> blueprints)
         {
             blueprints = blueprints ?? throw new ArgumentNullException(nameof(blueprints));
 
@@ -199,7 +199,7 @@ namespace Construktion
         /// </summary>
         /// <param name="blueprint"></param>
         /// <returns></returns>
-        public Construktion With(ExitBlueprint blueprint)
+        public Construktion Apply(ExitBlueprint blueprint)
         {
             blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 

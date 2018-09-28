@@ -9,7 +9,7 @@
         {
             var registry = new ConstruktionRegistry().AddPropertyAttribute<Set>(x => x.Value);
 
-            var foo = new Construktion().With(registry).Construct<Foo>();
+            var foo = new Construktion().Apply(registry).Construct<Foo>();
 
             foo.WithAttribute.ShouldBe("Set");
         }

@@ -24,7 +24,7 @@
         {
             registry.UseGreedyCtor();
 
-            var result = construktion.With(registry).Construct<MultiCtor>();
+            var result = construktion.Apply(registry).Construct<MultiCtor>();
 
             result.UsedGreedyCtor.ShouldBe(true);
         }
@@ -34,8 +34,8 @@
             registry.UseGreedyCtor();
 
             construktion
-                .With(registry)
-                .With(new ConstruktionRegistry());
+                .Apply(registry)
+                .Apply(new ConstruktionRegistry());
 
             var result = construktion.Construct<MultiCtor>();
 
@@ -48,7 +48,7 @@
                 .UseGreedyCtor()
                 .UseModestCtor();
 
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var result = construktion.Construct<MultiCtor>();
 

@@ -18,7 +18,7 @@
         {
             registry.Register<IFoo, Foo>();
 
-            var result = construktion.With(registry).Construct<IFoo>();
+            var result = construktion.Apply(registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo>();
         }
@@ -28,7 +28,7 @@
             registry.Register<IFoo, Foo>();
             registry.Register<IFoo, Foo2>();
 
-            var result = construktion.With(registry).Construct<IFoo>();
+            var result = construktion.Apply(registry).Construct<IFoo>();
 
             result.ShouldBeOfType<Foo2>();
         }
@@ -38,7 +38,7 @@
             var foo = new Foo { FooId = -1 };
             registry.UseInstance<IFoo>(foo);
 
-            var result = construktion.With(registry).Construct<IFoo>();
+            var result = construktion.Apply(registry).Construct<IFoo>();
 
             var fooResult = result.ShouldBeOfType<Foo>();
             fooResult.FooId.ShouldBe(-1);
@@ -52,7 +52,7 @@
             registry.UseInstance<IFoo>(foo);
             registry.UseInstance<IFoo>(foo2);
 
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var result = construktion.Construct<IFoo>();
 
@@ -64,7 +64,7 @@
             var foo = new Foo();
             registry.UseInstance<IFoo>(foo);
 
-            construktion.With(registry);
+            construktion.Apply(registry);
 
             var result = construktion.Construct<FooCollector>();
 
@@ -76,7 +76,7 @@
         {
             //_blueprintRegistry.Register<IFoo, Foo>();
 
-            Exception<Exception>.ShouldBeThrownBy(() => construktion.With(registry).Construct<IFoo>())
+            Exception<Exception>.ShouldBeThrownBy(() => construktion.Apply(registry).Construct<IFoo>())
                                 .Message
                                 .ShouldContain("Cannot construct the interface IFoo.");
         }
