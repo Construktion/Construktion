@@ -40,24 +40,30 @@ namespace Construktion.Internal
                        .Where(x => x.CanWrite);
         }
 
-        public static PropertyInfo NulloPropertyInfo = typeof(Unit).GetProperty(nameof(Unit.Nullo));
+        public static PropertyInfo NulloPropertyInfo = typeof(Unit).GetProperty(nameof(Unit.NulloProperty));
 
         public static ParameterInfo NulloParameterInfo = typeof(Unit)
-                                                    .GetMethod(nameof(Unit.Parameter))
+                                                    .GetMethod(nameof(Unit.NulloMethod))
                                                     .GetParameters()
                                                     .Single();
 
         public static bool IsNulloPropertyInfo(this PropertyInfo propertyInfo)
         {
             return propertyInfo.DeclaringType == typeof(Unit) &&
-                   propertyInfo.Name == nameof(Unit.Nullo) &&
+                   propertyInfo.Name == nameof(Unit.NulloProperty) &&
                    propertyInfo.PropertyType == typeof(Nullo);
         }
 
         public static bool IsNulloParameterInfo(this ParameterInfo parameterInfo)
         {
+            var nulloParameterName = typeof(Unit)
+                                     .GetMethod(nameof(Unit.NulloMethod))
+                                     .GetParameters()
+                                     .Single()
+                                     .Name;
+
             return parameterInfo.ParameterType == typeof(Nullo) &&
-                   parameterInfo.Name == nameof(Unit.Nullo).ToLower();
+                   parameterInfo.Name == nulloParameterName;
         }
     }
 }
